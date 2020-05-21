@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>登录</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../style/public.css">
+<link type="text/css" rel="stylesheet" href="../style/login.css">
+<script type="text/javascript" src="../script/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+	var pageWidth = window.innerWidth;
+	var pageHeight = window.innerHeight;
+	var minHeight ;
+	if (typeof pageWidth != "number")
+	{
+		if(document.compatMode == "CSS1Compat")
+		{
+			pageWidth = document.documentElement.clientWidth;
+			pageHeight = document.documentElement.clientHeight;
+		}
+		else
+		{
+			pageWidth = document.body.clientWidth;
+			pageHeight = document.body.clientHeight;
+		}
+	}
+	
+	if(pageHeight>480){
+		minHeight = pageHeight;
+	}
+	else
+	{
+		minHeight = 480;
+	}
+	
+	$(document).ready(function(){
+	 $(".min_height").height(minHeight);
+});
+</script>
+</head>
+
+<body class="body_bg">
+<div class="min_height">
+<div class="logo_name"><img src="../images/login/logo_name.png"></div>
+<div class="text_box">
+	<span><i>账号</i><input type="text" placeholder="请输入手机号"></span>
+    <span><i>密码</i><input type="password" placeholder="请输入密码"></span>
+    <b><input type="button" value="登录"></b>
+</div>
+<div class="link_bt"><a href="#" class="link_a">忘记密码?</a><a href="#" class="link_b">注册</a></div>
+</div>
+</body>
+</html>

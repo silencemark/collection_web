@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>备用金申请</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+
+var nodata = '<div class="list_none"><span><i class="yellow">Hello,我是大狮！</i><br>还没有申请备用金呢，赶紧添加一条吧~</span><b><img src="'+notDataImageUrl_havepower+'"></b></div>';
+function onloadData(){
+	
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getReserveAmountList?userid='+userInfo.userid+'&status=0&companyid='+userInfo.companyid,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				if(data.reserveamountlist.length > 0){
+					$(".list_none").remove();
+					var temp="";
+					for(var i=0;i<data.reserveamountlist.length;i++){
+						if(userInfo.userid==data.reserveamountlist[i].examineuserid && data.reserveamountlist[i].status==0){
+							temp+="<li onclick=\"location.href=\'reserve_check.html?reserveamountid="+data.reserveamountlist[i].reserveamountid+"&createid="+data.reserveamountlist[i].forwarduserid+"\'\">";
+						}else{
+							temp+="<li onclick=\"location.href=\'reserve_detail.html?reserveamountid="+data.reserveamountlist[i].reserveamountid+"&createid="+data.reserveamountlist[i].forwarduserid+"\'\">";
+						}
+						if(data.reserveamountlist[i].isread==0){
+							temp+="<div class=\"xx_01\"><span class=\"new\">";
+						}else{
+							temp+="<div class=\"xx_01\"><span>";
+						}
+						temp+=data.reserveamountlist[i].createname+"的备用金申请</span><em class=\"red\">待处理</em></div>"+
+			            "<div class=\"txt\" style=\"overflow:hidden;text-overflow:ellipsis;\"><nobr>"+data.reserveamountlist[i].reason+"</nobr></div>";
+			            if(data.reserveamountlist[i].urgentlevel==1){
+			            	temp+="<div class=\"xx_02\"><span class=\"num w_green\">普通</span>";
+			            }else if(data.reserveamountlist[i].urgentlevel==2){
+			            	temp+="<div class=\"xx_02\"><span class=\"num w_yellow\">紧急</span>";
+			            }else if(data.reserveamountlist[i].urgentlevel==3){
+			            	temp+="<div class=\"xx_02\"><span class=\"num w_red\">非常紧急</span>";
+			            }
+			            temp+="<span class=\"w_yellow\">￥"+data.reserveamountlist[i].amount+"</span><i>"+data.reserveamountlist[i].createtime+"</i></div></li>";
+					}
+					$('#ullist').html(temp);
+				}else{
+					$('#ullist').html("");
+					$('#ullist').parent().nextAll().remove();
+					$(".list_none").remove();
+					$("body").append(nodata);
+				}
+			}
+		}
+	})
+	
+	if(typeof(userInfo.powerMap.power5001810) != "undefined"){
+		$('#linkadd').show();
+	}
+}
+PageHelper({
+	url:projectpath+'/app/getReserveAmountList?userid='+userInfo.userid+'&status=0&companyid='+userInfo.companyid,
+	success:function(data){
+		if(data.reserveamountlist.length > 0){
+			var temp="";
+			for(var i=0;i<data.reserveamountlist.length;i++){
+				if(userInfo.userid==data.reserveamountlist[i].examineuserid && data.reserveamountlist[i].status==0){
+					temp+="<li onclick=\"location.href=\'reserve_check.html?reserveamountid="+data.reserveamountlist[i].reserveamountid+"&createid="+data.list[i].reserveamountlist[j].forwarduserid+"\'\">";
+				}else{
+					temp+="<li onclick=\"location.href=\'reserve_detail.html?reserveamountid="+data.reserveamountlist[i].reserveamountid+"&createid="+data.list[i].reserveamountlist[j].forwarduserid+"\'\">";
+				}
+				if(data.reserveamountlist[i].isread==0){
+					temp+="<div class=\"xx_01\"><span class=\"new\">";
+				}else{
+					temp+="<div class=\"xx_01\"><span>";
+				}
+				temp+=data.reserveamountlist[i].createname+"的备用金申请</span><em class=\"red\">待处理</em></div>"+
+	            "<div class=\"txt\" style=\"overflow:hidden;text-overflow:ellipsis;\"><nobr>"+data.reserveamountlist[i].reason+"</nobr></div>";
+	            if(data.reserveamountlist[i].urgentlevel==1){
+	            	temp+="<div class=\"xx_02\"><span class=\"num w_green\">普通</span>";
+	            }else if(data.reserveamountlist[i].urgentlevel==2){
+	            	temp+="<div class=\"xx_02\"><span class=\"num w_yellow\">紧急</span>";
+	            }else if(data.reserveamountlist[i].urgentlevel==3){
+	            	temp+="<div class=\"xx_02\"><span class=\"num w_red\">非常紧急</span>";
+	            }
+	            temp+="<span class=\"w_yellow\">￥"+data.reserveamountlist[i].amount+"</span><i>"+data.reserveamountlist[i].createtime+"</i></div></li>";
+			}
+			$('#ullist').append(temp);
+		}
+	}
+});
+
+function getNotIsRead(param){
+	$.ajax({
+		url:projectpath+"/app/getReserveAmountAllNotRead",
+		type:"post",
+		data:param,
+		success:function(data){
+			if(data.status == 0 || data.status == '0'){
+				var noexamiennum = data.noexaminenum;
+				var examinenum = data.examinenum;
+				if(noexamiennum > 0){
+					$('.span_nav span:first').prepend(redPoint);
+				}
+				if(examinenum > 0){
+					$('.span_nav span:last').prepend(redPoint);
+				}
+			}
+		}
+	});
+}
+
+function initPage(){
+	var param = new Object();
+	param.userid = userInfo.userid;
+	param.companyid = userInfo.companyid;
+	getNotIsRead(param);
+}
+</script>
+<body onload="onloadData();initPage();">
+<div class="head_box">
+	<a class="ico_back"  onclick="location.href='index.html'">返回</a>
+    <div class="name">备用金申请</div>
+    <div class="link_yellow" onclick="location.href='reserve_add.html'" id="linkadd" >新建</div>
+</div>
+<div class="head_none"></div>
+<div class="span_nav">
+	<span class="active" onclick="location.href='reserve_list0.html'">待处理</span>
+    <span class="last"  onclick="location.href='reserve_list1.html'">已处理</span>
+</div>
+<div class="page_list">
+	<ul id="ullist">
+    </ul>
+</div>
+<!-- <div class="load_more"><a>加载中...</a></div> -->
+</body>
+</html>

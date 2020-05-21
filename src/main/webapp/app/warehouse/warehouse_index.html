@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>主页</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/stock.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/echarts-all.js"></script>
+<script type='text/javascript' src='../appcssjs/script/touchScroll.js'></script>
+<script type='text/javascript' src='../appcssjs/script/touchslider.dev.js'></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+	}
+)
+
+
+
+function getnotice(){
+	if(typeof(userInfo.powerMap.power2001010) != "undefined"){
+		$('#todaystock').show();
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getWarehouseNotreadNum?receiveid='+userInfo.userid+'&companyid='+userInfo.companyid,
+		success:function(data){
+			if(parseInt(data.usenum)> 0){
+				$('#usenum').show();
+				$('#usenum').html(data.usenum);
+			}
+			if(parseInt(data.returnnum)> 0){
+				$('#returnnum').show();
+				$('#returnnum').html(data.returnnum);
+			}
+			if(parseInt(data.reportlossnum)> 0){
+				$('#reportlossnum').show();
+				$('#reportlossnum').html(data.reportlossnum);
+			}
+		}
+	})
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getBannerList?model=3&type=1',
+		success:function(data){
+			if(data.length>0){
+				var slidertemp="";
+				var pagediv="";
+				for(var i=0;i<data.length;i++){
+					slidertemp+="<li style=\"display: block\"><img src=\""+projectpath+"/"+data[i].imgurl+"\"  alt=\"\" width=\"100%\"></li>";
+					pagediv+="<a href=\"javascript:void(0);\">"+data[i].id+"</a>";
+				}
+				var windowheight=(parseInt($(window).height())*24)/100;
+				$('#slider').css("max-height",windowheight+"px");
+				$('#slider').html(slidertemp);
+				$('#pagenavi').html(pagediv);
+				var active=0,
+				as=document.getElementById('pagenavi').getElementsByTagName('a');
+				
+				for(var i=0;i<as.length;i++){
+					(function(){
+						var j=i;
+						as[i].onclick=function(){
+							t2.slide(j);
+							return false;
+						}
+					})();
+				}
+	
+				var t1=new TouchScroll({id:'wrapper','width':5,'opacity':0.7,color:'#555',minLength:20});
+				var t2=new TouchSlider({id:'slider', speed:600, timeout:6000, before:function(index){
+						as[active].className='';
+						active=index;
+						as[active].className='active';
+				}});
+			}
+		}
+	})
+	
+	$('#organizename').html(userInfo.organizename);
+	//查询统计数据
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getStockInfo?organizeid='+userInfo.organizeid,
+		success:function(data){
+			if(data.status==0){
+				var nonecolors=['#7e6fe1','#fff299', '#ee5c5c', '#64cccb', '#f7a44b','#6ac868',  '#36adff', '#9484fc','#ffce99', '#ee715c', '#64ccba','#f7bccb','#85e299','#5aace4','#9d6fe1','#e3eb64','#b13b3b','#51a4cf','#b9b866','#95db5c','#1ebfee'];
+				var dataArray = new Array() ;
+				var sumprice=0;
+				
+				for(var i=0;i<data.typelist.length;i++){
+					dataArray[i]=data.typelist[i].name;
+					sumprice+=parseFloat(data.typelist[i].value);
+				}
+				var sumpricecount = sumprice;
+				var summaterialprice = data.purchaseMap.summaterialprice;
+				var sumpayamount = data.purchaseMap.sumpayamount;
+				
+				sumprice=sumprice.toFixed(2);
+				var str="<div style=\"position:absolute;z-index:2;width:85px;padding:8px;height:auto;background-color:white;margin-bottom:0px;\">";
+				for(var i=0;i<data.typelist.length;i++){
+					var nonenum=i%nonecolors.length;
+					str+="<a onclick=\"$('#typename').text('"+data.typelist[i].name+"');materialDetail('"+data.typelist[i].name+"',"+sumprice+")\"><span style=\"width:10px;height:5px;background-color:"+nonecolors[nonenum]+";color:"+nonecolors[nonenum]+";\">___</span>"+data.typelist[i].name+"</a><br/><div style=\"margin-top:5px;\"></div>";
+				}
+				str+="</div>";
+				var allprice="";
+				if(parseInt(sumprice)!=0){
+					var sumpricecount = sumpricecount*(sumpayamount/summaterialprice);
+					allprice="实际金额\n￥"+sumpricecount.toFixed(2)+"元";
+				}
+				
+				var dataArraylength =  dataArray.length;
+				if((dataArraylength*24) > 223){
+					$('#echarts_one').css("height",(dataArraylength*24));
+				}
+				
+					option = {
+						    legend: {
+						        orient : 'vertical',
+						        x : 'left',
+						        data:dataArray,
+						        selectedMode:false
+						    },
+						    toolbox: {
+						        show : true,
+						      
+						    },
+						    calculable : false,
+						    series : [
+						        { 
+						            type:'pie', 
+						            radius : [0,0], 
+						            itemStyle : {
+						                normal : {
+						                    label : {
+						                        position : 'inner',
+						                        show : true, 
+						                        textStyle:{
+						                            color:'red'
+						                        }
+						                    },
+						                    labelLine : {
+						                        show : false
+						                    },color:'#FFFFFF'
+						                }
+						            }, 
+						            data:[
+						                {
+						                  value:335, name:allprice
+						                }  
+						            ]
+						        },
+						        {
+						            name:'访问来源',
+						            type:'pie',
+						            radius : [65, 100],
+						            selectedMode: 'single',
+						            x: '60%',
+						            width: '35%',
+						            funnelAlign: 'left',
+						            max: 1048,
+						            
+						            data:data.typelist, itemStyle : {
+						                normal : {
+						                    label : {
+						                        position : 'inner',
+						                        show : false, 
+						                        textStyle:{
+						                            color:'red'
+						                        }
+						                    },
+						                    labelLine : {
+						                        show : false
+						                    }
+						                }
+						            }
+						        }
+						    ],
+						    color:nonecolors,
+						};
+					
+					var myChart = echarts.init(document.getElementById("echarts_one"));
+					myChart.setOption(option);
+					myChart.on('click', function (params) {
+						
+					    // 控制台打印数据的名称
+					    $('#typename').text(params.name);
+					    materialDetail(params.name,sumprice);
+					});
+					if(data.typelist.length>0){
+						$('#typename').text(data.typelist[0].name);
+						materialDetail(data.typelist[0].name,sumprice);
+					}
+					else{
+						$('#martailtable').html("<tr class=\"head_td\"><td width=\"25%\">名称</td><td width=\"25%\">规格</td><td width=\"25%\">数量</td><td>金额</td></tr>");
+						$('#purchaseul').html("");
+						$('#typename').text("");
+					    $('#sumprice').text(0);
+					    $('#special').text(0);
+					}
+					$("#nonespan").html(str);
+			}
+		}
+	})
+}
+var typenow="";
+function materialDetail(type,allsumprice){
+	
+	typenow=type;
+	//查询统计数据
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getStockMaterialDetail?organizeid='+userInfo.organizeid+'&type='+type,
+		success:function(data){
+			if(data.status==0){
+				var temp="";
+				var sumprice=0;
+				for(var i=0;i<data.materiallist.length;i++){
+					temp+="<tr><td>"+data.materiallist[i].name+"</td><td>"+data.materiallist[i].specificationsall+"</td><td>"+data.materiallist[i].stock+data.materiallist[i].unit+"</td><td>￥"+(data.materiallist[i].price*data.materiallist[i].stock).toFixed(2)+"元</td></tr>";
+					sumprice+=(data.materiallist[i].residualmoney);
+				}
+				$('#martailtable').html("<tr class=\"head_td\"><td width=\"25%\">名称</td><td width=\"25%\">规格</td><td width=\"25%\">数量</td><td>金额</td></tr>");
+				$('#martailtable').append(temp);
+				
+				$('#sumprice').text("￥"+sumprice.toFixed(2)+"元");
+			    if(sumprice==0){
+			    	$('#special').text(0);
+			    }else{
+			    	$('#special').text((sumprice*100/(allsumprice)).toFixed(2));
+			    }
+			}
+		}
+	})
+	location.href='#s_name';
+}
+
+function logical(){
+	userInfo.organizeid=$('#organizeid').val();
+	userInfo.organizename=$('#organizename').text();
+	JianKangCache.setGlobalData("userinfo",userInfo);
+	getnotice();
+}
+</script>
+<body onload="getnotice()" style="overflow-x: hidden; overflow-y: auto;">
+<div id="htmlbody">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='../login/index.html'">返回</a>
+    <div class="name">仓库管理</div>
+    <div class="link">帮助</div>
+</div>
+<div class="head_none"></div>
+<div class="contentWrap" style="min-height:125px;">
+    <ul id="slider">
+<!--     	<li style="display:block"><img src="../appcssjs/images/stock/banner.png"  alt="" width="100%"></li> -->
+    </ul>
+    <div id="pagenavi">
+<!--     	<a href="javascript:void(0);" class="active">1</a> -->
+    </div>
+</div>
+<div class="index_menu">
+	<ul>
+    	<li onclick="location.href='use_list0.html'"><b class="st_bg1"><img src="../appcssjs/images/stock/menu_01.png"><i id="usenum" style="display: none" ></i></b><span>用料单</span></li>
+        <li onclick="location.href='return_list0.html'"><b class="st_bg2"><img src="../appcssjs/images/stock/menu_02.png"><i id="returnnum" style="display: none" ></i></b><span>退货单</span></li>
+        <li onclick="location.href='reportloss_list0.html'"><b class="st_bg3"><img src="../appcssjs/images/stock/menu_03.png"><i id="reportlossnum" style="display: none" ></i></b><span>报损单</span></li>
+        <li onclick="linkanalysis()"><b class="st_bg4"><img src="../appcssjs/images/stock/menu_04.png"></b><span>库存分析</span></li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript">
+function linkanalysis(){
+	if(typeof(userInfo.powerMap.power2001010) == "undefined"){
+		//查询提示框
+		$.ajax({
+			type:"post",
+			dataType:"json",
+			url:projectpath+"/app/getPromptInfo",
+			data:"datacode=personnopower",
+			success:function(data){
+				swal({
+					title : "",
+					text :  data.datamap.remark,
+					type : "warning",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+				return;
+			}
+		})
+	}else{
+		location.href='analysis.html';
+	}
+}
+</script>
+<div id="todaystock" style="display: none;">
+<div class="chart_box" style="overflow-x: hidden; overflow-y: auto;">
+	<input type="hidden" id="organizeid" />
+	<div class="s_name" id="s_name"><span><font  id="organizename"></font></span><i onclick="$('#htmlbody').hide();$('#organizeiframe').show();">切换门店</i></div>
+	<div style="line-height: 24px;font-size: 18px;padding: 12px 15px 0px 15px; color: #898989; text-align:center;">今日库存统计</div>
+	<span id="nonespan"></span> 
+    <div class="chart_img" id="echarts_one" style="width: 130%;height: 223px;"></div>
+</div>
+
+<div class="tab_box">
+<!-- 	<div class="jt_top">箭头</div> -->
+    <div class="xx" style="padding:0px 7px;">
+    	<span class="class" id="typename"></span>
+        <span style="width:140px;">金额:<i id="sumprice">￥</i></span>
+        <span style="width:90px;" class="num">占比:<i id="special"></i>%</span>
+        <div class="clear"></div>
+    </div>
+    <div class="tab" style="height:220px;overflow:hidden;overflow-y:visible;">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" id="martailtable">
+            	<tr class="head_td">
+                	<td width="25%">名称</td>
+                    <td width="25%">规格</td>
+                    <td width="25%">数量</td>
+                    <td>金额</td>
+                </tr>
+          </table>
+    </div>
+</div>
+
+</div>
+</div>
+<script type="text/javascript" src="../appcssjs/script/selectshop.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>个人中心系统公告-使用方后台</title>
+<link href="style/public.css" type="text/css" rel="stylesheet" />
+<link href="style/page.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="script/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+	var pageWidth = window.innerWidth;
+	var pageHeight = window.innerHeight;
+	var minHeight;
+	var usernameWidth;
+	if (typeof pageWidth != "number")
+	{
+		if(document.compatMode == "CSS1Compat")
+		{
+			pageWidth = document.documentElement.clientWidth;
+			pageHeight = document.documentElement.clientHeight;
+		}
+		else
+		{
+			pageWidth = document.body.clientWidth;
+			pageHeight = document.body.clientHeight;
+		}
+	}
+	minHeight = pageHeight - 77;
+	$(document).ready(function(){		
+		$(".main_page").css("min-height",minHeight+"px");
+		
+		usernameWidth = $(".top_username").width();		
+		usernameWidth = (160 - usernameWidth)/2;
+	    $(".top_username").css("margin-left",usernameWidth+"px");		
+		$(".head_box .user_box").hover(
+			  function () {
+				$(".head_box .user_box .name").addClass("name_border"); //移入
+				$(".head_box .user_box .box").show();
+			  },
+			  function () {
+				$(".head_box .user_box .name").removeClass("name_border");//移除\
+				$(".head_box .user_box .box").hide();
+			  }
+			);			
+});
+	
+
+</script>
+</head>
+
+<body>
+<div class="head_box">
+	<div class="logo_name">CateringMaster</div>
+    <div class="user_box">
+    	<div class="name"><div class="top_username"><b><img src="../images/public/user_img.png" width="26" height="26" /></b><span>Josh</span></div></div>
+        <div class="box">
+        	<ul>
+            	<li><a href="#" class="bg_01">个人中心</a></li>
+                <li><a href="#" class="bg_02">修改个人信息</a></li>
+                <li><a href="#" class="bg_03">重置密码</a></li>
+                <li class="last"><a href="#" class="bg_04">退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="link">
+    	<ul>
+        	<li><a href="#" class="bg_01">分享圈</a></li>
+            <li><a href="#" class="bg_02">备忘录</a></li>
+            <li><a href="#" class="bg_03">后台管理</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="main_page">
+	<div class="left_menu">
+    	<ul>
+        	<li><span><a href="#" class="bg_01">首页</a></span><div class="line"></div></li>
+            <li>
+            	<span class="bg_hidden"><a href="#" class="bg_02">工作表单</a></span><div class="line"></div>
+                <ul class="undis">
+                	<li><span><a href="#">餐前检查</a></span><div class="line"></div></li>
+                    <li><span><a href="#">厨房检查</a></span><div class="line"></div></li>
+                    <li><span><a href="#">离店检查</a></span><div class="line"></div></li>
+                </ul>
+            </li>
+            <li>
+            	<span class="bg_hidden"><a href="#" class="bg_03">店面管理</a></span><div class="line"></div>
+            	<ul class="undis">
+                    <li><span><a href="#">每日报表</a></span><div class="line"></div></li>
+                </ul>
+            </li>
+            <li>
+            	<span class="bg_hidden"><a href="#" class="bg_04">OA办公</a></span><div class="line"></div>
+                <ul class="undis">
+                    <li><span><a href="#">企业简报</a></span><div class="line"></div></li>
+                    <li><span><a href="#">企业云盘</a></span><div class="line"></div></li>
+                </ul>
+            </li>
+            <li>
+            	<span class="bg_hidden"><a href="#" class="bg_05">KPI星级考核</a></span><div class="line"></div>
+                <ul class="undis">
+                	<li><span><a href="#">岗位星值</a></span><div class="line"></div></li>
+                    <li><span><a href="#">综合星值</a></span><div class="line"></div></li>
+                    <li><span><a href="#">KPI规则</a></span><div class="line"></div></li>
+                </ul>
+            </li>
+            <li>
+            	<span class="bg_hidden"><a href="#" class="bg_06">企业管理</a></span><div class="line"></div>
+                <ul class="undis">
+                    <li><span><a href="#">组织管理</a></span><div class="line"></div></li>
+                    <li><span><a href="#">人员管理</a></span><div class="line"></div></li>
+                    <li><span><a href="#">企业权限</a></span><div class="line"></div></li>
+                    <li><span><a href="#">管理员管理</a></span><div class="line"></div></li>
+                    <li><span><a href="#">APP首页图片配置</a></span><div class="line"></div></li>
+                    <li><span><a href="#">管理日志</a></span><div class="line"></div></li>
+                </ul>
+            </li>            
+            <li>
+            	<span class="li_active bg_show"><a href="#" class="bg_07">个人中心</a></span><div class="line"></div>
+                <ul class="dis">
+                    <li><span class="active"><a href="#">系统公告</a></span><div class="line"></div></li>
+                    <li><span><a href="#">个人信息</a></span><div class="line"></div></li>
+                    <li><span><a href="#">重置密码</a></span><div class="line"></div></li>
+                </ul>
+            </li>
+        </ul>
+	</div>
+	<div class="page_nav"><p><a href="#">首页</a><i>/</i><a href="#">个人中心</a><i>/</i><span>系统公告</span></p></div>  
+    <div class="page_tab m_top">
+        <div class="tab_name"><span class="gray1">系统公告</span></div>
+        <div class="sel_box">
+            <input type="text" class="text" placeholder="请输入关键字" />
+            <input type="button" value="搜索" class="find_btn"  />
+            <div class="clear"></div>
+        </div>
+        <div class="tab_list">
+        	<table width="100%" border="0" cellpadding="0" cellspacing="0"  id="messageTable">
+            	<tr class="head_td">
+                	<td width="25%">标题</td>
+                    <td>简介</td>
+                    <td width="16%">发布时间</td>
+                    <td width="40">操作</td>
+                </tr>
+                
+               
+            </table>
+        </div>
+        <div id="Pagination" style="width:315px;"><div class="pagination"><a href="#" class="prev_first">首页</a><a href="#" class="prev">上一页</a><a href="#" class="sp">1</a><a href="#">2</a><a class="current">3</a><a href="#">4</a><a href="#">5</a><a href="#" class="next">下一页</a><a href="#" class="next_last">尾页</a></div></div><!--动态的获取pagination的宽度赋值给Pagination-->
+    </div>
+</div>
+<div class="div_mask" style="display:none;"></div>
+
+
+</body>
+</html>

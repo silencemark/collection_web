@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>企业云盘</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/oa.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+</head>
+
+<body>
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='skydrivecompany_index.html'">返回</a>
+    <div class="name">企业云盘</div>
+</div>
+<div class="head_none"></div>
+<div class="top_sel">
+	<div class="long"><input type="text" class="t_text" placeholder="请输入关键字" id="title"></div>
+    <div class="span">&nbsp;</div>
+    <div class="btn"><input type="button" value="" onclick="searchTitle()"></div>
+</div>
+<div class="page_list">
+	<ul id="ullist">
+<!--     	<li> -->
+<!--         	<div class="xx_01"><span>简报标题简报标题简报标题</span><em class="red">未查看</em></div> -->
+<!--             <div class="xx_02"><i class="fzr">2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="xx_01"><span>简报标题简报标题简报标题</span><em class="red">未查看</em></div> -->
+<!--             <div class="xx_02"><i class="fzr">2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="xx_01"><span>简报标题简报标题简报标题</span></div> -->
+<!--             <div class="xx_02"><i class="fzr">2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="xx_01"><span>简报标题简报标题简报标题</span></div> -->
+<!--             <div class="xx_02"><i class="fzr">2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="xx_01"><span>简报标题简报标题简报标题</span></div> -->
+<!--             <div class="xx_02"><i class="fzr">2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+    </ul>
+</div>
+<!-- <div class="load_more"><a>加载中...</a></div> -->
+</body>
+<script type="text/javascript">
+
+var nodata = '<div class="list_none"><span><i class="yellow">Hi,我是大狮！</i><br>列表空空，还没有云盘文件呢~</span><b><img src="'+notDataImageUrl_nopower+'"></b></div>';
+
+var moduleid=getUrlParam("moduleid");
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+	}
+)
+var SearchParam = new Object();
+SearchParam.userid = userInfo.userid;
+SearchParam.companyid = userInfo.companyid;
+SearchParam.moduleid = moduleid;
+
+function searchTitle(){
+	SearchParam.title = $('#title').val();
+	onloaddata();
+}
+
+function onloaddata(){
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getCompanyCloudList',
+		data:SearchParam,
+		beforeSend:function(){
+			$('body').after('<div class="load_more"><a>加载中···</a></div>');
+		},
+		success:function(data){
+			$('#ullist').empty();
+			showCloudFileTitleInfo(data);
+		},
+		complete:function(){
+			$('.load_more').remove();
+		}
+	})
+}
+
+PageHelper({
+	url:projectpath+'/app/getCompanyCloudList',
+	data:SearchParam,
+	success:function(data){
+		if(data.companycloudlist.length > 0){
+			showCloudFileTitleInfo(data);
+		}
+	}
+});
+
+function showCloudFileTitleInfo(data){
+	if(data.companycloudlist.length > 0){
+		$(".list_none").remove();
+		var temp="";
+		for(var i=0;i<data.companycloudlist.length;i++){
+			var title = data.companycloudlist[i].title;
+			var createtime = appBase.parseDateMinute(data.companycloudlist[i].createtime);
+			temp += '<li onclick="location.href=\'skydrivecompany_detail.html?fileid='+data.companycloudlist[i].fileid+'&moduleid='+moduleid+'\'">'+
+				        	'<div class="xx_01" style="text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:100%;"><span>'+title+'</span></div>'+
+				            '<div class="xx_02"><i class="fzr">'+createtime+'</i></div>'+
+				        '</li>';
+		}
+		$('#ullist').append(temp);
+	}else{
+		$(".list_none").remove();
+		$("body").append(nodata);
+	}
+}
+
+</script>
+</html>

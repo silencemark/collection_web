@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>主页</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/restaurant.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/echarts.min.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+	}
+)
+
+function getdata(){
+	$('#organizename').html(userInfo.organizename);
+	//查询统计数据
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getReportIncomeChart?organizeid='+userInfo.organizeid,
+		success:function(data){
+			if(data.status==0){
+				var timedataArray = new Array() ;
+				var lastdataArray = new Array() ;
+				var nowdataArray = new Array() ;
+				var nowsumprice=0;
+				var lastsumprice=0;
+				for(var i=0;i<data.nowmonthlist.length;i++){
+					timedataArray[i]=data.nowmonthlist[i].comparetime+"号";
+					nowdataArray[i]=data.nowmonthlist[i].price;
+					nowsumprice += parseInt(data.nowmonthlist[i].price);
+				}
+				for(var i=0;i<data.lastmonthlist.length;i++){
+					lastdataArray[i]=data.lastmonthlist[i].price;
+					lastsumprice += parseInt(data.lastmonthlist[i].price);
+				}
+				option = {
+					    title: {
+					    },
+					    splitLine:{
+					    	show:false
+					    },
+					    tooltip: {
+					        trigger: 'item'
+					    },
+					    legend: {
+					    	
+					        data:[data.lastmonth+"月",data.nowmonth+"月"]
+					    },
+					    grid: {
+					        x:50,
+					        y:30,
+					        y2:20,
+					        x2:20
+					    },
+					    xAxis: {
+					        type: 'category',
+					        boundaryGap: true,
+					        data: timedataArray,
+					        splitLine: {
+					            show: false
+					        }
+					    },
+					    yAxis: {
+					        type: 'value',
+					        splitLine: {
+					            show: false
+					        }
+
+					    },
+					    dataZoom: [
+					        {
+					            type: 'inside',
+					            start:80,
+					            end:100
+					        },
+					        {
+					            show: true,
+					            type: 'slider',
+					            start:80,
+					            end:100,
+					        }
+					    ],
+					    series: [
+					        {
+					            name:data.lastmonth+"月",
+					            type:'line',
+					            stack: 'null',
+					            data:lastdataArray
+					        },
+					        {
+					            name:data.nowmonth+"月",
+					            type:'line',
+					            stack: '总量',
+					            data:nowdataArray,
+					        }
+					    ]
+					};
+				var myChart = echarts.init(document.getElementById("echarts_one"));
+				myChart.setOption(option);
+			}
+		}
+	})
+}
+function logical(){
+	userInfo.organizeid=$('#organizeid').val();
+	userInfo.organizename=$('#organizename').text();
+	JianKangCache.setGlobalData("userinfo",userInfo);
+	getdata();
+}
+</script>
+
+<body onload="getdata()">
+<div id="htmlbody">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='restaurant_index.html'">返回</a>
+    <div class="name">每日报表统计</div>
+</div>
+<div class="head_none"></div>
+<div class="rst_report">
+	<input type="hidden" id="organizeid" />
+	<div class="s_name"><span id="organizename"></span><i onclick="$('#htmlbody').hide();$('#organizeiframe').show();">切换门店</i></div>
+    <div class="nav_list">
+    	<ul>
+        	<li onclick="location.href='report_yye.html'" class="active">营业额</li>
+            <li onclick="location.href='report_klle.html'">客流量</li>
+            <li onclick="location.href='report_cql.html'">出勤率</li>
+            <li onclick="location.href='report_rjxf.html'">人均消费</li>
+            <li onclick="location.href='report_myd.html'">满意度</li>
+        </ul>
+    </div>
+    <div class=" report_chart" style="height:300px;">
+    	<div id="echarts_one" style="width: 100%;height: 250px;"></div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="../appcssjs/script/selectshop.js"></script>
+
+</body>
+</html>

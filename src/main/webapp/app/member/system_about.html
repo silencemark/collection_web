@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>关于餐饮大师</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/member.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url:projectpath+"/app/getFormalVersionNumber",
+			type:"post",
+			success:function(version){
+				$("#version").text("版本号 V "+version);
+			}
+		});
+	});
+</script>
+</head>
+
+<body class="body_bg">
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage()">返回</a>
+    <div class="name">关于餐饮大师</div>
+</div>
+<div class="head_none"></div>
+<div class="logo_name"><b><img src="../appcssjs/images/login/logo_name.png"></b><br/><span id="version">版本号 V </span></div>
+<div class="about_txt">
+	<div class="name">餐饮垂直领域企业级资源型管理平台第一品牌</div>
+    <p>员工kpi星级考核、工作管理、oa办公、店面管理四大核心，完善企业内部社交网络，</p>
+    <p>突出“餐饮圈”的外部社交功能。打造一款全国餐饮企业地图，</p>
+    <p>能满足全国中小型餐饮企业内部管理、外部社交的资源型管理平台工具。</p>
+</div>
+</body>
+</html>

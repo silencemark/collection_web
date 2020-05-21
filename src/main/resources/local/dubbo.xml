@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		   http://code.alibabatech.com/schema/dubbo
+		   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+<!-- dubbo 服务消费者配置begin-->
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="consumer-of-helloworld-app" />
+	<!-- 使用multicast广播注册中心暴露发现服务地址
+	<dubbo:registry address="multicast://224.5.6.7:1234" />
+	 -->
+
+	<dubbo:protocol name="dubbo" port="20881" /> 
+	<dubbo:registry address="zookeeper://localhost:2181" check="false" />
+    <!-- <dubbo:registry protocol="zookeeper"  address="139.196.20.181:11181" check="false" /> -->
+    
+    <dubbo:reference id="indexService" interface="com.collection.service.IndexService"/>
+    <dubbo:reference id="companyService" interface="com.collection.service.CompanyService"/>
+    <dubbo:reference id="userInfoService" interface="com.collection.service.UserInfoService"/>
+    
+    <!-- 店面管理 -->
+	<dubbo:reference id="storeFrontService" interface="com.collection.service.storefront.StoreFrontService"/>
+    <!-- 采购管理 -->
+    <dubbo:reference id="purchaseService" interface="com.collection.service.purchase.PurchaseService"/>
+    <dubbo:reference id="supplierService" interface="com.collection.service.purchase.SupplierService"/>
+    
+    <!-- 工作表单 检查管理 -->
+    <dubbo:reference id="inspectService" interface="com.collection.service.worksheet.InspectService"/>
+    <!-- 工作表单 -->
+    <dubbo:reference id="rewardInfoService" interface="com.collection.service.worksheet.RewardInfoService"/>
+    <!-- 组织检查模板 -->
+    <dubbo:reference id="organizeTemplateService" interface="com.collection.service.worksheet.OrganizeTemplateService"/>
+    
+    <!-- 仓库管理 -->
+    <dubbo:reference id="warehouseService" interface="com.collection.service.warehouse.WarehouseService"/>
+    <!-- KPI星值审核管理 -->
+    <dubbo:reference id="starAssessService" interface="com.collection.service.starassess.StarAssessService"/>
+    <!-- 备忘录管理 -->
+    <dubbo:reference id="memorandumService" interface="com.collection.service.memorandum.MemorandumService"/>
+    <!--  OA办公管理 -->
+    <dubbo:reference id="officeService" interface="com.collection.service.oa.OfficeService"/>
+    <!--  OA通知管理 -->
+    <dubbo:reference id="noticeService" interface="com.collection.service.oa.NoticeService"/>
+    <!--  OA日志管理 -->
+    <dubbo:reference id="journalService" interface="com.collection.service.oa.JournalService"/>
+    <!--  OA通用审批-->
+    <dubbo:reference id="approvalService" interface="com.collection.service.oa.ApprovalService"/>
+    <!--  消息讨论组-->
+    <dubbo:reference id="chatService" interface="com.collection.service.chat.ChatService"/>
+    <!-- 个人中心 -->
+    <dubbo:reference id="personalService" interface="com.collection.service.personal.PersonalService"/>
+    <!-- 每日报表 -->
+    <dubbo:reference id="everydayReportService" interface="com.collection.service.storefront.EverydayReportService"/>
+    
+    <!-- 工作表单检查项目 -->
+    <dubbo:reference id="workSheetInspectService" interface="com.collection.service.worksheet.WorkSheetInspectService"/>
+    
+    <!-- 管理方后台管理 -->
+    <dubbo:reference id="systemService" interface="com.collection.service.SystemService"/>
+    <dubbo:reference id="customerFileService" interface="com.collection.service.managebackstage.CustomerFileService"/>
+    
+    
+    <!-- 使用方后台，云盘 -->
+    <dubbo:reference id="systemCloudService" interface="com.collection.service.managebackstage.SystemCloudService"/>
+    
+    <!-- 使用方后台，扩容申请 -->
+    <dubbo:reference id="cloudCapacityService" interface="com.collection.service.managebackstage.CloudCapacityService"/>
+    
+</beans>

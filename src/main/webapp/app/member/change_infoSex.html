@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>修改个人信息</title>
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+	name="viewport">
+<link type="text/css" rel="stylesheet"
+	href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet"
+	href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet"
+	href="../appcssjs/style/member.css">
+<script type="text/javascript"
+	src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+var userid="";
+var  sex = "1";
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+this.userid = userInfo.userid;
+
+function checkout(obj){
+	if( obj == 0 ){
+		sex = "0";
+		$("#bb").attr("class","check");
+		$("#mm").attr("class","check_ed");
+	}else{
+		sex="1";
+		$("#bb").attr("class","check_ed");
+		$("#mm").attr("class","check");
+	}
+}
+
+function checkUpdate(){
+	alert("userid="+userid+",sex="+sex);
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/updateOrganizeUserInfo?userid='+userid+'&sex='+sex,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+				
+				});
+			}else{
+				alert("修改成功");
+			}
+		}
+	})
+	
+}
+
+</script>
+<body>
+	<div class="head_box">
+		<a class="ico_back">返回</a>
+		<div class="name">修改性别</div>
+		<div class="link_yellow"  onclick="checkUpdate()">保存</div>
+	</div>
+	<div class="head_none"></div>
+	<div class="ch_info">
+		<span class="sex">
+			<a class="check_ed" 	onclick="checkout(1)" id ="bb" >选择</a><i>男</i>
+			<a class="check"  onclick="checkout(0)" id="mm">选择</a><i>女</i>
+		</span>
+	</div>
+</body>
+</html>

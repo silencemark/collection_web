@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>综合星值</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+
+<script type="text/javascript" src="../appcssjs/kpi/allstart_list_examine.js"></script>
+
+<link href="../appcssjs/style/mobiscroll.custom-2.6.2.min.css" type="text/css" rel="stylesheet"> 
+<script src="../appcssjs/script/mobiscroll.custom-2.6.2.min.js"></script> 
+
+</head>
+
+<body onload="initPage()">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='index.html'">返回</a>
+    <div class="name">综合星值</div>
+    <div class="link_yellow" onclick="location.href='allstar_add.html'" id="linkadd" style="display: none;">自评</div>
+</div>
+<div class="head_none"></div>
+<div class="span_nav">
+	<span onclick="location.href='allstart_list_noexamine.html'">待处理</span>
+    <span class="active last" onclick="location.href='allstart_list_examine.html'">已处理</span>
+</div>
+<div class="top_sel">
+	<div class="time"><input type="text" id="starttime" readonly="readonly" class="t_time" value=""></div>
+    <div class="span">-</div>
+    <div class="time"><input type="text" id="endtime" readonly="readonly" class="t_time" value=""></div>
+    <div class="span">&nbsp;</div>
+    <div class="btn"><input type="button" value="" onclick="fuzzySearch()"></div>
+</div>
+<div class="page_list" id="examinelist">
+<!-- 	<div class="time_name"><span>2016-06-16<i>4</i><em>点</em></span><b class="down">隐藏</b></div> -->
+<!-- 	<ul> -->
+<!--     	<li> -->
+<!--         	<div class="xx_01"><span class="new">李禅的综合星级</span><em class="green">已处理</em></div> -->
+<!--             <div class="xx_02"><span class="all">合计：<em>10</em>星</span><i>2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="xx_01"><span class="new">李禅的综合星级</span><em class="green">已处理</em></div> -->
+<!--             <div class="xx_02"><span class="all">合计：<em>10</em>星</span><i>2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="xx_01"><span>李禅的综合星级</span><em class="green">已处理</em></div> -->
+<!--             <div class="xx_02"><span class="all">合计：<em>10</em>星</span><i>2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="xx_01"><span>李禅的综合星级</span><em class="green">已处理</em></div> -->
+<!--             <div class="xx_02"><span class="all">合计：<em>10</em>星</span><i>2015-06-16 12:30</i></div> -->
+<!--         </li> -->
+<!--     </ul> -->
+<!--     <div class="time_name"><span>2016-06-16<i>4</i><em>点</em></span><b class="up">隐藏</b></div> -->
+<!--     <div class="time_name"><span>2016-06-16<i>4</i><em>点</em></span><b class="up">隐藏</b></div> -->
+<!--     <div class="time_name"><span>2016-06-16<i>4</i><em>点</em></span><b class="up">隐藏</b></div> -->
+</div>
+<div class="load_more" id="jiazaizhong"><a>加载中...</a></div>
+</body>
+</html>

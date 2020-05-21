@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新建报销单</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/purchase.css">
+
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script> 
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/OA/expense_add.js"></script>
+</head>
+
+<body>
+<div id="htmlbody">
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage()">返回</a>
+    <div class="name">新建报销单</div>
+    <div class="link_yellow" onclick="sendExpense()">发送</div>
+</div>
+<div class="head_none"></div>
+<div class="xx_one">
+    <span id="expenseno"></span>
+</div>
+<div class="xx_two">
+    <div class="name"><span>报销明细</span><a class="add" onclick="open_close_div()">添加</a></div>
+    <div class="tab">
+    	<table width="100%" border="0" cellpadding="0" cellspacing="0" id="baoxiaomingxi">
+        	<tr class="head_td">
+            	<td class="first" width="25%">类别</td>
+                <td width="20%">金额</td>
+                <td width="40%">明细</td>
+                <td class="last">操作</td>
+            </tr>
+        </table>
+    </div>
+    <div class="total">
+        <span>合计：<em id="detailprice">0</em></span>
+        <i>共<em id="detailnum">0</em>项</i>
+    </div>
+</div>
+
+<div class="xx_four">
+	<ul>
+		<input id="examineuserid" type="hidden"/>
+    	<li><span>审&nbsp;核&nbsp;人：</span><i id="examinename"></i><a onclick="$('#organizeiframe').show();$('#htmlbody').hide();"><img src="../appcssjs/images/public/btn_add.png"></a></li>
+        <li><span>抄&nbsp;送&nbsp;人：</span><i id="releaserange" style="text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; max-width: 59%;"></i><a onclick="$('#morechange_organizeiframe').show();$('#htmlbody').hide();"><img src="../appcssjs/images/public/btn_add.png"></a></li>
+        <li><span>申&nbsp;请&nbsp;人：</span><i id="createname"></i></li>
+        <li><span>填写时间：</span><i id="createtime"></i></li>
+    </ul>
+</div>
+
+<div class="div_mask" style="display:none" id="detail_div_mask"></div>
+<div class="tc_addgoods" style="display:none" id="detail_div">
+	<div class="name"><span>新增报销单</span><a onclick="addDetail()">添加</a></div>
+    <ul>
+    	<li><span>类型</span><input type="text" placeholder="请输入类型" class="text" id="detailtype"></li>
+        <li><span>金额</span><input type="text" maxLength="9" placeholder="请输入金额" class="text" id="money" onkeyup="this.value=value.replace(/[^\d.]/g,'')" onafterpaste="this.value=value.replace(/[^\d.]/g,'')"></li>
+        <li><span>明细</span><input type="text" placeholder="请输入明细" class="text" id="detail"></li>
+    </ul>
+</div>
+</div>
+<script type="text/javascript" src="../appcssjs/script/selectuser.js"></script>
+<script type="text/javascript" src="../appcssjs/script/select_xiebanren.js"></script>
+<script type="text/javascript">
+if(isiOS){
+	$("#detail_div").css({
+		"top":"35px"
+	});
+}
+</script>
+</body>
+</html>

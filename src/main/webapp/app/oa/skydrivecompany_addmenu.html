@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>添加栏目</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+	userInfo=data;
+})
+
+function onPhotoDataSuccess(imageData,fileSize) {
+	$('#imgslist').append('<div class="img" imgurl="'+imageData+'" filesize="'+fileSize+'"><b><img src="'+projectpath+imageData+'"></b><div class="del" onclick="$(this).parent().remove()">删除</div></div>');
+}
+function uploadimage(num){
+	var imglist = $('#imgslist').find('div[class="img"]');
+	if(imglist.length < num){
+		getPhoto(pictureSource.PHOTOLIBRARY,{type:12});
+	}else{
+		swal({
+			title : "",
+			text : "最多只能上传"+num+"张图片！",
+			type : "warning",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		});
+	}
+}
+
+function submitdata(){
+var modulename=$('#modulename').val();
+var moduleimage="";
+var imglist = $('#imgslist').find('div[class="img"]');
+$.each(imglist,function(i,item){
+	moduleimage = $(item).attr("imgurl");
+});
+if(modulename==""){
+	swal({
+		title : "",
+		text : "请填写栏目名称",
+		type : "error",
+		showCancelButton : false,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		
+	});
+	return;
+}
+/* if(moduleimage==""){
+	swal({
+		title : "",
+		text : "请上传栏目图片",
+		type : "error",
+		showCancelButton : false,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		
+	});
+	return;
+} */
+$.ajax({
+	type:'post',
+	dataType:'json',
+	beforeSend:function(a,b){
+		ajaxbefore();
+	},
+	complete:function(a,b){
+		ajaxcomplete();
+	},
+	url:projectpath+'/app/insertCompanyCloudModule',
+	data:'companyid='+userInfo.companyid+'&modulename='+modulename+'&moduleimage='+moduleimage+'&createid='+userInfo.userid,
+	success:function(data){
+		swal({
+			title : "",
+			text : "添加成功",
+			type : "success",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			location.href='skydrivecompany_index.html';
+		});
+	}
+})
+}
+</script>
+<body>
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='skydrivecompany_index.html'">返回</a>
+    <div class="name">添加栏目</div>
+    <div class="link_yellow" onclick="submitdata()">保存</div>
+</div>
+<div class="head_none"></div>
+<div class="detail_box">
+	<ul>
+    	<li><span>名称</span><input type="text" class="text" placeholder="请输入标题" maxlength="50" id="modulename"></li>
+        <li>
+        	<input type="hidden" id="moduleimage" value="app/appcssjs/images/oa/menu_02.png">
+        	<span>图标</span>
+            <div class="clear"></div>
+             <div class="img_list">
+            	<div id="imgslist">
+            		
+            	</div>
+                <div class="img_add" onclick="uploadimage(1)">添加图片</div>
+                <div class="clear"></div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

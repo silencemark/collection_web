@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>简报详情</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/oa.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var briefid=getUrlParam("briefid");
+var moduleid=getUrlParam("moduleid");
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+	}
+)
+
+function onloaddata(){
+	//标记为已读
+	readstatus(briefid,userInfo.userid);
+	
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getBriefInfo',
+		data:"briefid="+briefid,
+		success:function(data){
+			$('#title').text(data.briefInfo.title);
+			$('#realname').text(data.briefInfo.realname);
+			$('#createtime').text(data.briefInfo.createtime);
+			$('#realname').attr("onclick","location.href='../member/homepage_info.html?userid="+data.briefInfo.createid+"'");
+			$('#content').html(data.briefInfo.content);
+			$("#content").find("img").each(function(index,dom){
+				$(this).removeAttr("style");
+				$(this).removeAttr("height");
+				$(this).removeAttr("width");
+				if($(this).parent("span,p").children("span,p").length == 0) {
+					$(this).parent("span,p").after($(this).parent("span,p").children("img"))
+							.remove();
+					if($(this).parent("span,p").children("span,p").length == 0) {
+						$(this).parent("span,p").after($(this).parent("span,p").children("img"))
+								.remove();
+						
+					}
+					$(this).after("<br/><br/>");
+				}
+			})
+		}
+	})
+}
+</script>
+<body class="body_bg" onload="onloaddata()">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='briefing_list.html?moduleid='+moduleid">返回</a>
+    <div class="name">简报详情</div>
+</div>
+<div class="head_none"></div>
+<div class="briefing_detail">
+	<div class="title" id="title"></div>
+    <div class="span"><span id="realname"></span><span id="createtime"></span></div>
+    <div class="p_box" id="">
+    	<p id="content"></p>
+　　</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>处罚单详情</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script> 
+
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<!-- 语音的录制 播放 上传 -->
+<script type="text/javascript" src='../appcssjs/script/media.js'></script>
+
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+
+<script type="text/javascript" src="../appcssjs/worksheet/punish_check.js"></script>
+<script type="text/javascript" src="../appcssjs/script/showcomment.js"></script>
+</head>
+
+<body>
+<div id="htmlbody">
+<input type="hidden" id="examineuserid">
+<span id="examinename" style="display:none"></span>
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage();">返回</a>
+  	<div class="name">审核处罚单</div>
+<!--   	<div class="link_yellow">发视</div> -->
+</div>
+<div class="head_none"></div>
+<div class="detail_box">
+	<ul>
+    	<li><span class="em">姓名</span><i id="punishname"></i></li>
+        <li><span class="em">部门</span><i id="departmentname"></i></li>
+        <li><span class="em">职位</span><i id="position"></i></li>
+        <li><span class="em">处罚结果</span><i id="punishresulttext"></i></li>
+        <li><span class="em">发布范围</span><i id="releaserange" style="text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:66%; text-align:right;"></i></li>
+        <li>
+        	<span class="em">处罚原因</span>
+            <div class="clear"></div>
+            <p id="reason"></p>
+            <div class="img_list" id="files">
+            	
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="xx_user">
+    <div class="txt">
+        <span class="name">填写人：<em id="createname"></em></span>
+        <span class="time">填写时间：<em id="createtime"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name" style="width:98%;text-overflow:ellipsis ; overflow:hidden; white-space:nowrap;">审批人：<em id="shenpi_examinename"></em></span>
+<!--         <span class="time">审批时间：<em id="examinetime"></em></span> -->
+        <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name">抄送人：<em id="CCusernames"></em></span>
+        <div class="clear"></div>
+    </div>
+   <div class="txt last">
+        <span class="name" style="font-weight: bold;">审批意见</span>
+        <textarea class="text_area" placeholder="请输入审批意见，最多允许输入800字符" maxlength="800" id="opinion"></textarea>
+     </div>              
+</div>
+<div class="comment">
+	<div class="name">共有<em id="commentCount">0</em>条评论</div>
+    <ul id="comment_list">
+    </ul>
+</div>
+<div class="fbtn_none"></div>
+<div class="foot_btn">
+	<span name="foot_span" onclick="updatePunishInfo(1)" class="active">同意</span>
+	<span name="foot_span" onclick="updatePunishInfo(0)">拒绝</span>
+<!-- 	<span name="foot_span" onclick="$('#organizeiframe').show();$('#htmlbody').hide();">转发</span> -->
+<!--     <span name="foot_span" onclick="comment_opent_close()">评论</span> -->
+</div>
+<div class="div_mask" style="display: none" id="screen"></div>
+<div class="tc_comment" style="display: none" id="commentdiv">
+	<div class="name">评论</div>
+	<input type="hidden" id="parentid" />
+	<input type="hidden" id="parentuserid" />
+    <div class="text_box"><textarea id="content"></textarea></div>
+    <div class="btn_box">
+    	<input type="button" value="提交" class="btn_01" onclick="addComment();">
+        <input type="button" value="取消" class="btn_02" onclick="comment_opent_close();">
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="../appcssjs/script/selectuser_forward.js"></script>
+</body>
+</html>

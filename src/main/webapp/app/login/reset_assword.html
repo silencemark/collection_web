@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>重置密码</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/login.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+	}
+)
+function restpass(){
+	var pass1=$('#pass1').val();
+	var pass2=$('#pass2').val();
+	if(pass1==""){
+		swal({
+			title : "",
+			text : "请输入长度6-16位新密码",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			$('#pass1').focus();
+		});
+		return;
+	}
+	if(pass1.length < 6){
+		swal({
+			title : "",
+			text : "密码需要在6-16位之间",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			$('#pass1').focus();
+		});
+		return;
+	}
+	if(pass1!=pass2){
+		swal({
+			title : "",
+			text : "两次密码输入不一致，请重新输入",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			$('#pass1').focus();
+		});
+		return;
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/firstLoginUpdatePass?userid='+userInfo.userid+'&password='+pass1,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				setJpushId(data.userInfo.userid);
+				JianKangCache.getGlobalData('isfristlogin',function(data){
+					if(data.isfristlogin == "1" || data.isfristlogin == 1){
+						location.href="guide_index.html";
+					}else{
+						location.href="index.html";
+					}
+				});
+				
+			}
+		}
+	})
+} 
+</script>
+<body class="body_bg">
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage();">返回</a>
+    <div class="name" >重置密码</div>
+</div>
+<div class="head_none"></div>
+<div class="text_box pad_top20">
+	<span class="wid_03"><i>新&nbsp;密&nbsp;码</i><input type="password" placeholder="请输入长度6-16位新密码" id="pass1"></span>
+    <span class="wid_03"><i>确认密码</i><input type="password" placeholder="请确认新密码" id="pass2"></span>
+    <b><input type="button" value="确认重置" onclick="restpass();"></b>
+</div>
+</body>
+</html>

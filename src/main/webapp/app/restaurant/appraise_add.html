@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>满意度</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/restaurant.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+</head>
+
+<body>
+<div class="head_box">
+	<a class="ico_back"  onclick="goBackPage();">返回</a>
+    <div class="name">满意度</div>
+    <div class="link_yellow" id="submit_btn">提交</div>
+</div>
+<div class="head_none"></div>
+<div class="appraise_top">
+	<div class="s_box" id="sname_box"><div class="s_name" id="shop_name"></div></div>
+    <div class="txt">请对我的服务进行评价</div>
+</div>
+<div class="add_appraise">
+<form  id="satisfied_form">
+	<input type="hidden" id="organizeid" name="organizeid" />
+	<input type="hidden" id="companyid" name="companyid" />
+    <ul>
+    	<li>
+        	<span>口味得分</span>
+            <div class="start" id="tast_star">
+               <em><img index="1" src="../appcssjs/images/public/start2.png"></em>
+               <em><img index="2" src="../appcssjs/images/public/start2.png"></em>
+               <em><img index="3" src="../appcssjs/images/public/start2.png"></em>
+               <em><img index="4" src="../appcssjs/images/public/start3.png"></em>
+               <em><img index="5" src="../appcssjs/images/public/start3.png"></em>
+            </div>
+        </li>
+        <li>
+        	<span>环境得分</span>
+            <div class="start" id="envirement_star">
+              <em><img index="1" src="../appcssjs/images/public/start2.png"></em>
+              <em><img index="2" src="../appcssjs/images/public/start2.png"></em>
+              <em><img index="3" src="../appcssjs/images/public/start2.png"></em>
+              <em><img index="4" src="../appcssjs/images/public/start3.png"></em>
+              <em><img index="5" src="../appcssjs/images/public/start3.png"></em>
+            </div>
+        </li>
+        <li>
+        	<span>服务得分</span>
+            <div class="start" id="servier_star">
+              <em><img index="1" src="../appcssjs/images/public/start2.png"></em>
+              <em><img index="2" src="../appcssjs/images/public/start2.png"></em>
+              <em><img index="3" src="../appcssjs/images/public/start2.png"></em>
+              <em><img index="4" src="../appcssjs/images/public/start3.png"></em>
+              <em><img index="5" src="../appcssjs/images/public/start3.png"></em>
+             </div>
+        </li>
+        <li>
+        	<span>价格得分</span>
+            <div class="start" id="prive_star">
+                <em><img index="1" src="../appcssjs/images/public/start2.png"></em>
+                <em><img index="2" src="../appcssjs/images/public/start2.png"></em>
+                <em><img index="3" src="../appcssjs/images/public/start2.png"></em>
+                <em><img index="4" src="../appcssjs/images/public/start3.png"></em>
+                <em><img index="5" src="../appcssjs/images/public/start3.png"></em>
+            </div>
+        </li>
+        <li>
+        	<span>您的留言</span>     
+            <div class="clear"></div>
+            <div class="text_box"><textarea id="opinion" maxlength="800" name="opinion" placeholder="请输入留言，最多允许输入800字符"></textarea></div>   
+        </li>
+        <li>
+        	<span>是否需要回执</span>
+            <div class="check_box" id="isreceipt"><span id="sure_re" class="check_ed">是</span><span id="no_re" class="check">否</span></div>
+        </li>
+        </ul>
+        <ul id="info_ul">
+        <li>
+        	<span>手机号</span>
+            <input type="number" id="phone" maxlength="11" name= "phone" placeholder="请输入联系方式" class="text">
+        </li>
+        <li>
+        	<span>餐位</span>
+            <input type="text" id="seat" maxlength="20" name="seat" placeholder="请输入就餐桌号" class="text">
+        </li>
+        <li>
+        	<span>姓名</span>
+            <input type="text" id="name" maxlength="20" name = "name" placeholder="请选输入联系人" class="text">
+        </li>
+     </ul>  
+   </form>  
+</div>
+<div class="div_mask"></div>
+<div class="tc_ewm">
+	<div class="name_box" id="ewm_snamebox"><div class="name">餐饮大师浦东店</div></div>
+    <div class="img"><img src="../appcssjs/images/restaurant/ewm_img.png" id="ewmimg"></div>
+</div>
+
+<script type="text/javascript">
+	var organizeid=getUrlParam("organizeid");
+	$('#organizeid').val(organizeid);
+    var isreceipt = 1;
+	var sWidth = 0;
+	var ewmsWidth = 0;
+	$.ajax({
+		type:"post",
+		url:projectpath+"/app/getOrganizeName?organizeid="+organizeid,
+		success:function(data){
+			$('#shop_name').text(data.organizename);
+			$('#companyid').val(data.companyid);
+			$("#ewm_snamebox").find("div").text(data.organizename);
+			sWidth = $("#shop_name").width();
+			 sWidth = sWidth + 42;
+			 $("#sname_box").width(sWidth);
+			 ewmsWidth = $("#ewm_snamebox .name").width();
+			 ewmsWidth = ewmsWidth + 25;
+			 $('#ewmimg').attr("src",data.qrcode);
+			 //$("#ewm_snamebox").width(ewmsWidth);
+		}
+	})
+
+	$(document).ready(function(){
+	 $(".div_mask").hide();
+	 $(".tc_ewm").hide(); 
+	 $(".s_name").click(function(){
+		  $(".div_mask").show();
+		  $(".tc_ewm").show();
+	});
+		
+	 $(".div_mask").click(function(){
+		 $(".div_mask").hide();
+		 $(".tc_ewm").hide();
+		 
+	 });
+	 
+	 $(".tc_ewm").click(function(){
+		 $(".div_mask").hide();
+		 $(".tc_ewm").hide();
+	 });
+     //口味
+	  $("#tast_star img").click(function(){
+		  var index = $(this).attr("index");
+			 var imgArray = $("#tast_star img");
+			 checkStar(imgArray,index);
+			 return;
+	  });
+	  //环境
+	  $("#envirement_star img").click(function(){
+		  var index = $(this).attr("index");
+			 var imgArray = $("#envirement_star img");
+			 checkStar(imgArray,index);
+			 return;
+	  });
+	  //服务
+	  $("#servier_star img").click(function(){
+		  var index = $(this).attr("index");
+			 var imgArray = $("#servier_star img");
+			 checkStar(imgArray,index);
+			 return;
+	  });
+	  //价格
+	  $("#prive_star img").click(function(){
+		  var index = $(this).attr("index");
+			 var imgArray = $("#prive_star img");
+			 checkStar(imgArray,index);
+			 return;
+	  });
+	  //需要回执
+      $("#sure_re").click(function(){
+    	  $("#info_ul").show();
+    	  $(this).attr("class","check_ed");
+    	  $(this).siblings().attr("class","check");
+    	  isreceipt = 1;
+      });	 
+	  //不需要回执
+      $("#no_re").click(function(){
+    	  $("#info_ul").hide();
+    	  $(this).attr("class","check_ed");
+    	  $(this).siblings().attr("class","check");
+    	  isreceipt = 0;
+      });	
+	  //提交保存
+	 $("#submit_btn").click(function(){
+		    var tastStar = getStar($("#tast_star img"));
+		    var envirementStar = getStar($("#envirement_star img"));
+		    var servierStar = getStar($("#servier_star img"));
+		    var priceStar = getStar($("#prive_star img"));
+		    var avgStar = (tastStar+envirementStar+servierStar+priceStar)/4;
+		    var jsonData = getFormBean("satisfied_form");
+		        jsonData["tastescore"] = tastStar;
+		        jsonData["environmentscore"] = envirementStar;
+		        jsonData["servicescore"] = servierStar;
+		        jsonData["pricescore"] = priceStar;
+		        jsonData["isreceipt"] = isreceipt;
+		        jsonData["averagescore"] = avgStar;
+		         if(isreceipt+"" == "1"){
+		        	 if($("#phone").val().trim() == ""){
+		        		 swal({
+								title : "",
+								text : "手机号不能为空",
+								type : "error",
+								showCancelButton : false,
+								confirmButtonColor : "#ff7922",
+								confirmButtonText : "确认",
+								cancelButtonText : "取消",
+								closeOnConfirm : true
+							}, function(){
+								$("#phone").focus();
+							});
+		        		 return false;
+		        	 }
+		        	 
+		        	 if($("#phone").val().trim() != "" &&  !/^1(3|4|5|8)\d{9}$/.test($("#phone").val().trim())){
+			    		 swal({
+								title : "",
+								text : "手机号不正确，请重新输入",
+								type : "error",
+								showCancelButton : false,
+								confirmButtonColor : "#ff7922",
+								confirmButtonText : "确认",
+								cancelButtonText : "取消",
+								closeOnConfirm : true
+							}, function(){
+								$("#phone").focus();
+							});
+			    		 return false;
+			    	 }
+		        	 
+		        	 if($("#name").val().trim() == ""){
+		        		 swal({
+								title : "",
+								text : "姓名不能为空",
+								type : "error",
+								showCancelButton : false,
+								confirmButtonColor : "#ff7922",
+								confirmButtonText : "确认",
+								cancelButtonText : "取消",
+								closeOnConfirm : true
+							}, function(){
+								$("#name").focus();
+							});
+			    		 return false;
+		        	 }
+		        	 
+		        	 
+		         }
+		    	 
+		    	 var flg = 0;
+		    	 if(flg == 0){
+		    		 flg =1;
+		             $.ajax({
+			               url:projectpath+"/app/insertStoreEvaluate",
+			               type:"post",
+			               data:jsonData,
+			               beforeSend:function(a,b){
+			   				ajaxbefore();
+			   			},
+			   			complete:function(a,b){
+			   				ajaxcomplete();
+			   			},
+			               success:function(data){
+			            	   if(data.status+"" == "0"){
+			            		   swal({
+										title : "",
+										text : "提交成功，感谢您的反馈！",
+										type : "success",
+										showCancelButton : false,
+										confirmButtonColor : "#ff7922",
+										confirmButtonText : "确认",
+										cancelButtonText : "取消",
+										closeOnConfirm : true
+									}, function(){
+										$("#submit_btn").hide();
+									});
+			            	   }else{
+			            		   swal({
+										title : "",
+										text : "提交失败请稍后再试！",
+										type : "info",
+										showCancelButton : false,
+										confirmButtonColor : "#ff7922",
+										confirmButtonText : "确认",
+										cancelButtonText : "取消",
+										closeOnConfirm : true
+									}, function(){
+										 
+									});
+			            	   }
+			            	   flg = 0;
+			               },error:function(e){
+			            	   swal({
+									title : "",
+									text : "提交失败请稍后再试！",
+									type : "info",
+									showCancelButton : false,
+									confirmButtonColor : "#ff7922",
+									confirmButtonText : "确认",
+									cancelButtonText : "取消",
+									closeOnConfirm : true
+								}, function(){
+								 
+								});
+			            	   flg = 0;
+			            	   
+			               }
+			             });
+		    	 }
+
+		    
+	 });
+	 
+});
+
+//选中星
+function checkStar(imgArray,index){
+	$.each(imgArray,function(i,value){
+		if(i < index){
+			$(value).attr("src","../appcssjs/images/public/start2.png");
+		}else{
+			 $(this).attr("src","../appcssjs/images/public/start3.png");
+		}
+	});
+}
+
+//得到选中星星数
+function getStar(imgArray){
+	var starCount = 0;
+	$.each(imgArray,function(i,value){
+		 if($(value).attr("src") == "../appcssjs/images/public/start2.png"){
+			starCount++;
+		} 
+	});
+	return starCount;
+}
+
+	
+</script>
+</body>
+</html>

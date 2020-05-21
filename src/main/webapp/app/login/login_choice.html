@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>选择要登录的餐厅或餐饮公司</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/login.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+function onloadhtml(){
+	var companylist;
+	JianKangCache.getGlobalData('companylist',function(data){
+		companylist=data;
+	})
+	var temp="";
+	for(var i=0;i<companylist.length;i++){
+		temp+="<li onclick=\"choosecompany('"+companylist[i].userid+"','"+companylist[i].companyid+"');\">"+companylist[i].companyname+"</li>";
+	}
+	$('.choice_cp').html(temp);
+}
+function choosecompany(userid,companyid){
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/chooseCompany?userid='+userid,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				localStorage.GroupList="{}";
+				$.ajax({
+					type:'post',
+					dataType:'json',
+					url:projectpath+'/app/getShopListByUser?userid='+userid+'&companyid='+companyid,
+					success:function(data1){
+						if(data1.status==1){
+							swal({
+								title : "",
+								text : data1.message,
+								type : "error",
+								showCancelButton : false,
+								confirmButtonColor : "#ff7922",
+								confirmButtonText : "确认",
+								cancelButtonText : "取消",
+								closeOnConfirm : true
+							}, function(){
+								
+							});
+						}else{
+							if(data1.shoplist!=""){
+								data.userInfo.organizeid=data1.shoplist[0].organizeid;
+								data.userInfo.organizename=data1.shoplist[0].organizename;
+								data.userInfo.datacode=data1.shoplist[0].datacode;
+							}
+							JianKangCache.setGlobalData("userinfo",data.userInfo);
+							JianKangCache.setGlobalData("isfristlogin",data.userInfo.isfristlogin);
+							if(data.userInfo.isfristlogin==1){
+								location.href="reset_assword.html";
+							}else{
+								setJpushId(data.userInfo.userid);
+								location.href="index.html";
+							}
+						}
+					}
+				})
+			}
+		}
+	})
+}
+</script>
+<body class="body_bg" onload="onloadhtml()">
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage();">返回</a>
+    <div class="name">选择要登录的餐厅或餐饮公司</div>
+</div>
+<div class="head_none"></div>
+<ul class="choice_cp">
+	<li class="active">餐饮公司</li>
+</ul>
+</body>
+</html>

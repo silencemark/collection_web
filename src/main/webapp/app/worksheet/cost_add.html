@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新建菜单成本</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script> 
+
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<!-- 语音的录制 播放 上传 -->
+<script type="text/javascript" src='../appcssjs/script/media.js'></script>
+
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/worksheet/cost_add.js"></script>
+<script type="text/javascript">
+
+function hideinput(){
+	$("#dishestype_div").hide();
+}
+
+$(function(){
+	/* $("#dishestype_div").mouseover(function(){
+		$("#dishestypename").attr("onblur","");
+	});
+	$("#dishestype_div").mouseout(function(){
+		$("#dishestypename").attr("onblur","hideinput()");
+	}); */
+})
+</script>
+</head>
+
+<body>
+<div id="htmlbody">
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage();">返回</a>
+    <div class="name">新建菜单成本</div>
+    <div class="link_yellow" onclick="addDishesInfo()">保存</div>
+</div>
+<div class="head_none"></div>
+<div class="detail_box">
+	<ul>
+		<input type="hidden" id="organizeid"/>
+		<li><span>区域：</span><a class="add_btn" onclick="close_open_organizeDiv()">
+				<img src="../appcssjs/images/public/btn_add.png"></a><i id=organizename></i></li>     
+    	<li ><span class="em">菜单类别</span><input type="text" class="text" placeholder="请选择菜品类别" id="dishestypename"  onclick="close_open_dishestypeDiv()"/>
+        	<!-- <div class="sel_xx" id="dishestype_div"></div> -->
+        </li>
+    	<!--
+    	<li><span class="em">菜单类别</span><input type="text" id="dishestypename"
+    			 class="text" placeholder="请选择菜品类别">
+    			  onclick="close_open_dishestypeDiv()" -->
+    	<input type="hidden" id="dishestypeid" value=""/></li>        
+    	<li><span class="em">菜单名称</span><input type="text" id="dishesname" maxlength="10" class="text" placeholder="请输入菜品名称"></li>
+         <li>
+        	<span class="em">投料标准</span>
+            <div class="clear"></div>
+            <p><textarea class="text_area" placeholder="请输入详细内容，不超过200字" id="feeding"></textarea></p>
+        </li>      
+    	<li><span class="em">成本（元）</span><input type="number" class="text" id="costprice" placeholder="请输成本"></li>      
+    	<li><span class="em">售价（元）</span><input type="number" class="text" id="price" placeholder="请输入售价"></li>      
+    	<li><span class="em">成本率（%）</span><input type="number" class="text" id="costrate" placeholder="请输入成本率"></li>
+        <li>
+        	<span class="em">菜品描述</span>
+            <div class="clear"></div>
+            <p><textarea class="text_area" placeholder="请输入菜品描述，最多允许输入800字符" maxlength="800" id="description"></textarea></p>
+            <div class="img_list" id="files">
+            	<div id="imgslist">
+            		
+            	</div>
+                <div class="img_add" onclick="uploadimage(3)">添加图片</div>
+                <div class="talk_add">添加语言</div>
+                <div class="clear"></div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="xx_adduser">
+	<ul>
+		<input type="hidden" name="examineuserid" id="examineuserid"/>
+    	<li><span>审&nbsp;核&nbsp;人：</span><i id="examinename"></i><a onclick="$('#organizeiframe').show();$('#htmlbody').hide();"><img src="../appcssjs/images/public/btn_add.png"></a></li>
+        <li><span>抄&nbsp;送&nbsp;人：</span><i id="releaserange" style="text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; max-width:59%;"></i><a onclick="$('#morechange_organizeiframe').show();$('#htmlbody').hide();"><img src="../appcssjs/images/public/btn_add.png"></a></li>
+        <li><span>制&nbsp;作&nbsp;人：</span><i id="createname"></i></li>
+        <li><span>填写时间：</span><i id="createtime"></i></li>
+    </ul>
+</div>
+
+<div class="div_mask"  style="display:none" id="organize_mask"></div>
+<div class="tc_addsel" style="display:none	" id="organize_div">
+	<div class="name"><span>选择区域</span><a id="sure_btn" onclick="close_open_organizeDiv()">确定 </a></div>
+    <div class="xx_box" style="height: 253px;overflow:hidden;overflow-y:visible">
+    	<ul id="organize_option">
+        	
+        </ul>
+    </div>
+</div>
+<!-- <div class="div_mask"  style="display:none" id="dishestype_mask"></div> -->
+<!-- <div class="tc_addsel" style="display:none	" id="dishestype_div">
+	<div class="name"><span>选择菜品类型</span><a id="dishestype_btn" onclick="close_open_dishestypeDiv()">确定 </a></div>
+    <div class="xx_box" style="height: 253px;overflow:hidden;overflow-y:visible">
+    	<ul id="dishestype_option">
+        	
+        </ul>
+    </div>
+</div> -->
+<div class="div_maskkk" onclick="close_organizeDivk()" style="display:none;position:fixed; left: 0px; top: 0px; width: 100%; height:100%; _height:0px; z-index: 501; background: #000; FILTER: alpha(opacity:60); opacity: 0.6;" id="organize_maskk"></div>
+<div class="tc_addsel" style="display:none" id="organize_divk">
+	<div class="name"><span>选择类型</span><a id="sure_btn" onclick="typewrite()">输入 </a></div>
+    <div class="xx_box" style="height: 253px;overflow:hidden;overflow-y:visible">
+    	<ul id="organize_optionk">
+        	<!-- <li>浦东店</li>
+            <li>浦东店</li>
+            <li class="active">长安街店</li>
+            <li>浦东店</li>
+            <li>浦东店</li>
+            <li>浦东店</li>
+            <li>浦东店</li> -->
+        </ul>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript" src="../appcssjs/script/selectuser.js"></script>
+<script type="text/javascript" src="../appcssjs/script/select_xiebanren.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>组织架构</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/structure.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/jquery.min.js"></script>
+
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+function onloadData(){
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getNextOrgainize?companyid='+userInfo.companyid,
+		success:function(data){
+			if(data.organizelist.length > 0){
+				var temp="<div class=\"title\" id=\"companydiv\"><span onclick=\"getorganizelist('"+data.organizelist[0].organizeid+"','"+data.organizelist[0].organizename+"')\" name="+data.organizelist[0].organizeid+">"+data.organizelist[0].organizename+"</span></div>";
+				$('#orgainizediv').prev().after(temp);
+				getorganizelist(data.organizelist[0].organizeid,data.organizelist[0].organizename);
+			}
+			
+		}
+	})
+}
+function getorganizelist(organizeid,organizename){
+	$('#organizeid').val("");
+	$('#organizename').val("");
+	$('#confirmbtn').hide();
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getNextOrgainize?companyid='+userInfo.companyid+'&organizeid='+organizeid,
+		success:function(data){
+			if(data.organizelist.length > 0){
+				var temp="";
+				for(var i=0;i<data.organizelist.length ;i++){
+					if(data.organizelist[i].type!=3){
+						temp+="<li onclick=\"getorganizelist('"+data.organizelist[i].organizeid+"','"+data.organizelist[i].organizename+"')\"><span>"+data.organizelist[i].organizename+"</span></li>";
+					}
+				}
+				$('#organizeul').html(temp);
+				var strorga="<em>&gt;</em><span onclick=\"getorganizelist('"+organizeid+"','"+organizename+"')\" name="+organizeid+">"+organizename+"</span>";
+				var companyhtml=$('#companydiv').html();
+				if(companyhtml.indexOf(organizename) == -1){
+					$('#companydiv').append(strorga);
+				}else{
+					$('#companydiv').find('span[name='+organizeid+']').nextAll().remove();
+				}
+				
+				temp="";
+				for(var j=0;j<data.organizelist.length ;j++){
+					if(data.organizelist[j].type==3){
+						temp+="<li><i>"+data.organizelist[j].organizename+"</i><a class=\"radio\" onclick=\"changerealname(this,'"+data.organizelist[j].organizeid+"','"+data.organizelist[j].organizename+"')\">选择</a></li>";
+					}
+				}
+				$('#organizeul').append(temp);
+			}else{
+				$('#organizeul').html("");
+			}
+		}
+	})
+}
+function changerealname(obj,organizeid,organizename){
+	$('a[class=radio_ed]').attr("class","radio");
+	$(obj).attr("class","radio_ed");
+	$('#orgaid').val(organizeid);
+	$('#organame').val(organizename);
+	$('#confirmbtn').show();
+}
+function confirmexanine(){
+	$('#organizename').text($('#organame').val());
+	$('#organizeid').val($('#orgaid').val());
+	$('#organizeiframe').hide();
+	$('#htmlbody').show();
+	logical();
+}
+function searchOrganize(obj){
+	var organizename =$(obj).val();
+	if(organizename.trim()!=""){
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url:projectpath+'/app/getOrganizeBySearch?companyid='+userInfo.companyid+'&organizename='+organizename,
+			success:function(data){
+				if(data.organizelist.length > 0){
+					var temp="";
+					for(var j=0;j<data.organizelist.length ;j++){
+							temp+="<li><i>"+data.organizelist[j].organizename+"</i><a class=\"radio\" onclick=\"changerealname(this,'"+data.organizelist[j].organizeid+"','"+data.organizelist[j].organizename+"')\">选择</a></li>";
+					}
+					$('#organizeul').html(temp);
+				}
+			}
+		})
+	}
+}
+</script>
+<body onload="onloadData()">
+<input type="hidden" id="orgaid"/>
+<input type="hidden" id="organame"/>
+<div class="head_box">
+	<a class="ico_back" onclick="$('#organizeiframe', window.parent.document).hide();$('#htmlbody', window.parent.document).show();">返回</a>
+    <div class="name">组织架构</div>
+    <div class="link_yellow" id="confirmbtn" style="display: none;" onclick="confirmexanine()">确认</div>
+</div>
+<div class="head_none"></div>
+<div class="stru_list">
+	<div class="search_box"><input type="text" class="bg" placeholder="搜索" oninput="searchOrganize(this)"></div>
+    
+    <div class="sel_classa" id="orgainizediv">
+    	<ul id="organizeul">
+        </ul>
+    </div>
+</div>
+</body>
+</html>

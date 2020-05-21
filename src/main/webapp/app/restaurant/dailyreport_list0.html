@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>每日报表</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+
+var nodata = '<div class="list_none"><span><i class="yellow">Hi,我是大狮！</i><br>列表空空，还没有每日报表呢~</span><b><img src="'+notDataImageUrl_nopower+'"></b></div>';
+function onloadData(){
+	if(typeof(userInfo.powerMap.power6001010) != "undefined"){
+		$('#linkadd').show();
+		nodata = '<div class="list_none"><span><i class="yellow">Hello,我是大狮！</i><br>还没有每日报表，赶紧添加一条吧~</span><b><img src="'+notDataImageUrl_havepower+'"></b></div>';
+	}
+	
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getEverydayReportList?userid='+userInfo.userid+'&status=0&companyid='+userInfo.companyid,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				if(data.reportlist.length > 0){
+					$(".list_none").remove();
+					var temp="";
+					for(var i=0;i<data.reportlist.length;i++){
+						if(data.reportlist[i].isread==0){
+							if(data.reportlist[i].examineuserid==userInfo.userid  && data.reportlist[i].status==0){
+								temp+="<li onclick=\"location.href=\'dailyreport_check.html?reportid="+data.reportlist[i].reportid+"&createid="+data.reportlist[i].forwarduserid+"\'\">";
+							}else{
+								temp+="<li onclick=\"location.href=\'dailyreport_detail.html?reportid="+data.reportlist[i].reportid+"&createid="+data.reportlist[i].forwarduserid+"\'\">";
+							}
+							temp+="<div class=\"xx_01\"><span class=\"new\">"+data.reportlist[i].organizename+"</span><em class=\"red\">待处理</em><i>"+data.reportlist[i].createname+"</i></div>"+
+				            "<div class=\"xx_02\"><span class=\"name\">"+data.reportlist[i].createname+"</span><i>"+data.reportlist[i].createdate+"</i></div>"+
+				        	"</li>";
+						}else{
+							if(data.reportlist[i].examineuserid==userInfo.userid  && data.reportlist[i].status==0){
+								temp+="<li onclick=\"location.href=\'dailyreport_check.html?reportid="+data.reportlist[i].reportid+"&createid="+data.reportlist[i].forwarduserid+"\'\">";
+							}else{
+								temp+="<li onclick=\"location.href=\'dailyreport_detail.html?reportid="+data.reportlist[i].reportid+"&createid="+data.reportlist[i].forwarduserid+"\'\">";
+							}
+							temp+="<div class=\"xx_01\"><span>"+data.reportlist[i].organizename+"</span><em class=\"red\">待处理</em><i>"+data.reportlist[i].createname+"</i></div>"+
+				            "<div class=\"xx_02\"><span class=\"name\">"+data.reportlist[i].createname+"</span><i>"+data.reportlist[i].createdate+"</i></div>"+
+				        	"</li>";
+						}
+					}
+					$('#reportul').html(temp);
+				}else{
+					$(".list_none").remove();
+					$("body").append(nodata);
+				}
+			}
+		}
+	})
+}
+PageHelper({
+	url:projectpath+'/app/getEverydayReportList?userid='+userInfo.userid+'&status=0&companyid='+userInfo.companyid,
+	success:function(data){
+		if(data.reportlist.length > 0){
+			var temp="";
+			for(var i=0;i<data.reportlist.length;i++){
+				if(data.reportlist[i].isread==0){
+					if(data.reportlist[i].examineuserid==userInfo.userid  && data.reportlist[i].status==0){
+						temp+="<li onclick=\"location.href=\'dailyreport_check.html?reportid="+data.reportlist[i].reportid+"&createid="+data.reportlist[i].forwarduserid+"\'\">";
+					}else{
+						temp+="<li onclick=\"location.href=\'dailyreport_detail.html?reportid="+data.reportlist[i].reportid+"&createid="+data.reportlist[i].forwarduserid+"\'\">";
+					}
+					temp+="<div class=\"xx_01\"><span class=\"new\">"+data.reportlist[i].organizename+"</span><em class=\"red\">待处理</em><i>"+data.reportlist[i].createname+"</i></div>"+
+		            "<div class=\"xx_02\"><span class=\"name\">"+data.reportlist[i].createname+"</span><i>"+data.reportlist[i].createdate+"</i></div>"+
+		        	"</li>";
+				}else{
+					if(data.reportlist[i].examineuserid==userInfo.userid && data.reportlist[i].status==0){
+						temp+="<li onclick=\"location.href=\'dailyreport_check.html?reportid="+data.reportlist[i].reportid+"&createid="+data.reportlist[i].forwarduserid+"\'\">";
+					}else{
+						temp+="<li onclick=\"location.href=\'dailyreport_detail.html?reportid="+data.reportlist[i].reportid+"&createid="+data.reportlist[i].forwarduserid+"\'\">";
+					}
+					temp+="<div class=\"xx_01\"><span>"+data.reportlist[i].organizename+"</span><em class=\"red\">待处理</em><i>"+data.reportlist[i].createname+"</i></div>"+
+		            "<div class=\"xx_02\"><span class=\"name\">"+data.reportlist[i].createname+"</span><i>"+data.reportlist[i].createdate+"</i></div>"+
+		        	"</li>";
+				}
+			}
+			$('#reportul').append(temp);
+		}
+	}
+});  
+
+
+function getNotIsRead(param){
+	$.ajax({
+		url:projectpath+"/app/getEverydayReportAllNotRead",
+		type:"post",
+		data:param,
+		success:function(data){
+			if(data.status == 0 || data.status == '0'){
+				var noexamiennum = data.noexaminenum;
+				var examinenum = data.examinenum;
+				if(noexamiennum > 0){
+					$('.span_nav span:first').prepend(redPoint);
+				}
+				if(examinenum > 0){
+					$('.span_nav span:last').prepend(redPoint);
+				}
+			}
+		}
+	});
+}
+
+function initPage(){
+	var param = new Object();
+	param.userid = userInfo.userid;
+	param.companyid = userInfo.companyid;
+	getNotIsRead(param);
+}
+
+</script>
+<body onload="onloadData();initPage();">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='restaurant_index.html'">返回</a>
+    <div class="name">每日报表</div>
+    <div class="link_yellow"  onclick="location.href='dailyreport_add.html'" id="linkadd" style="display: none;">新建</div>
+</div>
+<div class="head_none"></div>
+<div class="span_nav">
+	<span class="active"  onclick="location.href='dailyreport_list0.html'">待处理</span>
+    <span class="last"  onclick="location.href='dailyreport_list1.html'">已处理</span>
+</div>
+<div class="page_list">
+	<ul id="reportul">
+    </ul>
+</div>
+<!-- <div class="load_more"><a>加载中...</a></div> -->
+</body>
+</html>

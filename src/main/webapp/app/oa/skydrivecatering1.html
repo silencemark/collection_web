@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>餐饮大师网盘</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/oa.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+	}
+)
+var nodata = '<div class="list_none"><span><i class="yellow">Hi,我是大狮！</i><br>列表空空，还没有文件呢~</span><b><img src="'+notDataImageUrl_nopower+'"></b></div>';
+
+var filename="";
+var typedata="";
+function onloadfilelist(type){
+	typedata=type;
+	filename=$('#filename').val();
+	if(type==1){
+		$('#file').attr("class","active");
+		$('#video').attr("class","last");
+	}else{
+		$('#file').attr("class","");
+		$('#video').attr("class","last active");
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getSystemCloudList',
+		data:"type="+type+'&filename='+filename,
+		success:function(data){
+			if(data.systemcloudlist.length > 0){
+				$(".list_none").remove();
+				var temp="";
+				for(var i=0;i<data.systemcloudlist.length;i++){
+					if(data.systemcloudlist[i].filetype==2){
+						temp+="<li onclick=\"linkfold('"+data.systemcloudlist[i].filename+"','"+data.systemcloudlist[i].fileid+"',"+type+")\">"+
+							"<div class=\"img\"><img src=\""+projectpath+data.systemcloudlist[i].file_icon+"\"></div>"+        
+				            "<div class=\"name\" style=\"text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:150px;\">"+data.systemcloudlist[i].filename+"</div>"+
+				            "<div class=\"time\">"+data.systemcloudlist[i].createtime+"</div>"+
+				        "</li>";
+					}
+				}
+				for(var i=0;i<data.systemcloudlist.length;i++){
+					if(data.systemcloudlist[i].filetype==1){
+						temp+="<li>"+
+							"<div class=\"img\"><img src=\""+projectpath+data.systemcloudlist[i].file_icon+"\"></div>"+        
+				            "<div class=\"name\"><span style=\"text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:150px;\">"+data.systemcloudlist[i].filename+"</span><i onclick=\"downLoadFileApp('"+data.systemcloudlist[i].fileurl+"')\">下载</i></div>"+
+				            "<div class=\"time\">"+data.systemcloudlist[i].createtime+"</div>"+
+				        "</li>";
+					}
+				}
+				$('#ullist').parent().nextAll().remove();
+				$('#ullist').html(temp);
+			}else{
+				$('#ullist').html("");
+				$('#ullist').parent().nextAll().remove();
+				$(".list_none").remove();
+				$("body").append(nodata);
+			}
+		}
+	})
+}
+
+PageHelper({
+	url:projectpath+'/app/getSystemCloudList',
+	data:"type="+typedata+'&filename='+filename,
+	success:function(data){
+		if(data.systemcloudlist.length > 0){
+			var temp="";
+			for(var i=0;i<data.systemcloudlist.length;i++){
+				if(data.systemcloudlist[i].filetype==2){
+					temp+="<li onclick=\"linkfold('"+data.systemcloudlist[i].filename+"','"+data.systemcloudlist[i].fileid+"',"+type+")\">"+
+						"<div class=\"img\"><img src=\""+projectpath+data.systemcloudlist[i].file_icon+"\"></div>"+        
+			            "<div class=\"name\" style=\"text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:150px;\">"+data.systemcloudlist[i].filename+"</div>"+
+			            "<div class=\"time\">"+data.systemcloudlist[i].createtime+"</div>"+
+			        "</li>";
+				}
+			}
+			for(var i=0;i<data.systemcloudlist.length;i++){
+				if(data.systemcloudlist[i].filetype==1){
+					temp+="<li>"+
+						"<div class=\"img\"><img src=\""+projectpath+data.systemcloudlist[i].file_icon+"\"></div>"+        
+			            "<div class=\"name\"><span style=\"text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:150px;\">"+data.systemcloudlist[i].filename+"</span><i onclick=\"downLoadFileApp('"+data.systemcloudlist[i].fileurl+"')\">下载</i></div>"+
+			            "<div class=\"time\">"+data.systemcloudlist[i].createtime+"</div>"+
+			        "</li>";
+				}
+			}
+			$('#ullist').append(temp);
+		}
+	}
+}); 
+
+function searchfile(){
+	$('.span_nav').find("span[class=active]").click();
+}
+function linkfold(filename,fileid,type){
+	var foldInfo={};
+	foldInfo['filename']=filename;
+	foldInfo['fileid']=fileid;
+	foldInfo['type']=type;
+	JianKangCache.setGlobalData('foldInfo',foldInfo);
+	location.href='skydrivecatering2.html';
+}
+</script>
+<body onload="onloadfilelist(1)">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='index.html'">返回</a>
+    <div class="name">餐饮大师网盘</div>
+</div>
+<div class="head_none"></div>
+<div class="span_nav">
+	<span class="active" onclick="onloadfilelist(1)" id="file">文件</span>
+    <span class="last" onclick="onloadfilelist(2)" id="video">视频</span>
+</div>
+<div class="top_sel">
+	<div class="long"><input type="text" class="t_text" placeholder="请输入关键字" id="filename"></div>
+    <div class="span">&nbsp;</div>
+    <div class="btn"><input type="button" value="" onclick="searchfile();"></div>
+</div>
+
+<div class="sky_list">
+	<ul id="ullist">
+    </ul>
+</div>
+</body>
+</html>

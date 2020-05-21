@@ -1,0 +1,744 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新建报损单</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/purchase.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+
+<link href="../appcssjs/style/mobiscroll.custom-2.6.2.min.css" type="text/css" rel="stylesheet"> 
+<script src="../appcssjs/script/mobiscroll.custom-2.6.2.min.js"></script> 
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+var orderno="";
+var organizeid="";
+var createtime="";
+function onloadData(){
+	if(userInfo!= null && typeof(userInfo) != "undefined"){
+		$('#createname').text(userInfo.realname);
+		$('#createname').attr("onclick","location.href='../member/homepage_info.html?userid="+userInfo.userid+"'");
+	}
+	if(userInfo.organizeid != null && typeof(userInfo.organizeid) != "undefined"){
+		$('#organizename').val(userInfo.organizename);
+		organizeid=userInfo.organizeid;
+		$('#organizeid').val(organizeid);
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/initInsertReportloss?companyid='+userInfo.companyid+'&organizeid='+organizeid,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				orderno=data.orderno;
+				createtime=data.createtime;
+				$('#createtime').text(createtime);
+				$('#orderno').html("报损单编号："+orderno);
+				
+				
+				var temp="";
+				for(var i=0;i<data.materialTypeList.length;i++){
+					temp+="<li ";
+					if(i==0){
+						temp+="class=\"active\"";
+					} 
+					temp+=" type="+data.materialTypeList[i].type+"  onclick=\"choosetype(this)\">"+data.materialTypeList[i].type+"</li>";
+				}
+				$('#typeul').html(temp);
+				var temp1="";
+				for(var j=0;j<data.materialNameList.length;j++){
+					temp1+="<li ";
+					if(j==0){
+						temp1+="class=\"active\"";
+					} 
+					temp1+=" name="+data.materialNameList[j].name+"  onclick=\"choosename(this)\">"+data.materialNameList[j].name+"</li>";
+				}
+				$('#nameul').html(temp1);
+			}
+		}
+	})
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getShopListByUser?userid='+userInfo.userid+'&companyid='+userInfo.companyid,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				if(data.shoplist.length > 0 && data.shoplist != ''){
+					var temp="";
+					for(var i=0;i<data.shoplist.length;i++){
+						temp+="<li ";
+						if(i==0){
+							temp+="class=\"active\"";
+						}
+						if(data.shoplist[i].organizeid == userInfo.organizeid){
+							changeorganizestore(data.shoplist[i].datacode);
+						}
+						temp+="organizeid="+data.shoplist[i].organizeid+" onclick=\"chooseorganize(this,'"+data.shoplist[i].datacode+"')\">"+data.shoplist[i].organizename+"</li>";
+					}
+					$('#organizeul').html(temp);
+				}
+			}
+		}
+	})
+	initmaterial();
+}
+/* function clickSelect(obj){
+	$(obj).parent().find("li").attr("class","");
+	$(obj).attr("class","active");
+} */
+function chooseorganize(obj,datacode){
+	var name =$(obj).text();
+	var id =$(obj).attr('organizeid');
+	$('#organizename').val(name);
+	organizeid=id;
+	$('#organizeid').val(organizeid);
+	$('#organizediv').hide();
+	$('.div_mask').hide();
+	changeorganizestore(datacode);
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/initInsertReportloss?companyid='+userInfo.companyid+'&organizeid='+organizeid,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				var temp="";
+				for(var i=0;i<data.materialTypeList.length;i++){
+					temp+="<li ";
+					if(i==0){
+						temp+="class=\"active\"";
+					} 
+					temp+=" type="+data.materialTypeList[i].type+"  onclick=\"choosetype(this)\">"+data.materialTypeList[i].type+"</li>";
+				}
+				$('#typeul').html(temp);
+				var temp1="";
+				for(var j=0;j<data.materialNameList.length;j++){
+					temp1+="<li ";
+					if(j==0){
+						temp1+="class=\"active\"";
+					} 
+					temp1+=" name="+data.materialNameList[j].name+"  onclick=\"choosename(this)\">"+data.materialNameList[j].name+"</li>";
+				}
+				$('#nameul').html(temp1);
+			}
+		}
+	})
+}
+//清空当前对象后边一个以后所有的值
+function removevalue(obj){
+	$('#addul input[name='+obj+']').parent().nextAll("li").find("input").val("");
+	$('#'+obj+'ul').find("li").removeClass("class");
+}
+function choosetype(obj){
+	var type =$(obj).text();
+	$('#addul input[name=type]').val(type);
+	$('#typediv').hide();
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		data:'type='+type+'&companyid='+userInfo.companyid+'&organizeid='+$('#organizeid').val()+"&groupname=1",
+		url:projectpath+'/app/getPurchaseMaterial',
+		success:function(data){
+			if(data.status==0){
+				var temp1="";
+				if(data.materialList.length>0){
+					for(var j=0;j<data.materialList.length;j++){
+						temp1+="<li ";
+						if(j==0){
+							temp1+="class=\"active\"";
+						} 
+						temp1+=" name="+data.materialList[j].name+"  onclick=\"choosename(this)\">"+data.materialList[j].name+"</li>";
+					}
+					$('#nameul').html(temp1);
+				}else{
+					$('#nameul').html("");
+				}
+			}
+			removevalue('type');
+		}
+	})
+	$(".div_mask").hide();
+	$(".div_maskk").show();
+	$('#materaildiv').show();
+}
+function choosename(obj){
+	var type =$('#addul input[name=type]').val();
+	var name =$(obj).text();
+	$('#addul input[name=name]').val(name);
+	$('#namediv').hide();
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		data:'type='+type+'&companyid='+userInfo.companyid+'&organizeid='+$('#organizeid').val()+'&name='+name+'&groupspecifications=1',
+		url:projectpath+'/app/getPurchaseMaterial',
+		success:function(data){
+			if(data.status==0){
+				var temp="";
+				if(data.materialList.length>0){
+					for(var j=0;j<data.materialList.length;j++){
+						temp+="<li ";
+						if(j==0){
+							temp+="class=\"active\"";
+							//默认给后面的值
+							/* $('#addul input[name=unit]').val(data.materialList[j].unit); */
+							$('#addul input[name=specifications]').val(data.materialList[j].specificationsall);
+							/* $('#addul input[name=price]').val(data.materialList[j].price); */
+							$('#specificationsul').html("<li class=\"active\" specifications="+data.materialList[j].specificationsall+"  unit="+data.materialList[j].unit+"  onclick=\"choosespecifications(this)\">"+data.materialList[j].specificationsall+"</li>");
+							/* $('#priceul').html("<li class=\"active\" price="+data.materialList[j].price+" materielid="+data.materialList[j].materielid+" stock="+data.materialList[j].stock+" onclick=\"chooseprice(this)\">"+data.materialList[j].price+"</li>"); */
+							/* $('#stock').val(data.materialList[j].stock); */
+							/* $('#materielid').val(data.materialList[j].materielid); */
+						} 
+						
+						temp+=" specifications="+data.materialList[j].specificationsall+"  unit="+data.materialList[j].unit+"   onclick=\"choosespecifications(this)\">"+data.materialList[j].specificationsall+"</li>";
+						/* temp+=" unit="+data.materialList[j].unit+"  onclick=\"chooseunit(this)\">"+data.materialList[j].unit+"</li>"; */
+					}
+					$('#specificationsul').html(temp);
+					$('#specificationsul li').get(0).click();
+				}else{
+					$('#specificationsul').html("");
+				}
+			}
+		}
+	})
+	$(".div_mask").hide();
+	$(".div_maskk").show();
+	$('#materaildiv').show();
+}
+
+function choosespecifications(obj){
+	var type =$('#addul input[name=type]').val();
+	var name =$('#addul input[name=name]').val();
+	
+	$('#unit').text($(obj).attr("unit"));
+	var specifications =$(obj).text();
+	if(specifications !=""){
+		$('#addul input[name=specifications]').val(specifications);
+		$('#specificationsdiv').hide();
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			data:'type='+type+'&companyid='+userInfo.companyid+'&organizeid='+$('#organizeid').val()+'&name='+name+'&specificationsall='+specifications,
+			url:projectpath+'/app/getPurchaseMaterial',
+			success:function(data){
+				if(data.status==0){
+					var temp="";
+					if(data.materialList.length>0){
+						for(var j=0;j<data.materialList.length;j++){
+							temp+="<li ";
+							if(j==0){
+								temp+="class=\"active\"";
+								//默认给后面的值
+								/* $('#addul input[name=price]').val(data.materialList[j].price);
+								$('#stock').val(data.materialList[j].stock);
+								$('#materielid').val(data.materialList[j].materielid); */
+							} 
+							temp+=" price="+data.materialList[j].price+" materielid="+data.materialList[j].materielid+" stock="+data.materialList[j].stock+" onclick=\"chooseprice(this)\">"+data.materialList[j].price+"</li>";
+						}
+						$('#priceul').html(temp);
+					}else{
+						$('#priceul').html("");
+					}
+				}
+			}
+		})
+	}
+	$(".div_mask").hide();
+	$(".div_maskk").show();
+	$('#materaildiv').show();
+}
+
+function changenum(obj){
+	
+	var materielid="";
+	var stocknum=0;
+	var stock1=0;
+	
+	var nonecount=$('#addul input[name=num]').val();
+	//var reg=/^\d+(\.\d{0,2}?)?$/;
+	//var ex = /^\d+$/;
+	var ex = /^\+?(\d*\.{0,1}\d{0,2})$/;
+	if(nonecount!="" && (!ex.test(nonecount) || parseFloat(nonecount) < 0)){
+		swal({
+			title : "",
+			text : "数量请输入数字",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			$('#addul input[name=num]').val("");
+		});
+		return;
+	}
+	
+	var num1=parseFloat($('#addul input[name=num]').val());
+	$('#priceul li').each(function(index){
+		stocknum+=parseFloat($(this).attr("stock"));
+		
+		stock1=parseFloat($(this).attr("stock"));
+		if(index ==0){
+			materielid+=$(this).attr("materielid");
+		}else{
+			if(num1 > stock1 ){
+				materielid+="_"+$(this).attr("materielid");
+				num1=num1-stock1;
+			}else if(num1 > 0){
+				materielid+="_"+$(this).attr("materielid");
+				num1=0;
+			}
+		}
+	})
+	$('#materielid').val(materielid);
+	$('#stock').val(stocknum);
+	
+	var num=0;
+	if($('#materialul input[value='+materielid+']').parent().parent().find('em[name=num]').length>0){
+		$('#materialul input[value='+materielid+']').parent().parent().find('em[name=num]').each(function(index){
+			num+=parseFloat($(this).text());
+		})
+	}
+	
+	if(parseFloat($(obj).val()) > (stocknum-num)){
+		if(stocknum-num > 0){
+			$(obj).val(stocknum-num);
+		}else{
+			$(obj).val(0);
+		}
+	}
+	
+	var sumprice=0;
+	var stock=0;
+	var nownum=parseFloat($('#addul input[name=num]').val());
+	
+	
+	
+	$('#priceul li').each(function(index){
+		stock=parseFloat($(this).attr("stock"));
+		if(num > stock){
+			num=num-stock;
+		}else{
+			if(num > 0 && nownum > (stock-num)){
+				var price=parseFloat($(this).attr("price"));
+				sumprice+=((stock-num)*100*price*100)/10000;
+				nownum=nownum-(stock-num);
+				num=0;
+			}else{
+				if(nownum > stock ){
+					var price=parseFloat($(this).attr("price"));
+					sumprice+=(stock*100*price*100)/10000;
+					nownum=nownum-stock;
+				}else if(nownum > 0){
+					var price=parseFloat($(this).attr("price"));
+					sumprice+=(nownum*100*price*100)/10000;
+					nownum=0;
+				}
+			}
+		}
+	})
+	sumprice = fomatFloatFloor(sumprice,2);
+	$('#addul input[name=sumprice]').val(sumprice);
+	
+}
+function initmaterial(){
+	$(".div_mask").hide();
+	$(".div_maskk").show();
+	$("#materaildiv").show();
+	$('#addul input[name=type]').val("");
+	$('#addul input[name=name]').val("");
+	$('#addul input[name=sumprice]').val("");
+	$('#addul input[name=num]').val("");
+/* 	$('#addul input[name=price]').val("");
+	$('#addul input[name=unit]').val(""); */
+	$('#addul input[name=specifications]').val("");
+}
+function addmaterial(){
+	if($('#addul input[name=type]').val()=="" ||
+		$('#addul input[name=name]').val()=="" ||
+		$('#addul input[name=sumprice]').val()=="" ||
+		$('#addul input[name=num]').val()=="" || 
+		$('#addul input[name=specifications]').val()==""){
+		swal({
+			title : "",
+			text : "请填写完整后再提交",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		return;
+	}
+	if(parseInt($('#addul input[name=num]').val())==0){
+			swal({
+				title : "",
+				text : "数量为0不能添加",
+				type : "error",
+				showCancelButton : false,
+				confirmButtonColor : "#ff7922",
+				confirmButtonText : "确认",
+				cancelButtonText : "取消",
+				closeOnConfirm : true
+			}, function(){
+				
+			});
+			return;
+	}
+	var temp="<li>"+
+		"<div class=\"close\" onclick=\"deleteorder(this,'"+$('#addul input[name=sumprice]').val()+"')\"><img src=\"../appcssjs/images/public/close.png\"></div>"+
+	    "<span class=\"wid_01\">类&nbsp;&nbsp;别：<em name='type'>"+$('#addul input[name=type]').val()+"</em></span>"+
+	    "<span class=\"wid_02\">名&nbsp;&nbsp;称：<em name='name'>"+$('#addul input[name=name]').val()+"</em></span>"+
+	    "<span class=\"wid_03\">数&nbsp;&nbsp;量：<em name='num'>"+parseFloat($('#addul input[name=num]').val())+"</em>"+$('#unit').text()+"</span>"+
+	    "<div class=\"clear\"></div>"+
+	    "<span class=\"wid_01\">总&nbsp;&nbsp;价：￥<em name='sumprice'>"+$('#addul input[name=sumprice]').val()+"</em></span>"+
+	    "<span class=\"wid_02\">规格：<em name='specifications'>"+$('#addul input[name=specifications]').val()+"</em>"+
+	    "<input type=\"hidden\" name=\"stock\" value="+$('#stock').val()+" /><input type=\"hidden\" name=\"materielid\" value="+$('#materielid').val()+" />"+
+	    "</span><span class=\"wid_03\" style=\"display:none;\"><em name='unit'>"+$('#unit').text()+"</em>"+
+	    "</span><div class=\"clear\"></div>"+
+	    "</li>";
+     var materialprice=parseFloat($('#materialprice').text())+parseFloat($('#addul input[name=sumprice]').val());
+     materialprice = materialprice.toFixed(2);
+     $('#materialprice').text(materialprice);
+     
+     $('#materialul').append(temp);
+     
+     var maternum=$('#materialul li').length;
+     $('#maternum').text(maternum);
+     $(".div_mask").hide();
+     $(".div_maskk").hide();
+ 	 $("#materaildiv").hide();
+ 	 
+ 	$("body").scrollTop($("body")[0].scrollHeight);
+}
+function deleteorder(obj,price){
+	swal({
+		title : "",
+		text : "确定要删除？",
+		type : "error",
+		showCancelButton : true,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		$(obj).parent().remove();
+		 var materialprice=parseFloat($('#materialprice').text())-parseFloat(price);
+	     $('#materialprice').text(materialprice);
+	     var maternum=$('#materialul li').length;
+	     $('#maternum').text(maternum);
+	});
+	
+}
+function submitdata(){
+	
+	if($('#organizeid').val()==''){
+		swal({
+			title : "",
+			text : "请选择店面",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			$('#organizename').click();
+		});
+		return;
+	}
+	
+	
+	var alldata={"materiallist":[]};  
+	$('#materialul li').each(function(index){
+		var materiallist={};
+		materiallist['type']=$(this).find('em[name=type]').text();
+		materiallist['name']=$(this).find('em[name=name]').text();
+		materiallist['num']=$(this).find('em[name=num]').text();
+		materiallist['unit']=$(this).find('em[name=unit]').text();
+		materiallist['sumprice']=$(this).find('em[name=sumprice]').text();
+		materiallist['specifications']=$(this).find('em[name=specifications]').text();
+		materiallist['purchasematerielid']=$(this).find('input[name=materielid]').val();
+		alldata.materiallist.push(materiallist); 
+	})
+	
+	if(alldata.materiallist.length==0){
+		swal({
+			title : "",
+			text : "请添加物料明细",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			$('#initmaterial').click();
+		});
+		return;
+	}
+	if($('#examineuserid').val()==""){
+		swal({
+			title : "",
+			text : "请选择审批人",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		return;
+	}
+	var url=projectpath+'/app/insertReportloss';
+	var param = new Object();
+	param.materiallist = JSON.stringify(alldata);
+	param.orderno = orderno;
+	param.organizeid = organizeid;
+	param.companyid = userInfo.companyid;
+	param.createid = userInfo.userid;
+	param.datacode = userInfo.datacode;
+	param.examineuserid = $('#examineuserid').val();
+	param.materialprice = $('#materialprice').text();
+	param.maternum = $('#maternum').text();
+	
+	param.userlist = $("#userlist").val();
+	param.CCusernames = $('#releaserange').text();
+	param.reportlosstime = $("#reportlosstime").val();
+	
+	$.ajax({
+		type:'post',
+		beforeSend:function(a,b){
+			ajaxbefore();
+		},
+		complete:function(a,b){
+			ajaxcomplete();
+		},
+		dataType:'json',
+		data: param,
+		url:url,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				swal({
+					title : "",
+					text : "添加成功",
+					type : "success",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					location.href="reportloss_list0.html";
+				});
+			}
+		},error:function(text){
+			alert("添加失败");
+		}
+	})
+}
+$(function(){
+	$('.div_mask,.div_maskk').click(function(){
+		$('#materaildiv').hide();
+		$('#organizediv').hide();
+		$('#pricediv').hide();
+		$('#specificationsdiv').hide();
+		$('#unitdiv').hide();
+		$('#namediv').hide();
+		$('#typediv').hide();
+		$('.div_mask').hide();
+		$('.div_maskk').hide();
+	});
+	
+	$('#reportlosstime').val(appBase.parseDate(new Date()));
+	var currYear = (new Date()).getFullYear();	
+	var opt={};
+	opt.date = {preset : 'date', dateFormat: 'yy-mm-dd' };
+	//opt.datetime = { preset : 'datetime', minDate: new Date(2012,3,10,9,22), maxDate: new Date(2014,7,30,15,44), stepMinute: 5  };
+	opt.datetime = {preset : 'datetime', dateFormat: 'yy-mm-dd' }; 
+	opt.time = {preset : 'time'};
+	opt.default = { 
+		theme: 'android-ics light', //皮肤样式  
+        display: 'modal', //显示方式  
+        mode: 'scroller', //日期选择模式
+        dateOrder : 'yymmdd',  
+		lang:'zh',
+        startYear:currYear - 10, //开始年份
+        endYear:currYear + 10 //结束年份
+	};
+	//初始化时间插件
+	$("#reportlosstime").scroller('destroy').scroller($.extend(opt['date'], opt['default']));
+})
+</script>
+<body onload="onloadData()">
+<div id="htmlbody">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='reportloss_list0.html'">返回</a>
+    <div class="name">新建报损单</div>
+    <div class="link_yellow" onclick="submitdata()">发送</div>
+</div>
+<div class="head_none"></div>
+<div class="xx_one">
+    <span id="orderno" style="font-size: 17px;"></span>
+    <input type="hidden" id="organizeid" />
+    <div class="txt"><span>店面</span><input type="text" placeholder="请选择店面"  readonly="readonly"  class="sel" id="organizename" onclick="$('#organizediv').show();$('.div_mask').show();"></div>
+</div>
+<div class="xx_two">
+    <div class="name"><span>物料明细</span></div>
+    <ul id="materialul">
+    
+    </ul>
+    <div class="total">
+        <span>合计：￥<em id="materialprice">0.00</em>元</span>
+        <i>共<em id="maternum">0</em>项</i>
+        <a class="add"  onclick="initmaterial()">添加</a>
+    </div>
+</div>
+
+<div class="xx_four">
+	<ul>
+		<input type="hidden" id="examineuserid">
+    	<li><span>审&nbsp;核&nbsp;人：</span><i id="examinename"></i><a onclick="$('#organizeiframe').show();$('#htmlbody').hide();"><img src="../appcssjs/images/public/btn_add.png"></a></li>
+        <li><span>抄&nbsp;送&nbsp;人：</span><i id="releaserange" style="text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; max-width: 59%;"></i><a onclick="$('#morechange_organizeiframe').show();$('#htmlbody').hide();"><img src="../appcssjs/images/public/btn_add.png"></a></li>
+        <li><span>报损时间：</span><input id="reportlosstime" type="text" style="font-size:14px; color:#666;"/></li>
+        <li><span>申&nbsp;请&nbsp;人：</span><i id="createname"></i></li>
+        <li><span>填写时间：</span><i id="createtime"></i></li>
+    </ul>
+</div>
+
+<div class="div_mask" style="display:none;"></div>
+<div class="div_maskk" style="display:none;position:fixed; left: 0px; top: 76px; width: 100%; height:100%; _height:0px; z-index: 501; background: #000; FILTER: alpha(opacity:60); opacity: 0.6;"></div>
+<div class="tc_addgoods" style="display:none;top:76px;" id="materaildiv">
+	<div class="name"><span>新增物料</span><a onclick="addmaterial()">确认</a></div>
+	<input type="hidden" id="stock">
+	<input type="hidden" id="materielid">
+    <ul id="addul">
+    	<li><span style="font-size: 17px;">类别</span><input type="text" placeholder="请选择" readonly="readonly" class="t_sel" name="type" onclick="$('#materaildiv').hide();$('.div_mask').show();$('.div_maskk').hide();$('#typediv').show();" style="font-size: 17px;"></li>
+        <li><span style="font-size: 17px;">名称</span><input type="text" placeholder="请选择" readonly="readonly" class="t_sel" name="name" onclick="$('#materaildiv').hide();$('.div_mask').show();$('.div_maskk').hide();$('#namediv').show();" style="font-size: 17px;"></li>
+        <!-- <li><span>单位</span><input type="text" placeholder="请选择" readonly="readonly" class="t_sel" name="unit" onclick="$('#materaildiv').hide();$('#unitdiv').show();"></li> -->
+        <li><span style="font-size: 17px;">规格</span><input type="text" style="width:95px; font-size:17px;" placeholder="请选择" readonly="readonly" class="t_sel" name="specifications" onclick="$('#materaildiv').hide();$('.div_mask').show();$('.div_maskk').hide();$('#specificationsdiv').show();"></li>
+        <!-- <li><span>单价</span><input type="text" placeholder="请选择" readonly="readonly" class="t_sel" name="price" onclick="$('#materaildiv').hide();$('#pricediv').show();"></li> -->
+        <li><span style="font-size: 17px;">数量</span><i id="unit"></i><input type="number" placeholder="请输入数量" class="text"  style="width:60%;font-size: 17px;" maxlength="11" name="num" oninput="changenum(this);"></li>
+        <li><span style="font-size: 17px;">总价</span><input type="text"  readonly="readonly" class="text" name="sumprice" style="font-size: 17px;"></li>
+    </ul>
+</div>
+
+<div class="tc_addsel"  style="display:none" id="organizediv">
+	<div class="name"><span>选择店面</span></div>
+    <div class="xx_box" style="max-height:250px;overflow:hidden;overflow-y:visible">
+    	<ul id="organizeul">
+        </ul>
+    </div>
+</div>
+<div class="tc_addsel"  style="display:none" id="typediv">
+	<div class="name"><span>类别</span></div>
+    <div class="xx_box" style="max-height:250px;overflow:hidden;overflow-y:visible">
+    	<ul id="typeul">
+        </ul>
+    </div>
+   
+</div>
+ <div class="tc_addsel"  style="display:none" id="namediv">
+	<div class="name"><span>名称</span></div>
+    <div class="xx_box" style="max-height:250px;overflow:hidden;overflow-y:visible">
+    	<ul id="nameul">
+        </ul>
+	</div>
+</div>
+<div class="tc_addsel"  style="display:none" id="unitdiv">
+	<div class="name"><span>单位</span></div>
+    <div class="xx_box" style="max-height:250px;overflow:hidden;overflow-y:visible">
+    	<ul id="unitul">
+        </ul>
+    </div>
+</div>
+<div class="tc_addsel"  style="display:none" id="specificationsdiv">
+	<div class="name"><span>选择规格</span></div>
+    <div class="xx_box" style="max-height:250px;overflow:hidden;overflow-y:visible">
+    	<ul id="specificationsul">
+        </ul>
+    </div>
+</div>
+<div class="tc_addsel"  style="display:none" id="pricediv">
+	<div class="name"><span>选择单价</span></div>
+    <div class="xx_box" style="max-height:250px;overflow:hidden;overflow-y:visible">
+    	<ul id="priceul">
+        </ul>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="../appcssjs/script/selectuser.js"></script>
+<script type="text/javascript" src="../appcssjs/script/select_xiebanren.js"></script>
+
+</body>
+</html>

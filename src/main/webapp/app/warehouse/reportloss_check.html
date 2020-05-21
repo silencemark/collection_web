@@ -1,0 +1,387 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>审核退货单</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/purchase.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var orderid= getUrlParam("orderid");
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+var createid="";
+function onloadData1(){
+	//标记为已读
+	readstatus(orderid,userInfo.userid);
+	
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getReportlossInfo?orderid='+orderid,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				$('#orderno').text("报损单编号："+data.applyInfo.orderno);
+				$('#organizename').text("店面："+data.applyInfo.organizename);
+				$('#materialprice').text(data.applyInfo.materialprice);
+				$('#maternum').text(data.applyInfo.maternum);
+				$('#createname').text(data.applyInfo.createname);
+				$('#createtime').text(fomartDate(data.applyInfo.createtime));
+				$('#examineinfoname').text(data.applyInfo.examinename);
+				$('#updatetime').text(data.applyInfo.updatetime);
+				$('#opinion').html(data.applyInfo.opinion);
+				
+				$('#createname').attr("onclick","location.href='../member/homepage_info.html?userid="+data.applyInfo.createid+"'");
+				$('#examineinfoname').attr("onclick","location.href='../member/homepage_info.html?userid="+data.applyInfo.examineuserid+"'");
+				
+				createid=data.applyInfo.createid;
+				var temp="";
+				for(var i=0;i<data.applylist.length;i++){
+					temp+="<li>"+
+			        "<span class=\"wid_01\">类&nbsp;&nbsp;别：<em name='type'>"+data.applylist[i].type+"</em></span>"+
+			        "<span class=\"wid_02\">名&nbsp;&nbsp;称：<em name='name'>"+data.applylist[i].name+"</em></span>"+
+			        "<span class=\"wid_03\">数&nbsp;&nbsp;量：<em name='num'>"+data.applylist[i].num+(data.applylist[i].unit!=null && data.applylist[i].unit!=undefined?data.applylist[i].unit:"")+"</em></span>"+
+			        "<div class=\"clear\"></div>"+
+			        "<span class=\"wid_01\">总&nbsp;&nbsp;价：￥<em name='sumprice'>"+data.applylist[i].sumprice+"</em></span>"+
+			        "<span class=\"wid_02\">规&nbsp;&nbsp;格：<em name='specifications'>"+data.applylist[i].specifications+"</em>"+
+			        
+			        "</span><div class=\"clear\"></div>"+
+			        "</li>";
+				}
+				$('#purchaseul').append(temp);
+				$('#CCusernames').text(data.applyInfo.CCusernames);
+				$("#reportlosstime").text(data.applyInfo.reportlosstime);
+			}
+		}
+	})
+	
+	//查询评论信息
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getOrderComment?orderid='+orderid+"&resourcetype="+5,
+		success:function(data){
+			$("#commentnum").text(data.num);
+				if(data.commentlist.length > 0){
+					var temp="";
+					for(var i=0;i<data.commentlist.length;i++){
+							temp+="<li><div class=\"xx\"><b><img src=\""+projectpath+data.commentlist[i].headimage+"\" onclick=\"location.href='../member/homepage_info.html?userid="+data.commentlist[i].userid+"'\" /></b>";
+							if(data.commentlist[i].replyname!= ""){
+								temp+="<span onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">"+data.commentlist[i].realname+"&nbsp;回复&nbsp;"+data.commentlist[i].replyname+"</span>";
+							}else{
+								temp+="<span onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">"+data.commentlist[i].realname+"</span>";
+							}
+							temp+="<i>"+data.commentlist[i].createtime+"</i></div>"+
+					            "<div class=\"txt\" onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">"+data.commentlist[i].content+"</div></li>";
+					}
+					$('#commentul').append(temp);
+				}
+			}
+	})
+}
+
+PageHelper({
+	url:projectpath+'/app/getOrderComment?orderid='+orderid+"&resourcetype="+5,
+	success:function(data){
+		if(data.commentlist.length > 0){
+			var temp="";
+			for(var i=0;i<data.commentlist.length;i++){
+					temp+="<li><div class=\"xx\"><b><img src=\""+projectpath+data.commentlist[i].headimage+"\" onclick=\"location.href='../member/homepage_info.html?userid="+data.commentlist[i].userid+"'\" /></b>";
+					if(data.commentlist[i].replyname!= ""){
+						temp+="<span onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">"+data.commentlist[i].realname+"&nbsp;回复&nbsp;"+data.commentlist[i].replyname+"</span>";
+					}else{
+						temp+="<span onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">"+data.commentlist[i].realname+"</span>";
+					}
+					temp+="<i>"+data.commentlist[i].createtime+"</i></div>"+
+			            "<div class=\"txt\" onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">"+data.commentlist[i].content+"</div></li>";
+			}
+			$('#commentul').append(temp);
+		}
+	}
+});
+function examineorder(result){
+	if($('#opinion').val()==""){
+		swal({
+			title : "",
+			text : "请输入审批意见",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		return;
+	}
+	$.ajax({
+		type:'post',
+		beforeSend:function(a,b){
+			ajaxbefore();
+		},
+		complete:function(a,b){
+			ajaxcomplete();
+		},
+		dataType:'json',
+		url:projectpath+'/app/examineReportlossOrder?orderid='+orderid+"&userid="+userInfo.userid+"&result="+result+"&opinion="+$('#opinion').val(),
+		success:function(data){
+			if(data.status == 0 || data.status == '0'){
+				swal({
+					title: "",   
+					text: "<font style=\"color:#ff7922; font-size:28px; margin-left:20px;\">操作成功！</font>",
+					type:"success",
+					timer: 1000,
+					html:true,
+					showConfirmButton: false 
+				}, function(){
+					changeIsread(createid,orderid);
+					var title=$("#examineinfoname").text()+"审批了您的报损单,请及时查看";
+					var url="/warehouse/reportloss_detail.html?orderid="+orderid;
+					pushMessage(createid,title,url);
+					goBackPage();
+				});
+			}else if(data.status == 1 || data.status == '1'){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+				});
+			}else{
+				swal({
+					title : "",
+					text : "网络异常，请稍后重试···",
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+				});
+			}
+		}
+	})
+}
+function logical(){
+	swal({
+		title : "",
+		text : "确认转发给"+$('#examinename').text()+"？",
+		type : "success",
+		showCancelButton : true,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		userForword(userInfo.companyid,orderid,$('#examineuserid').val(),userInfo.userid,5);
+	});
+}
+</script>
+<body onload="onloadData1()">
+<div id="htmlbody">
+<input type="hidden" id="examineuserid">
+<span id="examinename" style="display:none"></span>
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage()">返回</a>
+    <div class="name">审核报损单</div>
+</div>
+<div class="head_none"></div>
+<div class="xx_one">
+    <span id="orderno"></span>
+    <i id="organizename"></i>
+</div>
+<!-- <div class="xx_two"> -->
+<!--     <div class="name">物料明细</div>
+    <div class="tab">
+    	<table width="100%" border="0" cellpadding="0" cellspacing="0" id="materialtable">
+        	<tr class="head_td">
+            	<td class="first" width="16%">类别</td>
+                <td width="16%">名称</td>
+                <td width="16%">规格</td>
+                <td width="16%">数量</td>
+                
+                <td class="last">总价</td>
+            </tr>
+        </table>
+    </div>
+    <div class="total">
+        <span>合计：<em id="materialprice">0.00</em></span>
+        <i>共<em id="maternum">0</em>项</i>
+    </div>
+</div> -->
+
+<div class="xx_two">
+    <div class="name">物料明细</div>
+    <ul id="purchaseul">
+    </ul>
+    <div class="total">
+        <span>合计：￥<em id="materialprice">0.00</em>元</span>
+        <i>共<em id="maternum">0</em>项</i>
+    </div>
+</div>
+<div class="xx_three">
+    <div class="txt">
+        <span class="name">申请人：<em id="createname"></em></span>
+        <span class="time">填写时间：<em id="createtime"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name">审批人：<em id="examineinfoname"></em></span>
+<!--         <span class="time">审批时间：<em id="updatetime"></em></span> -->
+        <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name" style="width:98%;text-overflow:ellipsis ; overflow:hidden; white-space:nowrap;">报损时间：<em id="reportlosstime"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name" style="width:98%;text-overflow:ellipsis ; overflow:hidden; white-space:nowrap;">抄送人：<em id="CCusernames"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt last">
+        <span class="name" style="font-weight: bold;">审批意见</span>
+        <textarea class="text_area" placeholder="请输入审批意见，最多允许输入800字符" maxlength="800" id="opinion"></textarea>
+     </div>        
+</div>
+<div class="comment">
+	<div class="name">共有<em id="commentnum">0</em>条评论</div>
+    <ul id="commentul">
+    </ul>
+</div>
+
+<div class="fbtn_none"></div>
+<div class="foot_btn">
+	<span class="active" onclick="examineorder(1)">同意</span>
+    <span onclick="examineorder(0)">拒绝</span>
+<!--     <span onclick="$('#organizeiframe').show();$('#htmlbody').hide();">转发</span> -->
+<!--     <span onclick="initaddcomment();">评论</span> -->
+</div>
+
+<div class="div_mask" style="display: none"></div>
+<div class="tc_comment" style="display: none" id="commentdiv">
+	<div class="name">评论</div>
+	<input type="hidden" id="parentid" />
+	<input type="hidden" id="parentuserid" />
+    <div class="text_box"><textarea id="content"></textarea></div>
+    <div class="btn_box">
+    	<input type="button" value="提交" class="btn_01" onclick="addcomment();">
+        <input type="button" value="取消" class="btn_02" onclick="cancel();">
+    </div>
+</div>
+<script type="text/javascript">
+function addcomment(){
+	var parentid=$('#parentid').val();
+	if($('#content').val()==""){
+		swal({
+			title : "",
+			text : "请填写评论内容",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		return;
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/insertComment?userid='+userInfo.userid+'&content='+$('#content').val()+'&resourceid='+orderid+'&resourcetype=5&parentid='+parentid,
+		beforeSend:function(a,b){
+			ajaxbefore();
+		},
+		complete:function(a,b){
+			ajaxcomplete();
+		},
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				changeIsReadAll(userInfo.userid,orderid,5);
+				if(parentid!=""){
+					changeIsread($('#parentuserid').val(),orderid);
+				}
+				/* swal({
+					title : "",
+					text : "评论成功",
+					type : "success",
+					showCancelButton : true,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				}); */
+				location.reload(false);
+			}
+		}
+	})
+}
+function initaddcomment(parentid,parentuserid){
+	$('#content').val("");
+	$('#parentid').val(parentid);
+	$('#parentuserid').val(parentuserid);
+	$('.div_mask').show();
+	$('#commentdiv').show();
+}
+function cancel(){
+	$('#content').val("");
+	$('#parentid').val("");
+	$('#parentuserid').val("");
+	$('.div_mask').hide();
+	$('#commentdiv').hide();
+}
+</script>
+</div>
+<script type="text/javascript" src="../appcssjs/script/selectuser_forward.js"></script>
+
+</body>
+</html>

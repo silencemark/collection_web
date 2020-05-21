@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新增统计-管理方后台</title>
+<link href="../style/public2.css" type="text/css" rel="stylesheet" />
+<link href="../style/page2.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../script/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+	var pageWidth = window.innerWidth;
+	var pageHeight = window.innerHeight;
+	var minHeight;
+	var usernameWidth;
+	if (typeof pageWidth != "number")
+	{
+		if(document.compatMode == "CSS1Compat")
+		{
+			pageWidth = document.documentElement.clientWidth;
+			pageHeight = document.documentElement.clientHeight;
+		}
+		else
+		{
+			pageWidth = document.body.clientWidth;
+			pageHeight = document.body.clientHeight;
+		}
+	}
+	minHeight = pageHeight - 77;
+	$(document).ready(function(){		
+		$(".main_page").css("min-height",minHeight+"px");
+		
+		usernameWidth = $(".top_username").width();		
+		usernameWidth = (160 - usernameWidth)/2;
+	    $(".top_username").css("margin-left",usernameWidth+"px");		
+		$(".head_box .user_box").hover(
+			  function () {
+				$(".head_box .user_box .name").addClass("name_border"); //移入
+				$(".head_box .user_box .box").show();
+			  },
+			  function () {
+				$(".head_box .user_box .name").removeClass("name_border");//移除
+				$(".head_box .user_box .box").hide();
+			  }
+			);			
+});
+</script>
+</head>
+
+<body>
+<div class="head_box">
+	<div class="logo_name">CateringMaster</div>
+    <div class="user_box">
+    	<div class="name"><div class="top_username"><b><img src="../images/public/user_img.png" width="26" height="26" /></b><span>Josh</span></div></div>
+        <div class="box">
+        	<ul>
+            	<li><a href="#" class="bg_01">个人中心</a></li>
+                <li><a href="#" class="bg_02">修改个人信息</a></li>
+                <li><a href="#" class="bg_03">重置密码</a></li>
+                <li class="last"><a href="#" class="bg_04">退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="main_page">
+	<div class="left_menu">
+    	<ul>
+        	<li><span><a href="#" class="bg_01">首页</a></span><div class="line"></div></li>
+            <li><span><a href="#" class="bg_02">企业信息</a></span><div class="line"></div></li>
+            <li><span><a href="#" class="bg_03">申请记录</a></span><div class="line"></div></li>
+            <li><span><a href="#" class="bg_04">管理员管理</a></span><div class="line"></div></li>
+            <li><span><a href="#" class="bg_05">餐饮大师网盘</a></span><div class="line"></div></li>
+            <li><span class="active li_active"><a href="#" class="bg_06">统计</a></span><div class="line"></div></li>
+            <li><span><a href="#" class="bg_07">个人中心</a></span><div class="line"></div></li>
+            <li><span><a href="#" class="bg_08">系统设置</a></span><div class="line"></div></ul>
+	</div>
+	<div class="page_nav"><p><a href="#">首页</a><i>/</i><a href="#">统计</a><i>/</i><span>企业空间统计</span></p></div>        
+    <div class="page_tab">
+        <div class="tab_name"><span class="gray1">企业空间统计</span></div>
+        <div class="sel_box">            
+            <input type="text" class="text" placeholder="开始时间" />            
+            <input type="text" class="text" placeholder="结束时间" />
+            <input type="button" value="统计" class="find_btn"  />
+            <div class="clear"></div>
+        </div>
+      	<div class="chart_imgbox">
+        	<div class="chart_img"><img src="../images/page/chart_img03.png" style="width:100%;" /></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

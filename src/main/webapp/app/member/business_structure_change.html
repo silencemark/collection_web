@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>企业架构二级菜单修改</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/member.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/structure.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+
+</head>
+<script type="text/javascript">
+var type=1;
+var num=0; //num =0 修改 1新增
+var organizeid,organizename,type_s,datacode,companyid,address,parentOrgaName,orgaidNum,parentid,priority;
+
+JianKangCache.getGlobalData('organizemap',function(data){
+	organizemap=data;
+	organizeid = organizemap.organizeid;
+	organizename = organizemap.organizename;
+	type_s = organizemap.type;
+	datacode = organizemap.datacode;
+	companyid = organizemap.companyid;
+	address = organizemap.address;
+	parentOrgaName = organizemap.parentOrgaName;
+	parentid= organizemap.parentid;
+	num= organizemap.num;
+	orgaidNum = organizeid;
+	priority = organizemap.priority;
+})
+
+var userInfo = "";
+JianKangCache.getGlobalData('userinfo',function(data){
+	userInfo=data;
+})
+
+function onloadOut(){
+	if(num==0){
+		$("#update").show();
+		$("#insert").hide();
+		$("#chenge_organizename").val(organizename);
+		$("#organizename").val(parentOrgaName);
+		if(address != "" && address != undefined && address != 'undefined'){
+			$("#address").val(address);
+		}
+		if(priority != undefined || priority != "undefined"){
+			$('#priority').val(priority);
+		}
+
+		checkOut(type_s);
+		num = 0 ;
+	}else{
+		$("#update").hide();
+		$("#insert").show();
+		$("#chenge_organizename").val("");
+		$("#chenge_organizename").attr("placeholder","请输入组织或职务");
+		$("#organizename").attr("placeholder","请选择上级单位");
+		checkOut(2);
+		
+	}
+
+}
+
+function checkOut(obj){
+	type = obj;
+	if(obj == 1){
+		$("#type_a").attr("class","check_ed");
+		$("#type_b").attr("class","check");
+		$("#type_c").attr("class","check");
+		$("#address").hide();
+	}else if(obj == 2){
+		$("#type_b").attr("class","check_ed");
+		$("#type_a").attr("class","check");
+		$("#type_c").attr("class","check");
+		$("#address").hide();
+	}else if(obj == 3){
+		if( $("#type").val()== 3 && $("#type").val()== type) {
+			swal({
+				title : "",
+				text : "店面下不可有店面",
+				type : "error",
+				showCancelButton : false,
+				confirmButtonColor : "#ff7922",
+				confirmButtonText : "确认",
+				cancelButtonText : "取消",
+				closeOnConfirm : true
+			}, function(){
+				
+			});
+		}else{
+			$("#type_c").attr("class","check_ed");
+			$("#type_a").attr("class","check");
+			$("#type_b").attr("class","check");
+			$("#address").show();
+		}
+
+	}
+	
+}
+
+//保存
+function checkOrganize(){
+	var mgss="";
+	if($("#chenge_organizename").val()==null  || $("#chenge_organizename").val()==""){
+		mgss="请输入一个名称";
+	}
+	if($("#organizename").val() == null  || $("#organizename").val()== ""){
+		mgss="请选择一个组织";
+	}
+
+	if(mgss == ""){
+					if(num == 0){
+						//修改
+						//type判断当前选的是否为店面
+					
+						//msgg有值就代码 当前修改没满足条件
+					
+							var param = new Object();
+							//需要修改的数据
+							param.lastdatacode = datacode;
+							param.lastcompanyid = companyid;
+							param.lastorganizeid =organizeid;
+							param.organizename = $("#chenge_organizename").val()
+							
+							//需要修改到当前组织下
+							if($("#organizeid").val() != "" && $("#organizeid").val() != undefined ){
+								param.updataorganizeid = $("#organizeid").val()
+							}
+							if( $("#datacode").val() != "" &&  $("#datacode").val() != undefined ){
+								param.updatadatacode =  $("#datacode").val();
+							}				
+							param.parentid = parentid;
+							param.priority = $('#priority').val();
+							
+							
+							param.updatatype = type;
+							param.address = $("#address").val();
+							$.ajax({
+								type:'post',
+								dataType:'json',
+								url:projectpath+'/app/updateOrganizeInfo',
+								data:param,
+								beforeSend:function(a,b){
+									ajaxbefore();
+								},
+								complete:function(a,b){
+									ajaxcomplete();
+								},
+								success:function(data){
+									if(data.status==1){
+										swal({
+											title : "",
+											text : data.message,
+											type : "error",
+											showCancelButton : false,
+											confirmButtonColor : "#ff7922",
+											confirmButtonText : "确认",
+											cancelButtonText : "取消",
+											closeOnConfirm : true
+										}, function(){
+											
+										});
+									}else{
+										swal({
+											title : "",
+											text : data.message,
+											type : "success",
+											showCancelButton : false,
+											confirmButtonColor : "#ff7922",
+											confirmButtonText : "确认",
+											cancelButtonText : "取消",
+											closeOnConfirm : true
+										}, function(){
+											location.href= 'business_structure.html';
+										});
+										
+									}
+								}
+							})
+						}else{
+							//新增
+							var param = new Object();
+							param.updataorganizeid =$("#organizeid").val();//parentid
+							param.updatadatacode = $("#datacode").val();
+							param.address=$("#address").val();
+							param.organizename = $("#chenge_organizename").val()//公司名称
+							param.lastcompanyid = $("#companyid").val();//companyid
+							param.type = type;//type
+							param.userid = userInfo.userid;
+							param.companyid = userInfo.companyid;
+							param.priority = $('#priority').val();
+							
+							$.ajax({
+								type:'post',
+								dataType:'json',
+								url:projectpath+'/app/insertOrganizeInfo',
+								data:param,
+								beforeSend:function(a,b){
+									ajaxbefore();
+								},
+								complete:function(a,b){
+									ajaxcomplete();
+								},
+								success:function(data){
+									if(data.status==1){
+										swal({
+											title : "",
+											text : data.message,
+											type : "error",
+											showCancelButton : false,
+											confirmButtonColor : "#ff7922",
+											confirmButtonText : "确认",
+											cancelButtonText : "取消",
+											closeOnConfirm : true
+										}, function(){
+											
+										});
+									}else{
+										swal({
+											title : "",
+											text : data.message,
+											type : "success",
+											showCancelButton : false,
+											confirmButtonColor : "#ff7922",
+											confirmButtonText : "确认",
+											cancelButtonText : "取消",
+											closeOnConfirm : true
+										}, function(){
+											location.href= 'business_structure.html';
+										});
+									
+									}
+								}
+							})	
+						}
+	
+	}else{
+			swal({
+				title : "",
+				text : mgss,
+				type : "error",
+				showCancelButton : false,
+				confirmButtonColor : "#ff7922",
+				confirmButtonText : "确认",
+				cancelButtonText : "取消",
+				closeOnConfirm : true
+			}, function(){
+				
+			});	
+		
+	}
+		
+	
+	
+}
+
+function logical(){
+	if($("#type").val()== 3 && $("#type").val()== type) {
+		swal({
+			title : "",
+			text : "店面下不可有店面",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		$("#type_a").attr("class","check");
+		$("#type_b").attr("class","check_ed");
+		$("#type_c").attr("class","check");
+		$("#address").hide();
+	}
+	
+	var param = new Object();
+	param.organizeid = $('#organizeid').val();
+	param.companyid = $('#companyid').val();
+	$.ajax({
+		url:projectpath+"/app/getParentOrganizeMaxPriority",
+		type:"post",
+		data:param,
+		async:false,
+		success:function(data){
+			if(data != ""){
+				$('#priority').val(parseInt(data)+1);
+			}
+		}
+	});
+}; 
+</script>
+
+<body onload="onloadOut()">
+<div id="htmlbody" >
+<div id="chenge" >
+<input type="hidden" id="cheng_orgid"/>
+	<div class="head_box" >
+		<a class="ico_back" onclick="goBackPage()">返回</a>
+		   <div class="name" id="update">修改</div>
+		   <div class="name" id="insert">新增</div>
+	  <div class="link_yellow"  onclick="checkOrganize()">保存</div>
+	</div>
+	<div class="head_none"></div>
+	<div class="ch_info">
+		<input type="hidden" id="parentid"/>
+		<input type="hidden" id="companyid"/>
+		<input type="hidden" id="organizeid"/>
+		<input type="hidden" id="type"/>
+		<input type="hidden" id="datacode"/>
+		<span><input type="text" class="t_text" id="chenge_organizename"></span>
+	    <span><input type="text" class="t_sel" id="organizename" onclick="$('#htmlbody').hide();$('#organizeiframe').show();onloadSelect();" ></span>
+	    <span class="kind"><em>类别：&nbsp;</em>
+	    <a class="check" onclick="checkOut(1)" id="type_a">选择</a><i style="width:23%;">区域</i>
+	    <a class="check_ed" onclick="checkOut(2)" id="type_b">选择</a><i style="width:23%;">部门</i>
+	    <a class="check" onclick="checkOut(3)" id="type_c">选择</a><i style="width:23%;">店面</i></span>
+	    <span><input type="number" class="t_text" id="priority" placeholder="请安排排序号" value=""></span>
+		<span><input type="text" class="t_text" id="address" placeholder="请输入详细地址" value=""></span>	
+</div>
+</div>
+	
+
+</div>
+<script type="text/javascript" src="../appcssjs/script/select_structure.js"></script>
+</body>
+</html>

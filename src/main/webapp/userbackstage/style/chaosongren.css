@@ -1,0 +1,10 @@
+.tc_chaosongren { width:750px; height:505px; position:fixed; z-index:9999; left:50%; margin-left:-390px; top:50%; margin-top:-250px; background:#fff;}
+.tc_chaosongren .range { height:448px;}
+.tc_chaosongren .range .l_box { width:230px; float:left; height:448px; padding-left:20px;}
+.tc_chaosongren .range .r_box { width:490px; float:right; height:448px; border-left:2px solid #eee;}
+.tc_chaosongren .range .sel_xx { padding:0px 15px 5px 15px;}
+.tc_chaosongren .range .sel_xx .sel_box { padding-bottom:10px;}
+.tc_chaosongren .range .sel_xx li { float:left; border:1px solid #eee; height:30px; line-height:30px; padding:0px 10px; margin-bottom:10px; margin-right:10px; position:relative;}
+.tc_chaosongren .range .sel_xx li .del { display:block; width:16px; height:16px; position:absolute; right:-6px; top:-6px; cursor:pointer;}
+.tc_chaosongren .range .r_box #Pagination { margin:10px auto;}
+.tc_chaosongren .range .r_box .tc_btnbox { margin:10px 0px;}

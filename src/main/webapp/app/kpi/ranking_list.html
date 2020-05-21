@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>KPI星值排行</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/kpi.css">
+
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/stock.css">
+
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+
+<script type="text/javascript" src="../appcssjs/kpi/ranking_list.js"></script>
+
+<link href="../appcssjs/style/mobiscroll.custom-2.6.2.min.css" type="text/css" rel="stylesheet"> 
+<script src="../appcssjs/script/mobiscroll.custom-2.6.2.min.js"></script> 
+</head>
+
+<body>
+<div id="htmlbody">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='index.html'">返回</a>
+    <div class="name">KPI星值排行</div>
+    <div class="link" onclick="intorulelist()">规则</div>
+</div>
+<div class="head_none"></div>
+<!-- <div class="top_sel m_bt"> -->
+<!-- 	<div class="other"><input type="text" class="t_sel" id="organize" onclick="close_open_organizeDiv()" value="" organizeid="" readonly="readonly"></div> -->
+<!--     <div class="span">-</div> -->
+<!--     <div class="time"><input type="text" class="t_time" id="change_time" value="" onclick="changetimediv()" readonly="readonly"></div> -->
+<!--     <div class="span">&nbsp;</div> -->
+<!--     <div class="btn"><input type="button" value="" onclick="queryRanking()"></div> -->
+<!-- </div> -->
+<div class="chart_box" style="padding:0px 0px 0px 0px;">
+	<input type="hidden" id="organizeid" />
+	<div class="s_name s_bor" style="margin-top:0px;" id="s_name"><span id="organizename"></span><i id="organize" onclick="close_open_organizeDiv()" organizeid="">切换组织</i></div>
+    <div class="top_sel m_bt" style="margin-bottom:5px;">
+        <div class="time"><input type="text" class="t_time" id="change_time" value="" onclick="changetimediv()" readonly="readonly" style="width:150px;"></div>
+        <div class="btn" style="float:right;"><input type="button" value="" onclick="queryRanking()"></div>
+    </div>
+</div>
+<div class="ranking ep_kpi">
+	<ul id="rank_list">
+<!--     	<li> -->
+<!--         	<div class="num bg">1</div> -->
+<!--             <div class="name"><b><img src="../appcssjs/images/public/user_default.png"></b><span>shuyi</span></div> -->
+<!--             <div class="start yellow">7000</div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="num bg">2</div> -->
+<!--             <div class="name"><b><img src="../appcssjs/images/public/user_default.png"></b><span>shuyi</span></div> -->
+<!--             <div class="start yellow">6000</div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="num bg">3</div> -->
+<!--             <div class="name"><b><img src="../appcssjs/images/public/user_default.png"></b><span>shuyi</span></div> -->
+<!--             <div class="start yellow">5000</div> -->
+<!--         </li> -->
+<!--         <li> -->
+<!--         	<div class="num">4</div> -->
+<!--             <div class="name"><b><img src="../appcssjs/images/public/user_default.png"></b><span>shuyi</span></div> -->
+<!--             <div class="start">1000</div> -->
+<!--         </li> -->
+    </ul>
+</div>
+
+<!-- <div class="div_mask"  style="display:none" id="organize_mask"></div> -->
+<!-- <div class="tc_addsel" style="display:none	" id="organize_div"> -->
+<!-- 	<div class="name"><span>选择区域</span><a id="sure_btn" onclick="close_open_organizeDiv()"></a></div> -->
+<!--     <div class="xx_box" style="height: 253px;overflow:hidden;overflow-y:visible"> -->
+<!--     	<ul id="organize_option"> -->
+<!--         	<li>浦东店</li>
+<!--             <li>浦东店</li> -->
+<!--             <li class="active">长安街店</li> -->
+<!--             <li>浦东店</li> -->
+<!--             <li>浦东店</li> -->
+<!--             <li>浦东店</li> -->
+<!--             <li>浦东店</li> -->
+<!--         </ul> -->
+<!--     </div> -->
+<!-- </div> -->
+    <input type="hidden" id="yearnum" />
+    <input type="hidden" id="monthnum" />
+<div class="div_mask" id="time_mask" style="display: none;" ></div>
+<div class="tc_addsel" id="timediv" style="display: none;">
+	<div class="name"><span>是否全部：<input type="radio" name="all" onclick="checkall('yes')"/>&nbsp;是&nbsp;&nbsp;
+	<input type="radio" name="all" onclick="checkall('no')" checked="checked"/>&nbsp;否
+	</span><a onclick="changetime()">确定</a></div>
+	<div class="xx_box">
+    	<div class="time_box" style="max-height:200px;overflow:hidden;overflow-y:visible">
+        	<ul id="yearul">
+            </ul>
+        </div>
+        <div class="time_mid">&nbsp;</div>
+        <div class="time_box"  style="max-height:200px;overflow:hidden;overflow-y:visible">
+        	<ul id="monthul">
+				<li month="" onclick="clickSelect(this)">全年</li>
+				<li name="01" month="01" onclick="clickSelect(this)">01月</li>
+                <li name="02" month="02" onclick="clickSelect(this)">02月</li>
+				<li name="03" month="03" onclick="clickSelect(this)">03月</li>
+            	<li name="04" month="04" onclick="clickSelect(this)">04月</li>
+                <li name="05" month="05" onclick="clickSelect(this)">05月</li>
+                <li name="06" month="06" onclick="clickSelect(this)">06月</li>
+                <li name="07" month="07" onclick="clickSelect(this)">07月</li>
+                <li name="08" month="08" onclick="clickSelect(this)">08月</li>
+				<li name="09" month="09" onclick="clickSelect(this)">09月</li>
+                <li name="10" month="10" onclick="clickSelect(this)">10月</li>
+				<li name="11" month="11" onclick="clickSelect(this)">11月</li>
+                <li name="12" month="12" onclick="clickSelect(this)">12月</li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="../appcssjs/script/select_structure.js"></script>
+</body>
+</html>

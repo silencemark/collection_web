@@ -1,0 +1,554 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>每日报表详情</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/restaurant.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var reportid= getUrlParam("reportid");
+var forwarduserid = getUrlParam("createid");
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+var createid="";
+function onloadData(){
+	//标记为已读
+	readstatus(reportid,userInfo.userid);
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getEverydayReportInfo?reportid='+reportid,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				$('#createname').attr("onclick","location.href='../member/homepage_info.html?userid="+data.reportInfo.createid+"'");
+				$('#examineinfoname').attr("onclick","location.href='../member/homepage_info.html?userid="+data.reportInfo.examineuserid+"'");
+				
+				$('#turnover').text(data.reportInfo.turnover+" 元");
+				$('#guestflow').text(data.reportInfo.guestflow+" 元");
+				$('#consumption').text(data.reportInfo.consumption+" 元");
+				$('#statisticaltime').text(data.reportInfo.statisticaltime);
+				
+				$('#organizename').text(data.reportInfo.organizename);
+				$('#createname').text(data.reportInfo.createname);
+				$('#createtime').text(fomartDate(data.reportInfo.createtime));
+				$('#examineinfoname').text(data.reportInfo.examinename);
+				$('#updatetime').text(data.reportInfo.updatetime);
+				$('#opinion').html(data.reportInfo.opinion);
+				createid=data.reportInfo.createid;
+				
+				$('#CCusernames').text(data.reportInfo.CCusernames);
+				var temp="";
+				if(data.reportInfo.extendlist.length > 0){
+					//先得到所有的餐别id
+					var meallist=new Array();
+					for(var i=0;i < data.reportInfo.extendlist.length;i++){
+						if(data.reportInfo.extendlist[i].type==1){
+							var status=0;
+							for(var j=0;j < meallist.length;j++){
+								if(data.reportInfo.extendlist[i].mealdataname==meallist[j]){
+									status=1;
+									break;
+								}
+							}
+							if(status==0){
+								meallist[meallist.length]=data.reportInfo.extendlist[i].mealdataname;
+							}
+						}
+					}
+					//餐别显示
+					var mealtemp="";
+					for(var j=0;j < meallist.length;j++){
+						mealtemp+="<div class=\"daily_xx\" name=\"mealdaily\"><div class=\"name\" name=\"mealdiv\"><span mealname=\""+meallist[j]+"\">"+meallist[j]+"</span></div></div>";
+					}
+					$('#alldata').html(mealtemp);
+					
+					
+					
+					//得到今日统计
+					for(var j=0;j < meallist.length;j++){
+						var todaytemp="<div class=\"title\"><span>今日统计</span><i class=\"ico_show\" onclick=\"changeshow(this)\">展开</i></div><ul>";
+						for(var i=0;i < data.reportInfo.extendlist.length;i++){
+							if(data.reportInfo.extendlist[i].typeid==3){
+								if(data.reportInfo.extendlist[i].mealdataname==meallist[j]){
+									if(data.reportInfo.extendlist[i].content != ""){
+										data.reportInfo.extendlist[i].content = data.reportInfo.extendlist[i].content+" 元";
+									}
+									todaytemp+="<li><span>"+data.reportInfo.extendlist[i].dataname+"</span><i>"+data.reportInfo.extendlist[i].content+"</i></li>";
+								}
+							}
+							
+						}
+						todaytemp+="</ul>";
+						$("span[mealname="+meallist[j]+"]").parent().after(todaytemp);
+					}
+					//得到明细
+					for(var j=0;j < meallist.length;j++){
+						var todaytemp="<div class=\"title\"><span>收入详细</span><i class=\"ico_show\" onclick=\"changeshow(this)\">展开</i></div><ul>";
+						for(var i=0;i < data.reportInfo.extendlist.length;i++){
+							if(data.reportInfo.extendlist[i].typeid==2){
+								if(data.reportInfo.extendlist[i].mealdataname==meallist[j]){
+									if(data.reportInfo.extendlist[i].content != ""){
+										data.reportInfo.extendlist[i].content = data.reportInfo.extendlist[i].content+" 元";
+									}
+									todaytemp+="<li><span>"+data.reportInfo.extendlist[i].dataname+"</span><i>"+data.reportInfo.extendlist[i].content+"</i></li>";
+								}
+							}
+							
+						}
+						todaytemp+="</ul>";
+						$("span[mealname="+meallist[j]+"]").parent().after(todaytemp);
+					}
+					
+					
+					var remarkList=getRemarkList(data.reportInfo.extendlist,2);
+					
+					//得到今日培训情况统计（例会）
+					var todaytemp="<div class=\"daily_xx pad_bt\"><div class=\"name\"><span>今日培训情况</span><i class=\"ico_show\" onclick=\"changeshow1(this)\">展开</i></div>";
+					for(var j=0;j<remarkList.length;j++){
+						todaytemp+="<div class=\"span_box\">";
+					    var num=1;
+						for(var i=0;i < data.reportInfo.extendlist.length;i++){
+							if(data.reportInfo.extendlist[i].remark==remarkList[j]  && data.reportInfo.extendlist[i].type==2){
+								todaytemp+="<span><em>"+data.reportInfo.extendlist[i].dataname+":</em>"+data.reportInfo.extendlist[i].content+"</span>";
+								if(num%2==0){
+									todaytemp+="<div class=\"clear\"></div>";
+							    }
+							    num++;
+							}
+						}
+						if(num%2==0){
+							todaytemp+="<div class=\"clear\"></div>";
+						}
+						todaytemp+="</div>";
+					}
+					todaytemp+="</div>";
+					$('#alldata').append(todaytemp);
+					
+					remarkList=getRemarkList(data.reportInfo.extendlist,3);
+					
+					//得到今日出勤情况统计
+					var attendancetemp="<div class=\"daily_xx pad_bt\"><div class=\"name\"><span>今日出勤情况</span><i class=\"ico_show\" onclick=\"changeshow1(this)\">展开</i></div>";
+					for(var j=0;j<remarkList.length;j++){
+						attendancetemp+="<div class=\"span_box\">";
+					    var num=1;
+						for(var i=0;i < data.reportInfo.extendlist.length;i++){
+							if(data.reportInfo.extendlist[i].remark==remarkList[j] && data.reportInfo.extendlist[i].type==3){
+								if(data.reportInfo.extendlist[i].content != ""){
+									data.reportInfo.extendlist[i].content = data.reportInfo.extendlist[i].content+" 人";
+								}
+								attendancetemp+="<span><em>"+data.reportInfo.extendlist[i].dataname+":</em>"+data.reportInfo.extendlist[i].content+"</span>";
+								if(num%2==0){
+									attendancetemp+="<div class=\"clear\"></div>";
+							    }
+							    num++;
+							}
+						}
+						if(num%2==0){
+							attendancetemp+="<div class=\"clear\"></div>";
+						}
+						attendancetemp+="</div>";
+					}
+					attendancetemp+="</div>";
+					$('#alldata').append(attendancetemp);
+					
+					remarkList=getRemarkList(data.reportInfo.extendlist,4);
+					//今日主要客情
+					var todaycustomer="<div class=\"daily_xx\"><div class=\"name\"><span>今天主要客情</span><i class=\"ico_show\" onclick=\"changeshow1(this)\">展开</i></div>";
+					for(var j=0;j<remarkList.length;j++){
+						todaycustomer+="<div class=\"txt\">";
+						for(var i=0;i < data.reportInfo.extendlist.length;i++){
+							if(data.reportInfo.extendlist[i].remark==remarkList[j]  && data.reportInfo.extendlist[i].type==4){
+								todaycustomer+="<p>"+data.reportInfo.extendlist[i].content+"</p>";
+							}
+						}
+						todaycustomer+="</div>";
+					}
+					todaycustomer+="</div>";
+					$('#alldata').append(todaycustomer);
+					
+					remarkList=getRemarkList(data.reportInfo.extendlist,5);
+					//需沟通事项
+					var communication="<div class=\"daily_xx\"><div class=\"name\"><span>需沟通事项</span><i class=\"ico_show\" onclick=\"changeshow1(this)\">展开</i></div>";
+					for(var j=0;j<remarkList.length;j++){
+						communication+="<div class=\"txt\">";
+						for(var i=0;i < data.reportInfo.extendlist.length;i++){
+							if(data.reportInfo.extendlist[i].remark==remarkList[j]  && data.reportInfo.extendlist[i].type==5){
+								communication+="<p>"+data.reportInfo.extendlist[i].content+"</p>";
+							}
+						}
+						communication+="</div>";
+					}
+					communication+="</div>";
+					$('#alldata').append(communication);
+				}
+			}
+		}
+	})
+	
+	getSendName(forwarduserid,"#sendname");
+	
+	//查询评论信息
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getOrderComment?orderid='+reportid+"&resourcetype="+21,
+		success:function(data){
+			$("#commentnum").text(data.num);
+			showcomment(data);
+		}
+	})
+}
+
+function changeshow(obj){
+	if($(obj).attr("class")=="ico_show"){
+		$(obj).attr("class","ico_hidden");
+		$(obj).parent().next().hide();
+	}else{
+		$(obj).attr("class","ico_show");
+		$(obj).parent().next().show();
+	}
+}
+
+function changeshow1(obj){
+	if($(obj).attr("class")=="ico_show"){
+		$(obj).attr("class","ico_hidden");
+		$(obj).parent().nextAll().hide();
+	}else{
+		$(obj).attr("class","ico_show");
+		$(obj).parent().nextAll().show();
+	}
+}
+
+PageHelper({
+	url:projectpath+'/app/getOrderComment?orderid='+reportid+"&resourcetype="+21,
+	success:function(data){
+		showcomment(data);
+	}
+}); 
+
+function showcomment(data){
+	if(data.commentlist.length > 0){
+		var temp="";
+		for(var i=0;i<data.commentlist.length;i++){
+			temp+="<li><div class=\"xx\"><b><img src=\""+projectpath+data.commentlist[i].headimage+"\"  onclick=\"location.href='../member/homepage_info.html?userid="+data.commentlist[i].userid+"'\"  /></b>";
+			if(data.commentlist[i].replyname!= ""){
+				temp+="<span onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">"+data.commentlist[i].realname+"<i>回复</i><em style=\"color:#666;\">"+data.commentlist[i].replyname+"</em></span>";
+			}else{
+				temp+="<span onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">"+data.commentlist[i].realname+"</span>";
+			}
+			if(data.commentlist[i].type == "2"){
+				temp+="<i>转发</i><em>"+data.commentlist[i].forwardusernames+"</em>";
+			}
+			temp+="</div><div class=\"txt\" onclick=\"initaddcomment('"+data.commentlist[i].commentid+"','"+data.commentlist[i].userid+"')\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.commentlist[i].content+"</div><div class=\"time\"><i>"+appBase.parseDateMinute(data.commentlist[i].createtime)+"</i></div></li>";
+		}
+		$('#commentul').append(temp);
+	}
+}
+
+function getRemarkList(extendlist,type){
+	//先得到所有的今日培训 增添remark列表
+	var todaylist=new Array();
+	for(var i=0;i < extendlist.length;i++){
+		if(extendlist[i].type==type){
+			var status=0;
+			for(var j=0;j < todaylist.length;j++){
+				if(extendlist[i].remark==todaylist[j]){
+					status=1;
+					break;
+				}
+			}
+			if(status==0){
+				todaylist[todaylist.length]=extendlist[i].remark;
+			}
+		}
+	}
+	return todaylist;
+}
+function logical(){
+	swal({
+		title : "",
+		text : "确认转发给"+$('#examinename').text()+"？",
+		type : "success",
+		showCancelButton : true,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		sendComment(2,$('#examinename').text(),$('#examineuserid').val());
+		userForword(userInfo.companyid,reportid,$('#examineuserid').val(),userInfo.userid,21);
+		location.reload(false);
+	});
+}
+</script>
+<body onload="onloadData()">
+<div id="htmlbody">
+<input type="hidden" id="examineuserid">
+<span id="examinename" style="display:none"></span>
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage()">返回</a>
+    <div class="name">每日报表详情</div>
+</div>
+<div class="head_none"></div>
+<div class="detail_box">
+    <ul style="margin-top:0px;">
+    		<li><span>店面</span><i id="organizename"></i></li>
+    		<li><span>今日营业额</span><i id="turnover"></i></li>
+    		<li><span>今日客流量</span><i id="guestflow"></i></li>
+    		<li><span>今日人均消费</span><i id="consumption"></i></li>
+    </ul>
+</div>
+<div id="alldata">
+
+</div>
+
+<!-- <div class="daily_xx">
+	<div class="name"><span>早餐</span></div>
+    <div class="title"><span>收入详细</span><i class="ico_show">展开</i></div>
+    <ul>
+        <li><span>现金</span><i>￥400，000.00</i></li>
+        <li><span>团购</span><i>￥400，000.00</i></li>
+        <li><span>签单</span><i>￥400，000.00</i></li>
+    </ul>
+    <div class="title"><span>今日统计</span><i class="ico_show">展开</i></div>
+    <ul>
+        <li><span>客流量</span><i>1200</i></li>
+        <li><span>食品</span><i>1200</i></li>
+        <li><span>酒水</span><i>1200</i></li>
+    </ul>
+</div>
+<div class="daily_xx pad_bt">
+	<div class="name"><span>今日培训情况</span><i class="ico_show">展开</i></div>
+    <div class="span_box">
+    	<p><em>主题：</em>培训主题培训主题培训主题培训主题培训</p>
+        <span><em>主讲人：</em>李老师</span>
+        <span><em>时间：</em>2016-06-02 10:30</span>
+        <div class="clear"></div>
+        <span><em>参加人数：</em>100人</span>
+        <span><em>出勤率：</em>92%</span>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="daily_xx pad_bt">
+	<div class="name"><span>今日出勤情况</span><i class="ico_show">展开</i></div>
+    <div class="span_box">
+        <span><em>编制人数：</em>50人</span>
+        <span><em>例休：</em>1人</span>
+        <div class="clear"></div>
+        <span><em>当值：</em>42人</span>
+        <span><em>请假：</em>1人</span>
+        <div class="clear"></div>
+        <span><em>出差：</em>2人</span>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="daily_xx">
+	<div class="name"><span>今天主要客情</span><i class="ico_show">展开</i></div>
+    <div class="txt">
+    	<p>主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情主要客情</p>
+    </div>
+</div>
+<div class="daily_xx">
+	<div class="name"><span>需沟通事项</span><i class="ico_show">展开</i></div>
+    <div class="txt">
+    	<p>事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容事项内容</p>
+    </div>
+</div> -->
+
+
+<div class="xx_user">
+    <div class="txt">
+        <span class="name">审批人：<em id="examineinfoname"></em></span>
+        <span class="name">创建人：<em id="createname"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="time">统计时间：<em id="statisticaltime"></em></span>
+        <div class="clear"></div>
+    </div>
+     <div class="txt">
+        <span class="name" style="width:98%;text-overflow:ellipsis ; overflow:hidden; white-space:nowrap;">抄送人：<em id="CCusernames"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name" style="width:98%;text-overflow:ellipsis ; overflow:hidden; white-space:nowrap;">转发人：<em id="sendname"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="time">填写时间：<em id="createtime"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt last">
+        <span class="name" style="font-weight: bold; width:100%;">审批人意见</span>
+        <div class="clear"></div>
+     </div>
+     <div class="p_box" id="opinion"></div> 
+</div>
+<div class="comment">
+	<div class="name">共有<em id="commentnum">0</em>条评论</div>
+    <ul id="commentul">
+    </ul>
+</div>
+<!-- <div class="fbtn_none"></div>
+<div class="foot_btn">
+	<span onclick="initforwarding()"  class="active">转发</span>
+    <span onclick="initaddcomment();" >评论</span>
+</div> -->
+<div class="bt_none"></div>
+<div class="tool_detail">
+    <div class="talk_detail">
+        <div class="a_box">
+            <input type="text" readonly="readonly" onclick="initaddcomment();" class="text" placeholder="写评论.意见或建议">
+            <a class="zf" onclick="initforwarding();"><img src="../appcssjs/images/share/zf.png"></a>
+        </div>
+    </div>
+</div>
+
+<div class="div_mask" style="display: none" onclick="cancel();"></div>
+<div class="tc_comment" style="display: none" id="commentdiv">
+	<!-- <div class="name">评论</div> -->
+	<input type="hidden" id="parentid" />
+		<input type="hidden" id="parentuserid" />
+    <div class="text_box"><textarea id="content"></textarea></div>
+    <div class="btn_box">
+    	<!-- <input type="button" value="提交" class="btn_01" > -->
+        <input type="button" value="发表" class="btn_02" onclick="addcomment();" style="margin-left:180px;">
+    </div>
+</div>
+<script type="text/javascript">
+function addcomment(){
+	if(actiontype==1){
+		sendComment(1,"","");
+		location.reload(false);
+	}else{
+		$('.div_mask').hide();
+		$('#commentdiv').hide();
+		$('#organizeiframe').show();
+		$('#htmlbody').hide();
+	}
+}
+
+var actiontype;
+function sendComment(type,forwardusernames,forwarduserids){
+	if($('#content').val()==""){
+		swal({
+			title : "",
+			text : "请填写评论内容",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		return;
+	}
+	var param = new Object();
+	param.userid = userInfo.userid;
+	param.content = $('#content').val();
+	param.resourceid = reportid;
+	param.resourcetype = 21;
+	param.parentid = $('#parentid').val();
+	param.type = type;
+	param.forwardusernames = forwardusernames;
+	param.forwarduserids = forwarduserids;
+	
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		data:param,
+		url:projectpath+'/app/insertComment',
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				changeIsReadAll(userInfo.userid,reportid,21);
+				if(parentid!=""){
+					changeIsread($('#parentuserid').val(),reportid);
+				}
+				/* swal({
+					title : "",
+					text : "评论成功",
+					type : "success",
+					showCancelButton : true,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				}); */
+			}
+		}
+	})
+}
+function initaddcomment(parentid,parentuserid){
+	actiontype=1;
+	$('#content').val("");
+	$('#parentid').val(parentid);
+	$('#parentuserid').val(parentuserid);
+	$('.div_mask').show();
+	$('#commentdiv').show();
+	$('#content').focus();
+}
+function cancel(){
+	$('#content').val("");
+	$('#parentid').val("");
+	$('#parentuserid').val("");
+	$('.div_mask').hide();
+	$('#commentdiv').hide();
+}
+function initforwarding(parentid,parentuserid){
+	actiontype=0;
+	$('#content').val("");
+	$('#parentid').val(parentid);
+	$('#parentuserid').val(parentuserid);
+	$('.div_mask').show();
+	$('#commentdiv').show();
+	$('#content').focus();
+}
+</script>
+</div>
+<script type="text/javascript" src="../appcssjs/script/selectuser_forward.js"></script>
+</body>
+</html>

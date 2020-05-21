@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>企业机构一级菜单新增</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/member.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/structure.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+var orgaidNum=1;
+
+JianKangCache.getGlobalData('userinfo',function(data){
+	userInfo=data;
+	$("#companyid").val(data.companyid);
+})
+
+var mailinfo;
+JianKangCache.getGlobalData('mailinfo',function(data){
+	mailinfo=data;
+})
+
+
+
+function logical(){
+	var organizeid,organizename;
+	organizeid =$("#organizeid").val();
+	organizename=$("#organizename").val();
+	$("#orgname").val(organizename);
+}
+
+function checkSave(){
+	var num = 0 ;
+	var mess ="" ;
+	var myreg = /^1\d{10}$/; 
+	var phone = $("#phone").val();
+	var param = new Object();
+	if($("#realname").val() == "" ){
+		mess="请输入姓名";
+	}else if(phone == "" ){
+		mess="请输入手机号码";
+	}else if(phone.length != 11 || !myreg.test(phone)) {
+		mess="请输入有效的手机号码";
+	}else if($("#orgname").val() == "" ){
+		mess="请选择部门";
+	}
+	
+	if(mess == ""){
+		param.createid=userInfo.userid;
+		param.organizelist=$("#organizelist").val();
+		param.companyid=userInfo.companyid;
+		param.realname=$("#realname").val();
+		param.phone =$("#phone").val();
+		param.position= $("#position").val();
+		param.username=$("#phone").val();
+		
+			$.ajax({
+				type:'post',
+				url:projectpath+'/app/insertOrganizeUserInfo',
+				data:param,	
+				beforeSend:function(a,b){
+					ajaxbefore();
+				},
+				complete:function(a,b){
+					ajaxcomplete();
+				},
+				success:function(data){
+					if(data.status==1){
+						swal({
+							title : "",
+							text : data.message,
+							type : "error",
+							showCancelButton : false,
+							confirmButtonColor : "#ff7922",
+							confirmButtonText : "确认",
+							cancelButtonText : "取消",
+							closeOnConfirm : true
+						}, function(){
+						
+						});
+					}else if(data.status==2){
+						swal({
+							title : "",
+							text : data.message,
+							type : "warning",
+							showCancelButton : false,
+							confirmButtonColor : "#ff7922",
+							confirmButtonText : "确认",
+							cancelButtonText : "取消",
+							closeOnConfirm : true
+						}, function(){
+						
+						});
+					}else{
+						swal({
+							title : "",
+							text :data.message,
+							type : "success",
+							showCancelButton : false,
+							confirmButtonColor : "#ff7922",
+							confirmButtonText : "确认",
+							cancelButtonText : "取消",
+							closeOnConfirm : true
+						}, function(){
+							location.href="personnel_list.html";
+						});
+			
+					}
+				}
+			})
+					
+	}else{
+		swal({
+			title : "",
+			text :mess,
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		
+		});
+	}
+	
+
+}
+function onloadmail(){
+	if(mailinfo!= '' && typeof(mailinfo) != "undefined"){
+		$('#realname').val(mailinfo.name);
+		$('#phone').val(mailinfo.phone.replaceAll(" ","").replace("+86",""));
+		JianKangCache.delGlobalData('mailinfo');
+	}
+}
+</script>
+
+<body  onload="onloadmail()">
+<div id="htmlbody" >
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage()">返回</a>
+    <div class="name">新增人员</div>
+    <div class="link_yellow" onclick="checkSave()">保存</div>
+</div>
+<div class="head_none"></div>
+<div class="ch_info">
+	<div class="yzm_box"><input type="text" class="t_text" placeholder="请输入姓名" id="realname" ><a class="link_txl"  href="personnel_maillist.html">通讯录</a></div>
+	<span><input type="text" class="t_text" placeholder="请输入手机号" id="phone" maxlength="11" oninput="this.value=this.value.replace(/\D/g,'');"></span>
+    <span>
+    <input type ="hidden"  id="organizeid" />
+    <input type ="hidden"  id="organizename" />
+    <input type ="hidden"  id="companyid" />
+    <!-- <input type="text" class="t_sel" placeholder="请选择部门"  onclick="$('#htmlbody').hide();$('#organizeiframe').show();onloadSelect();" id="orgname" readonly = "readonly"> -->
+    <input type="text" class="t_sel" placeholder="请选择部门"  onclick="$('#htmlbody').hide();$('#morechange_organizeiframe').show();" id="orgname" readonly = "readonly">
+    </span>
+    <span><input type="text" class="t_text" placeholder="请输入职位" id="position" ></span>
+</div>
+
+<script type="text/javascript" src="../appcssjs/script/select_structure.js"></script>
+<script type="text/javascript" src="../appcssjs/script/select_organizeduoxuan.js"></script>
+</body>
+<div >
+</html>

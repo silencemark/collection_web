@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>日程详情</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/memo.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var memorandumid= getUrlParam("memorandumid");
+var date1= getUrlParam("datetime");
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+function onloadData(){
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getMemorandumInfo?memorandumid='+memorandumid,
+		success:function(data){
+			if(data.status==0){
+				$('#datehour').html(data.memoranduminfo.datetime+" "+data.memoranduminfo.hourtime);
+				$('#content').text(data.memoranduminfo.content);
+			}
+		}
+	})
+}
+function deletememorandum(){
+	swal({
+		title : "",
+		text : "是否删除？",
+		showCancelButton : true,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url:projectpath+'/app/updateMemorandum?memorandumid='+memorandumid+'&delflag=1&userid='+userInfo.userid,
+			success:function(data){
+				if(data.status==0){
+					goBackPage();
+				}
+			}
+		})
+	});
+}
+</script>
+<body onload="onloadData()">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='calendar.html?datetime='+date1;">返回</a>
+    <div class="name">详情</div>
+</div>
+<div class="head_none"></div>
+<div class="detail_box">
+	<ul>
+    	<li><span>提醒时间</span><i id="datehour"></i></li>
+        <li>
+        	<span>提醒事由</span><div class="clear"></div>
+            <p id="content"></p>
+        </li>
+    </ul>
+</div>
+<div class="fbtn_none"></div>
+<div class="foot_btn">
+	<span class="active" onclick="location.href='meno_edit.html?memorandumid='+memorandumid;">编辑</span>
+    <span onclick="deletememorandum()">删除</span>
+</div>
+</body>
+</html>

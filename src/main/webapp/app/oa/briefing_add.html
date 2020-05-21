@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新建简报</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/structure.css">
+</head>
+<script type="text/javascript">
+var moduleid=getUrlParam("moduleid");
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+	}
+)
+function submitdata(){
+	var userlist = $('#userlist').val();
+	var title=$('#title').val();
+	var content=$('#content').val();
+	if(userlist == ""){
+		swal({
+			title : "",
+			text : "请选择发布范围。",
+			type : "warning",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		});
+		return;
+	}
+	if(title==""){
+		swal({
+			title : "",
+			text : "请输入标题",
+			type : "warning",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		});
+		return;
+	}
+	if(content==""){
+		swal({
+			title : "",
+			text : "请输入内容",
+			type : "warning",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		});
+		return;
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/insertBrief',
+		data:"moduleid="+moduleid+"&title="+title+"&content="+content+"&createid="+userInfo.userid+"&userlist="+userlist+"&companyid="+userInfo.companyid,
+		beforeSend:function(a,b){
+			ajaxbefore();
+		},
+		complete:function(a,b){
+			ajaxcomplete();
+		},
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				swal({
+					title : "",
+					text : "添加成功",
+					type : "success",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					location.href='briefing_list.html?moduleid='+moduleid;
+				});
+			}
+		}
+	})
+}
+</script>
+
+<body>
+<div id="htmlbody">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='briefing_list.html?moduleid='+moduleid;">返回</a>
+    <div class="name">新建简报</div>
+    <div class="link_yellow" onclick="submitdata()">保存</div>
+</div>
+<div class="head_none"></div>
+<div class="detail_box">
+	<ul>
+    	<li><span>标题</span><input type="text" class="text" placeholder="请输入标题" id="title" maxlength="50"></li>
+        <li>
+        	<span class="em">内容</span>
+            <div class="clear"></div>
+            <p><textarea class="text_area" placeholder="请输入内容，最多允许输入800字符" maxlength="800"id="content" maxlength="1000"></textarea></p>
+        </li> 
+    </ul>
+</div>
+<div class="xx_adduser">
+	<ul>
+		<li><span class="em">发布范围:</span>
+		<input type="text" class="t_sel" onclick="$('#morechange_organizeiframe').show();$('#htmlbody').hide();" placeholder="请选择发布区域" id="releaserange" readonly="readonly">
+		</li>
+        <li><span>发送时间：</span><i id="nowTime"></i></li>
+    </ul>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#nowTime").text(getNowTime());
+})
+</script>
+</div>
+<script type="text/javascript" src="../appcssjs/script/select_userorganize.js"></script>
+</body>
+</html>

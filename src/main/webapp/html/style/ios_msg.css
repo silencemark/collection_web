@@ -1,0 +1,137 @@
+@charset "utf-8";
+/* CSS Document */
+
+.msg_nav { border-bottom:1px solid #e5e5e5;}
+.msg_nav span { display:block; float:left; width:34%; text-align:center; line-height:32px; height:32px; border-right:1px solid #e5e5e5;}
+.msg_nav span.last { width:32%; border-right:0px;}
+.msg_nav span.active { color:#ff9b30; border-bottom:2px solid #ff9b30;}
+
+.msg_index { background:#fff;}
+.msg_index li { border-bottom:1px solid #d5d5d5; height:64px; overflow:hidden;}
+.msg_index li b { display:block; width:48px; height:48px; overflow:hidden; border-radius:48px; position:absolute; left:15px; top:8px; font-weight:normal;}
+.msg_index li b em { display:block; float:left; width:24px; height:24px; text-align:center; line-height:22px; font-size:10px; color:#fff;}
+.msg_index li b em.big { width:24px; height:48px; line-height:48px; font-size:14px;}
+.msg_index li .bg_color1 { background:#ee5c5c;}
+.msg_index li .bg_color2 { background:#f7a44b;}
+.msg_index li .bg_color3 { background:#4fa7f0;}
+.msg_index li .bg_color4 { background:#17c295;}
+.msg_index li span { display:block; float:left; line-height:24px; color:#000;}
+.msg_index li span.blue { color:#324d88;}
+.msg_index li i { display:block; float:right; line-height:24px; color:#afafaf; font-size:14px;}
+.msg_index li p { color:#757575; font-size:14px; line-height:24px; height:24px;}
+.msg_index li p.unread { padding-right:20px; background:url(../images/public/red_point.png) no-repeat right; background-size:10px 10px;}
+.msg_index li:last-child { border-bottom:0px;}
+.msg_index li .li_box { position:relative; width:100%; overflow:hidden; padding:8px 15px 8px 80px; float:left;}
+.msg_index li a.del_btn { display:block; width:64px; text-align:center; color:#fff; background:#ed3030; float:left; height:64px; line-height:64px;}
+.msg_index li .ml_64 { margin-left:-64px;}
+
+.name_list { background:#fff;}
+.name_list .title { font-size:18px; color:#121212; padding:0px 15px 0px 40px; height:40px; line-height:40px; background:url(../images/public/ico_cp.png) no-repeat 15px 50%; background-size:16px 16px; border-bottom:1px solid #bababa;}
+.name_list .quyu li:last-child { border-bottom:0px;}
+.name_list .dianpu { border-top:1px solid #d5d5d5;}
+.name_list .dianpu li:last-child { border-bottom:0px;}
+.name_list .leve_a { border-bottom:1px solid #d5d5d5;}
+.name_list .leve_a_s { display:block; line-height:36px; padding:0px 15px 0px 30px; background-repeat:no-repeat; background-position:15px 50%; background-size:10px 10px; color:#424242;}
+.name_list .leve_b { border-bottom:1px solid #e5e5e5;}
+.name_list .leve_b_s { display:block; line-height:36px; padding:0px 15px 0px 45px; background-repeat:no-repeat; background-position:30px 50%; background-size:10px 10px;}
+.name_list .bg_show { background-image:url(../images/public/list_bg2.png);}
+.name_list .bg_hidden { background-image:url(../images/public/list_bg1.png);}
+.name_list .user_box { border-top:1px solid #e5e5e5; color:#999; font-size:14px;}
+.name_list .user_box li { border-bottom:1px solid #e5e5e5; padding:0px 30px; height:65px;}
+.name_list .user_box li:last-child { border-bottom:0px;}
+.name_list .user_box .user { height:32px;}
+.name_list .user_box .tel { border-top:1px solid #e5e5e5; height:33px;}
+.name_list .user_box span { display:block; float:left; line-height:32px;}
+.name_list .user_box i { display:block; float:right; width:20px; height:20px; border:1px solid #e5e5e5; padding:3px; border-radius:16px; margin:6px 0px;}
+.name_list .user_box i img { float:left;}
+
+.info_box1 { background:#fff; margin-top:8px;}
+.info_box1 .name { line-height:40px; border-bottom:1px solid #d5d5d5; padding:0px 15px; height:41px;}
+.info_box1 .name span { display:block; float:left; color:#424242;}
+.info_box1 .name i { display:block; float:right; color:#999;}
+.info_box1 .user_list .num { padding:0px 15px; line-height:40px; color:#424242; border-bottom:1px solid #d5d5d5;}
+.info_box1 .user_list .li_list { padding:10px 10px 5px 10px;}
+.info_box1 .user_list li { float:left; width:25%; margin:5px 0px;}
+.info_box1 .user_list li b { display:block; width:52px; height:52px; overflow:hidden; border-radius:52px; margin:0px auto; box-shadow:0px 0px 1px #ddd;}
+.info_box1 .user_list li b img { min-height:52%;}
+.info_box1 .user_list li span { display:block; text-align:center; line-height:24px;}
+.info_box1 .user_list li b.add { background:url(../images/msg/add_img.png) no-repeat center; background-size:28px 28px; border:1px solid #ff9b30; text-indent:-9999px; overflow:hidden;}
+
+.info_box2 { background:#fff; margin-top:8px;}
+.info_box2 li { border-bottom:1px solid #d5d5d5; padding:0px 15px; height:41px;}
+.info_box2 li span { display:block; float:left; color:#424242; line-height:40px;}
+.info_box2 li i { display:block; float:right; height:22px; width:38px; margin:9px 0px; border-radius:22px; overflow:hidden;}
+.info_box2 li em { display:block; width:20px; height:20px; background:#fff; border-radius:20px; text-indent:-999px; overflow:hidden; line-height:20px; box-shadow:0px 0px 1px 0px #999;}
+.info_box2 li i.off { background:#fff; border:1px solid #e5e5e5;}
+.info_box2 li i.off em { float:left;}
+.info_box2 li i.on { background:#4cd966; border:1px solid #4cd966;}
+.info_box2 li i.on em { float:right;}
+
+.talk_bg { background:#f0f0f0;}
+.talk_page .load_history { padding:8px 15px;}
+.talk_page .load_history a { display:block; background:#e0e0e0; border-radius:3px; text-align:center; color:#fff; line-height:28px;}
+.talk_page ul { padding:0px 15px;}
+.talk_page li { position:relative; padding:0px 52px; margin-bottom:12px;}
+.talk_page li .user_l { width:42px; height:42px; border-radius:42px; overflow:hidden; position:absolute; left:0px; top:0px;}
+.talk_page li .user_l img { width:42px; height:42px;}
+.talk_page li .name_l { font-size:14px; line-height:24px;}
+.talk_page li .msg_l { background:#fff; color:#333; line-height:20px; border:1px solid #e4e4e4; border-radius:3px; padding:11px 12px; position:relative; float:left;}
+.talk_page li .msg_l em { display:block; width:8px; height:8px; position:absolute; left:-8px; top:5px; background:url(../images/msg/jt_left.png) no-repeat; background-size:100% 100%;}
+.talk_page li .time_l { float:left; line-height:35px; margin:0px 10px;}
+.talk_page li .read_l { float:left; background:url(../images/public/red_point.png) no-repeat; background-size:100% 100%; width:9px; height:9px; margin:13px 0px; text-indent:-9999px; overflow:hidden;}
+.talk_page li .user_r { width:42px; height:42px; border-radius:42px; overflow:hidden; position:absolute; right:0px; top:4px;}
+.talk_page li .user_r img { width:42px; height:42px;}
+.talk_page li .name_r { font-size:14px; line-height:24px; text-align:right;}
+.talk_page li .msg_r { background:#60a9fa; color:#fff; line-height:20px; border:1px solid #e4e4e4; border-radius:3px; padding:11px 12px; position:relative; float:right;}
+.talk_page li .msg_r em { display:block; width:8px; height:8px; position:absolute; right:-8px; top:5px; background:url(../images/msg/jt_right.png) no-repeat; background-size:100% 100%;}
+.talk_page li .time_r { float:right; line-height:35px; margin:0px 10px;}
+.talk_page li .read_r { float:right; background:url(../images/public/red_point.png) no-repeat; background-size:100% 100%; width:9px; height:9px; margin:13px 0px; text-indent:-9999px; overflow:hidden;}
+.talk_page li .li_time { text-align:center;}
+.talk_page li .li_time span { background:#e0e0e0; color:#fff; padding:0px 5px; border-radius:3px;}
+
+.talk_none { height:47px;}
+.talk_none2 { height:140px;}
+.talk_none3 { height:232px;}
+
+.tool_box { position:fixed; z-index:10; width:100%; left:0px; bottom:0px;}
+.talk_tool { height:47px; border-top:1px solid #d8d8d8; padding:7px 15px; background:#ededed;}
+.talk_tool .a_box { padding:0px 84px 0px 42px; position:relative;}
+.talk_tool .a_box a.yy { position:absolute; left:0px; top:0px; width:32px; height:32px;}
+.talk_tool .a_box a.bq { position:absolute; right:42px; top:0px; width:32px; height:32px;}
+.talk_tool .a_box a.add { position:absolute; right:0px; top:0px; width:32px; height:32px;}
+.talk_tool .a_box .text { background:none; border-bottom:1px solid #bababa; height:32px; width:100%; line-height:31px; color:#666; font-size:16px;}
+.tool_box .add_pic { background:#f5f5f5; padding:12px 15px 7px 15px; border-top:1px solid #d8d8d8;}
+.tool_box .add_pic span { width:25%; float:left;}
+.tool_box .add_pic a { display:block; width:48px; height:48px; padding:6px 6px; border:1px solid #ccc; border-radius:3px; overflow:hidden; margin:0px auto;}
+.tool_box .add_pic i { display:block; text-align:center; font-size:14px; color:#666; line-height:20px; padding-top:5px;}
+.tool_box .face_img { height:185px; padding:7px 15px; background:#f5f5f5; border-top:1px solid #d8d8d8;}
+.talk_tool .a_box .textarea{
+    width: 100%; 
+    min-height: 20px; 
+    max-height: 300px;
+    _height: 120px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 3px; 
+    outline: 0; 
+    border: 1px solid #bababa; 
+    font-size: 16px; 
+	color:#333;
+    line-height: 24px;
+    padding: 3px;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.address_list { background:#fff;}
+.address_list li { border-bottom:1px solid #e5e5e5; padding:8px 15px 8px 67px; position:relative;}
+.address_list li b { display:block; width:42px; height:42px; overflow:hidden; border-radius:24px; position:absolute; left:15px; top:8px;}
+.address_list li b img { width:42px; min-height:42px;}
+.address_list li span { display:block; line-height:22px; color:#666;}
+.address_list li i { display:block; float:right; width:24px; height:24px; margin:0px 20px 0px 0px; border-radius:12px; overflow:hidden; background:#00aeef; padding:5px;}
+/*.address_list li i { display:block; float:right; width:24px; height:24px; margin:0px 20px 0px 0px; border-radius:12px; overflow:hidden; background:#fff; border:1px solid #00aeef; padding:4px;}*/
+.address_list li i img { float:left;}
+
+.address_word { background:url(../images/public/black_bg.png); width:24px; padding:5px 0px; text-align:center; font-size:14px; color:#333; border-bottom-left-radius:3px; border-top-left-radius:3px; position:fixed; right:0px; top:50px; overflow:hidden;}
+.address_word span { display:block; width:18px; height:18px; line-height:24px;}

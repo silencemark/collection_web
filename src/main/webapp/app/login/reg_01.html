@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>注册</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/login.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript">
+	var pageWidth = window.innerWidth;
+	var pageHeight = window.innerHeight;
+	var navWidth;
+	if (typeof pageWidth != "number")
+	{
+		if(document.compatMode == "CSS1Compat")
+		{
+			pageWidth = document.documentElement.clientWidth;
+			pageHeight = document.documentElement.clientHeight;
+		}
+		else
+		{
+			pageWidth = document.body.clientWidth;
+			pageHeight = document.body.clientHeight;
+		}
+	}
+	navWidth = (pageWidth - 200-30)/3;
+	
+	$(document).ready(function(){
+	 $(".reg_nav i").width(navWidth);
+});
+</script>
+<script type="text/javascript">
+function getvalidecode(){
+	$('#phone').attr("disabled",true);
+	var phone=$('#phone').val();
+	if(phone==""){
+		swal({
+			title : "",
+			text : "请输入手机号码",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		return;
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getVerificationCode?phone='+phone,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				location.href='reg_02.html?phone='+phone;
+			}
+		}
+	})
+}
+</script>
+</head>
+
+<body class="body_bg">
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage();">返回</a>
+    <div class="name">注册</div>
+</div>
+<div class="head_none"></div>
+<div class="reg_nav">
+	<span class="active"><img src="../appcssjs/images/login/ico_a.png"></span>
+    <i>line</i>
+    <span><img src="../appcssjs/images/login/ico_b.png"></span>
+    <i>line</i>
+    <span><img src="../appcssjs/images/login/ico_c.png"></span>
+    <i>line</i>
+    <span><img src="../appcssjs/images/login/ico_d.png"></span>
+    <div class="clear"></div>
+</div>
+<div class="reg_box">
+	<span class="bg03"><input type="number" placeholder="请输入手机号" id="phone" maxlength="11"></span>
+    <b><input type="button" value="下一步" class="btn_next"  onclick="getvalidecode()" style="background: #ff9b30"></b>
+    <em>点击下一步意味着您同意餐饮大师的<a href="agreement.html">《用户协议》</a></em>
+</div>
+</body>
+</html>

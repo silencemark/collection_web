@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>企业网盘</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/oa.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+</head>
+<script type="text/javascript">
+var moduleid=getUrlParam("moduleid");
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+	}
+)
+var filename="";
+function onloaddata(){
+	filename=$('#filename').val();
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getCompanyCloudList',
+		data:'filename='+filename+'&moduleid='+moduleid,
+		success:function(data){
+			if(data.companycloudlist.length > 0){
+				var temp="";
+				for(var i=0;i<data.companycloudlist.length;i++){
+					var fileurlname =  data.companycloudlist[i].filename;
+					if(fileurlname == undefined || fileurlname == ""){
+						data.companycloudlist[i].filename = "······";
+					}
+					if(data.companycloudlist[i].createtime != undefined && data.companycloudlist[i].createtime != ""){
+						data.companycloudlist[i].createtime = appBase.parseDateMinute(data.companycloudlist[i].createtime);
+					}
+					if(data.companycloudlist[i].filetype==2){
+						temp+="<li onclick=\"linkfold('"+data.companycloudlist[i].filename+"','"+data.companycloudlist[i].fileid+"')\">"+
+							"<div class=\"img\"><img src=\"../appcssjs/images/public/user_img.png\"></div>"+        
+				            "<div class=\"name\" style=\"text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:150px;\">"+data.companycloudlist[i].filename+"</div>"+
+				            "<div class=\"time\">"+data.companycloudlist[i].createtime+"</div>"+
+				        "</li>";
+					}
+				}
+				for(var i=0;i<data.companycloudlist.length;i++){
+					var fileurlname =  data.companycloudlist[i].filename;
+					if(fileurlname == undefined || fileurlname == ""){
+						data.companycloudlist[i].filename = "······";
+					}
+					if(data.companycloudlist[i].createtime != undefined && data.companycloudlist[i].createtime != ""){
+						data.companycloudlist[i].createtime = appBase.parseDateMinute(data.companycloudlist[i].createtime);
+					}
+					if(data.companycloudlist[i].filetype==1){
+						temp+="<li>"+
+							"<div class=\"img\"><img src=\"../appcssjs/images/public/user_img.png\"></div>"+        
+				            "<div class=\"name\"><span style=\"text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:150px;\">"+data.companycloudlist[i].filename+"</span><i onclick=\"downLoadFileApp('"+data.companycloudlist[i].fileurl+"')\">下载</i></div>"+
+				            "<div class=\"time\">"+data.companycloudlist[i].createtime+"</div>"+
+				        "</li>";
+					}
+				}
+				$('#ullist').parent().nextAll().remove();
+				$('#ullist').html(temp);
+			}else{
+				$('#ullist').html("");
+				$('#ullist').parent().nextAll().remove();
+				$('#ullist').parent().after("<div class=\"load_more\"><a>暂无数据</a></div>");
+			}
+		}
+	})
+}
+
+PageHelper({
+	url:projectpath+'/app/getCompanyCloudList',
+	data:'filename='+filename+'&moduleid='+moduleid,
+	success:function(data){
+		if(data.companycloudlist.length > 0){
+			var temp="";
+			for(var i=0;i<data.companycloudlist.length;i++){
+				var fileurlname =  data.companycloudlist[i].filename;
+				if(fileurlname == undefined || fileurlname == ""){
+					data.companycloudlist[i].filename = "······";
+				}
+				if(data.companycloudlist[i].createtime != undefined && data.companycloudlist[i].createtime != ""){
+					data.companycloudlist[i].createtime = appBase.parseDateMinute(data.companycloudlist[i].createtime);
+				}
+				if(data.companycloudlist[i].filetype==2){
+					temp+="<li onclick=\"linkfold('"+data.companycloudlist[i].filename+"','"+data.companycloudlist[i].fileid+"')\">"+
+						"<div class=\"img\"><img src=\"../appcssjs/images/public/user_img.png\"></div>"+        
+			            "<div class=\"name\" style=\"text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:150px;\">"+data.companycloudlist[i].filename+"</div>"+
+			            "<div class=\"time\">"+data.companycloudlist[i].createtime+"</div>"+
+			        "</li>";
+				}
+			}
+			for(var i=0;i<data.companycloudlist.length;i++){
+				var fileurlname =  data.companycloudlist[i].filename;
+				if(fileurlname == undefined || fileurlname == ""){
+					data.companycloudlist[i].filename = "······";
+				}
+				if(data.companycloudlist[i].createtime != undefined && data.companycloudlist[i].createtime != ""){
+					data.companycloudlist[i].createtime = appBase.parseDateMinute(data.companycloudlist[i].createtime);
+				}
+				if(data.companycloudlist[i].filetype==1){
+					temp+="<li>"+
+						"<div class=\"img\"><img src=\"../appcssjs/images/public/user_img.png\"></div>"+        
+			            "<div class=\"name\"><span style=\"text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; width:150px;\">"+data.companycloudlist[i].filename+"</span><i onclick=\"downLoadFileApp('"+data.companycloudlist[i].fileurl+"')\">下载</i></div>"+
+			            "<div class=\"time\">"+data.companycloudlist[i].createtime+"</div>"+
+			        "</li>";
+				}
+			}
+			$('#ullist').append(temp);
+		}
+	}
+});
+function linkfold(filename,fileid,type){
+	var foldInfo={};
+	foldInfo['filename']=filename;
+	foldInfo['fileid']=fileid;
+	JianKangCache.setGlobalData('foldInfo',foldInfo);
+	location.href='skydrivecompany2.html?moduleid='+moduleid;
+}
+</script>
+<body onload="onloaddata(1)">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='skydrivecompany_index.html'">返回</a>
+    <div class="name">企业网盘</div>
+</div>
+<div class="head_none"></div>
+<div class="top_sel">
+	<div class="long"><input type="text" class="t_text" placeholder="请输入关键字" id="filename"></div>
+    <div class="span">&nbsp;</div>
+    <div class="btn"><input type="button" value="" onclick="onloaddata();"></div>
+</div>
+
+<div class="sky_list">
+	<ul id="ullist">
+    </ul>
+</div>
+</body>
+</html>

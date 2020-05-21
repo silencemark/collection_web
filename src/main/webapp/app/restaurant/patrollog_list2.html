@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>巡店日志</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<link href="../appcssjs/style/mobiscroll.custom-2.6.2.min.css" type="text/css" rel="stylesheet"> 
+<script src="../appcssjs/script/mobiscroll.custom-2.6.2.min.js"></script> 
+</head>
+
+<body onload="initPage()">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='restaurant_index.html'">返回</a>
+    <div class="name">巡店日志</div>
+    <div class="link_yellow" onclick="location.href='patrollog_add.html'" id="linkadd";">新建</div>
+</div>
+<div class="head_none"></div>
+<div class="span_nav">
+	<span onclick="location.href='patrollog_list1.html'">待处理</span>
+    <span class="active last" id="yichuli">已处理</span>
+</div>
+<div class="top_sel">
+	<div class="time"><input type="text" placeholder="开始时间" id="begintime" readonly="readonly" class="t_time" value=""></div>
+    <div class="span">-</div>
+    <div class="time"><input type="text" placeholder="结束时间" id="endtime" readonly="readonly" class="t_time" value=""></div>
+    <div class="span">&nbsp;</div>
+    <div class="btn"><input type="button" id="search_btn" value=""></div>
+</div>
+<div class="page_list" id="ul_list">
+</div>
+<script type="text/javascript">
+
+var nodata = '<div class="list_none"><span><i class="yellow">Hello,我是大狮！</i><br>还没有巡店日志，赶紧添加一条吧~</span><b><img src="'+notDataImageUrl_havepower+'"></b></div>';
+
+var userInfo = "";
+  function loadPatrollog(status,starttime,endtime){
+	  JianKangCache.getGlobalData("userinfo",function(user){
+		  userInfo = user;
+		  if(typeof(user.powerMap.power6001010) != "undefined"){
+				$('#linkadd').show();
+		  }
+		  
+		  var url = projectpath+'/app/getTourStoreByDate';
+		    var key = "tourStoreList_handered_data_list";
+			$.ajax({
+			    type:"post",
+			    url:url,
+			    data:{companyid:user.companyid,userid:user.userid,status:status,starttime:starttime,endtime:endtime},
+			    success:function(data){
+			    	$('.list_none').remove();
+			    	$('#begintime').val(data.map.starttime);
+					$('#endtime').val(data.map.endtime);
+			    	 if(data.requestlist != null && data.requestlist.length>0){
+			    		$.each(data.requestlist,function(index,value){
+			    			var temp_li="";
+			    			$.each(value.tourList,function(i,item){
+			    				var templi = $("#store_temp2").html();
+			    				if(item.isread+"" == "0"){
+				    				item.style="";
+				    			}else {
+				    				item.style="style=\"background-image:url(''	)\"";
+				    			}
+			    				temp_li+=replaceTemp(templi,item);
+			    			});
+			    			var temp = $("#store_temp").html();
+			    			 value.temp_li = temp_li;
+			    			$("#ul_list").append(replaceTemp(temp,value));
+			    		});
+			    		JianKangCache.setData(key,data.requestlist);
+			    	}else{
+			    		$("#ul_list").empty();
+			    		$(".list_none").remove();
+			    		$("body").append(nodata);
+			    	}
+			    	 $('#ul_list div[class="time_name"]:first').click();
+			    },error:function(e){
+			    	JianKangCache.getData(key,function(result){
+			    		$.each(result,function(index,value){
+			    			var temp_li="";
+			    			$.each(value.tourList,function(i,item){
+			    				var templi = $("#store_temp2").html();
+			    				if(item.isread+"" == "0"){
+				    				item.style="";
+				    			}else {
+				    				item.style="style=\"background-image:url(''	)\"";
+				    			}
+			    				temp_li+=replaceTemp(templi,item);
+			    			});
+			    			var temp = $("#store_temp").html();
+			    			 value.temp_li = temp_li;
+			    			$("#ul_list").append(replaceTemp(temp,value));
+			    		});
+			    	});
+			    	$('#ul_list div[class="time_name"]:first').click();
+			    }
+			});
+			
+		   PageHelper({
+				url:url,
+				data:{companyid:user.companyid,userid:user.userid,status:status,starttime:starttime,endtime:endtime},
+				success:function(data){
+					if(data.requestlist != null){
+						$.each(data.requestlist,function(index,value){
+			    			var temp_li="";
+			    			$.each(value.tourList,function(i,item){
+			    				var templi = $("#store_temp2").html();
+			    				if(item.isread+"" == "0"){
+				    				item.style="";
+				    			}else {
+				    				item.style="style=\"background-image:url(''	)\"";
+				    			}
+			    				temp_li+=replaceTemp(templi,item);
+			    			});
+			    			var temp = $("#store_temp").html();
+			    			 value.temp_li = temp_li;
+			    			$("#ul_list").append(replaceTemp(temp,value));
+			    		});
+			    	}  
+				}
+			});  
+	  });
+  }
+  $(function(){
+	  loadPatrollog(1,null,null);
+	//初始化时间控件
+	  	var currYear = (new Date()).getFullYear();	
+		var opt={};
+		opt.date = {preset : 'date', dateFormat: 'yy-mm-dd' };
+		//opt.datetime = { preset : 'datetime', minDate: new Date(2012,3,10,9,22), maxDate: new Date(2014,7,30,15,44), stepMinute: 5  };
+		opt.datetime = {preset : 'date', dateFormat: 'yy-mm-dd' }; 
+		opt.time = {preset : 'time'};
+		opt.default = { 
+			theme: 'android-ics light', //皮肤样式  
+	        display: 'modal', //显示方式  
+	        mode: 'scroller', //日期选择模式
+	        dateOrder : 'yymmdd',  
+			lang:'zh',
+	        startYear:currYear - 10, //开始年份
+	        endYear:currYear + 10 //结束年份
+		};
+		$("#begintime").scroller('destroy').scroller($.extend(opt['datetime'], opt['default']));
+		$("#endtime").scroller('destroy').scroller($.extend(opt['datetime'], opt['default']));
+// 	    $("#begintime").scroller(opt);
+// 	    $("#endtime").scroller(opt);
+	    
+	    
+	  $("#yichuli").click(function(){
+		  $("#ul_list").html("");
+		  $("#search_btn").click();
+	  });
+	  
+	  //搜索
+	  $("#search_btn").click(function(){
+		  $("#ul_list").html("");
+		  loadPatrollog(1,$("#begintime").val(),$("#endtime").val());
+		  //location.reload();
+	  });
+	  
+  });
+  
+  //上下收缩
+  function toggleShwo(obj){
+	  if($(obj).find("b").attr("class") == "down"){
+		  $(obj).next().show();
+		  $(obj).find("b").attr("class","up");
+	  }else{
+		  $(obj).next().hide();
+		  $(obj).find("b").attr("class","down");
+	  }
+  }
+  
+  //点击改为已读状态
+  function changeToRead(forwardId,tourstoreid,isread){
+	  if(isread+"" == "0"){
+		  $.ajax({
+              url:projectpath+"/app/updateReadStatus",
+              type:"post",
+              data:{dataid:forwardId},
+              success:function(data){
+            	  location.href='patrollog_detail.html?tourstoreid='+tourstoreid+'&forwarduserid='+forwardId;
+              } 	   
+		 });
+    }else{
+    	location.href='patrollog_detail.html?tourstoreid='+tourstoreid+'&forwarduserid='+forwardId;
+	  }
+ }
+  
+  function getNotIsRead(param){
+		$.ajax({
+			url:projectpath+"/app/getTourStoreAllNotRead",
+			type:"post",
+			data:param,
+			success:function(data){
+				if(data.status == 0 || data.status == '0'){
+					var noexamiennum = data.noexaminenum;
+					var examinenum = data.examinenum;
+					if(noexamiennum > 0){
+						$('.span_nav span:first').prepend(redPoint);
+					}
+					if(examinenum > 0){
+						$('.span_nav span:last').prepend(redPoint);
+					}
+				}
+			}
+		});
+	}
+  
+  function initPage(){
+	  var param = new Object();
+	  param.userid = userInfo.userid;
+	  param.companyid = userInfo.companyid;
+	  getNotIsRead(param);
+  }
+
+
+</script>
+<script type="text/temple" id="store_temp">
+   <div class="time_name" onclick="toggleShwo(this);" id="{createtime}_div"><span>{createtime}<i>{count}</i><em>点</em></span><b class="down">隐藏</b></div>
+   <ul style="display:none" id="{createtime}_ul">{temp_li}</ul>
+</script>
+<script type="text/temple" id="store_temp2">
+        <li class="li_del" onclick="changeToRead('{forwarduserid}','{tourstoreid}','{isread}')">
+			<div class="li_box" id="{forwarduserid}_libox">
+        	<div class="xx_01"><span {style} class="new">{organizename}</span><em class="green">已处理</em></div>
+             <div class="xx_02"><span class="name">{createname}</span><i>{arrivetime}<em>至</em>{leavetime} </i></div>
+			</div>
+            <a class="del_btn" style="width:0px;" onclick="deleteForwardUserInfo(this)" id="{forwarduserid}_delbtn">删除</a>
+			<div class="clear"></div>
+
+        </li>
+</script>
+</body>
+</html>

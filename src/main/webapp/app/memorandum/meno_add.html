@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新建日程</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/memo.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<link href="../appcssjs/style/mobiscroll.custom-2.6.2.min.css" type="text/css" rel="stylesheet"> 
+<script src="../appcssjs/script/mobiscroll.custom-2.6.2.min.js"></script> 
+</head>
+<script type="text/javascript">
+var date1= getUrlParam("datetime");
+
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+function savememorandum(){
+	var datetime=$('#datetime').val();
+	var hourtime=$('#hourtime').val();
+	var content=$('#content').val();
+	if(datetime=="" || hourtime==""){
+		swal({
+			title : "",
+			text : "请选择提醒时间",
+			type : "error",
+			showCancelButton : true,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			$('#datehour').click();
+		});
+		return;
+	}
+	if(content==""){
+		swal({
+			title : "",
+			text : "请填写提醒内容",
+			type : "error",
+			showCancelButton : true,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			$('#content').focus();
+		});
+		return;
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/insertMemorandum?companyid='+userInfo.companyid+'&createid='+userInfo.userid+'&datetime='+datetime+'&hourtime='+hourtime+'&content='+content,
+		success:function(data){
+			if(data.status==0){
+				swal({
+					title : "",
+					text : "添加成功",
+					type : "success",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					location.href='calendar.html?datetime='+date1;
+				});
+			}
+		}
+	})
+}
+$(function(){
+	var currYear = (new Date()).getFullYear();	
+	var opt={};
+	opt.date = {preset : 'date', dateFormat: 'yy-mm-dd' };
+	//opt.datetime = { preset : 'datetime', minDate: new Date(2012,3,10,9,22), maxDate: new Date(2014,7,30,15,44), stepMinute: 5  };
+	opt.datetime = {preset : 'datetime', dateFormat: 'yy-mm-dd' }; 
+	opt.time = {preset : 'time'};
+	opt.default = { 
+		theme: 'android-ics light', //皮肤样式  
+        display: 'modal', //显示方式  
+        mode: 'scroller', //日期选择模式
+        dateOrder : 'yymmdd',  
+		lang:'zh',
+        startYear:currYear - 10, //开始年份
+        endYear:currYear + 10 //结束年份
+	};
+	$('#datehour').scroller('destroy').scroller($.extend(opt['datetime'], opt['default'])); 
+	
+	$('#datehour').change(function(){
+		var datehour=$(this).val();
+		var datestr=datehour.split(" ");
+		$('#datetime').val(datestr[0]);
+		$('#hourtime').val(datestr[1]);	
+	})
+})
+function onloaddata(){
+	if(date1 != "" && date1 != null){
+	var date2=date1.split("-");
+	var date3=date2[0];
+	if(parseInt(date2[1])<10){
+		date3+="-0"+date2[1];
+	}else{
+		date3+="-"+date2[1];
+	}
+	if(parseInt(date2[2])<10){
+		date3+="-0"+date2[2];
+	}else{
+		date3+="-"+date2[2];
+	}
+	$('#datehour').val(date3+" 08:00");
+	$('#datetime').val(date3);
+	$('#hourtime').val("08:00");
+	}
+}
+</script>
+<body  onload="onloaddata()">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='calendar.html?datetime='+date1;">返回</a>
+    <div class="name">新建日程</div>
+   	<div class="link_yellow" onclick="savememorandum()">保存</div>
+</div>
+<div class="head_none"></div>
+<div class="detail_box">
+	<ul>
+		<input type="hidden" id="datetime"/>
+		<input type="hidden" id="hourtime"/>
+    	<li><span>提醒时间</span><input type="text" class="text" id="datehour" readonly="readonly"></li>
+        <li>
+        	<span>提醒事由</span><div class="clear"></div>
+            <p><textarea placeholder="" class="text_area" id="content"></textarea></p>
+        </li>
+    </ul>
+</div>
+
+<!-- <div class="div_mask"></div> -->
+</body>
+</html>

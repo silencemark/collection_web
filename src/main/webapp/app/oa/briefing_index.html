@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>主页</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+
+var nodata = '<div class="list_none"><span><i class="yellow">Hi,我是大狮！</i><br>列表空空，还没有简报栏目呢~</span><b><img src="'+notDataImageUrl_nopower+'"></b></div>';
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+		/* if(typeof(data.powerMap.power5001110) != "undefined"){
+			$('#linkadd').show();
+		} */
+	}
+)
+function getnotice(){
+	if(typeof(userInfo.powerMap.power5001110) != "undefined"){
+		$('#linkadd').show();
+		nodata = '<div class="list_none"><span><i class="yellow">Hello,我是大狮！</i><br>还没有简报栏目，赶紧添加一条吧~</span><b><img src="'+notDataImageUrl_havepower+'"></b></div>';
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getCompanyModuleList',
+		data:'companyid='+userInfo.companyid+'&userid='+userInfo.userid,
+		success:function(data){
+			if(data.modulelist.length>0){
+				$('#ullist').parent().show();
+				$(".list_none").remove();
+				var temp="";
+				var indexnum=1;
+				for(var i=0;i<data.modulelist.length;i++){
+					if(indexnum==13){
+						indexnum==1;
+					}
+					temp+="<li onclick=\"location.href='briefing_list.html?moduleid="+data.modulelist[i].moduleid+"'\"><b class=\""+(data.modulelist[i].moduleimage!=null && data.modulelist[i].moduleimage!=undefined && data.modulelist[i].moduleimage!=""?"news_b":"oa_bg"+indexnum)+"\" style='width:62px; height:62px;'>"+(data.modulelist[i].moduleimage!=null && data.modulelist[i].moduleimage!=undefined && data.modulelist[i].moduleimage!=""?"<img width=\"38\" height=\"38\" src=\""+projectpath+"/"+data.modulelist[i].moduleimage+"\" >":"<img width=\"38\" height=\"38\" src=\"../appcssjs/images/oa/menu_02.png\" >");
+					if(data.modulelist[i].briefnum > 0){
+						temp+="<i>"+data.modulelist[i].briefnum+"</i>";
+					}
+					temp+="</b><span>"+data.modulelist[i].modulename+"</span></li>";
+					indexnum++;
+				}
+				$('#ullist').html(temp);
+			}else{
+				$('#ullist').parent().hide();
+				$(".list_none").remove();
+				$("body").append(nodata);
+			}
+		}
+	})
+}
+</script>
+
+
+
+<body onload="getnotice()">
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='index.html'">返回</a>
+    <div class="name">企业简报</div>
+    <div class="link_yellow" onclick="location.href='briefing_addmenu.html'" id="linkadd" style="display: none;">新建</div>
+</div>
+<div class="head_none"></div>
+<div class="index_menu">
+	<ul id="ullist">
+    </ul>
+    <div class="clear"></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>岗位星值详情</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/kpi.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script> 
+<script type="text/javascript" src="../appcssjs/script/showcomment.js"></script>
+</head>
+
+<body>
+<div id="htmlbody">
+<input type="hidden" id="examineuserid">
+<span id="examinename" style="display:none"></span>
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage();">返回</a>
+    <div class="name">岗位星值详情</div>
+</div>
+<div class="head_none"></div>
+<div class="xx_one">
+	<ul>
+        <li>所属区域：<i id="organizename"></i></li>
+        <li>岗位名称：<i id="gangwei"></i></li>
+    </ul>
+    <div class="state" id="agree" style="display: none;"><img src="../appcssjs/images/public/agree_img.png"></div>
+</div>
+<div class="star_list">
+	<ul id="evaluate_list">
+<!--     	<li><span>仪容仪表</span><b><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start3.png"></em><em><img src="../appcssjs/images/public/start3.png"></em></b></li> -->
+<!--         <li><span>微笑服务</span><b><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start3.png"></em><em><img src="../appcssjs/images/public/start3.png"></em></b></li> -->
+<!--         <li><span>区域卫生</span><b><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start3.png"></em><em><img src="../appcssjs/images/public/start3.png"></em></b></li> -->
+<!--         <li><span>物品摆放</span><b><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start3.png"></em><em><img src="../appcssjs/images/public/start3.png"></em></b></li> -->
+<!--         <li><span>餐前准备</span><b><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start3.png"></em><em><img src="../appcssjs/images/public/start3.png"></em></b></li> -->
+<!--         <li><span>工作纪律</span><b><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start3.png"></em><em><img src="../appcssjs/images/public/start3.png"></em></b></li> -->
+<!--         <li><span>团队意识</span><b><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start2.png"></em><em><img src="../appcssjs/images/public/start3.png"></em><em><img src="../appcssjs/images/public/start3.png"></em></b></li> -->
+    </ul>
+    <div class="total">合计：<i id="sumstar"></i>星</div>
+</div>
+
+<div class="xx_user">
+    <div class="txt">
+        <span class="name">申请人：<em id="shenqing_name"></em></span>
+        <span class="time">填写时间：<em id="shenqing_time"></em></span>
+         <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name">审批人：<em id="shenpi_name"></em></span>
+        <span class="time">审批时间：<em id="shenpi_time"></em></span>
+         <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name" style="width:98%;text-overflow:ellipsis ; overflow:hidden; white-space:nowrap;">抄送人：<em id="CCusernames"></em></span>
+         <div class="clear"></div>
+    </div>
+    <div class="txt">
+        <span class="name" style="width:98%;text-overflow:ellipsis ; overflow:hidden; white-space:nowrap;">转发人：<em id="sendname"></em></span>
+        <div class="clear"></div>
+    </div>
+    <div class="txt last">
+        <span class="name" style="font-weight: bold;">审批意见</span>
+        <div class="clear"></div>
+     </div> 
+     <div class="p_box" id="yijian"></div> 
+</div>
+<div class="comment">
+	<div class="name">共有<em id="comnum">0</em>条评论</div>
+    <ul id="comment_list">
+    </ul>
+</div>
+<!-- <div class="fbtn_none"></div>
+<div class="foot_btn">
+	<span name="foot_span" onclick="forwarding_opent_close()" class="active">转发</span>
+    <span name="foot_span" onclick="comment_opent_close()">评论</span>
+</div>
+
+<div class="div_mask" style="display: none" id="screen"></div>
+<div class="tc_comment" style="display: none" id="commentdiv">
+	<div class="name">评论</div>
+	<input type="hidden" id="parentid" />
+	<input type="hidden" id="parentuserid" />
+    <div class="text_box"><textarea id="content"></textarea></div>
+    <div class="btn_box">
+    	<input type="button" value="提交" class="btn_01" onclick="addComment();">
+        <input type="button" value="取消" class="btn_02" onclick="comment_opent_close();">
+    </div>
+</div> -->
+<div class="bt_none" id="pinglun_none" style="display: none;"></div>
+<div class="tool_detail" id="pinglun_detail" style="display: none;">
+    <div class="talk_detail">
+        <div class="a_box">
+            <input type="text" readonly="readonly" onclick="comment_opent_close()" class="text" placeholder="写评论.意见或建议">
+            <a class="zf" onclick="forwarding_opent_close()"><img src="../appcssjs/images/share/zf.png"></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="div_mask" style="display: none" onclick="comment_opent_close();" id="screen"></div>
+<div class="tc_comment" style="display: none" id="commentdiv">
+	<!-- <div class="name">评论</div> -->
+	<input type="hidden" id="parentid" />
+	<input type="hidden" id="parentuserid" />
+    <div class="text_box"><textarea id="content"></textarea></div>
+    <div class="btn_box">
+    	<!-- <input type="button" value="提交" class="btn_01" > -->
+        <input type="button" value="发表" class="btn_02" onclick="addComment();" style="margin-left:180px;">
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+	userInfo = data
+});
+
+function showcommentnoneanddetail(userid){
+	if(userid.indexOf(userInfo.userid) >= 0){
+		$('#pinglun_none').show();
+		$('#pinglun_detail').show();
+	}
+}
+</script>
+<script type="text/javascript" src="../appcssjs/script/selectuser_forward.js"></script>
+</body>
+
+<script type="text/javascript">
+
+var evaluateid = appBase.getQueryString("evaluateid");
+var userid = appBase.getQueryString("userid");
+var forwarduserid = appBase.getQueryString("forwarduserid");
+
+$(function(){
+	
+	var resourceType = appBase.getQueryString("type");
+	//修改未读状态
+// 	intoDetailUpdateRead(userid, evaluateid, resourceType);
+	
+	var obj = new Object();
+	obj.evaluateid = evaluateid;
+	obj.userid = userid;
+	requestPost('/app/getEvaluateInfo',obj,'detail_'+evaluateid+userid,true,function(resultMap){
+		if(resultMap != undefined && resultMap != null){
+			var evaluateInfo = resultMap.evaluateInfo;
+			var evaluatelist = resultMap.evaluatelist;
+			//显示审核项目
+			if(evaluatelist.length > 0 && evaluatelist != null){
+				var htm = "";
+				$.each(evaluatelist,function(i,map){
+					var status = map.status;
+					if(status == "1" || status == 1){
+						htm += '<li>'+
+									'<span style="font-weight:bold;">'+((map.projectname)==undefined?"":map.projectname)+'</span>'+
+									'<b></b>'+
+								'</li>';
+					}else{
+						var xing = "";
+						var starlevel = map.starlevel;
+						var dj = dengji(starlevel);
+						for(var g=0;g<5;g++){
+							if(g<starlevel){
+								xing += '<em><img src="../appcssjs/images/public/start2.png"></em>';
+							}else{
+								xing += '<em><img src="../appcssjs/images/public/start3.png"></em>';
+							}
+						}
+						htm += '<li>'+
+									'<span>'+((map.projectname)==undefined?"":map.projectname)+'</span>'+
+									'<b>'+
+										xing+'<font style="font-weight:normal; font-size:12px;">&nbsp;&nbsp;'+dj+'</font>'+
+									'</b>'+
+								'</li>';
+					}
+				});
+				$('#evaluate_list').append(htm);
+			}
+			//显示审核的基本信息
+			if(evaluateInfo != null){
+				$('#shenqing_name').text(evaluateInfo.createname);
+				$('#shenqing_time').text(appBase.parseDateMinute(evaluateInfo.createtime));
+				$('#shenpi_name').text(evaluateInfo.examinename);
+				if(evaluateInfo.updatetime == undefined){
+					$('#shenpi_time').parent().hide();
+				}
+				$('#shenpi_time').text(appBase.parseDateMinute(evaluateInfo.updatetime)==null?"":appBase.parseDateMinute(evaluateInfo.updatetime));
+				$('#yijian').text(evaluateInfo.opinion==undefined?"":evaluateInfo.opinion);
+				$('#organizename').text(evaluateInfo.organizename);
+				$('#gangwei').text(evaluateInfo.templatename);
+				$('#sumstar').text(evaluateInfo.sumstar);
+				$('#shenqing_name').attr("onclick","location.href='../member/homepage_info.html?userid="+evaluateInfo.createid+"'");
+				$('#shenpi_name').attr("onclick","location.href='../member/homepage_info.html?userid="+evaluateInfo.examineuserid+"'");
+				if(evaluateInfo.status == '1' || evaluateInfo.status == 1){
+					if(evaluateInfo.result == 1 || evaluateInfo.result == '1'){
+						$('#agree').show();
+					}else if(evaluateInfo.result == 2 || evaluateInfo.result == '2'){
+						$('#agree').show();
+						$('#agree').find('img').attr("src","../appcssjs/images/public/agree_img2.png");
+					}
+				}
+				
+				$('#CCusernames').text(evaluateInfo.CCusernames);
+				
+				showcommentnoneanddetail(evaluateInfo.createid);
+				showcommentnoneanddetail(evaluateInfo.examineuserid);
+				$.each(evaluateInfo.ccuserlist,function(i,item){
+					showcommentnoneanddetail(item.userid);
+				});
+				$.each(evaluateInfo.forwardnamelist,function(i,item){
+					showcommentnoneanddetail(item.forwarduserids);
+				});
+			}
+		}
+	});
+	
+	getSendName(forwarduserid,"#sendname");
+	
+	obj.resourcetype = 6;
+	obj.orderid = evaluateid;
+	//查询评论信息
+	requestPost("/app/getOrderComment",obj,"",true,function(resultMap){
+		if(resultMap != undefined && resultMap != null){
+			var commentlist = resultMap.commentlist;
+			var commentnum = resultMap.num;
+			$('#comnum').text(commentnum);
+			showComment(commentlist);
+		}
+	});
+	
+	//评论加载更多
+	PageHelper({
+		url:projectpath+"/app/getOrderComment",
+		data:obj,
+		success:function(resultMap){
+			if(resultMap != undefined && resultMap != null){
+				var commentlist = resultMap.commentlist;
+				showComment(commentlist);
+			}
+		}
+	}); 
+	
+	//样式切换
+	$('.foot_btn').delegate('span[name="foot_span"]',"click",function(){
+		$('span[name="foot_span"]').attr("class","");
+		$(this).attr("class","active");
+	});
+});
+
+function dengji(level){
+	level = parseInt(level);
+	/* if(level == 1){
+		return "很差";
+	}else if(level == 2){
+		return "不差";
+	}else if(level == 3){
+		return "一般";
+	}else if(level == 4){
+		return "&nbsp;&nbsp;&nbsp;好";
+	}else if(level == 5){
+		return "很好";
+	} */
+	if(level == 1){
+		return "一星";
+	}else if(level == 2){
+		return "二星";
+	}else if(level == 3){
+		return "三星";
+	}else if(level == 4){
+		return "四星";
+	}else if(level == 5){
+		return "五星";
+	}
+}
+
+function logical(){
+	swal({
+		title : "",
+		text : "确认转发给"+$('#examinename').text()+"？",
+		type : "success",
+		showCancelButton : true,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		sendComment(2,$('#examinename').text(),$('#examineuserid').val());
+		userForword(userInfo.companyid,evaluateid,$('#examineuserid').val(),userInfo.userid,6);
+		location.reload(false);
+	});
+}
+
+//添加评论信息
+function addComment(){
+	if(isforwarding==1){
+		sendComment(1,"","");
+		location.reload(false);
+	}else{			
+		$('.div_mask').hide();
+		$('#commentdiv').hide();
+		$('#organizeiframe').show();
+		$('#htmlbody').hide();		
+	}
+}
+
+function sendComment(type,forwardusernames,forwarduserids){
+	var param = new Object();
+	param.content = $('#content').val();
+	param.userid = userid;
+	param.resourceid = evaluateid;
+	param.resourcetype = 6;
+	param.type = type;
+	param.forwardusernames = forwardusernames;
+	param.forwarduserids = forwarduserids;
+	addcommentAjax(param);
+}
+
+//公共的查询方法
+function requestPost(url,data,identifying,issynchroniz,callback){
+	$.ajax({
+		url:projectpath+url,
+		data:data,
+		async:issynchroniz,
+		type:"post",
+		beforeSend:function(){
+			$('#jiazaizhong').show();
+		},
+		success:function(resultMap){
+			//保存到当前路径缓存
+			JianKangCache.setData("kpi_",resultMap);
+			callback(resultMap);
+		},error:function(e){
+			//取出缓存数据
+			JianKangCache.getData("kpi_",function(resultMap){
+				callback(resultMap);
+			});
+		},complete:function(){
+			$('#jiazaizhong').hide();
+		}
+	});
+}
+</script>
+
+</html>

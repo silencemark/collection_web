@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>登录</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/login.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+    localStorage.GroupList="{}";
+	var pageWidth = window.innerWidth;
+	var pageHeight = window.innerHeight;
+	var minHeight ;
+	if (typeof pageWidth != "number")
+	{
+		if(document.compatMode == "CSS1Compat")
+		{
+			pageWidth = document.documentElement.clientWidth;
+			pageHeight = document.documentElement.clientHeight;
+		}
+		else
+		{
+			pageWidth = document.body.clientWidth;
+			pageHeight = document.body.clientHeight;
+		}
+	}
+	
+	if(pageHeight>480){
+		minHeight = pageHeight;
+	}
+	else
+	{
+		minHeight = 480;
+	}
+	
+	$(document).ready(function(){
+	 $(".min_height").height(minHeight);
+});
+</script>
+<script type="text/javascript">
+function webviewlogin(uname,psw){
+	$('#username').val(uname);
+	$('#password').val(psw);
+	login();
+}
+function login(){
+	var username=$('#username').val();
+	var password=$('#password').val();
+	if(username==""){
+		swal({
+			title : "",
+			text : "用户名不能为空",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		return;
+	}
+	if(password==""){
+		swal({
+			title : "",
+			text : "请输入长度6-16位密码",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+			
+		});
+		return;
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/userlogin?username='+username+'&password='+password,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					$("#password").val("");
+				});
+			}else{
+				var param = new Object();
+				param.username = username;
+				param.password = password;
+				//保存到当前路径缓存
+				JianKangCache.setData("logininfo",param);
+				JianKangCache.setGlobalData("companylist",data.companylist);
+				if(data.companylist.length==1){
+					$.ajax({
+						type:'post',
+						dataType:'json',
+						url:projectpath+'/app/chooseCompany?userid='+data.companylist[0].userid,
+						success:function(data2){
+							if(data2.status==1){
+								swal({
+									title : "",
+									text : data2.message,
+									type : "error",
+									showCancelButton : false,
+									confirmButtonColor : "#ff7922",
+									confirmButtonText : "确认",
+									cancelButtonText : "取消",
+									closeOnConfirm : true
+								}, function(){
+									
+								});
+							}else{
+								$.ajax({
+									type:'post',
+									dataType:'json',
+									url:projectpath+'/app/getShopListByUser?userid='+data.companylist[0].userid+'&companyid='+data.companylist[0].companyid,
+									success:function(data1){
+										if(data1.status==1){
+											swal({
+												title : "",
+												text : data1.message,
+												type : "error",
+												showCancelButton : false,
+												confirmButtonColor : "#ff7922",
+												confirmButtonText : "确认",
+												cancelButtonText : "取消",
+												closeOnConfirm : true
+											}, function(){
+												
+											});
+										}else{
+											if(data1.shoplist!=""){
+												data2.userInfo.organizeid=data1.shoplist[0].organizeid;
+												data2.userInfo.organizename=data1.shoplist[0].organizename;
+												data2.userInfo.datacode=data1.shoplist[0].datacode;
+											}
+											JianKangCache.setGlobalData("userinfo",data2.userInfo);
+											JianKangCache.setGlobalData("isfristlogin",data2.userInfo.isfristlogin);
+											if(data2.userInfo.isfristlogin==1){
+												location.href="reset_assword.html";
+											}else{
+												setJpushId(data2.userInfo.userid);
+												location.href="index.html";
+											}
+										}
+									}
+								})
+								
+							}
+						}
+					})
+				}else{
+					location.href="login_choice.html";
+				}
+				
+			}
+		}
+	})
+}
+
+	
+$(function(){
+	//取出缓存数据
+	JianKangCache.getData("logininfo",function(param){
+		$('#username').val(param.username);
+	});
+});
+	
+</script>
+<body class="body_bg">
+<div class="min_height">
+<div class="logo_name"><img src="../appcssjs/kpi/images/login/logo_name.png"></div>
+<div class="text_box">
+	<span><i>账号</i><input type="text" placeholder="请输入手机号" id="username" ></span>
+    <span><i>密码</i><input type="password" placeholder="请输入长度6-16位密码" id="password"></span>
+    <b><input type="button" value="登录" onclick="login()"></b>
+</div>
+<div class="link_bt"><a href="find_assword.html" class="link_a">忘记密码?</a><a href="reg_01.html" class="link_b">注册</a></div>
+</div>
+</body>
+</html>

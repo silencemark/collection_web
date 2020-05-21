@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>供应商详情</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/purchase.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+function onloaddata(){
+	if(typeof(userInfo.powerMap.power1001010) == "undefined"){
+		$('#linkupdate').hide();
+	}
+}
+</script>
+<body onload="onloaddata()">
+<div class="head_box">
+	<a class="ico_back"  onclick="goBackPage();">返回</a>
+   <div class="name">供应商详情</div>
+   <div class="link_yellow" id="editSupplier" onclick="" id="linkupdate">修改</div>
+</div>
+<div class="head_none"></div>
+<div class="detail_box" id="supplier_detail_div">
+	<!-- <ul>
+    	<li><span>供应商编号</span><i>GYS2016011123456</i></li>
+        <li><span>供应商名称</span><i>供应商一</i></li>
+        <li><span>供应商类型</span><i>日常用品</i></li>
+        <li><span>联系人</span><i>shuji</i></li>
+        <li><span>联系人电话</span><i>1356879785</i></li>
+        <li><span>职务</span><i>总经理</i></li>
+        <li><span>详细地址</span><i>上海浦东新区</i></li>
+        <li><span>纳税人识别号</span><i>GYS2016011123456</i></li>
+        <li><span>开户行</span><i>上海银行</i></li>
+        <li><span>银行账号</span><i>GYS2016011123456</i></li>
+        <li><span class="name">简介</span><div class="clear"></div><p>简介详细内容简介详细内容简介详细内容简介详细内容简介详细内容简介详细内容简介详细内容简介详细内容简介详细内容</p></li>
+    </ul>
+    <ul>
+    	<li><span>供应商创建人</span><i>张海松</i></li>
+        <li><span>创建时间</span><i>2016-06-01 12:20</i></li>
+    </ul>
+    <ul>
+    	<li><span>供应商修改人</span><i>张海松</i></li>
+        <li><span>修改时间</span><i>2016-06-01 12:20</i></li>
+    </ul> -->
+</div>
+<script type="text/javascript">
+ $(function(){
+	 var supplierid = appBase.getQueryString("supplierid");
+	 $("#editSupplier").attr("onclick","location.href='supplier_add.html?supplierid="+supplierid+"'");
+	 $.ajax({
+			url:projectpath+"/app/getSupplierInfo",
+			data:{supplierid:appBase.getQueryString("supplierid")},
+			type:"post",
+			success:function(data){
+				var temp = $("#supplier_detail_temp").html();
+				$(supplier_detail_div).append(replaceTemp(temp,data.supplierInfo));
+			}
+		 });
+ });
+
+</script>
+<script type="text/temple" id="supplier_detail_temp">
+ <ul>
+    	<li><span>供应商编号</span><i>{supplierno}</i></li>
+        <li><span>供应商名称</span><i>{suppliername}</i></li>
+        <li><span>供应商类型</span><i>{suppliertype}</i></li>
+        <li><span>联系人</span><i>{contactsname}</i></li>
+        <li><span>联系人电话</span><i>{phone}</i></li>
+        <li><span>职务</span><i>{position}</i></li>
+        <li><span>详细地址</span><i>{address}</i></li>
+        <li><span>纳税人识别号</span><i>{taxpayernum}</i></li>
+        <li><span>开户行</span><i>{bankname}</i></li>
+        <li><span>银行账号</span><i>{bankaccount}</i></li>
+        <li><span class="name">简介</span><div class="clear"></div><p>{introduction}</p></li>
+    </ul>
+    <ul>
+    	<li><span>供应商创建人</span><i>{createname}</i></li>
+        <li><span>创建时间</span><i>{createtime}</i></li>
+    </ul>
+    <ul>
+    	<li><span>供应商修改人</span><i>{updatename}</i></li>
+        <li><span>修改时间</span><i>{updatetime}</i></li>
+    </ul>
+</script>
+
+</body>
+</html>

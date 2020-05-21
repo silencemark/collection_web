@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>规则</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/kpi.css">
+
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+
+
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+</head>
+
+<body>
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage();">返回</a>
+    <div class="name">规则</div>
+</div>
+<div class="head_none"></div>
+<div class="rule_list">
+	<ul id="rule_list">
+<!--     	<li><span>KPI星级考核制度</span></li> -->
+<!--         <li><span>KPI星级考核制度</span></li> -->
+<!--         <li><span>KPI星级考核制度</span></li> -->
+<!--         <li><span>KPI星级考核制度</span></li> -->
+<!--         <li><span>KPI星级考核制度</span></li> -->
+    </ul>
+</div>
+</body>
+
+<script type="text/javascript">
+var organizeid = appBase.getQueryString("organizeid");
+
+var obj = new Object();
+$(function(){
+	JianKangCache.getGlobalData('userinfo',function(data){
+		obj.userid = data.userid;
+		obj.companyid = data.companyid;
+		userInfo = data;
+	});
+	requestPost("/app/getStarRuleList",obj,'rule',true,function(resultMap){
+		if(resultMap != undefined && resultMap != ""){
+			var list = resultMap.rulelist;
+			showRuleInfo(list);
+		}
+	});
+	
+	//加载更多
+	PageHelper({
+		url:projectpath+"/app/getStarRuleList",
+		data:obj,
+		success:function(resultMap){
+			if(resultMap != null && resultMap != ""){
+				var userlist = resultMap.rulelist;
+				showRuleInfo(list);
+			}
+		}
+	});
+});
+var nodata = '<div class="list_none"><span><i class="yellow">Hello,我是大狮！</i><br>列表空空，还没有kPI考核规则的~</span><b><img src="'+notDataImageUrl_nopower+'"></b></div>';
+//显示规则信息
+function showRuleInfo(list){
+	if(list.length > 0 && list != null){
+		$('.list_none').remove();
+		var htm = '';
+		$.each(list,function(i,map){
+			htm += '<li onclick="location.href=\'rule_detail.html?ruleid='+map.ruleid+'\'"><span><div><div style="text-overflow:ellipsis ; overflow:hidden; white-space:nowrap; max-width:130px;">'+map.title+'</div><font style="float:right; margin-top:-35px; margin-right:15px;">'+appBase.parseDateMinute(map.createtime)+'</font></div></span></li>';
+		});
+		$('#rule_list').append(htm);
+	}else{
+		$('.list_none').remove();
+		$('body').append(nodata);
+	}
+}
+
+//公共的查询方法
+function requestPost(url,data,identifying,issynchroniz,callback){
+	$.ajax({
+		url:projectpath+url,
+		data:data,
+		async:issynchroniz,
+		type:"post",
+		beforeSend:function(){
+			$('#jiazaizhong').show();
+		},
+		success:function(resultMap){
+			//保存到当前路径缓存
+			JianKangCache.setData("kpi_",resultMap);
+			callback(resultMap);
+		},error:function(e){
+			//取出缓存数据
+			JianKangCache.getData("kpi_",function(resultMap){
+				callback(resultMap);
+			});
+		},complete:function(){
+			$('#jiazaizhong').hide();
+		}
+	});
+}
+</script>
+
+</html>

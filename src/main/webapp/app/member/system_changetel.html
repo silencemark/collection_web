@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>更换手机号码</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/member.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userid;
+JianKangCache.getGlobalData('userinfo',function(data){
+	userInfo=data;
+})
+this.userid=userInfo.userid;
+//验证手机号码
+var myreg = /^1\d{10}$/; 
+
+function checkUpdate(){
+	var password=$("#password").val();
+	var phone=$("#phone").val();
+	var V_Code=$("#V_Code").val();
+	var username=$("#phone").val();
+	if(password==""){
+		swal({
+			title : "",
+			text :"请输入长度6-16位密码",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		
+		});
+	}else if(phone ==""){
+		swal({
+			title : "",
+			text :"请输入手机号",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		
+		});
+	}else if(phone.length!= 11 || !myreg.test(phone)){
+    	swal({
+			title : "",
+			text :"请输入有效的手机格式",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		
+		});
+    }else if(V_Code == ""){
+		swal({
+			title : "",
+			text :"请输入验证码",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		
+		});
+	}else{
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url:projectpath+'/app/updateUserPhone?userid='+userid+"&password="+password+"&phone="+phone+"&V_Code="+V_Code+"&username="+username,
+			success:function(data){
+				if(data.status==1){
+					swal({
+						title : "",
+						text : data.message,
+						type : "error",
+						showCancelButton : false,
+						confirmButtonColor : "#ff7922",
+						confirmButtonText : "确认",
+						cancelButtonText : "取消",
+						closeOnConfirm : true
+					}, function(){
+					
+					});
+				}else{
+					swal({
+						title : "",
+						text :"手机号码已更换",
+						type : "success",
+						showCancelButton : false,
+						confirmButtonColor : "#ff7922",
+						confirmButtonText : "确认",
+						cancelButtonText : "取消",
+						closeOnConfirm : true
+					}, function(){
+					
+					});
+					location.href="../login/login.html";
+				}
+			}
+		})	
+	}
+
+	
+}
+
+
+
+
+//验证码
+function sendSms(i,dom){
+  	if(i==0){
+  		$(dom).val("获取验证码");
+  		$(dom).css("background-color","#ff9b30");
+  		$(dom).attr("disabled",false);
+  		return;
+  	}else{ 
+  		$(dom).val(i+"秒后重新发送");
+  		$(dom).css("background-color","#ccc");
+  		$(dom).attr("disabled",true);
+  	}
+  	setTimeout(function(){
+  		sendSms(i-1,dom);
+  	},1000);
+  }
+
+
+function getvalidecode(){
+	var phone=$("#phone").val();
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getVerificationCode?phone='+phone,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				sendSms(60,$('#sendbtn'));
+			}
+		}
+	})
+}
+</script>
+<body  onload="sendSms(0,$('#sendbtn'));">
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage()">返回</a>
+    <div class="name">更换手机号码</div>
+  <div class="link_yellow" onclick="checkUpdate()">保存</div>
+</div>
+<div class="head_none"></div>
+<div class="ch_info">
+	<span><input type="password" class="t_text" placeholder="请输入长度6-16位密码" id="password"></span>
+    <span><input type="text" class="t_text" placeholder="请输入新手机号"  id="phone"></span>
+    <div class="yzm_box">
+	    <input type="text" class="t_text" placeholder="请输入验证码" id="V_Code">
+	    <input type="button" class="yzm_btn"  id="sendbtn" onclick="getvalidecode()">
+    </div>
+</div>
+</body>
+</html>

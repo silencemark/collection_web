@@ -1,0 +1,606 @@
+ <!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>企业架构</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/member.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/structure.css">
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo,
+	type,
+	organizeid="";
+
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+
+})
+this.userid= userInfo.userid;
+
+function panduan(){
+	if(typeof(userInfo.powerMap.power7001010) == "undefined"){
+		$('#poweradd').hide();
+		$(".ico_del").hide();
+		$(".ico_qiyong").hide();
+		$("#start").hide();
+		$("#del").hide();
+		$(".check_ed").hide();
+		$(".check").hide();
+		$(".first").hide();
+	}
+}
+
+var organizelistall = "";
+function onloadData(){
+	panduan();
+	$("#chenge").hide();
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getNextOrgainizePurchaseUser?companyid='+userInfo.companyid+'&userid='+userInfo.userid,
+		beforeSend:function(a,b){
+			ajaxbefore();
+		},
+		complete:function(a,b){
+			ajaxcomplete();
+		},
+		success:function(data){
+			organizelistall = data.organizelist;
+			$.each(organizelistall,function(i,map){
+				if(map.parentid == undefined){
+					if(data.organizelist.length > 0){
+						$('#organdiv').text(map.organizename);
+						$('#organdiv').nextAll().remove();
+						getorganizelist(0,map.organizeid,map.organizename,'#organdiv',map.isnopower);
+					}
+				}
+			});
+		}
+	})
+}
+
+function getorganizelist(num,organizeid,organizename,obj,isnopower){
+	$("#nodata").css("display","none");
+	$("#checkeds a[class=check_ed]").attr("class","check");
+	if(obj !='#organdiv' &&  $(obj).parent().next("ul[class=quyu]").length>0){
+		if($(obj).parent().attr("class")=="leve_a_s bg_hidden"){
+			$(obj).parent().parent().find("span").hide();
+			$(obj).parent().parent().find("ul").hide();
+			$(obj).parent().nextAll("div[name=person]").hide();
+			$(obj).parent().show();
+			$(obj).parent().attr("class","leve_a_s bg_show");
+			$(obj).parent().next("ul").show();
+			$(obj).parent().next("ul").find("span").show();
+			$(obj).parent().next("ul").find("div[name=person]").show();
+			$(obj).parent().next("ul").find("span").attr("class","leve_a_s bg_hidden");		
+			$(obj).parent().next("ul").find("span[name=levea]").attr("class","leve_a_s");		
+			return;
+		}else{
+			$(obj).parent().next("ul").hide();
+			$(obj).parent().attr("class","leve_a_s bg_hidden");
+			
+			$(obj).hide();
+			num = num -1;
+			organizeid = $(obj).attr("parentid");
+		}
+	}
+	
+	var temp="";
+	temp+="<ul class=\"quyu\">";
+	temp+="<li class=\"leve_a\" >";
+	if(organizelistall.length > 0 ){
+		for(var i=0;i<organizelistall.length ;i++){
+			if(organizelistall[i].parentid == organizeid){
+				if(organizelistall[i].childnum>0 || organizelistall[i].usernum>0 ){
+					temp+="<span class=\"leve_a_s bg_hidden\" style=\"padding:0px 15px 0px "+(num*15+30)+"px;background-position:"+(num*15+15)+"px 50%;\"><i class=\""+changeorganizetype(organizelistall[i].type)+"\" onclick=\"getorganizelist("+(num+1)+",'"+organizelistall[i].organizeid+"','"+organizelistall[i].organizename+"',this,'"+organizelistall[i].isnopower+"')\" parentid=\""+organizelistall[i].parentid+"\">"+organizelistall[i].organizename+"</i><div class=\"clear\"></div></span>";
+				}else{
+					temp+="<span class=\"leve_a_s\" name=\"levea\" style=\"padding:0px 15px 0px "+(num*15+30)+"px;background-position:"+(num*15+15)+"px 50%;\"><i class=\""+changeorganizetype(organizelistall[i].type)+"\">"+organizelistall[i].organizename+"</i><div class=\"clear\"></div></span>";
+				}
+			}
+		}
+		for(var i=0;i<organizelistall.length ;i++){
+			var data = organizelistall[i];
+			if(data.userlist != undefined && data.userlist.length > 0){
+				for(var j=0;j<data.userlist.length ;j++){
+					if(data.userlist[j].organizeid == organizeid){
+						temp+="<div name=\"person\"  style=\"display: block;line-height:30px;  \"><i style=\"padding:0px 15px 0px "+(num*15+30)+"px;background-position:"+(num*15+15)+"px 50%;\">"+
+						"<a class=\"check\" style=\"float:left;\" onclick=\"checkOut(this)\" userid=\""+data.userlist[j].userid+"\" organizeid=\""+data.userlist[j].organizeid+"\" manageid=\""+data.userlist[j].manageid+"\" >选择</a><font class=\"ico_person\">"+data.userlist[j].realname+"</font></i>";
+						if(typeof(userInfo.powerMap.power7001010) != "undefined" && userInfo.userid != data.userlist[j].userid){
+						   temp +="<i class=\"ico_del\" style=\"display: block;float:right;  line-height:30px;  margin-left:20px;margin-right: 15px;\"   onclick=\"checkDelete('"+data.userlist[j].userid+"','"+data.userlist[j].organizeid+"','"+data.userlist[j].manageid+"')\">删除</i>";
+						   temp += "<i class=\"ico_qiyong\" style=\"display: block;float:right;  line-height:30px; margin-left:20px;\" onclick=\"checkStauts('"+data.userlist[j].userid+"','"+data.userlist[j].organizeid+"')\">启用</i>";
+						}	
+						temp += "<div class=\"clear\"></div></div>";
+					}
+				}
+			}
+		}
+	}
+	
+	temp+="</li></ul>";
+	if(obj =='#organdiv'){
+		$(obj).after(temp);
+     		}else{
+     			$(obj).parent().parent().find("span").hide();
+     			$(obj).parent().parent().find("ul").hide();
+     			$(obj).parent().parent().find("div[name=person]").hide();
+     			$(obj).parent().show();
+     			$(obj).parent().attr("class","leve_a_s bg_show");
+     			$(obj).parent().after(temp);
+     		}
+     		if(obj !='#organdiv'){
+			$(obj).parent().attr("class","leve_a_s bg_show");
+     		}
+     		panduan();
+}
+
+function checkSearch(){
+	var param = new Object();
+	param.companyid = userInfo.companyid;
+	var realname = $("#realname").val();
+	param.searchname = realname;
+	if(realname != "" && realname !=null){
+		$.ajax({
+			type:'post',
+			url:projectpath+'/app/getUserBySearchDisabled',
+			data:param,	
+			beforeSend:function(a,b){
+				ajaxbefore();
+			},
+			complete:function(a,b){
+				ajaxcomplete();
+			},
+			success:function(data){
+				if(data.status==1){
+					swal({
+						title : "",
+						text : data.message,
+						type : "error",
+						showCancelButton : false,
+						confirmButtonColor : "#ff7922",
+						confirmButtonText : "确认",
+						cancelButtonText : "取消",
+						closeOnConfirm : true
+					}, function(){
+					
+					});
+				}else{
+					if(data.userlist.length > 0){
+						var temp="";
+						temp+="<ul class=\"quyu\">";
+						temp+="<li class=\"leve_a\" >";
+						for(var j=0;j<data.userlist.length ;j++){
+							temp+="<div name=\"person\"  style=\"display: block;line-height:30px;  \"><i style=\"padding:0px 15px 0px 30px;background-position:"+(num*15+15)+"px 50%;\">"+
+							"<a class=\"check\" onclick=\"checkOut(this)\" userid=\""+data.userlist[j].userid+"\" organizeid=\""+data.userlist[j].organizeid+"\" manageid=\""+data.userlist[j].manageid+"\" >选择</a>"+data.userlist[j].realname+"</i>";
+							if(typeof(userInfo.powerMap.power7001010) != "undefined"){
+								   temp +="<i class=\"ico_del\" style=\"display: block;float:right;  line-height:30px;  margin-left:20px;margin-right: 15px;\"   onclick=\"checkDelete('"+data.userlist[j].userid+"','"+data.userlist[j].organizeid+"','"+data.userlist[j].manageid+"')\"  >删除</i>";
+								   temp += "<i class=\"ico_qiyong\" style=\"display: block;float:right;  line-height:30px; margin-left:20px;\" onclick=\"checkStauts('"+data.userlist[j].userid+"','"+data.userlist[j].organizeid+"')\">启用</i>";
+								}	
+							  
+								temp += "<div class=\"clear\"></div></div>";
+						}
+				
+						temp+="</li></ul>";
+						$("#nodata").css("display","none");
+						$("#organdiv").nextAll().remove();
+						$("#organdiv").after(temp);
+					}else{
+						$("#organdiv").nextAll().remove();
+						$("#nodata").css("display","block");
+					}
+					
+					
+				}
+				panduan();
+			}
+		})
+	}else{
+		swal({
+				title : "",
+				text : "请输入关键字",
+				type : "error",
+				showCancelButton : false,
+				confirmButtonColor : "#ff7922",
+				confirmButtonText : "确认",
+				cancelButtonText : "取消",
+				closeOnConfirm : true
+		}, function(){
+			
+		});
+	
+		
+	}
+	
+}
+
+
+function checkStauts(userid,organizeid){
+	var param = new Object();
+	param.userid = userid;
+	param.organizeid =organizeid;
+	param.status = 1;
+	
+		$.ajax({
+			type:'post',
+			url:projectpath+'/app/updateUserDisable',
+			data:param,	
+			beforeSend:function(a,b){
+				ajaxbefore();
+			},
+			complete:function(a,b){
+				ajaxcomplete();
+			},
+			success:function(data){
+				if(data.status==1){
+					swal({
+						title : "",
+						text : data.message,
+						type : "error",
+						showCancelButton : false,
+						confirmButtonColor : "#ff7922",
+						confirmButtonText : "确认",
+						cancelButtonText : "取消",
+						closeOnConfirm : true
+					}, function(){
+					
+					});
+				}else{
+					swal({
+						title : "",
+						text : "启用成功",
+						type : "success",
+						showCancelButton : false,
+						confirmButtonColor : "#ff7922",
+						confirmButtonText : "确认",
+						cancelButtonText : "取消",
+						closeOnConfirm : true
+					}, function(){
+						location.href="personnel_list.html";
+					});
+					
+					
+				}
+			}
+		})
+}
+
+function checkDelete(userid,organizeid,manageid){
+	var param = new Object();
+	param.userid = userid;
+	param.organizeid =organizeid;
+	param.manageid =manageid;
+	$.ajax({
+		type:'post',
+		url:projectpath+'/app/updateUserDelete',
+		data:param,	
+		beforeSend:function(a,b){
+			ajaxbefore();
+		},
+		complete:function(a,b){
+			ajaxcomplete();
+		},
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+				
+				});
+			}else{
+				swal({
+					title : "",
+					text : "删除成功",
+					type : "success",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					location.href="personnel_list.html";
+				});
+			
+			}
+		}
+	})
+	
+	$.ajax({
+    		type:"post",
+    		dataType:"json",
+    		url:projectpath+"/app/getMyAllCartList",
+    		data:{
+    			userid:userid,
+    			pageNo:1,
+    			pageSize:30
+    		},
+    		success:function(resultMap){
+    			if(resultMap.status == 0 && resultMap.status == '0'){
+    				localStorage.GroupList = "{}";
+    				var dataList = resultMap.dataList;
+    				for(var k=dataList.length-1;k>=0;k--){
+    					var datalistlength = dataList.length - 1;
+    					setGroupList(dataList[datalistlength-k].groupid, dataList[datalistlength-k]);
+    				}
+    			}
+    		}
+    	})
+}
+
+
+
+function checkData(obj){
+	$("#start").attr("class","active");
+	$("#del").attr("class","");
+	if($("#checkeds a[class=check_ed]").length>0){
+			var list = [];
+			var  param = new Object();
+			param.status=1;
+			$("#checkeds a[class=check_ed]").each(function(index,dom){
+				list[index] = {userid:$(this).attr("userid"),organizeid:$(this).attr("organizeid")}
+				param.organizeid =list[0].organizeid;
+			})
+			param.list = JSON.stringify(list);
+			
+			$.ajax({
+				type:'post',
+				url:projectpath+'/app/updateUserDisable',
+				data:param,
+				beforeSend:function(a,b){
+					ajaxbefore();
+				},
+				complete:function(a,b){
+					ajaxcomplete();
+				},
+				success:function(data){
+					if(data.status==1){
+						swal({
+							title : "",
+							text : "启用出错",
+							type : "error",
+							showCancelButton : false,
+							confirmButtonColor : "#ff7922",
+							confirmButtonText : "确认",
+							cancelButtonText : "取消",
+							closeOnConfirm : true
+						}, function(){
+						
+						});
+					}else{
+						swal({
+							title : "",
+							text : "启用成功",
+							type : "success",
+							showCancelButton : false,
+							confirmButtonColor : "#ff7922",
+							confirmButtonText : "确认",
+							cancelButtonText : "取消",
+							closeOnConfirm : true
+						}, function(){
+							location.href="personnel_list.html";	
+						});
+						
+					}
+				}
+			});
+	}else{
+		swal({
+			title : "",
+			text : "请选择一个人员",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		
+		});
+	}
+}
+
+function checkOut(obj){
+	if($(obj).attr("class")=="check"){
+		$(obj).attr("class","check_ed");
+	}else{
+		$(obj).attr("class","check");
+	}
+	
+}
+
+function checked(obj){
+	if($(obj).attr("class")=="check"){
+		$(obj).attr("class","check_ed");
+		$("#checkeds a[class=check]").each(function(index){
+			if($(this).parent().parent().is(':visible')){
+				$(this).attr("class","check_ed");
+			}
+		})
+	}else{
+		$(obj).attr("class","check");
+		$("#checkeds a[class=check]").each(function(index){
+			if($(this).parent().parent().is(':visible')){
+				$(this).attr("class","check");
+			}
+		})
+	}
+}
+
+
+//多选删除
+function checkDel_duoxuan(){
+	$("#start").attr("class","");
+	$("#del").attr("class","active");
+	if($("#checkeds a[class=check_ed]").length>0){
+		var list = [];
+		var  param = new Object();
+		param.status=1;
+		$("#checkeds a[class=check_ed]").each(function(index,dom){
+			list[index] = {userid:$(this).attr("userid"),organizeid:$(this).attr("organizeid"),manageid:$(this).attr("manageid")}
+			param.organizeid =list[0].organizeid;
+		})
+		param.list = JSON.stringify(list);
+		
+		$.ajax({
+			type:'post',
+			url:projectpath+'/app/updateUserDelete',
+			data:param,	
+			beforeSend:function(a,b){
+				ajaxbefore();
+			},
+			complete:function(a,b){
+				ajaxcomplete();
+			},
+			success:function(data){
+				if(data.status==1){
+					swal({
+						title : "",
+						text : "删除出错",
+						type : "error",
+						showCancelButton : false,
+						confirmButtonColor : "#ff7922",
+						confirmButtonText : "确认",
+						cancelButtonText : "取消",
+						closeOnConfirm : true
+					}, function(){
+					
+					});
+				}else{
+					swal({
+						title : "",
+						text : "删除成功",
+						type : "success",
+						showCancelButton : false,
+						confirmButtonColor : "#ff7922",
+						confirmButtonText : "确认",
+						cancelButtonText : "取消",
+						closeOnConfirm : true
+					}, function(){
+						location.href="personnel_list.html";	
+					});
+					
+				}
+			}
+		})
+		
+		$.ajax({
+    		type:"post",
+    		dataType:"json",
+    		url:projectpath+"/app/getMyAllCartList",
+    		data:{
+    			userid:userInfo.userid,
+    			pageNo:1,
+    			pageSize:30
+    		},
+    		success:function(resultMap){
+    			if(resultMap.status == 0 && resultMap.status == '0'){
+    				localStorage.GroupList = "{}";
+    				var dataList = resultMap.dataList;
+    				for(var k=dataList.length-1;k>=0;k--){
+    					var datalistlength = dataList.length - 1;
+    					setGroupList(dataList[datalistlength-k].groupid, dataList[datalistlength-k]);
+    				}
+    			}
+    		}
+    	})
+	}else{
+		swal({
+			title : "",
+			text : "请选择一个人员",
+			type : "error",
+			showCancelButton : false,
+			confirmButtonColor : "#ff7922",
+			confirmButtonText : "确认",
+			cancelButtonText : "取消",
+			closeOnConfirm : true
+		}, function(){
+		
+		});
+	}//if
+}
+
+function checkAdd(){
+	location.href="personnel_add.html";
+}
+
+
+function checkFind(){
+	location.href="personnel_list.html";
+}
+
+function goIndex(){
+	location.href="business_index.html";
+}
+
+function setGroupList(groupid,data){
+	var GroupList = {};
+	if(localStorage.GroupList){
+		GroupList = JSON.parse(localStorage.GroupList);
+		if(!GroupList){
+			GroupList = {};
+		}
+	} 
+	GroupList[groupid] = data;
+	localStorage.GroupList = JSON.stringify(GroupList);
+}
+
+function getGroupList(){
+	if(localStorage.GroupList){
+		return JSON.parse(localStorage.GroupList);
+	} 
+	return {};
+}
+
+</script>
+<body	onload="onloadData()">
+
+<!-- 查询 -->
+<div id="structure">
+	<div class="head_box" >
+		<a class="ico_back" onclick="goIndex()">返回</a>
+	    <div class="name" >人员管理</div>
+	    <div class="link_yellow" onclick="checkAdd()" id="poweradd">新增</div>
+	</div>
+	<div class="head_none"></div>
+	<div class="span_nav">
+	<span class="last"  onclick="checkFind()">在职人员</span>
+    <span class="active" >禁用人员</span>
+</div>
+<div id="checkeds">
+	<div class="top_sel">
+		    <div class="long"><input type="text" class="t_text" placeholder="请输入关键字" id="realname"></div>
+		    <div class="span">&nbsp;</div>
+		    <div class="btn"><input type="button" onclick="checkSearch()"></div>
+		</div>
+		<div class="stru_list">
+		  <div class="title" id="organdiv" onclick="onloadData()"></div><div class="clear"></div>
+		</div>
+	</div>	
+	
+	<div class="load_more" style="display: none;" id="nodata"><a>暂无数据</a></div>
+	<div class="foot_per">
+		<span class="first"><b><a class="check" onclick="checked(this)">选择</a><i>全选</i></b></span>
+	    <span class="active"  onclick="checkData()" id="start">启用</span>
+	    <span id="del" onclick="checkDel_duoxuan()" >删除</span>
+	</div>
+</div>
+</body>
+</html>

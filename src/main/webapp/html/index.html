@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>首页</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="style/public.css">
+<link type="text/css" rel="stylesheet" href="style/index.css">
+<script type="text/javascript" src="script/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+	var pageWidth = window.innerWidth;
+	var pageHeight = window.innerHeight;
+	var menuWidth;
+	var menuspanWidth ;
+	if (typeof pageWidth != "number")
+	{
+		if(document.compatMode == "CSS1Compat")
+		{
+			pageWidth = document.documentElement.clientWidth;
+			pageHeight = document.documentElement.clientHeight;
+		}
+		else
+		{
+			pageWidth = document.body.clientWidth;
+			pageHeight = document.body.clientHeight;
+		}
+	}
+	menuWidth = pageWidth/4;
+	
+	$(document).ready(function(){
+	 $(".index_menu li").width(menuWidth);
+});
+</script>
+</head>
+
+<body>
+<div class="contentWrap">
+    <ul id="slider">
+        <li style="display:block"><img src="images/index/banner_img.png"  alt="" width="100%"></li>
+        <li style="display:none"><img src="images/index/banner_img.png"  alt="" width="100%"></li>
+        <li style="display:none"><img src="images/index/banner_img.png"  alt="" width="100%"></li>
+    </ul>
+    <div id="pagenavi">
+        <a href="javascript:void(0);" class="active">1</a>
+        <a href="javascript:void(0);">2</a>
+        <a href="javascript:void(0);">3</a>
+    </div>
+</div>
+<script type="text/javascript" src="script/touchScroll.js"></script>
+<script type="text/javascript" src="script/touchslider.dev.js"></script>
+<script type="text/javascript" src="script/run.js"></script>
+<div class="index_menu">
+	<ul>
+    	<li><b class="bg1"><img src="images/index/menu_01.png"></b><span>采购管理</span></li>
+        <li><b class="bg2"><img src="images/index/menu_02.png"><i>3</i></b><span>仓库管理</span></li>
+        <li><b class="bg7"><img src="images/index/menu_07.png"></b><span>菜单管理</span></li>
+        <li><b class="bg8"><img src="images/index/menu_08.png"></b><span>收银管理</span></li>
+        <li><b class="bg3"><img src="images/index/menu_03.png"></b><span>工作表单</span></li>
+        <li><b class="bg4"><img src="images/index/menu_04.png"></b><span>OA办公</span></li>
+        <li><b class="bg5"><img src="images/index/menu_05.png"></b><span>店面管理</span></li>
+        <li><b class="bg6"><img src="images/index/menu_06.png"></b><span>星级考核</span></li>
+    </ul>
+    <ul style="display:none;">
+    	<li><b class="bg9"><img src="images/index/menu_09.png"></b><span>客户管理</span></li>
+        <li><b class="bg10"><img src="images/index/menu_10.png"></b><span>营销管理</span></li>
+    </ul>
+    <div class="span_box"><span class="active">1</span><span>2</span></div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<div class="db_list">
+	<div class="name"><span>待办事项<i>10</i><em>点</em></span></div>
+    <div class="none_msg"><b><img src="images/public/none_msg.png"></b><span>您暂时还没有通知以及待审批的事项<br>请先休息会儿吧：）</span></div>
+    <!--<ul>
+    	<li class="bg1"><span>根据长沙市雨花区人民法院协助执</span><i>07-08  21:30</i></li>
+        <li class="bg2"><span>李短期的请假申请</span><i>07-08  21:30</i></li>
+        <li class="bg2"><span>李短期的请假申请</span><i>07-08  21:30</i></li>
+        <li class="bg2"><span>李短期的请假申请</span><i>07-08  21:30</i></li>
+        <li class="bg2"><span>李短期的请假申请</span><i>07-08  21:30</i></li>
+    </ul>-->
+</div>
+
+<div class="bt_none"></div>
+<div class="bt_menu">
+	<ul>
+    	<li class="dq"><a href="#"><b class="bg_home"></b><span>首页</span></a></li>
+        <li><a href="#"><b class="bg_msg"></b><span>消息</span></a><em>3</em></li>
+        <li><a href="#"><b class="bg_memo"></b><span>备忘录</span></a></li>
+        <li><a href="#"><b class="bg_share"></b><span>分享</span></a></li>
+        <li><a href="#"><b class="bg_user"></b><span>我的</span></a></li>
+    </ul>
+</div>
+</body>
+</html>

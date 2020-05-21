@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript" charset="utf-8" src="appcssjs/script/cordova.js"></script>
+	<script type="text/javascript" src="appcssjs/script/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="appcssjs/script/constant.js"></script>
+    <title>Hello PhoneGap</title>
+    <script type="text/javascript">
+    
+    /*
+       	 来源：http://my.oschina.net/realfighter/blog/375781
+    
+    	首先，我们来实现【拍照】的功能，调用摄像头拍照，并显示，phonegap提供了一些camera的API，
+    	通过调用navigator.camera.getPicture(cameraSuccess,cameraError,[cameraOptions])方法，
+    	我们可以简单的实现拍照功能，三个参数分别对应拍照成功、拍照失败和拍照参数选项，我们定义onLoadImageSuccess，onLoadImageFail作为拍照成功或失败的回调函数，
+    	cameraOptions 我们定义了最主要的destinationType来区分图片来自于拍照还是图片库，这里定义为{destinationType: Camera.DestinationType.DATA_URL}，
+    	其他的参数定义请参见API或查阅源码，完整的js如下：
+    */
+    function loadImage() {
+        //拍照并显示在屏幕
+        navigator.camera.getPicture(onLoadImageSuccess, onLoadImageFail, {destinationType: Camera.DestinationType.DATA_URL});
+    }
+    //拍照成功后回调
+    function onLoadImageSuccess(imageURI) {
+        //这里的图片经过了base64编码
+        var src = "data:image/jpeg;base64," + imageURI;
+        $("#getImage").attr("src", src);
+        $("#getImage").show();
+    }
+    //所有获取图片失败都回调此函数
+    function onLoadImageFail(message) {
+        navigator.notification.alert("拍照失败，原因：" + message, null, "警告");
+    }
+    
+    
+    
+    /*
+    	 接下来运行module，在手机上点击【拍照】按钮，我们就可以调用摄像头拍照，并在屏幕上显示拍的照片，
+    	 第一步的工作已经完成，接下来实现从本地图片库获取图片，与第一步主要是 cameraOptions 的 不同，
+    	 需要额外的添加sourceType图片资源类型为sourceType: Camera.PictureSourceType.PHOTOLIBRARY，
+    	 即来自本地图片库，另外，我们修改下destinationType: Camera.DestinationType.FILE_URI，返回完整的图片路径，
+    	 同时定义相应的 onLoadImageLocalSuccess，失败的回调还是onLoadImageFail，相应的js代码如下：
+    */
+    function loadImageLocal() {
+        //获取本地图片并显示在屏幕
+        navigator.camera.getPicture(onLoadImageLocalSuccess, onLoadImageFail, {
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+        });
+    }
+    //本地图片选择成功后回调此函数
+    function onLoadImageLocalSuccess(imageURI) {
+        $("#getImageLocal").attr("src", imageURI);
+        $("#getImageLocal").show();
+    }
+    
+    
+    
+    /*
+    	这样，第二步的功能也已经实现，比较简单，接下来，最重要的一点，我们实现第三步的【拍照上传】功能，
+    	与第一步的功能较为类似，主要是在图片拍照成功后，对图片进行上传处理，这里同样指定destinationType: Camera.DestinationType.FILE_URI，相应的js代码如下：
+    */
+    function loadImageUpload() {
+        //拍照上传并显示在屏幕
+        navigator.camera.getPicture(onLoadImageUploadSuccess, onLoadImageFail, {
+            destinationType: Camera.DestinationType.DATA_URL
+        });
+    }
+    //图片拍照成功后回调此函数
+    function onLoadImageUploadSuccess(imageURI) {
+        //此处执行文件上传的操作，上传成功后执行下面代码
+        $("#getImageLocalUpload").attr("src", imageURI);
+        $("#getImageLocalUpload").show();
+        navigator.notification.alert("文件上传成功！", null, "提醒");
+    }
+    
+    
+    /*
+    	本功能的关键是执行上传部分的代码，phonegap提供了FileUploadOptions和FileTransfer，
+    	通过FileTransfer.upload方法，同时传递options选项，进行上传的操作，也可以定义相应的成功或回调函数，
+    	完整的onLoadImageUploadSuccess代码如下：
+    */
+  	//图片拍照成功后回调此函数
+    function onLoadImageUploadSuccess(imageURI) {
+        //此处执行文件上传的操作，上传成功后执行下面代码
+        var options = new FileUploadOptions(); //文件参数选项
+        options.fileKey = "file";//向服务端传递的file参数的parameter name
+        options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);//文件名
+        options.mimeType = "image/jpeg";//文件格式，默认为image/jpeg
+        var ft = new FileTransfer();//文件上传类
+        ft.onprogress = function (progressEvt) {//显示上传进度条
+            if (progressEvt.lengthComputable) {
+                navigator.notification.progressValue(Math.round(( progressEvt.loaded / progressEvt.total ) * 100));
+            }
+        }
+        navigator.notification.progressStart("提醒", "当前上传进度");
+        ft.upload(imageURI, encodeURI('http://192.168.0.32:8888/app/upload.jfinal'), function () {
+            navigator.notification.progressStop();//停止进度条
+            $("#getImageLocalUpload").attr("src", imageURI);
+            $("#getImageLocalUpload").show();
+            navigator.notification.alert("文件上传成功！", null, "提醒");
+        }, null, options);
+    }
+    </script>
+</head>
+<body>
+<h1>Hello PhoneGap</h1>
+<p>
+    <input type="button" value="拍照" onclick="loadImage();"/>
+    <img src="" id="getImage" style="display: none;width: 120px;height: 120px;"/>
+</p>
+<p>
+    <input type="button" value="本地图片" onclick="loadImageLocal();"/>
+    <img src="" id="getImageLocal" style="display: none;width: 120px;height: 120px;"/>
+</p>
+<p>
+    <input type="button" value="拍照上传" onclick="loadImageUpload();"/>
+    <img src="" id="getImageUpload" style="display: none;width: 120px;height: 120px;"/>
+</p>
+</body>
+</html>

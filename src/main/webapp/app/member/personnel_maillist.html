@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>通讯录</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<meta name = "format-detection" content = "telephone=no">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/msg_personal.css">
+
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/appbase.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+<style type="text/css">
+.bg_color1 { background:#ee5c5c;}
+.bg_color2 { background:#f7a44b;}
+.bg_color3 { background:#4fa7f0;}
+.bg_color4 { background:#17c295;}
+</style>
+</head>
+<script type="text/javascript">
+
+document.addEventListener('deviceready', function(){
+	var options = new ContactFindOptions();
+	options.filter = "";
+	options.multiple = true; 
+	var fields = [ "displayName", "name", "phoneNumbers" ];
+	navigator.contacts.find(fields, onSuccess, onError, options);
+}, false); 
+ 
+
+var userInfo,orgaidNum,usermap;
+JianKangCache.getGlobalData('userinfo',function(data){
+	userInfo=data;
+})
+ function GetRandomNum(Min,Max)
+{   
+	var Range = Max - Min;   
+	var Rand = Math.random();   
+	return(Min + Math.round(Rand * Range));   
+} 
+ 	
+	  function onSuccess(contacts) {
+		  for (var i = 0; contacts[i]; i++) {	
+			  var name = contacts[i].name.formatted;
+			  var phoneNumbers = contacts[i].phoneNumbers;
+			  if(name&&name!="null"){
+				  for(var j = 0; phoneNumbers[j]; j++){
+					  var phone = phoneNumbers[j].value;
+					  $("#phone").append('<li onclick="savenamephone(\''+name+'\',\''+phone+'\')"><b style=" line-height: 42px; text-align: center; font-size: 21px; color: #fff;" class="bg_color'+GetRandomNum(1,4)+'">'+name.split("")[0].toUpperCase()+'</b><span>'+name+'</span><i>'+phone+'</i></li>'); 
+				  }			  
+			  }
+		 }
+	  }   
+	  // onError: Failed to get the contacts   
+	  function onError(contactError) { }   
+	  
+	  function savenamephone(name,phone){
+		  var mailinfo={};
+		  mailinfo["name"]=name;
+		  mailinfo["phone"]=phone;
+		  JianKangCache.setGlobalData('mailinfo',mailinfo);
+		  goBackPage();
+	  }
+	  function searchphonename(obj){
+		  var searchname=$(obj).val();
+		  if(searchname != ""){
+			  $('#phone').find('li').hide();
+			  $('#phone').find('li').each(function(){
+				  if($(this).find("span").text().indexOf(searchname) > -1){
+					  $(this).show();
+				  }
+			  })
+		  }else{
+			  $('#phone').find('li').show();
+		  }
+	  }
+</script>
+
+<body>
+<div class="head_box">
+	<a class="ico_back" onclick="goBackPage();">返回</a>
+    <div class="name">通讯录</div>
+</div>
+<div class="head_none"></div>
+<div class="address_list">
+	<div class="search_box"><input type="text" class="bg" placeholder="搜索" oninput="searchphonename(this)"></div>
+	<ul id="phone">
+<!-- 		<li onclick="savenamephone('语然','15000042335')"><b><img src="../appcssjs/images/public/img.png"></b><span>语然</span><i>15000042335</i></li> -->
+<!-- 		<li onclick="savenamephone('陈超','+86 152 8813 2353')"><b><img src="../appcssjs/images/public/img.png"></b><span>陈超</span><i>+86 152 8813 2353</i></li> -->
+    </ul>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>人事轨迹</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" >
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/page_public.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/restaurant.css">
+<link type="text/css" rel="stylesheet" href="../appcssjs/style/kpi.css">
+
+<script type="text/javascript" src="../appcssjs/script/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../appcssjs/sweetalert/dist/sweetalert.css">
+<script src="../appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
+<script type="text/javascript" src="../appcssjs/script/tab.js"></script>
+<script type="text/javascript" src="../appcssjs/script/page.js"></script>
+
+<script type="text/javascript" src="../appcssjs/script/appendjs.js"></script>
+<script type="text/javascript" src="../appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../appcssjs/script/constant.js"></script>
+</head>
+<script type="text/javascript">
+var userInfo;
+JianKangCache.getGlobalData('userinfo',function(data){
+		userInfo=data;
+})
+var kpiuserid="";
+var kpirealname="";
+var kpiuserinfo;
+var yearnum="";
+var monthnum="";
+
+var nodata = '<div class="list_none"><span><i class="yellow">Hello,我是大狮！</i><br>还没有KPI考核信息，赶紧添加一条吧~</span><b><img src="'+notDataImageUrl_havepower+'"></b></div>';
+
+function onloadData(){
+	JianKangCache.getGlobalData('kpiuserinfo',function(data){
+		kpiuserinfo=data;
+		if(typeof(kpiuserinfo)!='undefined'){
+			kpirealname=kpiuserinfo.kpirealname;
+			kpiuserid=kpiuserinfo.kpiuserid;
+			yearnum=kpiuserinfo.yearnum;
+			monthnum=kpiuserinfo.monthnum;
+		}
+	})
+
+	//初始化 yearul 年份 
+	var nowdate = new Date();
+	nowyear=nowdate.getFullYear();
+	var yeartemp="";
+	for(var k=0;k < 100 ;k++){
+		if(k==0){
+			yeartemp+="<li year=\""+(nowyear-k)+"\" class=\"active\"  onclick=\"clickSelect(this)\">"+(nowyear-k)+"年</li>";
+		}else{
+			yeartemp+="<li year=\""+(nowyear-k)+"\"  onclick=\"clickSelect(this)\">"+(nowyear-k)+"年</li>";
+		}
+	}
+	$('#yearul').html(yeartemp);
+	
+	if(typeof(kpiuserinfo)=='undefined'){
+		kpiuserid=userInfo.userid;
+		$('#examineuserid').val(kpiuserid);
+		$('#examinename').text(userInfo.realname);
+		$('#searchrealname').val(userInfo.realname);
+		
+		var mydate = new Date();
+		yearnum=mydate.getFullYear();
+		var month=mydate.getMonth()+1; //获取当前月份(0-11,0代表1月)
+		if(parseInt(month) < 10){
+			monthnum="0"+month;
+		}else{
+			monthnum=month;
+		}
+		$('#yearnum').val(yearnum);
+		$('#monthnum').val(monthnum);
+		$('#datatime').val(yearnum+"年"+monthnum+"月");
+	}else{
+		if(monthnum==""){
+			$('#datatime').val(yearnum+"年全年");
+		}else{
+			$('#datatime').val(yearnum+"年"+monthnum+"月");
+		}
+		$('#yearnum').val(yearnum);
+		$('#monthnum').val(monthnum);
+		
+		$('#examineuserid').val(kpiuserid);
+		$('#examinename').text(kpirealname);
+		$('#searchrealname').val(kpirealname);
+	}
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:projectpath+'/app/getPathKpiStarList?userid='+kpiuserid+'&companyid='+userInfo.companyid+'&year='+yearnum+'&monthnum='+monthnum,
+		success:function(data){
+			if(data.status==1){
+				swal({
+					title : "",
+					text : data.message,
+					type : "error",
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					
+				});
+			}else{
+				if(data.kpistarList.length > 0 && data.kpistarList != ''){
+					$(".list_none").remove();
+					var temp="";
+					for(var i=0;i<data.kpistarList.length;i++){
+						temp+="<li>"+
+				        	"<div class=\"time_xx\"><span>"+data.kpistarList[i].createtime+"</span><i>星值：<em>"+data.kpistarList[i].sumstar+"</em></i><b class=\"up\" onclick=\"changeshow(this)\">隐藏</b></div>"+
+				            "<div class=\"num\" style=\"display:none;\"><span onclick=\"location.href='../kpi/jobstart_list_by_userid.html?companyid="+userInfo.companyid+"&userid="+kpiuserid+"&datetime="+data.kpistarList[i].createtime+"'\">岗位星值：<em>"+data.kpistarList[i].selfstar+"</em></span><span onclick=\"location.href='../kpi/allstart_list_by_userid.html?companyid="+userInfo.companyid+"&userid="+kpiuserid+"&datetime="+data.kpistarList[i].createtime+"'\">综合星值：<em>"+data.kpistarList[i].overallstar+"</em></span></div>"+
+				        "</li>";
+					}
+					$('#kpiul').html(temp);
+// 					$('#nodata').hide();
+				}else{
+					$('#kpiul').html("");
+					$(".list_none").remove();
+					$("body").append(nodata);
+				}
+			}
+		}
+	})
+}
+
+function changeshow(obj){
+	if($(obj).attr("class")=="up"){
+		$(obj).attr("class","down");
+		$(obj).parent().next().show();
+	}else{
+		$(obj).attr("class","up");
+		$(obj).parent().next().hide();
+	}
+}
+function logical(){
+	$('#searchrealname').val($('#examinename').text());
+}
+function searchkpi(){
+	var examineuserid=$('#examineuserid').val();
+	var kpiuserinfo={};
+	kpiuserinfo['kpiuserid']=examineuserid;
+	kpiuserinfo['kpirealname']=$('#examinename').text();
+	kpiuserinfo['yearnum']=$('#yearnum').val();
+	kpiuserinfo['monthnum']=$('#monthnum').val();
+	JianKangCache.setGlobalData("kpiuserinfo",kpiuserinfo);
+	yearnum=$('#yearnum').val();
+	monthnum=$('#monthnum').val();
+	kpiuserid=examineuserid;
+	kpirealname=$('#examinename').text();
+	onloadData();
+}
+function changetime(){
+	var year =$('#yearul li[class=active]').attr('year');
+	var month =$('#monthul li[class=active]').attr('month');
+	if(month==""){
+		$('#datatime').val(year+"年全年");
+	}else{
+		$('#datatime').val(year+"年"+month+"月");
+	}
+	$('#yearnum').val(year);
+	$('#monthnum').val(month);
+	
+	$('#timediv').hide();
+	$('.div_mask').hide()
+}
+function clickSelect(obj){
+	$(obj).parent().find("li").attr("class","");
+	$(obj).attr("class","active");
+}
+
+$(function(){
+	$('.div_mask').click(function(){
+		$('#timediv').hide();
+		$(this).hide();
+	});
+	
+	if(kpiuserid != "" && yearnum != ""){
+		PageHelper({
+			url:projectpath+'/app/getPathKpiStarList?userid='+kpiuserid+'&companyid='+userInfo.companyid+'&year='+yearnum+'&monthnum='+monthnum,
+			success:function(data){
+				if(data.kpistarList.length > 0 && data.kpistarList != ''){
+					var temp="";
+					for(var i=0;i<data.kpistarList.length;i++){
+						temp+="<li>"+
+				        	"<div class=\"time_xx\"><span>"+data.kpistarList[i].createtime+"</span><i>星值：<em>"+data.kpistarList[i].sumstar+"</em></i><b class=\"up\" onclick=\"changeshow(this)\">隐藏</b></div>"+
+				        	"<div class=\"num\" style=\"display:none;\"><span onclick=\"location.href='../kpi/jobstart_list_by_userid.html?companyid="+userInfo.companyid+"&userid="+kpiuserid+"&datetime="+data.kpistarList[i].createtime+"'\">岗位星值：<em>"+data.kpistarList[i].selfstar+"</em></span><span onclick=\"location.href='../kpi/allstart_list_by_userid.html?companyid="+userInfo.companyid+"&userid="+kpiuserid+"&datetime="+data.kpistarList[i].createtime+"'\">综合星值：<em>"+data.kpistarList[i].overallstar+"</em></span></div>"+
+				        "</li>";
+					}
+					$('#kpiul').append(temp);
+				}
+	
+			}
+		})
+	}
+})
+</script>
+<body onload="onloadData()">
+<div id="htmlbody">
+<input type="hidden" id="examineuserid" />
+<span id="examinename" style="display: none;"></span>
+<div class="head_box">
+	<a class="ico_back" onclick="location.href='restaurant_index.html'">返回</a>
+    <div class="name">人事轨迹</div>
+</div>
+<div class="head_none"></div>
+<div class="top_sel">
+	<div class="other"><input type="text" class="t_sel" value="选择人员" id="searchrealname" onclick="$('#organizeiframe').show();$('#htmlbody').hide();" readonly="readonly"></div>
+    <div class="span">-</div>
+    <input type="hidden" id="yearnum" />
+    <input type="hidden" id="monthnum" />
+    <div class="time"><input type="text" class="t_time"  readonly="readonly" id="datatime" onclick="$('#timediv').show();$('.div_mask').show();"></div>
+    <div class="span">&nbsp;</div>
+    <div class="btn"><input type="button" value="" onclick="searchkpi()" ></div>
+</div>
+<div class="nav_list">
+	<span class="first active" onclick="location.href='employee_kpi.html'">KPI星级考核</span>
+    <span onclick="location.href='employee_reward.html'">奖励记录</span>
+    <span onclick="location.href='employee_punish.html'">处罚记录</span>
+</div>
+<div class="ep_kpi">
+	<ul id="kpiul">
+    </ul>
+</div>
+<div class="div_mask" style="display: none;" ></div>
+<div class="tc_addsel" id="timediv" style="display: none;">
+	<div class="name"><span>选择时间</span><a onclick="changetime()">确定</a></div>
+	<div class="xx_box">
+    	<div class="time_box" style="max-height:200px;overflow:hidden;overflow-y:visible">
+        	<ul id="yearul">
+            </ul>
+        </div>
+        <div class="time_mid">&nbsp;</div>
+        <div class="time_box"  style="max-height:200px;overflow:hidden;overflow-y:visible">
+        	<ul id="monthul">
+				<li month="" class="active" onclick="clickSelect(this)">全年</li>
+				<li month="01" onclick="clickSelect(this)">01月</li>
+                <li month="02" onclick="clickSelect(this)">02月</li>
+				<li month="03" onclick="clickSelect(this)">03月</li>
+            	<li month="04" onclick="clickSelect(this)">04月</li>
+                <li month="05" onclick="clickSelect(this)">05月</li>
+                <li month="06" onclick="clickSelect(this)">06月</li>
+                <li month="07" onclick="clickSelect(this)">07月</li>
+                <li month="08" onclick="clickSelect(this)">08月</li>
+				<li month="09" onclick="clickSelect(this)">09月</li>
+                <li month="10" onclick="clickSelect(this)">10月</li>
+				<li month="11" onclick="clickSelect(this)">11月</li>
+                <li month="12" onclick="clickSelect(this)">12月</li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="load_more" style="display: none" id="nodata"><a>暂无数据</a></div>
+</div>
+<script type="text/javascript" src="../appcssjs/script/selectuseremployee.js"></script>
+</body>
+</html>
