@@ -19,8 +19,7 @@
     
     <!-- add by silence 2020-05-26--> 
     <dubbo:reference id="appLoginService" interface="com.collection.service.IAppLoginService"/>
-    
-    
+    <dubbo:reference id="appIndexService" interface="com.collection.service.IAppIndexService"/>
     
     
     
