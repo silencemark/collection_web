@@ -32,7 +32,7 @@ function onloaddata(){
 <body onload="onloaddata()">
 <form action="<%=request.getContextPath() %>/managebackstage/login" method="post">
 <div class="login_box">
-	<div class="name">CateringMaster</div>
+	<div class="name">享GO影视</div>
     <div class="text"><input type="text" placeholder="用户名" name="username" value="${map.username}"/></div>
     <div class="text"><input type="password" placeholder="密码" name="password" /></div>
     <div class="text">

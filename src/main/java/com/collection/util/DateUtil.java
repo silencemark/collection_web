@@ -16,6 +16,24 @@ public class DateUtil {
 	private static final Logger LOGGER = Logger.getLogger(DateUtil.class);
 	
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+	
+	static SimpleDateFormat YMDHMS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	
+	/**
+	 * 获取当前时间yyyy-MM-dd
+	 */
+	public static String sysDate(){
+		return sdf.format(new Date());
+	}
+	
+	/**
+	 * 获取当前时间yyyy-MM-dd HH:mm:ss
+	 */
+	public static String sysDateTime(){
+		return YMDHMS.format(new Date());
+	}
+	
+	
 	/**
 	 * 获取某一时间  这一周日期
 	 * @param mdate

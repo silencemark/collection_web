@@ -69,7 +69,7 @@ function login(){
 		});
 		return;
 	}
-	if(password==""){
+	if(password=="" || password.length < 6){
 		swal({
 			title : "",
 			text : "请输入长度6-16位密码",
@@ -87,7 +87,7 @@ function login(){
 	$.ajax({
 		type:'post',
 		dataType:'json',
-		url:projectpath+'/app/userlogin?username='+username+'&password='+password,
+		url:projectpath+'/appLogin/userlogin?username='+username+'&password='+password,
 		success:function(data){
 			if(data.status==1){
 				swal({
@@ -107,8 +107,9 @@ function login(){
 				param.username = username;
 				param.password = password;
 				//保存到当前路径缓存
-				JianKangCache.setData("logininfo",param);
-				JianKangCache.setGlobalData("companylist",data.companylist);
+				JianKangCache.setData("userinfo",data.userInfo);
+				location.href="index.html";
+				/* 
 				if(data.companylist.length==1){
 					$.ajax({
 						type:'post',
@@ -171,24 +172,24 @@ function login(){
 				}else{
 					location.href="login_choice.html";
 				}
-				
+				 */
 			}
 		}
 	})
 }
 
 	
-$(function(){
+/* $(function(){
 	//取出缓存数据
 	JianKangCache.getData("logininfo",function(param){
 		$('#username').val(param.username);
 	});
-});
+}); */
 	
 </script>
 <body class="body_bg">
 <div class="min_height">
-<div class="logo_name"><img src="../appcssjs/kpi/images/login/logo_name.png"></div>
+<div class="logo_name"><img src="../appcssjs/images/login/logo_name.png"></div>
 <div class="text_box">
 	<span><i>账号</i><input type="text" placeholder="请输入手机号" id="username" ></span>
     <span><i>密码</i><input type="password" placeholder="请输入长度6-16位密码" id="password"></span>

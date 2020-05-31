@@ -58,14 +58,14 @@
     <div class="index_top">    	
         <div class="wid_01">
             <div class="cp_num">
-                <span><i>收费公司</i><em class="yellow">${indexInfo.chargenum}</em><i>家</i><div class="clear"></div></span>
-                <span><i>普通公司</i><em class="yellow">${indexInfo.freechargenum}</em><i>家</i><div class="clear"></div></span>
+                <span><i>目前市场金额</i><em class="yellow">200000</em><i>元</i><div class="clear"></div></span>
+                <span><i>多余市场金额</i><em class="yellow">50000</em><i>元</i><div class="clear"></div></span>
             </div>
         </div>
     	<div class="wid_02">
             <div class="user_num">
-                <span><i>已登录人员</i><em class="yellow">${indexInfo.usernum}</em><i>人</i><div class="clear"></div></span>
-                <span><i>未登陆人员</i><em class="yellow">${indexInfo.nologinnum}</em><i>人</i></span>
+                <span><i>已登录人员</i><em class="yellow">500</em><i>人</i><div class="clear"></div></span>
+                <span><i>未登陆人员</i><em class="yellow">200</em><i>人</i></span>
             </div> 
         </div>
         <div class="clear"></div>
@@ -83,14 +83,15 @@
 	                <tr>
 	                	<td>${item.content}</td>
 	                    <td>${item.createtime}</td>
-	                    <c:choose>
+	                    <td><a href="javascript:void(0)" class="link">查看</a></td>
+	                    <%-- <c:choose>
 	                    	<c:when test="${item.type==1}">
 	                    		<td><a href="javascript:void(0)" onclick="linkurlpower(1,'${item.companyid}')" class="link">查看</a></td>
 	                    	</c:when>
 	                    	<c:otherwise>
 	                    		<td><a href="javascript:void(0)" onclick="linkurlpower(2,'${item.reasonid}')" class="link">查看</a></td>
 	                    	</c:otherwise>
-	                    </c:choose>
+	                    </c:choose> --%>
 	                </tr>
                 </c:forEach>
             </table>

@@ -1,9 +1,6 @@
 package com.collection.controller.managebackstage;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,23 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.bouncycastle.jce.provider.JCEMac.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.dubbo.common.json.JSON;
 import com.collection.redis.RedisUtil;
 import com.collection.service.IndexService;
 import com.collection.service.SystemService;
 import com.collection.service.UserInfoService;
-import com.collection.service.oa.OfficeService;
 import com.collection.util.CookieUtil;
 import com.collection.util.Md5Util;
 import com.collection.util.PageHelper;
-import com.collection.util.PageScroll;
 import com.collection.util.SDKTestSendTemplateSMS;
 import com.collection.util.UserUtil;
 
@@ -59,6 +52,8 @@ public class ManageIndexController {
 	 */
 	@RequestMapping("/login")
 	public String adminLogin(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		//查询权限菜单
 		model.addAttribute("map", map);
 		if(map.containsKey("username") && map.get("username").equals("")){
@@ -90,7 +85,8 @@ public class ManageIndexController {
 					// cookiesid存入cookies中,有效期30分钟
 					CookieUtil.setCookie(response, UserUtil.SYSTEMINFO, cookiesid, "/", null);
 					// 用户信息存入reids中,有效期30分钟
-					RedisUtil.setMap(cookiesid, userMap);
+					//RedisUtil.setMap(cookiesid, userMap);
+					request.getSession().setAttribute(cookiesid, userMap);
 					// 存储登录来源
 					CookieUtil.setCookie(response, UserUtil.FROMINFO, "ADMIN", "/",null);			
 					
@@ -119,16 +115,16 @@ public class ManageIndexController {
 	public String index(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		//查询首页信息
-		Map<String, Object> indexInfo=this.systemService.getIndexInfo();
-		model.addAttribute("indexInfo", indexInfo);
+		//Map<String, Object> indexInfo=this.systemService.getIndexInfo();
+		//model.addAttribute("indexInfo", indexInfo);
 		
 		//初始化分页
 		PageHelper pageHelper = new PageHelper(request);
 		pageHelper.initPage(map);
-		List<Map<String, Object>> noticeList = systemService.getNoticeList(map);
-		int num = systemService.getNoticeListNum(map);
+		//List<Map<String, Object>> noticeList = systemService.getNoticeList(map);
+		int num = 10;
 		pageHelper.setTotalCount(num);
-		model.addAttribute("noticeList", noticeList);
+		//model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pager", pageHelper.cateringPage().toString());
 		model.addAttribute("map", map);
 		return "/managebackstage/index";

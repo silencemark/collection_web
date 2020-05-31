@@ -1,6 +1,6 @@
 
-var projectpath="http://www.canyindashi.com.cn";
-//var projectpath="http://localhost";
+//var projectpath="http://www.canyindashi.com.cn";
+var projectpath="http://localhost:8080";
 //var projectpath = "http://t.canyindashi.com.cn";
 
 var userinfo={};

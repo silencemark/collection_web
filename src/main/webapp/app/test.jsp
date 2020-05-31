@@ -15,11 +15,11 @@
 	<table border="0">
 		<tr>
 			<td>方法名:</td>
-			<td><input type="text" id="methodname" />(例:chooseCompany)</td>
+			<td><input type="text" id="methodname" />(例:userlogin)</td>
 		</tr>
 		<tr>
 			<td>传入参数:</td>
-			<td><textarea rows="8" cols="40" id="parameter"></textarea><br/>(例：userid=1)</td>
+			<td><textarea rows="8" cols="40" id="parameter"></textarea><br/>(例：phone=15000042335&password=123)</td>
 		</tr>
 		<tr>
 			<td>传入参数json:</td>
@@ -105,7 +105,7 @@ $(function(){
 	$('#subbtn').click(function(){
 		var methodname=$('#methodname').val();
 		var parameter=$('#parameter').val();
-		var url=projectpath+"/app/"+methodname;
+		var url=projectpath+"/appLogin/"+methodname;
 		$.ajax({
 			type:'post',
 			dataType:'json',

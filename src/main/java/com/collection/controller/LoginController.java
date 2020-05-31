@@ -60,7 +60,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	@RequestMapping("/getVerificationCode")
 	@ResponseBody
 	public Map<String, Object> getVerificationCode(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
@@ -77,17 +77,17 @@ public class LoginController {
 				return data;
 			}
 		}else{
-/*			Map<String, Object> userInfo=this.userInfoService.getUserInfo(map);
+			Map<String, Object> userInfo=this.userInfoService.getUserInfo(map);
 			if(userInfo != null && userInfo.size() > 0){
 				data.put("status", 1);
 				data.put("message", "此帐号已存在");
 				return data;
-			}*/
+			}
 			return sendSms(map);
 		}
 	}
 	
-	/**
+	*//**
 	 * 发送短信验证码
 	 * 
 	 * @param map
@@ -95,7 +95,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	public Map<String, Object> sendSms(Map<String, Object> map) {
 		Map<String, Object> data=new HashMap<String, Object>();
 		String phone=map.get("phone")+"";
@@ -119,7 +119,7 @@ public class LoginController {
 		return data;
 	}
 	
-	/**
+	*//**
 	 * 注册  校验验证码
 	 * 传入参数{"phone":15000042335,"code":3668}
 	 * 传出参数{"message":"验证码输入正确","status":0}
@@ -128,7 +128,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	@RequestMapping("/checkValide")
 	@ResponseBody
 	public Map<String, Object> checkValide(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
@@ -152,7 +152,7 @@ public class LoginController {
 			return data;
 		}
 	}
-	/**
+	*//**
 	 * 注册接口
 	 * 传入参数{"companyname":"紫痕软件有限公司","realname":"silence","phone":15000042335,"password":123456}
 	 * 传出参数{"message":"注册成功","status":0}
@@ -161,7 +161,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	@RequestMapping("/register")
 	@ResponseBody
 	public Map<String, Object> register(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
@@ -259,7 +259,7 @@ public class LoginController {
 		
 	}
 	
-	/**
+	*//**
 	 * 找回密码第一步（根据手机号选择公司）
 	 * 传入参数{"phone":15000042335,"code":3668}
 	 * 传出参数{"message":"查询成功","companylist":[{"createtime":1468413492000,"companyid":"67702cc412264f4ea7d2c5f692070457","username":"15000042335","phone":"15000042335","updatetime":1468413498000,"createid":"690fb669ed4d40219964baad7783abd4","userid":"690fb669ed4d40219964baad7783abd4","companyname":"紫痕软件有限公司"}],"status":0}
@@ -268,7 +268,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	@RequestMapping("/getCompanyByPhone")
 	@ResponseBody
 	public Map<String, Object> getCompanyByPhone(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
@@ -301,7 +301,7 @@ public class LoginController {
 		}
 	}
 	
-	/**
+	*//**
 	 * 重置密码
 	 * 传入参数{"userid":"690fb669ed4d40219964baad7783abd4","password":123456}
 	 * 传出参数{"message":"修改成功","status":0}
@@ -310,7 +310,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	@RequestMapping("/updateUserInfo")
 	@ResponseBody
 	public Map<String, Object> updateUserInfo(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
@@ -340,7 +340,7 @@ public class LoginController {
 		return data;
 	}
 	
-	/**
+	*//**
 	 * 登录接口
 	 * 传入参数{"username":15000042335,"password":132010}
 	 * 传出参数{"message":"查询成功","companylist":[{"createtime":1468413492000,"companyid":"67702cc412264f4ea7d2c5f692070457","username":"15000042335","phone":"15000042335","updatetime":1468413498000,"createid":"690fb669ed4d40219964baad7783abd4","userid":"690fb669ed4d40219964baad7783abd4","companyname":"紫痕软件有限公司"}],"status":0}
@@ -349,7 +349,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	@RequestMapping("/userlogin")
 	@ResponseBody
 	public Map<String, Object> userlogin(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
@@ -368,7 +368,7 @@ public class LoginController {
 			return data;
 		}
 	}
-	/**
+	*//**
 	 * 选择公司（当只有一个公司的时候直接调用接口）
 	 * 传入参数{"userid":"690fb669ed4d40219964baad7783abd4"}
 	 * 传出参数{"message":"查询成功","status":0,"userInfo":{"createtime":1468413494000,"companyid":"67702cc412264f4ea7d2c5f692070457","username":"15000042335","phone":"15000042335","sex":"1","userid":"690fb669ed4d40219964baad7783abd4","isfristlogin":0,"realname":"silence","status":1,"delflag":0,"companyname":"紫痕软件有限公司","isshowphone":0}}
@@ -377,7 +377,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	@RequestMapping("/chooseCompany")
 	@ResponseBody
 	public Map<String, Object> chooseCompany(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
@@ -427,7 +427,7 @@ public class LoginController {
 		RedisUtil.setMap(Constants.LOGIN_TOKENKEY, tokenMap);
 	}
 	
-	/**
+	*//**
 	 * 判断 是否 第一次登录强制修改密码
 	 * 传入参数{"userid":"690fb669ed4d40219964baad7783abd4","password":132010}
 	 * 传出参数{"message":"修改成功","status":0}
@@ -436,7 +436,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 * @author silence
-	 */
+	 *//*
 	@RequestMapping("/firstLoginUpdatePass")
 	@ResponseBody
 	public Map<String, Object> firstLoginUpdatePass(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
@@ -460,13 +460,13 @@ public class LoginController {
 		return data;
 	}
 	
-	/**
+	*//**
 	 * 查询用户权限信息、
 	 * 传入参数：userid
 	 * @param map
 	 * @param response
 	 * @return
-	 */
+	 *//*
 	@ResponseBody
 	@RequestMapping(value="/getUserPowerInfo")
 	public Map<String,Object> getUserPowerInfo(@RequestParam Map<String,Object> map , HttpServletResponse response){
@@ -485,12 +485,12 @@ public class LoginController {
 		}
 		return data;
 	}
-	/**
+	*//**
 	 * 校验登录token
 	 * @param map
 	 * @param response
 	 * @return
-	 */
+	 *//*
 	@ResponseBody
 	@RequestMapping(value="/checklogintoken")
 	public Map<String,Object> checkLoginToken(@RequestParam Map<String,Object> map , HttpServletResponse response){
@@ -541,12 +541,12 @@ public class LoginController {
 		return data;
 	}
 	
-	/**
+	*//**
 	 * 修改用户绑定的设备id
 	 * @param map
 	 * @param response
 	 * @return
-	 */
+	 *//*
 	@ResponseBody
 	@RequestMapping(value="/updateRegistrationIdByUserId")
 	public String updateRegistrationIdByUserId(@RequestParam Map<String,Object> map , HttpServletResponse response){
@@ -565,5 +565,5 @@ public class LoginController {
 			msg = "error";
 		}
 		return msg;
-	}
+	}*/
 }

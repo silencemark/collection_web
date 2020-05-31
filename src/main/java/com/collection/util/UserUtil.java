@@ -143,7 +143,8 @@ public class UserUtil {
 			 CookieUtil.synchronousCookie(c);
 			 String d=c.getValue();
 			 if(d != null){
-				 userMap=RedisUtil.getMap(d);
+				 userMap = (Map<String, Object>) request.getSession().getAttribute(d);
+				 //userMap=RedisUtil.getMap(d);
 			 }
 		 }
 		 return userMap;
@@ -359,12 +360,12 @@ public class UserUtil {
 	 public static void deleteSystemUser(HttpServletRequest request,HttpServletResponse response){
 		 Cookie usercookie = CookieUtil.getCookie(request,UserUtil.SYSTEMINFO);
 		 if(usercookie != null ){
-			 RedisUtil.remove(usercookie.getValue());
+			 //RedisUtil.remove(usercookie.getValue());
 			 CookieUtil.deleteCookie(response, usercookie, "/");
 		 }
 		 Cookie menucookie=CookieUtil.getCookie(request,UserUtil.MENUINFO);
 		 if(menucookie != null ){
-			 RedisUtil.remove(menucookie.getValue());
+			 //RedisUtil.remove(menucookie.getValue());
 			 CookieUtil.deleteCookie(response, menucookie, "/");
 		 }
 		 Cookie fromcookie=CookieUtil.getCookie(request,UserUtil.FROMINFO);

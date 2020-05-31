@@ -107,7 +107,8 @@ public class AccessToIntercept implements HandlerInterceptor{
     	}
     	
     	//判读redis中是否存在该cookiesid
-    	if(!RedisUtil.exist(cookiesid)){	
+    	if(request.getSession().getAttribute(cookiesid) == null){	
+    	//if(!RedisUtil.exist(cookiesid)){	
     		response.sendRedirect(Constants.PROJECT_PATH+"managebackstage/login"); 		
     		return false;
     	}

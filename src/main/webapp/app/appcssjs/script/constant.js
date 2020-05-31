@@ -2,9 +2,9 @@
 var hrefurl = location.href.substring(0, location.href.indexOf("/app/"));
 // 项目域名
 
-var projectpath = "http://www.canyindashi.com.cn";
+//var projectpath = "http://www.canyindashi.com.cn";
 //var projectpath = "http://t.canyindashi.com.cn";
-//var projectpath="http://localhost";
+var projectpath="http://localhost:8080";
 // var projectpath = "http://192.168.1.102";
 
 /**
@@ -708,7 +708,7 @@ function downLoadQrcode(downloadUrl, callback) {
 	// alert("download");
 	var filename = downloadUrl.substring(downloadUrl.lastIndexOf("/"),
 			downloadUrl.length);
-	var relativeFilePath = "canyindashi" + filename; // using an absolute
+	var relativeFilePath = "cangpinzhencang" + filename; // using an absolute
 														// path also does not
 														// work
 	if (downloadUrl && downloadUrl.indexOf(projectpath) != 0) {
@@ -980,7 +980,7 @@ function checklogintoken() {
 	JianKangCache.getGlobalData('userinfo', function(data) {
 		// u判断缓存数据是否为空，为空则跳转到登录页面。
 		if (data == undefined || data == null || data == "null") {
-			location.href = '../login/login.html';
+			//location.href = '../login/login.html';
 		}
 		userInfo = data;
 	});

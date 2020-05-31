@@ -2,7 +2,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <% Map<String, Object> user = UserUtil.getSystemUser(request);%>
 <div class="head_box">
-	<div class="logo_name">CateringMaster</div>
+	<div class="logo_name">享GO影视</div>
     <div class="user_box">
     	<div class="name" style="border:0px;"><div class="top_username"><b><img src="<%=user.get("headimage") %>" width="26" height="26" /></b><span><%=user.get("realname") %></span></div></div>
         <div class="box">
