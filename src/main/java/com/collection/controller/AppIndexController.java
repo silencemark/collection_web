@@ -83,5 +83,4 @@ public class AppIndexController extends BaseController{
 		List<Map<String, Object>> movielist = this.appindexService.getHomePageMovie(map);
 		return movielist;
 	}
-
 }

@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.base.controller.BaseController;
-import com.collection.controller.oa.OfficeController;
 import com.collection.controller.userbackstage.UserIndexController.ExportExcel;
 import com.collection.service.IndexService;
 import com.collection.service.oa.NoticeService;
@@ -48,7 +47,7 @@ public class NoticePcController extends BaseController {
 	@Resource private  NoticeService noticeService;
 	
 	@Resource private OfficeService officeService;
-	private transient static Log log = LogFactory.getLog(OfficeController.class);
+	private transient static Log log = LogFactory.getLog(BaseController.class);
 
 	/**
 	 * 得到通知列表

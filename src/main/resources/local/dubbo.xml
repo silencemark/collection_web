@@ -46,16 +46,6 @@
     <dubbo:reference id="warehouseService" interface="com.collection.service.warehouse.WarehouseService"/>
     <!-- KPI星值审核管理 -->
     <dubbo:reference id="starAssessService" interface="com.collection.service.starassess.StarAssessService"/>
-    <!-- 备忘录管理 -->
-    <dubbo:reference id="memorandumService" interface="com.collection.service.memorandum.MemorandumService"/>
-    <!--  OA办公管理 -->
-    <dubbo:reference id="officeService" interface="com.collection.service.oa.OfficeService"/>
-    <!--  OA通知管理 -->
-    <dubbo:reference id="noticeService" interface="com.collection.service.oa.NoticeService"/>
-    <!--  OA日志管理 -->
-    <dubbo:reference id="journalService" interface="com.collection.service.oa.JournalService"/>
-    <!--  OA通用审批-->
-    <dubbo:reference id="approvalService" interface="com.collection.service.oa.ApprovalService"/>
     <!--  消息讨论组-->
     <dubbo:reference id="chatService" interface="com.collection.service.chat.ChatService"/>
     <!-- 个人中心 -->
