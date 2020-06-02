@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.print.attribute.HashAttributeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -124,6 +123,8 @@ public class AppVipCardController extends BaseController{
 			HttpServletResponse response) {
 		this.appVipCardService.payVipCard(map);
 		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("status", 1);
+		data.put("message", "支付成功，等待审核");
 		return data;
 	}
 	
@@ -144,4 +145,57 @@ public class AppVipCardController extends BaseController{
 		return data;
 	}
 	
+	/**
+	 * 获取会员VIP交易卖出的vip会员卡列表
+	 * 传入参数{"ordernum":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getSaleCardList")
+	@ResponseBody
+	public List<Map<String, Object>> getSaleCardList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Map<String, Object>> cardlist=this.appVipCardService.getSaleCardList(map);
+		return cardlist;
+	}
+	
+	/**
+	 * 点击审核进入审核页面
+	 * 传入参数{"ordernum":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/initExamine")
+	@ResponseBody
+	public Map<String, Object> initExamine(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> examine=this.appVipCardService.getExamineInfo(map);
+		return examine;
+	}
+	
+	/**
+	 * 立即审核通过
+	 * 传入参数{"ordernum":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/examinePast")
+	@ResponseBody
+	public Map<String, Object> examinePast(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		this.appVipCardService.examinePast(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("status", 1);
+		data.put("message", "审核成功");
+		return data;
+	}
 }
