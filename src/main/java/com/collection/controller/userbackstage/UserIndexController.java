@@ -51,7 +51,6 @@ import com.collection.redis.RedisUtil;
 import com.collection.service.CompanyService;
 import com.collection.service.IndexService;
 import com.collection.service.UserInfoService;
-import com.collection.service.oa.OfficeService;
 import com.collection.util.CookieUtil;
 import com.collection.util.Md5Util;
 import com.collection.util.PageHelper;
@@ -67,7 +66,6 @@ import com.collection.util.UserUtil;
 @RequestMapping("/userbackstage")
 public class UserIndexController extends BaseController{
 	private transient static Log log = LogFactory.getLog(UserIndexController.class);
-	@Resource private OfficeService officeService;
 	
 	@Resource private IndexService indexService;
 

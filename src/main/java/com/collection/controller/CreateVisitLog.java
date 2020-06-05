@@ -1,9 +1,6 @@
 package com.collection.controller;
 
 
-import java.util.List;
-import java.util.Map;
-
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -11,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.collection.service.IndexService;
-import com.collection.service.memorandum.MemorandumService;
-import com.collection.util.Constants;
 
 @Service
 
@@ -20,19 +15,19 @@ public class CreateVisitLog implements Job {
 	@Autowired
 	private static CreateVisitLog createVisitLog;
 	private IndexService indexService;
-	private MemorandumService memorandumService;
+	//private MemorandumService memorandumService;
 	public void init() {
 		createVisitLog = this;
 		createVisitLog.indexService=this.indexService;
-		createVisitLog.memorandumService=this.memorandumService;
+		//createVisitLog.memorandumService=this.memorandumService;
 	}
-	public MemorandumService getMemorandumService() {
+	/*public MemorandumService getMemorandumService() {
 		return createVisitLog.memorandumService;
 	}
 
 	public void setMemorandumService(MemorandumService memorandumService) {
 		this.memorandumService = memorandumService;
-	}
+	}*/
 
 	public IndexService getIndexService() {
 		return createVisitLog.indexService;
@@ -45,8 +40,8 @@ public class CreateVisitLog implements Job {
 	public void execute(JobExecutionContext arg0) throws JobExecutionException{
 		//System.out.println("--------quertz 2minute 备忘录推送");
 		//查询备忘录
-		List<Map<String, Object>> memolist=getMemorandumService().getAllMemorandumList();
-		for(Map<String, Object> memo:memolist){
+		//List<Map<String, Object>> memolist=getMemorandumService().getAllMemorandumList();
+		/*for(Map<String, Object> memo:memolist){
 			//推送信息
 			try {
 				String userid=memo.get("createid")+"";
@@ -80,6 +75,6 @@ public class CreateVisitLog implements Job {
 				// TODO: handle exception
 				System.out.println("推送error-----");
 			}
-		}
+		}*/
 	}
 }

@@ -198,4 +198,76 @@ public class AppVipCardController extends BaseController{
 		data.put("message", "审核成功");
 		return data;
 	}
+	
+	
+	/**
+	 * 获取会员VIP已拥有（审核通过）vip会员卡列表
+	 * 传入参数{"ordernum":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getMyCardList")
+	@ResponseBody
+	public List<Map<String, Object>> getMyCardList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Map<String, Object>> cardlist=this.appVipCardService.getMyCardList(map);
+		return cardlist;
+	}
+	
+	/**
+	 * 获取会员VIP卡对应的视频包
+	 * 传入参数{"cardid":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getMovieByCardId")
+	@ResponseBody
+	public Map<String, Object> getMovieByCardId(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> cardlist=this.appVipCardService.getMemberCardInfo(map);
+		return cardlist;
+	}
+	
+	/**
+	 * 进入出售页面获取会员卡信息，（VIP出售按钮触发）
+	 * 传入参数{"cardid":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/initSellCard")
+	@ResponseBody
+	public Map<String, Object> initSellCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> cardlist=this.appVipCardService.getSellCardInfo(map);
+		return cardlist;
+	}
+	
+	/**
+	 * 输入价格 点击立即出售
+	 * 传入参数{"price":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/commitSellCard")
+	@ResponseBody
+	public Map<String, Object> commitSellCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		this.appVipCardService.commitSellCard(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("status", 1);
+		data.put("message", "审核成功");
+		return data;
+	}
 }

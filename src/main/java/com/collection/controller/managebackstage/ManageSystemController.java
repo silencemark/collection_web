@@ -5,11 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.TreeMap;
 
 import javax.annotation.Resource;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.bouncycastle.jce.provider.JCEMac.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,20 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.dubbo.common.json.JSON;
 import com.base.controller.BaseController;
 import com.collection.controller.userbackstage.UserIndexController.ExportExcel;
-import com.collection.redis.RedisUtil;
 import com.collection.service.CompanyService;
 import com.collection.service.IndexService;
 import com.collection.service.SystemService;
 import com.collection.service.UserInfoService;
-import com.collection.service.oa.OfficeService;
-import com.collection.util.CookieUtil;
-import com.collection.util.Md5Util;
 import com.collection.util.PageHelper;
-import com.collection.util.PageScroll;
-import com.collection.util.SDKTestSendTemplateSMS;
 import com.collection.util.UserUtil;
 
 /**
