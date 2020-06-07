@@ -21,6 +21,7 @@ import com.collection.service.IAppLoginService;
 import com.collection.util.DateUtil;
 import com.collection.util.Md5Util;
 import com.collection.util.SDKTestSendTemplateSMS;
+import com.utils.MD5Util;
 
 
 /**
@@ -48,12 +49,12 @@ public class AppLoginController {
 	 */
 	@RequestMapping("/getVerificationCode")
 	@ResponseBody
-	public Map<String, Object> sendSms(Map<String, Object> map, HttpServletRequest request) {
+	public Map<String, Object> getVerificationCode(@RequestParam Map<String, Object> map, HttpServletRequest request) {
 		Map<String, Object> data=new HashMap<String, Object>();
 		String phone=map.get("phone")+"";
-		String code = "888888";
+		String code = "6666";
 		// 发送验证码
-		try {
+		/*try {
 			Random r = new Random();
 			code = r.nextInt(10) + "" + r.nextInt(10) + "" + r.nextInt(10) + "" + r.nextInt(10)+ "" + r.nextInt(10)+ "" + r.nextInt(10);
 			SDKTestSendTemplateSMS.sendRegisterVerificationCodeMessage(phone, code,"30");
@@ -61,7 +62,7 @@ public class AppLoginController {
 			data.put("status", 1);
 			data.put("message", "发送验证码错误");
 			return data;
-		}
+		}*/
 		log.info("code=" + code + "-------------------------------------");
 		/*Map<String, Object> codemap=new HashMap<String, Object>();
 		codemap.put("code", code);
@@ -89,7 +90,7 @@ public class AppLoginController {
 		Map<String, Object> data=new HashMap<String, Object>();
 		//获取校验验证码判断是否等于输入的验证码
 		String checkcode = (String) request.getSession().getAttribute(map.get("phone").toString());
-		if (checkcode == null ){
+		if (checkcode == null){
 			data.put("status", 1);
 			data.put("message", "验证码已过期，请重新获取");
 		}
@@ -101,6 +102,8 @@ public class AppLoginController {
 				data.put("status", 1);
 				data.put("message", "手机号已存在, 请找回密码");
 			}
+			//密码加密
+			map.put("password", Md5Util.getMD5(map.get("password").toString()));
 			//注册入库
 			appLoginService.insertUserInfo(map);
 			data.put("status", 0);
@@ -134,16 +137,12 @@ public class AppLoginController {
 				data.put("message", "验证码已过期，请重新获取");
 			}
 			if (map.get("checkcode").equals(checkcode)) {
-				//查询手机号是否存在
-				boolean phoneflag= appLoginService.checkPhone(map);
-				//如果存在 提示
-				if (phoneflag) {
-					//修改密码
-					appLoginService.updateUserInfo(map);
-					data.put("status", 0);
-					data.put("message", "密码修改成功");
-				}
-				
+				//密码加密
+				map.put("password", Md5Util.getMD5(map.get("password").toString()));
+				//修改密码
+				appLoginService.updateUserInfo(map);
+				data.put("status", 0);
+				data.put("message", "密码修改成功");
 			} else {
 				data.put("status", 1);
 				data.put("message", "验证码错误");

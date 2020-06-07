@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.collection.service.IAppUserCenterService;
 import com.collection.util.Constants;
+import com.collection.util.Md5Util;
 import com.collection.util.QRcode;
-
 
 /**
  * 
@@ -254,4 +254,134 @@ public class AppUserCenterController {
 		return data;	
 	}
 	
+	/**
+	 * 修改头像
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/updateHeadImg")
+	@ResponseBody
+	public Map<String, Object> updateHeadImg(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		this.appUserCenterService.updateHeadImg(map);
+		data.put("status", 0);
+		data.put("message", "头像修改成功");
+		return data;	
+	}
+	
+	/**
+	 * 修改昵称
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/updateNickname")
+	@ResponseBody
+	public Map<String, Object> updateNickname(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		this.appUserCenterService.updateNickName(map);
+		data.put("status", 0);
+		data.put("message", "昵称修改成功");
+		return data;	
+	}
+	
+	/**
+	 * 修改登录密码
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/updatePassWord")
+	@ResponseBody
+	public Map<String, Object> updatePassWord(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		//1、把密码都MD5加密
+		map.put("oldpassword", Md5Util.getMD5(map.get("oldpassword").toString()));
+		map.put("newpassword", Md5Util.getMD5(map.get("newpassword").toString()));
+		Map<String, Object> data = this.appUserCenterService.updatePassWord(map);
+		return data;	
+	}
+	
+	/**
+	 * 修改设置支付密码
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/setPayPassWord")
+	@ResponseBody
+	public Map<String, Object> setPayPassWord(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//获取的手机号验证码
+		String vaildcode = (String) request.getSession().getAttribute(map.get("phone").toString());
+		if (vaildcode.equals(map.get("vaildcode"))) {
+			//支付密码加密
+			map.put("paypassword", Md5Util.getMD5(map.get("paypassword").toString()));
+			this.appUserCenterService.setPayPassWord(map);
+			data.put("status", 0);
+			data.put("message", "支付密码设置成功");
+		} else {
+			data.put("status", 1);
+			data.put("message", "验证码输入错误");
+		}
+		return data;	
+	}
+	
+	/**
+	 * 收款方式管理页面查询
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getPaymentMethod")
+	@ResponseBody
+	public Map<String, Object> getPaymentMethod(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		return this.appUserCenterService.getPaymentMethod(map);
+	}
+	
+	/**
+	 * 修改收款方式
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/updateAddPaymentMethod")
+	@ResponseBody
+	public Map<String, Object> updateAddPaymentMethod(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		this.appUserCenterService.updatePaymentMethod(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("status", 0);
+		data.put("message", "支付密码设置成功");
+		return data;
+	}
 }

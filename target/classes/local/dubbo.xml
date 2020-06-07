@@ -21,7 +21,7 @@
     <dubbo:reference id="appLoginService" interface="com.collection.service.IAppLoginService"/>
     <dubbo:reference id="appIndexService" interface="com.collection.service.IAppIndexService"/>
     <dubbo:reference id="appVipCardService" interface="com.collection.service.IAppVipCardService"/>
-    
+    <dubbo:reference id="appUserCenterService" interface="com.collection.service.IAppUserCenterService"/>
     
     
     
