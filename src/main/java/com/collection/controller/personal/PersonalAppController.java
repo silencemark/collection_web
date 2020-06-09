@@ -29,7 +29,6 @@ import com.collection.redis.RedisUtil;
 import com.collection.service.CompanyService;
 import com.collection.service.IndexService;
 import com.collection.service.UserInfoService;
-import com.collection.service.chat.ChatService;
 import com.collection.service.personal.PersonalService;
 import com.collection.util.Constants;
 import com.collection.util.Generate_Verification_Code;
@@ -59,8 +58,6 @@ public class PersonalAppController extends BaseController {
 	CompanyService companyService;
 	
 	@Resource private UserInfoService userInfoService;
-	
-	@Resource private ChatService chatService;
 	
 	/**
 	 * 修改用户手机号码 传入参数： phone，userid，password,V_Code(验证码) -------> 所有的参数必填
@@ -1102,186 +1099,6 @@ public class PersonalAppController extends BaseController {
 			log.error(e);
 			resultMap.put("status", 1);
 			resultMap.put("message", "操作失败");
-		}
-
-		return resultMap;
-	}
-
-	/**
-	 * 删除机构关联用户
-	 * companyid，userid，useridlist,phone，delflag，realname，status，isinvite
-	 * ，invitetime，updatetime，updateid，position
-	 *  传入参数： manageidlist,useridlist
-	 * 
-	 * @param map
-	 * @param response
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/updateUserDelete", method = RequestMethod.POST)
-	public Map<String, Object> updateUserDelete(
-			@RequestParam Map<String, Object> map, HttpServletResponse response) {
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		// 创建返回的map对象
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-
-		try {
-			map.put("delflag", 1);
-			if(map != null && !"".equals(map)){	
-				//选中多个人员
-				if(map.get("list") != null && !"".equals(map.get("list"))){
-						//获取所选中的userid 获取所选中的organizeid	
-						List<Map> list = JSONArray.parseArray(map.get("list").toString(), Map.class);
-						List<String> useridlist=new ArrayList<String>();
-						List<String> manageidlist=new ArrayList<String>();
-						List<String> organizelist = new ArrayList<String>();
-						for(int i=0;i<list.size();i++){  					
-							String userid=list.get(i).get("userid").toString();
-							String manageid=list.get(i).get("manageid").toString();
-							String organizeid = list.get(i).get("organizeid").toString();
-							useridlist.add(userid);
-							manageidlist.add(manageid);
-							organizelist.add(organizeid);
-						}	
-						map.put("useridlist", useridlist);
-						map.put("manageidlist", manageidlist);
-						map.put("organizelist", organizelist);
-				}else{
-					map.put("usernum",1);
-				}
-				// 修改用户	
-				this.personalService.updateUserBasicInfo(map);
-				// 修改用户组织关联表
-				this.personalService.updateOrganizeUserInfo(map);
-				//修改组织表的usernum用户数量
-				this.personalService.updateUserOrganize(map);
-	
-				//删除之后发送短信
-				try {
-					if(map.containsKey("useridlist") && !"".equals(map.get("useridlist"))){
-						@SuppressWarnings("unchecked")
-						List<String> useridlist = (List<String>) map.get("useridlist");
-						for(String userid : useridlist){
-							Map<String,Object> usermap = new HashMap<String,Object>();
-							usermap.put("userid", userid);
-							//查询用户信息
-							usermap = this.personalService.getUserInfo(usermap);
-							String phone = String.valueOf(usermap.get("phone"));
-							String username = String.valueOf(usermap.get("realname"));
-							String content = "从【"+usermap.get("companyname")+"】移出";
-							SDKTestSendTemplateSMS.sendDeleteUser(phone, username, content);
-							
-							//删除消息中的群组的信息
-							try {
-								//查询用户所在的群组的信息
-								List<Map<String,Object>> grouplist = this.chatService.getGroupListInfoByUserid(usermap);
-								if(grouplist != null && grouplist.size() > 0){
-									for(Map<String,Object> groupmap : grouplist){
-										//查询每个群组中的人数
-										int usernum = this.chatService.getGroupUserNumByGroupId(groupmap);
-										//当为一对一单聊
-										if(usernum <=2 && usernum > 0){
-											Map<String,Object> onemap = new HashMap<String,Object>();
-											onemap.put("groupid", groupmap.get("groupid"));
-											onemap.put("delflag", 1);
-											this.chatService.deleteGroupUserInfo(onemap);
-											this.chatService.updateGroupInfo(onemap);
-										}else if(usernum > 2){//当为群聊的时候
-											Map<String,Object> moremap = new HashMap<String,Object>();
-											moremap.put("groupuserid", groupmap.get("groupuserid"));
-											this.chatService.deleteGroupUserInfo(moremap);
-											moremap.clear();
-											String groupname = String.valueOf(groupmap.get("groupname"));
-											String realname = String.valueOf(groupmap.get("realname"));
-											int groupnum = groupname.indexOf(realname);
-											int namenum = realname.length();
-											if(groupnum > 0 && groupnum < (groupname.length() - namenum)){
-												groupname = groupname.substring(0,groupnum - 1) + groupname.substring(groupnum+namenum , groupname.length());
-											}else if(groupnum >= (groupname.length() - namenum)){
-												groupname = groupname.substring(0 , groupnum - 1);
-											}else if(groupnum == 0){
-												groupname = groupname.substring(namenum + 1 , groupname.length());
-											}
-											moremap.put("groupname", groupname);
-											moremap.put("groupid", groupmap.get("groupid"));
-											this.chatService.updateGroupInfo(moremap);
-										}
-										//将删除人员未读的信息的状态改为已读
-										this.chatService.updateChatRecordStatus(groupmap);
-									}
-								}
-							} catch (Exception e) {
-								// TODO: handle exception
-								e.printStackTrace();
-							}
-							
-						}
-					}else if(map.containsKey("userid") && !"".equals(map.get("userid"))){
-						//查询用户信息
-						Map<String,Object> usermap = this.personalService.getUserInfo(map);
-						String phone = String.valueOf(usermap.get("phone"));
-						String username = String.valueOf(usermap.get("realname"));
-						String content = "从【"+usermap.get("companyname")+"】移出";
-						SDKTestSendTemplateSMS.sendDeleteUser(phone, username, content);
-						
-						//删除消息中的群组的信息
-						try {
-							//查询用户所在的群组的信息
-							List<Map<String,Object>> grouplist = this.chatService.getGroupListInfoByUserid(map);
-							if(grouplist != null && grouplist.size() > 0){
-								for(Map<String,Object> groupmap : grouplist){
-									//查询每个群组中的人数
-									int usernum = this.chatService.getGroupUserNumByGroupId(groupmap);
-									//当为一对一单聊
-									if(usernum <=2 && usernum > 0){
-										Map<String,Object> onemap = new HashMap<String,Object>();
-										onemap.put("groupid", groupmap.get("groupid"));
-										onemap.put("delflag", 1);
-										this.chatService.deleteGroupUserInfo(onemap);
-										this.chatService.updateGroupInfo(onemap);
-									}else if(usernum > 2){//当为群聊的时候
-										Map<String,Object> moremap = new HashMap<String,Object>();
-										moremap.put("groupuserid", groupmap.get("groupuserid"));
-										this.chatService.deleteGroupUserInfo(moremap);
-										moremap.clear();
-										String groupname = String.valueOf(groupmap.get("groupname"));
-										String realname = String.valueOf(groupmap.get("realname"));
-										int groupnum = groupname.indexOf(realname);
-										int namenum = realname.length();
-										if(groupnum > 0 && groupnum < (groupname.length() - namenum)){
-											groupname = groupname.substring(0,groupnum - 1) + groupname.substring(groupnum+namenum , groupname.length());
-										}else if(groupnum >= (groupname.length() - namenum)){
-											groupname = groupname.substring(0 , groupnum - 1);
-										}else if(groupnum == 0){
-											groupname = groupname.substring(namenum + 1 , groupname.length());
-										}
-										moremap.put("groupname", groupname);
-										moremap.put("groupid", groupmap.get("groupid"));
-										this.chatService.updateGroupInfo(moremap);
-									}
-									//将删除人员未读的信息的状态改为已读
-									this.chatService.updateChatRecordStatus(groupmap);
-								}
-							}
-						} catch (Exception e) {
-							// TODO: handle exception
-							e.printStackTrace();
-						}
-						
-					}
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}
-				
-				resultMap.put("status", 0);
-				resultMap.put("message", "删除成功");
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			log.error(e);
-			resultMap.put("status", 1);
-			resultMap.put("message", "删除出错");
 		}
 
 		return resultMap;

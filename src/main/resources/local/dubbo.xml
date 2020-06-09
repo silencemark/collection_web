@@ -14,8 +14,8 @@
 	 -->
 
 	<dubbo:protocol name="dubbo" port="20881" /> 
-	<!-- <dubbo:registry address="zookeeper://localhost:2181" check="false" /> -->
-    <dubbo:registry protocol="zookeeper"  address="117.18.12.193:2181" check="false" />
+	<dubbo:registry address="zookeeper://117.18.12.193:2181" check="false" />
+    <!-- <dubbo:registry protocol="zookeeper"  address="139.196.20.181:11181" check="false" /> -->
     
     <!-- add by silence 2020-05-26--> 
     <dubbo:reference id="appLoginService" interface="com.collection.service.IAppLoginService"/>
@@ -46,8 +46,6 @@
     <dubbo:reference id="warehouseService" interface="com.collection.service.warehouse.WarehouseService"/>
     <!-- KPI星值审核管理 -->
     <dubbo:reference id="starAssessService" interface="com.collection.service.starassess.StarAssessService"/>
-    <!--  消息讨论组-->
-    <dubbo:reference id="chatService" interface="com.collection.service.chat.ChatService"/>
     <!-- 个人中心 -->
     <dubbo:reference id="personalService" interface="com.collection.service.personal.PersonalService"/>
     <!-- 每日报表 -->

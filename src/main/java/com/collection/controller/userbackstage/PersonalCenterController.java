@@ -34,7 +34,6 @@ import com.collection.redis.RedisUtil;
 import com.collection.service.CompanyService;
 import com.collection.service.IndexService;
 import com.collection.service.UserInfoService;
-import com.collection.service.chat.ChatService;
 import com.collection.service.personal.PersonalService;
 import com.collection.util.Constants;
 import com.collection.util.Md5Util;
@@ -57,7 +56,6 @@ public class PersonalCenterController extends BaseController {
 	@Resource private UserInfoService userInfoService;
 	@Resource private IndexService indexService;
 	@Resource private CompanyService companyService;
-	@Resource private ChatService chatService;
 	
 	/**
 	 * 系统公告列表
@@ -481,15 +479,15 @@ public class PersonalCenterController extends BaseController {
 		this.insertManageLog(userinfo.get("companyid")+"", 2, "组织架构", content, userinfo.get("userid")+"");
 			return "redirect:/userbackstage/getNextOrgainize";
 	}
-
-	/**
+/*
+	*//**
 	 * 人员管理：删除
 	 * @param map 传入  必须参数userid，manageid，organizeid：所属的组织  ，list：多选的userid，manageid
 	 * @param model
 	 * @param request
 	 * @return
 	 * @author dsl
-	 */
+	 *//*
 	@RequestMapping("/getDeleteByUser")
 	public String getDeleteByUser(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -662,7 +660,7 @@ public class PersonalCenterController extends BaseController {
 		}
 		
 			return "redirect:/userbackstage/getNextOrgainize";
-	}
+	}*/
 	
 	/**
 	 * 人员管理：邀请

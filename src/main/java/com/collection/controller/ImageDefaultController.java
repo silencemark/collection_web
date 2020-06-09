@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.collection.service.chat.ChatService;
 
 
 /**
@@ -35,17 +33,17 @@ import com.collection.service.chat.ChatService;
 @RequestMapping("/default/img")
 public class ImageDefaultController {
 	
-	@Autowired
-	private ChatService chatService; 
+	//@Autowired
+	//private ChatService chatService; 
 	
-	
-	/**
+	/*
+	*//**
 	 * 群头像
 	 * @param groupid
 	 * @param request
 	 * @param response
 	 * @throws IOException
-	 */
+	 *//*
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/group/{groupid}")
 	@ResponseBody
@@ -76,7 +74,7 @@ public class ImageDefaultController {
 			ImageIO.write(image, "JPEG", response.getOutputStream());
 		}
 		
-	}
+	}*/
 	
 	public static BufferedImage getCombinationOfheadBufferedImage(List<String> paths) throws IOException {
 		List<BufferedImage> bufferedImages = new ArrayList<BufferedImage>();
