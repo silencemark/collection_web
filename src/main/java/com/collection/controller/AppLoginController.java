@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.collection.redis.RedisUtil;
 import com.collection.service.IAppLoginService;
 import com.collection.util.DateUtil;
 import com.collection.util.Md5Util;
@@ -64,10 +65,10 @@ public class AppLoginController {
 			return data;
 		}*/
 		log.info("code=" + code + "-------------------------------------");
-		/*Map<String, Object> codemap=new HashMap<String, Object>();
+		Map<String, Object> codemap=new HashMap<String, Object>();
 		codemap.put("code", code);
-		RedisUtil.setObject(phone,codemap, 1);*/
-		request.getSession().setAttribute(phone, code);
+		RedisUtil.setObject(phone,codemap, 1);
+		//request.getSession().setAttribute(phone, code);
 		data.put("status", 0);
 		data.put("message", "获取成功");
 		return data;
