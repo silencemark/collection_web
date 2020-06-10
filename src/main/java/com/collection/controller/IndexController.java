@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.base.controller.BaseController;
-import com.collection.dwr.DwrUtil;
 import com.collection.redis.RedisUtil;
 import com.collection.service.IndexService;
 import com.collection.service.UserInfoService;
@@ -1251,7 +1250,7 @@ public class IndexController extends BaseController{
 	 * @return
 	 * @author silence
 	 */
-	@RequestMapping("/dwrlogin")
+	/*@RequestMapping("/dwrlogin")
 	@ResponseBody
 	public Map<String, Object> dwrlogin(@RequestParam Map<String, Object> map,HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -1264,7 +1263,7 @@ public class IndexController extends BaseController{
 		}
 		return data;
 	}
-	
+	*/
 	/**
 	 * 删除用户的关联数据
 	 * @param map

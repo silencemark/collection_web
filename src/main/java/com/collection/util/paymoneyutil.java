@@ -1,6 +1,5 @@
 package com.collection.util;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -11,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.collection.util.Constants;
-import com.utils.GetWxOrderno;
 import com.utils.RequestHandler;
 import com.utils.Sha1Util;
 import com.utils.TenpayUtil;
