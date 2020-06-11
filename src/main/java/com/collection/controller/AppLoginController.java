@@ -2,7 +2,6 @@ package com.collection.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,6 @@ import com.collection.redis.RedisUtil;
 import com.collection.service.IAppLoginService;
 import com.collection.util.DateUtil;
 import com.collection.util.Md5Util;
-import com.collection.util.SDKTestSendTemplateSMS;
-import com.utils.MD5Util;
 
 
 /**
@@ -64,7 +61,7 @@ public class AppLoginController {
 			data.put("message", "发送验证码错误");
 			return data;
 		}*/
-		log.info("code=" + code + "-------------------------------------");
+		log.info("code=" + code + "------------------------"+phone+"-------------");
 		Map<String, Object> codemap=new HashMap<String, Object>();
 		codemap.put("code", code);
 		RedisUtil.setObject(phone,codemap, 1);
@@ -90,7 +87,12 @@ public class AppLoginController {
 			HttpServletResponse response) {
 		Map<String, Object> data=new HashMap<String, Object>();
 		//获取校验验证码判断是否等于输入的验证码
-		String checkcode = (String) request.getSession().getAttribute(map.get("phone").toString());
+		Map<String, Object> checkcodeMap = RedisUtil.getObject(""+map.get("phone"));
+		String checkcode = "";
+		if (checkcodeMap != null && checkcodeMap.size() > 0) {
+			checkcode = checkcodeMap.get("code").toString();
+			logger.info("checkcode====" + checkcode);
+		}
 		if (checkcode == null){
 			data.put("status", 1);
 			data.put("message", "验证码已过期，请重新获取");
@@ -127,26 +129,30 @@ public class AppLoginController {
 	 * @author silence
 	 */
 	@RequestMapping("/findPassWord")
+	@ResponseBody
 	public Map<String, Object> findPassWord(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data=new HashMap<String, Object>();
 		try {
 			//获取校验验证码判断是否等于输入的验证码
-			String checkcode = (String) request.getSession().getAttribute(map.get("phone").toString());
-			if (checkcode == null ){
-				data.put("status", 1);
-				data.put("message", "验证码已过期，请重新获取");
-			}
-			if (map.get("checkcode").equals(checkcode)) {
-				//密码加密
-				map.put("password", Md5Util.getMD5(map.get("password").toString()));
-				//修改密码
-				appLoginService.updateUserInfo(map);
-				data.put("status", 0);
-				data.put("message", "密码修改成功");
+			Map<String, Object> checkcodeMap = RedisUtil.getObject(""+map.get("phone"));
+			String checkcode = "";
+			if (checkcodeMap != null && checkcodeMap.size() > 0) {
+				checkcode = checkcodeMap.get("code").toString();
+				if (map.get("checkcode").equals(checkcode)) {
+					//密码加密
+					map.put("password", Md5Util.getMD5(map.get("password").toString()));
+					//修改密码
+					appLoginService.updateUserInfo(map);
+					data.put("status", 0);
+					data.put("message", "密码修改成功");
+				} else {
+					data.put("status", 1);
+					data.put("message", "验证码错误");
+				}
 			} else {
 				data.put("status", 1);
-				data.put("message", "验证码错误");
+				data.put("message", "验证码已过期，请重新获取");
 			}
 		} catch (Exception e) {
 			data.put("status", 1);
@@ -203,12 +209,11 @@ public class AppLoginController {
 	 */
 	@RequestMapping("/userlogin")
 	@ResponseBody
-	public Map<String, Object> userlogin(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+	public Map<String, Object> userlogin(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		response.setCharacterEncoding("UTF-8");
 		Map<String, Object> data=new HashMap<String, Object>();
 		map.put("password", Md5Util.getMD5(map.get("password").toString()));
-		logger.info("用户"+map.get("phone"+"登录系统"+DateUtil.sysDateTime()));
+		logger.info("用户"+map.get("phone")+"登录系统"+DateUtil.sysDateTime());
 		Map<String, Object> userInfo = this.appLoginService.login(map);
 		if(userInfo!=null && userInfo.size()>0){
 			if ("1".equals(userInfo.get("status"))){

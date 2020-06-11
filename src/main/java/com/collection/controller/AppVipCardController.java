@@ -66,8 +66,7 @@ public class AppVipCardController extends BaseController{
 		//抢购逻辑x需要思考一下
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("status", 0);
-		data.put("message", "抢购成功");
-		data.put("orderid", 11111);
+		data.put("message", "参与抢购成功,请到我的抢购中查看抢购结果");
 		return data;
 	}
 	
@@ -123,27 +122,29 @@ public class AppVipCardController extends BaseController{
 			HttpServletResponse response) {
 		this.appVipCardService.payVipCard(map);
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("status", 1);
+		data.put("status", 0);
 		data.put("message", "支付成功，等待审核");
 		return data;
 	}
 	
 	/**
-	 * 联系卖家 获取卖家信息
-	 * 传入参数{"ordernum":"123456"}
+	 * 联系买卖家 获取买家/卖家信息
+	 * 传入参数{"userid":"123456"}
 	 * 传出参数[
 	 * @param type
 	 * @param request
 	 * @return
 	 * @author silence
 	 */
-	@RequestMapping("/getSellUserInfo")
+	@RequestMapping("/getSellOrBuyUserInfo")
 	@ResponseBody
-	public Map<String, Object> getSellUserInfo(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getSellOrBuyUserInfo(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = this.appVipCardService.getContactPhone(map);
 		return data;
 	}
+	
+	
 	
 	/**
 	 * 获取会员VIP交易卖出的vip会员卡列表
@@ -194,7 +195,7 @@ public class AppVipCardController extends BaseController{
 			HttpServletResponse response) {
 		this.appVipCardService.examinePast(map);
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("status", 1);
+		data.put("status", 0);
 		data.put("message", "审核成功");
 		return data;
 	}
@@ -266,8 +267,8 @@ public class AppVipCardController extends BaseController{
 			HttpServletResponse response) {
 		this.appVipCardService.commitSellCard(map);
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("status", 1);
-		data.put("message", "审核成功");
+		data.put("status", 0);
+		data.put("message", "出售成功");
 		return data;
 	}
 }

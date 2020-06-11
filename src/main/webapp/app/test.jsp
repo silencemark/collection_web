@@ -15,7 +15,7 @@
 	<table border="0">
 		<tr>
 			<td>方法名:</td>
-			<td><input type="text" id="methodname" />(例:userlogin)</td>
+			<td><input type="text" id="methodname" />(例:appLogin/userlogin)</td>
 		</tr>
 		<tr>
 			<td>传入参数:</td>
@@ -105,7 +105,7 @@ $(function(){
 	$('#subbtn').click(function(){
 		var methodname=$('#methodname').val();
 		var parameter=$('#parameter').val();
-		var url=projectpath+"/appLogin/"+methodname;
+		var url=projectpath+"/"+methodname;
 		$.ajax({
 			type:'post',
 			dataType:'json',
