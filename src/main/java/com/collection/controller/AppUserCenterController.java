@@ -69,6 +69,8 @@ public class AppUserCenterController {
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		this.appUserCenterService.signIn(map);
+		data.put("status", 0);
+		data.put("message", "签到成功");
 		return data;	
 	}
 	

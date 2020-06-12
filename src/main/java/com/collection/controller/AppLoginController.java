@@ -104,13 +104,14 @@ public class AppLoginController {
 			if (phoneflag) {
 				data.put("status", 1);
 				data.put("message", "手机号已存在, 请找回密码");
+			} else {
+				//密码加密
+				map.put("password", Md5Util.getMD5(map.get("password").toString()));
+				//注册入库
+				appLoginService.insertUserInfo(map);
+				data.put("status", 0);
+				data.put("message", "注册成功");
 			}
-			//密码加密
-			map.put("password", Md5Util.getMD5(map.get("password").toString()));
-			//注册入库
-			appLoginService.insertUserInfo(map);
-			data.put("status", 0);
-			data.put("message", "注册成功");
 		} else {
 			data.put("status", 1);
 			data.put("message", "验证码错误");
@@ -136,6 +137,8 @@ public class AppLoginController {
 		try {
 			//获取校验验证码判断是否等于输入的验证码
 			Map<String, Object> checkcodeMap = RedisUtil.getObject(""+map.get("phone"));
+			/*Map<String, Object> checkcodeMap = new HashMap<String, Object>();
+			checkcodeMap.put("code", "6666");*/
 			String checkcode = "";
 			if (checkcodeMap != null && checkcodeMap.size() > 0) {
 				checkcode = checkcodeMap.get("code").toString();
