@@ -43,7 +43,6 @@ public class AccessToIntercept implements HandlerInterceptor{
         if(requesturl.indexOf("/managebackstage/login") > -1){
         	UserUtil.deleteSystemUser(request, response);
         	return true;
-        	
         }
         //登陆页面
         if(requesturl.indexOf("/managebackstage/initforget") > -1
@@ -93,7 +92,7 @@ public class AccessToIntercept implements HandlerInterceptor{
 			for(int i=0;i<cookies.length;i++) {
 				if(cookies[i].getName().equals(UserUtil.SYSTEMINFO)) {
 					cookiesid=cookies[i].getValue();
-				}
+				} 
 			}
 		} 
     	log.debug("cookiesid_______"+cookiesid);

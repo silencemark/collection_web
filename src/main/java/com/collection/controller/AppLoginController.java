@@ -140,12 +140,20 @@ public class AppLoginController {
 			if (checkcodeMap != null && checkcodeMap.size() > 0) {
 				checkcode = checkcodeMap.get("code").toString();
 				if (map.get("checkcode").equals(checkcode)) {
-					//密码加密
-					map.put("password", Md5Util.getMD5(map.get("password").toString()));
-					//修改密码
-					appLoginService.updateUserInfo(map);
-					data.put("status", 0);
-					data.put("message", "密码修改成功");
+					//查询手机号是否存在
+					boolean phoneflag= appLoginService.checkPhone(map);
+					//如果不存在 提示
+					if (!phoneflag) {
+						data.put("status", 1);
+						data.put("message", "手机号不存在, 请先注册");
+					} else {
+						//密码加密
+						map.put("password", Md5Util.getMD5(map.get("password").toString()));
+						//修改密码
+						appLoginService.updateUserInfo(map);
+						data.put("status", 0);
+						data.put("message", "密码修改成功");
+					}
 				} else {
 					data.put("status", 1);
 					data.put("message", "验证码错误");
