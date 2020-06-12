@@ -1,0 +1,100 @@
+.userInfo{
+    width: 90%;
+    height: auto;
+    margin-left: 5%;
+    padding: 10px 5px 10px 0px;
+}
+.userInfo img{
+    width: 50px;
+    height: 50px;
+    float: left;
+}
+.userInfo .userName{
+    width: 110px;
+    height: 50px;
+    float: left;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+    padding: 0 0 0 12px;
+}
+.userInfo .qiand{
+    margin: 10px 20px 0 0;float:right;
+}
+.userInfo .userName span{
+    display: block;
+}
+.userInfo .userName img{
+    width: 15px;
+    height: 17px;
+}
+.userInfo .userName .renz{
+    font-size: 0.8rem;font-weight:500;color:#777;margin-top:5px;
+}
+
+.vipInfo{
+    width: 90%;
+    height: 180px;
+    margin-left: 5%;
+    background-size:100% 100%;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+    padding: 30px 0 0 20px;
+    /* position:fixed; */
+}
+.vipInfo span{
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: block;
+}
+.vipInfo .v-img{
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    right: 0px;
+    margin-top: -49px;
+}
+.v-numver{
+    width: 200px;
+    height: auto;
+    position: absolute;
+    margin-top: 40px;
+}
+.v-numver span{
+    font-size: 0.8rem !important;
+}
+.jdt-father {
+    width:200px;
+    height:5px;
+    margin: 5px 0 5px 0;
+    background: hsla(0,0%,100%,.6);
+    border-radius: 15px;
+}
+.jdt-father div{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.operationEl{
+    width: 94%;
+    margin-left: 3%;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #f3f2f2;
+    font-size: 0.9rem;
+    color: #555;
+}
+.operationEl img{
+    width: 24px;
+    height: 24px;
+    margin-top: 13px;
+    position: absolute;
+}
+.operationEl span{
+    margin-left: 35px;
+}
+.userXGOBut{
+    display: inline;
+    float:right;
+    margin-right: 20px;
+}

@@ -1,0 +1,67 @@
+ /*公共部分*/
+ *{     margin: 0;
+     padding: 0;
+ }
+ .html,body,.wrap{
+     width: 100%;
+ }
+  
+  body{
+      background: #fff;
+  }
+  a{
+      text-decoration: none;
+      color: #777;
+  }
+ 
+  a:active{
+      text-decoration: underline;
+      color: #000;
+  }
+ .main{
+     width: 100%;
+     height: auto;
+ }
+ .logoCont{
+     text-align: center;
+     font-size: 2rem;
+     color: #555;
+     font-weight: bold;
+     margin-top: 30px;
+ }
+ .logoCont img{
+     width: 210px;
+     height: 70px;
+     margin-top: 20px;
+ }
+ .inputCont{
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    height: 80px;
+ }
+ .inputCont input{
+    width: 98%;
+    height: 40px;
+    font-size: 1rem;
+    color: #555;
+    border: 1px solid #ededed;
+    border-radius: 20px;
+    text-indent: 30px
+ }
+ input::-webkit-input-placeholder{
+     font-size: 0.9rem;
+     color: #dfdfdf;
+ }
+ .inputCont span{
+    font-size: 0.7rem;
+    color: #f26e2f;
+ }
+.errMsgCont{
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding-top: 5px;
+}

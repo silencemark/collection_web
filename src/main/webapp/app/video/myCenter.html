@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
+     <script src="js/jquery-3.4.1.js"></script>
+     <script src="js/vue.js"></script>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+   <!--  <div class="title">
+        <img src="img/to-left.png"/>
+        个人中心
+    </div> -->
+
+    <!--userInfo-->
+    <div class="userInfo">
+        <img src="img/toux.png"/>
+        <div class="userName">
+            <span style="margin-top:3px;">蒙娜丽莎</span>
+            <img src="img/duop.png" style="margin-top:5px;"/>
+            <span class="renz">未认证</span> 
+        </div>
+        <div class="btn qiand" @click="签到">签到</div>
+        <div class="clear"></div>
+    </div>
+
+    <!--vipInfo-->
+    <div :class="`vipInfo v${vipGrade}-c`" :style="`background-image: url('img/V${vipGrade}_BG.png`">
+      <span style="margin-bottom:5px;">{{vipGradeName[vipGrade]}}</span>
+        当前成长值 : 0
+        <div class="v-numver">
+          距离升级还需要1点成长值
+          <div class="jdt-father">
+              <div id="Son" :class="`v${vipGrade}-bg`"></div>
+          </div>
+          <span style="float:left;">V{{vipGrade}}</span>
+          <span style="float:right;">V{{vipGrade+1}}</span>
+          <span class="clear"></span>
+      </div>
+      <img v-if="vipGrade!=0" :src="`img/V${vipGrade}_IC.png`" class="v-img"/>
+    </div>
+    <div class="clear"></div>
+
+    <!--operationEl-->
+    <div class="operationEl" style="margin-top:10px;">
+        <img src="img/integral-ic.png"/>
+        <span>积分</span>
+        <span class="money">20</span>
+        <div class="userXGOBut">明细</div>
+        <div class="userXGOBut" style="margin-right:30px;">转赠</div>
+    </div>
+    <div class="operationEl">
+      <img src="img/vipSystem-ic.png"/>
+      <span>会员体系</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl">
+      <img src="img/money-ic.png"/>
+      <span>我的资产</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl">
+      <img src="img/handPor-ic.png"/>
+      <span>我的团队</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl">
+      <img src="img/invitation-ic.png"/>
+      <span>我的邀请码</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl">
+      <img src="img/edit-ic.png"/>
+      <span>账号设置</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl">
+      <img src="img/custService-ic.png"/>
+      <span>服务中心</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl" style="border: 0;" @click="loginOut">
+      <img src="img/set-ic.png"/>
+      <span>退出登录</span></a>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+  <ul id="footer_list">
+     <li class="list_li home active">
+         <a href="index.html" class="text">首页</a>
+     </li>
+     <li class="list_li follow" >
+         <a  href="javascript:void(0); class="text">活动中心</a>
+     </li>
+     <li class="list_li cart">
+         <a  href="javascript:void(0); class="text">卡包</a>
+     </li>
+     <li class="list_li profile">
+         <a  href="myCenter.html" class="text">我的</a>
+     </li>
+ </ul>
+</footer>
+<!-- end footer-->
+</body>
+
+<script>
+   //进度条计算
+   var Son = document.getElementById("Son");
+    Son.style.width = Percentage(1, 100) + "%";
+    function Percentage(current, total) {
+        return current / total * 100
+    }
+
+;
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+          vipGrade : 0,    //会员等级
+          vipGradeName : { //会员等级昵称
+                0:'普通用户',
+                1:'V1青铜会员',
+                2:'V2白银会员',
+                3:'v3黄金会员'
+              }
+          //页面参数    
+        }
+      },
+      created() {
+          
+      },
+      methods:{
+        loginOut(){
+          window.location.href="login.html";
+        }
+      }
+    })
+  </script>
+
+</html>
