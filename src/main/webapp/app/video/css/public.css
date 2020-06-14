@@ -29,6 +29,7 @@
   }
   .clear{
       clear: both;
+      border:0px !important;
   }
 
   /**头部TITLE*/

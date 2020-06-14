@@ -33,14 +33,18 @@
 }
 
 .vipInfo{
-    width: 90%;
+    width: 96%;
     height: 180px;
-    margin-left: 5%;
+    margin-left: 2%;
     background-size:100% 100%;
     font-size: 0.8rem;
     box-sizing: border-box;
     padding: 30px 0 0 20px;
-    /* position:fixed; */
+}
+.vipInfo-active{
+    width: 96% !important;
+    margin-left: 2% !important;
+    padding: 15px 75px 0 15px !important;
 }
 .vipInfo span{
     font-size: 1.3rem;
@@ -53,6 +57,7 @@
     position: absolute;
     right: 0px;
     margin-top: -49px;
+    opacity: 0.7;
 }
 .v-numver{
     width: 200px;
@@ -63,8 +68,13 @@
 .v-numver span{
     font-size: 0.8rem !important;
 }
+.v-numver div{
+    width: 50%;
+    float: left;
+    margin-bottom: 5px;
+}
 .jdt-father {
-    width:200px;
+    width:200px !important;
     height:5px;
     margin: 5px 0 5px 0;
     background: hsla(0,0%,100%,.6);
@@ -95,6 +105,53 @@
 }
 .userXGOBut{
     display: inline;
-    float:right;
+    float: right;
     margin-right: 20px;
+}
+.active-but{
+    width: 96%;
+    margin-left: 2%;
+    height: 35px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    color: #fff;
+    border: 1px solid #dfdfdf;
+    margin: 1px 2% 0 2%;
+}
+.gabTitle{
+    width: 100%;
+    height: 35px;
+    margin-bottom: 30px;
+}
+.gabTitle div{
+    width: 25%;
+    height: 50px;
+    float: left;
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 50px;
+    border-bottom: 3px solid #ebe9e9;
+}
+.gabTitle .active{
+    border-bottom: 3px solid #ed602a !important;
+    font-weight: 600 !important;
+    color: #ed602a !important;
+}
+.payWaitLoad{
+    width: 96%;
+    height: 215px;
+    background: #000;
+    opacity: .5;
+    margin-left: 2%;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+    margin-top: -230px;
+    border-radius: 5px;
+}
+.payWaitLoad img{
+    width: 150px;
+    height: 150px;
+    display: inline;
+    margin-top: 20px;
 }

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        我的卡包
+    </div>
+
+<div class="gabTitle">
+    <div onclick="window.location.href='bagPayWait.html'" class="active">抢购中</div>
+    <div onclick="window.location.href='bagOwn.html'">已拥有</div>
+    <div onclick="window.location.href='bagSale.html'">出售中</div>
+    <div onclick="window.location.href='bagHistory.html'">历史VIP卡</div>
+    <b class="clear"></b>
+</div>
+
+
+<div style="margin-bottom:15px;">
+    <div  class="vipInfo-active vipInfo  v6-c" 
+    style="background-image:url('../img/V6_BG.png')">
+      <span style="margin-bottom:5px;">星耀VIP卡</span>
+      即日起购买星耀VIP卡 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+        <div class="v-numver" style="width: 90%;margin-top:45px;">
+            <div>已抢购时间：1分钟3秒</div>
+            <div>VIP卡期限：30天</div>
+            <div>预计价格：235 - 1300</div>
+            <div>交易状态： <a style="font-weight:600;color:#BA4A33;">抢购中</a></div>
+            <span class="clear">
+      </div>
+      <img src="../img/V6_IC.png" class="v-img" style="width:120px;height:120px;"/>
+    </div>
+    <div class="clear"></div>
+    <input type="button" value="正在抢购中..." class="active-but  v6-bg"/>
+</div>
+<div class="payWaitLoad"><img src="../img/timg.gif"/></div>
+
+<!--vipInfo-->
+<div v-for="(item,i) in activList" style="margin-bottom:15px;">
+    <div  :class="`vipInfo-active vipInfo  v${item.vipGrade}-c`" 
+    :style="`background-image:url('../img/V${item.vipGrade}_BG.png')`">
+      <span style="margin-bottom:5px;">{{item.vipGradeName}}</span>
+      即日起购买白银VIP卡 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+        <div class="v-numver" style="width: 90%;margin-top:45px;">
+            <div>交易单号：XGO23534524</div>
+            <div>VIP卡期限：30天</div>
+            <div>购买价格：235</div>
+            <div>交易状态：
+                <a style="font-weight:600;color:#BA4A33;" v-if="i==0">待支付</a>
+                <a style="font-weight:600;color:#BA4A33;" v-if="i>0">待审核</a>
+            </div>
+            <span class="clear">
+      </div>
+      <img :src="`../img/V${item.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    </div>
+    <div class="clear"></div>
+    <input type="button" v-if="i==0" value="立即支付(倒计时：59分25秒)" :class="`active-but  v${item.vipGrade}-bg`"/>
+    <input type="button" v-if="i>0"  value="自动审核时间(倒计时：46分47秒)" :class="`active-but  v${item.vipGrade}-bg`"/>
+</div>
+
+
+
+
+
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a href="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="../activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            activList:[
+                {
+                    vipGrade : 1,
+                    vipGradeName : '青铜VIP卡'  
+                },{
+                    vipGrade : 2,
+                    vipGradeName : '白银VIP卡'  
+                },{
+                    vipGrade : 3,
+                    vipGradeName : '黄金VIP卡'  
+                },{
+                    vipGrade : 4,
+                    vipGradeName : '铂金VIP卡'  
+                },{
+                    vipGrade : 5,
+                    vipGradeName : '砖石VIP卡'  
+                }
+            ] 
+        }
+      },
+      created() {
+      },
+      methods:{
+      }
+    })
+  </script>
+
+</html>
