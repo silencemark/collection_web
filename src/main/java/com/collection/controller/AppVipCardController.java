@@ -63,12 +63,36 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> rushToBuyCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		//抢购逻辑x需要思考一下
+		/**
+		 *  1、根据抢购的人数分配系统中待出售的会员卡订单 比例按30-50%分配 不够的 补系统会员卡，比如10个人抢保证3到5个人抢到，如果只有2条vip在出售，那么系统就放出1到3个会员卡 供用户抢购
+			2、抢购直接更新到订单 信息里面的买家 userid
+			3、算出购买时间和到期时间更新入库
+		 */
+		this.appVipCardService.insertRushToBuy(map);
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("status", 0);
 		data.put("message", "参与抢购成功,请到我的抢购中查看抢购结果");
 		return data;
 	}
+	
+
+	/**
+	 * 获取VIP会员卡（抢购中）列表页面
+	 * 传入参数{"type":"1"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getRushToBuyList")
+	@ResponseBody
+	public List<Map<String, Object>> getRushToBuyList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Map<String, Object>> cardlist=this.appVipCardService.getRushToBuyList(map);
+		return cardlist;
+	}
+	
 	
 	
 	/**

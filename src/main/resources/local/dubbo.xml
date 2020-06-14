@@ -14,8 +14,8 @@
 	 -->
 
 	<dubbo:protocol name="dubbo" port="20999" /> 
-	<dubbo:registry address="zookeeper://localhost:2181" check="false" /> 
-	<!-- <dubbo:registry address="zookeeper://117.18.12.193:2181" check="false" />-->
+	<!-- <dubbo:registry address="zookeeper://localhost:2181" check="false" />  -->
+	<dubbo:registry address="zookeeper://117.18.12.193:2181" check="false" />
     <!-- <dubbo:registry protocol="zookeeper"  address="139.196.20.181:11181" check="false" /> -->
     
     <!-- add by silence 2020-05-26--> 

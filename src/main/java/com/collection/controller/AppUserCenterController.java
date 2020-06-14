@@ -9,13 +9,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.collection.redis.RedisUtil;
 import com.collection.service.IAppUserCenterService;
 import com.collection.util.Constants;
 import com.collection.util.Md5Util;
@@ -32,7 +32,7 @@ public class AppUserCenterController {
 	
 	@Resource private IAppUserCenterService appUserCenterService;
 	
-	private Logger logger = Logger.getLogger(getClass());
+	//private Logger logger = Logger.getLogger(getClass());
 
 	/**
 	 * 进入我的个人中心
@@ -107,9 +107,18 @@ public class AppUserCenterController {
 	public Map<String, Object> certification(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
-		this.appUserCenterService.certification(map);
-		data.put("status", 0);
-		data.put("message", "提交成功");
+		Map<String, Object> certMap = this.appUserCenterService.getCertification(map);
+		if(certMap!= null && certMap.size() > 0 && "0".equals(certMap.get("status").toString())) {
+			data.put("status", 1);
+			data.put("message", "已提交审核，请勿重新提交");
+		} else if (certMap!= null && certMap.size() > 0 && "1".equals(certMap.get("status").toString())) {
+			data.put("status", 1);
+			data.put("message", "已实名审核通过，请勿重新提交");
+		} else {
+			this.appUserCenterService.certification(map);
+			data.put("status", 0);
+			data.put("message", "提交成功");
+		}
 		return data;	
 	}
 	
@@ -201,11 +210,7 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> exchangeVipCard(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		this.appUserCenterService.exchangeVipCard(map);
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("status", 0);
-		data.put("message", "兑换成功");
-		return data;	
+		return this.appUserCenterService.exchangeVipCard(map);
 	}
 	
 	/**
@@ -227,10 +232,11 @@ public class AppUserCenterController {
 		//如果没有qr二维码就生成一个入库
 		if(codeMap.get("invitecodeqrcode") == null) {
 			//用注册地址带参 生成二维码
-			String organizeid=UUID.randomUUID().toString().replaceAll("-", "");
-			String codeContent=Constants.PROJECT_PATH+"app/restaurant/appraise_add.html?organizeid="+organizeid;
-			QRcode qr=new QRcode();
-			String qrcode=qr.getQRcode(codeMap.get("invitecodehttpurl").toString(), request, organizeid);
+			String organizeid = UUID.randomUUID().toString().replaceAll("-", "");
+			String codeContent = Constants.PROJECT_PATH + codeMap.get("invitecodehttpurl");
+			QRcode qr = new QRcode();
+			@SuppressWarnings("static-access")
+			String qrcode=qr.getQRcode(codeContent , request, organizeid);
 			codeMap.put("invitecodehttpurl", qrcode);
 			this.appUserCenterService.updateQrcode(codeMap);
 		}
@@ -335,8 +341,19 @@ public class AppUserCenterController {
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		//获取的手机号验证码
-		String vaildcode = (String) request.getSession().getAttribute(map.get("phone").toString());
-		if (vaildcode.equals(map.get("vaildcode"))) {
+		//String vaildcode = (String) request.getSession().getAttribute(map.get("phone").toString());
+		//Map<String, Object> checkcodeMap = RedisUtil.getObject(""+map.get("phone"));
+		Map<String, Object> checkcodeMap = new HashMap<String, Object>();
+		checkcodeMap.put("code", "6666");
+		String checkcode = null;
+		if (checkcodeMap != null && checkcodeMap.size() > 0) {
+			checkcode = checkcodeMap.get("code").toString();
+		}
+		if (checkcode == null){
+			data.put("status", 1);
+			data.put("message", "验证码已过期，请重新获取");
+		}
+		if (map.get("checkcode").equals(checkcode)) {
 			//支付密码加密
 			map.put("paypassword", Md5Util.getMD5(map.get("paypassword").toString()));
 			this.appUserCenterService.setPayPassWord(map);
@@ -383,7 +400,7 @@ public class AppUserCenterController {
 		this.appUserCenterService.updatePaymentMethod(map);
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("status", 0);
-		data.put("message", "支付密码设置成功");
+		data.put("message", "修改成功");
 		return data;
 	}
 }

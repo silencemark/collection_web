@@ -88,10 +88,9 @@ public class AppLoginController {
 		Map<String, Object> data=new HashMap<String, Object>();
 		//获取校验验证码判断是否等于输入的验证码
 		Map<String, Object> checkcodeMap = RedisUtil.getObject(""+map.get("phone"));
-		String checkcode = "";
+		String checkcode = null;
 		if (checkcodeMap != null && checkcodeMap.size() > 0) {
 			checkcode = checkcodeMap.get("code").toString();
-			logger.info("checkcode====" + checkcode);
 		}
 		if (checkcode == null){
 			data.put("status", 1);
