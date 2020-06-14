@@ -1,30 +1,28 @@
 package com.collection.util;
 
 import java.awt.image.BufferedImage;
-import java.io.File; 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Hashtable; 
+import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
-
-
 import javax.servlet.http.HttpServletRequest;
 
-/*import com.google.zxing.BarcodeFormat; 
-import com.google.zxing.EncodeHintType; 
-import com.google.zxing.MultiFormatWriter; 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix; */
+import com.google.zxing.common.BitMatrix;
 
 public class QRcode{ 
    
     /**
      * @param args
      * @throws Exception 
-     */
+     */ 
 	public static String getQRcode(String codeContent,HttpServletRequest request,String organizeid){
-		/*String newImg = System.currentTimeMillis()/1000l + "_" + organizeid;
+		String newImg = System.currentTimeMillis()/1000l + "_" + organizeid;
         String f= request.getSession().getServletContext().getRealPath("upload/qrcodes");
 		 String text = codeContent; 
 	        int width = 300; 
@@ -56,11 +54,10 @@ public class QRcode{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			return  "/upload/qrcodes/"+newImg+".jpg";*/
-		return null;
+			return  "/upload/qrcodes/"+newImg+".jpg";
 	}
 
-    /*public final static class one {
+    public final static class one {
        
       private static final int BLACK = 0xFF000000; 
       private static final int WHITE = 0xFFFFFFFF; 
@@ -98,5 +95,5 @@ public class QRcode{
         } 
       } 
        
-    }*/
+    }
 }
