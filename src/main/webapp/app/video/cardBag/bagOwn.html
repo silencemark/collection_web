@@ -41,7 +41,8 @@
       <img :src="`../img/V${item.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" v-if="i==0" value="立 即 观 影" :class="`active-but  v${item.vipGrade}-bg`"/>
+    <input type="button" v-if="i==0" value="立 即 观 影" :class="`active-but  v${item.vipGrade}-bg`" 
+    onclick="window.location.href='bagOwnInfo.html'"/>
     <input type="button" v-if="i>0"  value="立 即 出 售" :class="`active-but  v${item.vipGrade}-bg`"/>
 </div>
 

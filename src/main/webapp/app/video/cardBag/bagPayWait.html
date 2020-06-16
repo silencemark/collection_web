@@ -64,7 +64,8 @@
       <img :src="`../img/V${item.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" v-if="i==0" value="立即支付(倒计时：59分25秒)" :class="`active-but  v${item.vipGrade}-bg`"/>
+    <input type="button" v-if="i==0" value="立即支付(倒计时：59分25秒)" :class="`active-but  v${item.vipGrade}-bg`"
+    onclick="window.location.href='bagPay.html'"/>
     <input type="button" v-if="i>0"  value="自动审核时间(倒计时：46分47秒)" :class="`active-but  v${item.vipGrade}-bg`"/>
 </div>
 
