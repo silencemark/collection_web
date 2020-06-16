@@ -123,6 +123,7 @@ header .searchCont input::-webkit-input-placeholder{
       position: fixed;
       bottom: 0;
       padding-top: 5px;
+      z-index: 2;
   }
   
   #footer_list .list_li{
@@ -133,54 +134,63 @@ header .searchCont input::-webkit-input-placeholder{
       width: 25%;
       font-size: 13px;
      text-align: center;
+     z-index: 2;
  }
   
  #footer_list .list_li:nth-child(1){
      background: url(../img/home-ic.png) no-repeat;
      background-size: 26px 26px;
      background-position: top;
+     z-index: 2;
  }
 
   #footer_list .list_li:nth-child(1):active{
       background: url(../img/home-ic.png) no-repeat;
       background-size: 26px 26px;
       background-position: top;
+      z-index: 2;
   }
  
   #footer_list .list_li:nth-child(2){
       background: url(../img/hd-ic.png) no-repeat;
       background-size: 26px 26px;
       background-position: top;
+      z-index: 2;
   }
   
   #footer_list .list_li:nth-child(2):active{
      background: url(../img/hd-ic.png) no-repeat;
      background-size: 26px 26px;
      background-position: top;
+     z-index: 2;
  }
  
  #footer_list .list_li:nth-child(3){
      background: url(../img/pag-ic.png) no-repeat;
      background-size: 26px 26px;
      background-position: top;
+     z-index: 2;
  }
  
  #footer_list .list_li:nth-child(3):active{
      background: url(../img/pag-ic.png) no-repeat;
      background-size: 26px 26px;
      background-position: top;
+     z-index: 2;
  }
  
  #footer_list .list_li:nth-child(4){
    background: url(../img/my-ic.png) no-repeat;
      background-size: 26px 26px;
      background-position: top;
+     z-index: 2;
  }
  
  #footer_list .list_li:nth-child(4):active{
     background: url(../img/my-ic.png) no-repeat;
      background-size: 26px 26px;
     background-position: top;
+    z-index: 2;
  }
  /**不同等级会员字体颜色*/
  .v0-c{color: #555555;}
