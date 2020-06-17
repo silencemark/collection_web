@@ -32,7 +32,7 @@ import com.collection.util.UserUtil;
  *
  */
 @Controller
-@RequestMapping("/managebackstage")
+@RequestMapping("/managebackstage111")
 public class ManageIndexController {
 	private transient static Log log = LogFactory.getLog(ManageIndexController.class);
 	@Resource private SystemService systemService;
@@ -85,7 +85,9 @@ public class ManageIndexController {
 					// cookiesid存入cookies中,有效期30分钟
 					CookieUtil.setCookie(response, UserUtil.SYSTEMINFO, cookiesid, "/", null);
 					// 用户信息存入reids中,有效期30分钟
-					RedisUtil.setMap(cookiesid, userMap);
+					/*RedisUtil.setMap(cookiesid, userMap);*/
+					//本地测试
+					request.getSession().setAttribute(cookiesid, userMap);
 					// 存储登录来源
 					CookieUtil.setCookie(response, UserUtil.FROMINFO, "ADMIN", "/",null);			
 					

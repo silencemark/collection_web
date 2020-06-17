@@ -87,7 +87,7 @@ function login(){
 	$.ajax({
 		type:'post',
 		dataType:'json',
-		url:projectpath+'/appLogin/userlogin?username='+username+'&password='+password,
+		url:projectpath+'/appLogin/userlogin?phone='+username+'&password='+password,
 		success:function(data){
 			if(data.status==1){
 				swal({

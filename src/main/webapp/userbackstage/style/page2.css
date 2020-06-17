@@ -38,7 +38,7 @@
 .tab_list td.l_text2 { color:#2f2f2f; padding:10px 0px;}
 .tab_list td .img { width:30px; height:30px; border-radius:30px; overflow:hidden; box-shadow:0px 0px 1px 0px #ddd; margin:0px auto;}
 .tab_list td .img2 { width:30px; height:30px; border-radius:4px; overflow:hidden; box-shadow:0px 0px 1px 0px #ddd; margin:0px auto;}
-.tab_list td .img3 { width:48px; height:48px; border-radius:48px; overflow:hidden; box-shadow:0px 0px 1px 0px #ddd; margin:0px auto;}
+.tab_list td .img3 { /* width:48px; height:48px; */ border-radius:48px; overflow:hidden; box-shadow:0px 0px 1px 0px #ddd; margin:0px auto;}
 .tab_list td.img_td { padding:5px 10px;}
 .tab_list td.img_td2 { padding:5px 0px;}
 .tab_list .m_r10 { margin-right:10px;}

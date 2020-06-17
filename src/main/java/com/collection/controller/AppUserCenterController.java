@@ -341,10 +341,7 @@ public class AppUserCenterController {
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		//获取的手机号验证码
-		//String vaildcode = (String) request.getSession().getAttribute(map.get("phone").toString());
-		//Map<String, Object> checkcodeMap = RedisUtil.getObject(""+map.get("phone"));
-		Map<String, Object> checkcodeMap = new HashMap<String, Object>();
-		checkcodeMap.put("code", "6666");
+		Map<String, Object> checkcodeMap = RedisUtil.getObject(""+map.get("phone"));
 		String checkcode = null;
 		if (checkcodeMap != null && checkcodeMap.size() > 0) {
 			checkcode = checkcodeMap.get("code").toString();
@@ -401,6 +398,44 @@ public class AppUserCenterController {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("status", 0);
 		data.put("message", "修改成功");
+		return data;
+	}
+	
+	/**
+	 * 获取我提过的问题 及回复
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getMyQuestion")
+	@ResponseBody
+	public List<Map<String, Object>> getMyQuestion(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		return this.appUserCenterService.getMyQuestion(map);
+	}
+	
+	/**
+	 * 提交问题投诉建议
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/addMyQuestion")
+	@ResponseBody
+	public Map<String, Object> addMyQuestion(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		this.appUserCenterService.addMyQuestion(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("status", 0);
+		data.put("message", "提交成功");
 		return data;
 	}
 }

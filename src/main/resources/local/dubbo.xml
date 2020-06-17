@@ -16,6 +16,7 @@
 	<dubbo:protocol name="dubbo" port="20999" /> 
 	<!-- <dubbo:registry address="zookeeper://localhost:2181" check="false" />  -->
 	<dubbo:registry address="zookeeper://117.18.12.193:2181" check="false" />
+
     <!-- <dubbo:registry protocol="zookeeper"  address="139.196.20.181:11181" check="false" /> -->
     
     <!-- add by silence 2020-05-26--> 
@@ -23,6 +24,7 @@
     <dubbo:reference id="appIndexService" interface="com.collection.service.IAppIndexService"/>
     <dubbo:reference id="appVipCardService" interface="com.collection.service.IAppVipCardService"/>
     <dubbo:reference id="appUserCenterService" interface="com.collection.service.IAppUserCenterService"/>
+    <dubbo:reference id="manageBackStageService" interface="com.collection.service.IManageBackStageService"/>
     
     
     
