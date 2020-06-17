@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        我的卡包
+    </div>
+
+<div class="gabTitle">
+    <div onclick="window.location.href='bagPayWait.html'">抢购中</div>
+    <div onclick="window.location.href='bagOwn.html'">已拥有</div>
+    <div onclick="window.location.href='bagSale.html'" class="active">出售中</div>
+    <div onclick="window.location.href='bagHistory.html'">历史VIP卡</div>
+    <b class="clear"></b>
+</div>
+
+<!--vipInfo-->
+<div v-for="(item,i) in activList" style="margin-bottom:15px;">
+    <div  :class="`vipInfo-active vipInfo  v${item.vipGrade}-c`" 
+    :style="`background-image:url('../img/V${item.vipGrade}_BG.png')`">
+      <span style="margin-bottom:5px;">{{item.vipGradeName}}</span>
+      即日起购买白银VIP卡 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+        <div class="v-numver" style="width: 90%;margin-top:45px;">
+            <div v-if="i==0" style="width: 100%;">
+                <div style="width: 100%;">预计出售时间：2020-09-03 20:20:03</div>
+                <div>出售价格：123</div>
+                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">待出售</a></div>
+            </div>
+            <div v-if="i==1" style="width: 100%;">
+                <div>交易单号：XGO234534</div>
+                <div>出售价格：123</div>
+                <div>剩余支付时间：56分29秒</div>
+                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">待支付</a></div>
+            </div>
+            <div v-if="i>1" style="width: 100%;">
+                <div>交易单号：XGO234534</div>
+                <div>付款金额：123</div>
+                <div>剩余审核时间：56分29秒</div>
+                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">待审核</a></div>
+            </div>
+            <span class="clear">
+      </div>
+      <img :src="`../img/V${item.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    </div>
+    <div class="clear"></div>
+    <input type="button" v-if="i==1" value="联 系 卖 家" :class="`active-but  v${item.vipGrade}-bg`"/>
+    <input type="button" v-if="i>1"  value="立 即 审 核" :class="`active-but  v${item.vipGrade}-bg`"/>
+</div>
+
+
+
+
+
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a href="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="../activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            activList:[
+                {
+                    vipGrade : 1,
+                    vipGradeName : '青铜VIP卡'  
+                },{
+                    vipGrade : 2,
+                    vipGradeName : '白银VIP卡'  
+                },{
+                    vipGrade : 3,
+                    vipGradeName : '黄金VIP卡'  
+                },{
+                    vipGrade : 4,
+                    vipGradeName : '铂金VIP卡'  
+                },{
+                    vipGrade : 5,
+                    vipGradeName : '砖石VIP卡'  
+                },{
+                    vipGrade : 6,
+                    vipGradeName : '星耀VIP卡'  
+                }
+            ] 
+        }
+      },
+      created() {
+      },
+      methods:{
+      }
+    })
+  </script>
+
+</html>

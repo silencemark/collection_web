@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        观影好评
+    </div>
+
+<div class="comment">
+    <span style="font-weight:600;margin-left:20px;">全部好评</span>
+    <span style="float: right;margin-right:55px;">
+        参与评论
+    </span>
+    <img src="../img/edit-ic.png"/>
+</div>
+<iframe src="https://www.wanmeikk.me/project/16.html" class="videoFrame">
+
+</iframe>
+
+</section>
+
+ <footer id="footer">
+    <ul id="footer_list" style="z-index: 2;">
+       <li class="list_li home active">
+           <a href="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="../activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            bigInfo:{
+                vipGrade:1,
+                vipGradeName:'青铜VIP卡'
+            }
+        }
+      },
+      created() {
+      },
+      methods:{
+      }
+    })
+  </script>
+
+</html>

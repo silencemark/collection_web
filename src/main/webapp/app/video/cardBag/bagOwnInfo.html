@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        VIP专享视频
+    </div>
+
+<!--vipInfo-->
+<div style="margin-bottom: 15px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
+    <div  :class="`vipInfo-active vipInfo  v${bigInfo.vipGrade}-c`" 
+    :style="`background-image:url('../img/V${bigInfo.vipGrade}_BG.png')`">
+      <span style="margin-bottom:5px;">{{bigInfo.vipGradeName}}专享视频</span>
+      即日起购买白银VIP卡 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+        <div class="v-numver" style="width: 90%;margin-top:45px;">
+            <div>购买时间：2020-09-03</div>
+            <div>购买价格：123</div>
+            <div>VIP卡剩余天数：5天</div>
+            <div>观影好评次数：3</div>
+            <span class="clear">
+      </div>
+      <img :src="`../img/V${bigInfo.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+<div class="prdClassCont">
+    <div class="prd-title" style="padding-right:0;">
+        <span>电影</span>
+        <span class="clear"></span>
+    </div>
+    <div class="ImgCont" style="width: 48%;">
+        <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
+        <div class="prdName">创造营·异域舞娘</div>
+        <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
+    </div>
+    <div class="ImgCont" style="width: 48%;">
+        <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
+        <div class="prdName">创造营·异域舞娘</div>
+        <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
+    </div>
+    <div class="ImgCont" style="width: 48%;">
+        <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
+        <div class="prdName">创造营·异域舞娘</div>
+        <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
+    </div>
+    <div class="ImgCont" style="width: 48%;">
+        <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
+        <div class="prdName">创造营·异域舞娘</div>
+        <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+
+
+<br/><br/><br/><br/><br/>
+</section>
+
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a href="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="../activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            bigInfo:{
+                vipGrade:1,
+                vipGradeName:'青铜VIP卡'
+            }
+        }
+      },
+      created() {
+      },
+      methods:{
+      }
+    })
+  </script>
+
+</html>
