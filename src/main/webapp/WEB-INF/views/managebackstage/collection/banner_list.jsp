@@ -55,6 +55,7 @@ $(document).ready(function(){
 })
 	
 function deleteBanner(bannerid){
+	$("input[name=bannerid]").val(bannerid);
 	swal({
 		title : "",
 		text : "确认删除？",
@@ -65,7 +66,7 @@ function deleteBanner(bannerid){
 		cancelButtonText : "取消",
 		closeOnConfirm : true
 	}, function(){
-		location.href='<%=request.getContextPath() %>/managebackstage/deleteBanner?bannerid='+bannerid;
+		$('#userform').submit();
 	})
 }
 </script>
@@ -136,5 +137,9 @@ function deleteBanner(bannerid){
         <div id="Pagination" style="width:450px;">${pager }</div>
     </div>
 </div>
+<form action="<%=request.getContextPath() %>/managebackstage/deleteBanner" id="userform" method="post">
+     <input type="hidden" name="bannerid" />
+</form>
+
 </body>
 </html>

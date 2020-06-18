@@ -186,6 +186,8 @@ public class ManageBackstageController {
 		return "redirect:/managebackstage/login";
 	}
 	
+	/**-----------------------------------------用户信息管理开始----------------------------------------------------**/
+	
 	/**
 	 * 获取用户信息列表
 	 * @param map
@@ -226,6 +228,12 @@ public class ManageBackstageController {
 		this.manageBackstageService.updateUserInfo(map);
 		return "redirect:/managebackstage/getUserList";
 	}
+	
+	/**-----------------------------------------用户信息管理结束----------------------------------------------------**/
+	
+	
+	
+	/**-----------------------------------------banner管理开始-----------------------------------------------------**/
 	
 	/**
 	 * 获取banner管理列表
@@ -335,21 +343,75 @@ public class ManageBackstageController {
 	 * @return
 	 */
 	@RequestMapping("/deleteBanner")
-	@ResponseBody
-	public Map<String, Object> deleteBanner(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
-		
+	public String deleteBanner(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
 		Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+		map.put("status", 0);
+		map.put("updateid", userInfo.get("userid"));
+		map.put("updatetime",new Date());
+		this.manageBackstageService.updateBanner(map);
+		return "redirect:/managebackstage/getBannerList";
+	}
+	
+	/**-----------------------------------------banner管理结束-----------------------------------------------------**/
+	
+	
+	/**-----------------------------------------订单管理开始-------------------------------------------------------**/
+	/**
+	 * 获取订单管理列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getOrderList")
+	public String getOrderList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getOrderListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getOrderList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/order_list";
+	}
+	
+	/**
+	 * 审核拒绝
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/updateOrderStatus")
+	public String updateOrderStatus(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+		map.put("updateid", userInfo.get("userid"));
+		map.put("updatetime",new Date());
+		this.manageBackstageService.updateOrderStatus(map);
+		return "redirect:/managebackstage/getOrderList";
+	}
+	
+	/**
+	 * 冻结双方用户
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/frozenOrder")
+	@ResponseBody
+	public Map<String, Object> frozenOrder(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
 		Map<String, Object> data=new HashMap<String, Object>();
 		try {
-			map.put("status", 0);
-			map.put("updateid", userInfo.get("userid"));
-			map.put("updatetime",new Date());
-			this.manageBackstageService.updateBanner(map);
+			this.manageBackstageService.frozenOrder(map);
 			data.put("status", 0);
-			data.put("message", "删除成功");
+			data.put("message", "冻结成功");
 		} catch (Exception e) {
 			data.put("status", 1);
-			data.put("message", "删除失败");
+			data.put("message", "冻结失败");
 		}
 		return data;
 	}

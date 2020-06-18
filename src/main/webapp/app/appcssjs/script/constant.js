@@ -4,8 +4,8 @@ var hrefurl = location.href.substring(0, location.href.indexOf("/app/"));
 
 //var projectpath = "http://www.canyindashi.com.cn";
 //var projectpath = "http://t.canyindashi.com.cn";
-//var projectpath="http://localhost:8080";
-var projectpath="http://117.18.12.193";
+var projectpath="http://localhost:8080";
+//var projectpath="http://117.18.12.193";
 // var projectpath = "http://192.168.1.102";
 
 /**
