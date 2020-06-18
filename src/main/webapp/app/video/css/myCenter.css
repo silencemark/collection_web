@@ -37,7 +37,7 @@
     height: 180px;
     margin-left: 2%;
     background-size:100% 100%;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     box-sizing: border-box;
     padding: 30px 0 0 20px;
 }
@@ -179,7 +179,7 @@
     border-bottom: 1px solid #f3f2f2;
 }
 .colUserCont .colLeft{
-    width: 60%;
+    width: 55%;
     height: 150px;
     float: left;
 }
@@ -213,7 +213,7 @@
     width: 100%;
     height: 55px;
     line-height: 55px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #555;
     border-bottom: 1px solid #f2f1f1;
     background: #fff;
@@ -222,10 +222,10 @@
 }
 .comment img{
     position: absolute;
-    width: 25px;
-    height: 25px;
-    margin-top: 15px;
-    right: 25px;
+    width: 20px;
+    height: 20px;
+    margin-top: 17px;
+    right: 31px;
 }
 .videoFrame{
     width: 100%;
@@ -234,4 +234,19 @@
     top: 50px;
     position: absolute;
     z-index: 1;
+}
+.commentWinCont{
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    padding: 90px 30px;
+}
+.commentWinCont .xin {
+    width: 30px;
+    height: 30px;
 }

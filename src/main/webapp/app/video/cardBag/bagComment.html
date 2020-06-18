@@ -20,16 +20,18 @@
 
 <div class="comment">
     <span style="font-weight:600;margin-left:20px;">全部好评</span>
-    <span style="float: right;margin-right:55px;">
+    <span style="float: right;margin-right:55px;" v-if="wMin<=1">
         参与评论
+    </span>
+    <span style="float: right;margin-right:55px;" v-if="wMin>1">
+        再观看{{wMin}}秒可评论
     </span>
     <img src="../img/edit-ic.png"/>
 </div>
-<iframe src="https://www.wanmeikk.me/project/16.html" class="videoFrame">
+<iframe src="https://www.wanmeikk.me/project/2160.html" class="videoFrame"  scrolling="no">
 
 </iframe>
 
-</section>
 
  <footer id="footer">
     <ul id="footer_list" style="z-index: 2;">
@@ -48,14 +50,29 @@
    </ul>
   </footer>
 <!-- end footer-->
+
+<div id="commentWindow">
+    <div class="loading commentLoadCont" style="background-color: #fff;opacity:0.7;"></div>
+    <div class="commentWinCont">
+        为影片打分：
+        <img :src="xNum>0?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 1" class="xin"/>
+        <img :src="xNum>1?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 2" class="xin"/>
+        <img :src="xNum>2?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 3" class="xin"/>
+        <img :src="xNum>3?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 4" class="xin"/>
+        <img :src="xNum>4?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 5" class="xin"/>
+    </div>
+</div>
+
+</section>
 </body>
 
 <script>
-
     new Vue({
       el: '#app',
       data: function() {
         return {
+            xNum:0,
+            wMin:60,
             bigInfo:{
                 vipGrade:1,
                 vipGradeName:'青铜VIP卡'
@@ -63,8 +80,18 @@
         }
       },
       created() {
+          this.scvTime();
       },
       methods:{
+          scvTime(){
+            var timer = setInterval(()=>{
+                this.wMin -= 1;
+                if(this.wMin<=1){
+                    clearInterval(timer);
+                }
+            },1000);
+
+        }
       }
     })
   </script>
