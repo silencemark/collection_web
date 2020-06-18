@@ -49,10 +49,8 @@ public class CloudCapacityController extends BaseController{
 			
 			this.insertManageLog("", 1, "申请记录", "查看了申请记录列表信息。", getUserInfo(request).get("userid")+"");
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
 		return "/managebackstage/usercloud/apply_list";
 	}
 	

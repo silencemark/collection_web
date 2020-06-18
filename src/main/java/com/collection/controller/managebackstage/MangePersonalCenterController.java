@@ -1051,7 +1051,6 @@ public class MangePersonalCenterController  extends BaseController {
 		//得到当前的用户信息
 		Map<String, Object> userinfo=UserUtil.getSystemUser(request);
 		map.put("userid", userinfo.get("userid").toString());
-		
 		try {
 				List<Map<String, Object>> datalist = this.systemService.getManageaAppconfig(map);
 				request.setAttribute("datalist", datalist);	
