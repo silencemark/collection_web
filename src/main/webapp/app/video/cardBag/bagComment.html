@@ -9,6 +9,7 @@
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
  </head>
  <body>
 
@@ -20,7 +21,7 @@
 
 <div class="comment">
     <span style="font-weight:600;margin-left:20px;">全部好评</span>
-    <span style="float: right;margin-right:55px;" v-if="wMin<=1">
+    <span style="float: right;margin-right:55px;" v-if="wMin<=1" @click="goComment">
         参与评论
     </span>
     <span style="float: right;margin-right:55px;" v-if="wMin>1">
@@ -28,8 +29,8 @@
     </span>
     <img src="../img/edit-ic.png"/>
 </div>
-<iframe src="https://www.wanmeikk.me/project/2160.html" class="videoFrame"  scrolling="no">
-
+<iframe src="https://www.wanmeikk.me/project/16.html"  scrolling="no"  class="videoFrame">
+<!-- <iframe src="" class="videoFrame"  scrolling="no"> -->
 </iframe>
 
 
@@ -51,38 +52,107 @@
   </footer>
 <!-- end footer-->
 
-<div id="commentWindow">
-    <div class="loading commentLoadCont" style="background-color: #fff;opacity:0.7;"></div>
+<!--评论窗口-->
+<div id="commentWindow" style="display: none;">
+    <div class="loading commentLoadCont" style="background-color:#fff;opacity: 0.9 !important;"></div>
     <div class="commentWinCont">
-        为影片打分：
-        <img :src="xNum>0?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 1" class="xin"/>
-        <img :src="xNum>1?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 2" class="xin"/>
-        <img :src="xNum>2?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 3" class="xin"/>
-        <img :src="xNum>3?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 4" class="xin"/>
-        <img :src="xNum>4?'../img/sXin.png':'../img/eXin.png'" @click="xNum = 5" class="xin"/>
+        <div class="xinCont">
+            为影片打分：
+            <img :src="comment.xNum>0?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=1" class="xin"/>
+            <img :src="comment.xNum>1?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=2" class="xin" style="margin-left: 30px;"/>
+            <img :src="comment.xNum>2?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=3" class="xin" style="margin-left: 60px;"/>
+            <img :src="comment.xNum>3?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=4" class="xin" style="margin-left: 90px;"/>
+            <img :src="comment.xNum>4?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=5" class="xin" style="margin-left: 120px;"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="margin-left:130px;">{{comment.xNum}}星</span>
+        </div>
+        <div style="width: 80%;margin-top: 30px;">
+            不想打字？嫌打字太麻烦？那么试试好评标签吧。一键您输入评论信息！
+        </div><br/>
+        <div style="width:88%;height: 108px;">
+            <div class="commentLabe">哇这个视频真好看</div>
+            <div class="commentLabe" style="margin-left:122px;margin-top:5px;">哎哟不错很棒棒哦</div>
+            <div class="commentLabe" style="margin-left:245px;margin-top:2px;">挺好看的</div>
+            <div class="commentLabe" style="margin-top:35px;">视频很好看，请问好评送女朋友吗？</div>
+            <div class="commentLabe" style="margin-top:48px;margin-left:222px;">天呐太精彩了</div>
+            <div class="commentLabe" style="margin-top: 70px;margin-left: 50px;">这世界那么美，有你才完美</div>
+        </div>
+        <div>我要评论:</div>
+        <textarea class="commentText" ref="commentText">
+        </textarea>
+        <div style="font-size: 0.8rem;color:#f67e1c;font-weight:500;">{{errMsg}}</div>
+        <div>
+            <div class="btn btn-200" @click="subComment" style="margin-left:18%;margin-top: 5px;">立 即 评 论</div>
+        </div>
     </div>
 </div>
+<!--end评论窗口-->
 
 </section>
 </body>
 
 <script>
+    $(function(){
+        $(".commentLabe").click(function(){
+            $(".commentLabe").removeClass("commentLabeActiv");
+            $(this).addClass("commentLabeActiv");
+            $(".commentText").val($(this).html());
+        })
+    })
+
     new Vue({
       el: '#app',
       data: function() {
         return {
-            xNum:0,
-            wMin:60,
+            comment:{
+                xNum:3,
+                commentText:''
+            },
+            wMin:10,
             bigInfo:{
                 vipGrade:1,
                 vipGradeName:'青铜VIP卡'
-            }
+            },
+            errMsg:'',
         }
       },
       created() {
           this.scvTime();
       },
       methods:{
+          //提交评论
+          subComment(){
+            this.comment.commentText = this.$refs.commentText.value;
+            if(!this.comment.commentText){
+                this.errMsg = "您还没有输入评论哟！";
+                return;
+            }
+            let sel = this;
+            if(this.comment.xNum<5){
+                $("#commentWindow").hide();
+                jqalert({
+                    title:'提示',
+                    prompt:'太难拉，考虑一下给个5星好不好',
+                    yestext:'考虑一下',
+                    notext:'就是不给',
+                    yesfn:function () {
+                        $("#jq-alert").remove();
+                        $("#commentWindow").show();
+                    },
+                    nofn:function () {
+                        sel.confirmSubComment();
+                    }
+                }) 
+            }else{
+                sel.confirmSubComment();
+            }
+          },
+          //确认提交评论
+          confirmSubComment(){
+                jqtoast('评论成功');
+                $("#commentWindow").hide();
+                this.scvTime();
+          },
           scvTime(){
             var timer = setInterval(()=>{
                 this.wMin -= 1;
@@ -90,7 +160,12 @@
                     clearInterval(timer);
                 }
             },1000);
-
+        },
+        //打开评论窗口
+        goComment(){
+            $("#commentWindow").show();
+            this.comment.commentText='';
+            this.wMin = 10;
         }
       }
     })
