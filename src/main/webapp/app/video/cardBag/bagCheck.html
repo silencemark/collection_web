@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        交易审核
+    </div>
+
+<!--vipInfo-->
+<div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
+    <div  :class="`vipInfo-active vipInfo  v${bigInfo.vipGrade}-c`" 
+    :style="`background-image:url('../img/V${bigInfo.vipGrade}_BG.png')`">
+      <span style="margin-bottom:5px;">{{bigInfo.vipGradeName}}专享视频</span>
+      即日起购买{{bigInfo.vipGradeName}} 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+      <img :src="`../img/V${bigInfo.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="payVipInfoCont">
+    <div style="font-weight: 600;">{{bigInfo.vipGradeName}}专享影视</div>
+    <div>交易单号 ：AG23049583942</div>
+    <div>出售日期 ：2020-03-24 23:12:34</div>
+    <div>出售价格 ：<span style="color:#F36257;font-weight:600;">￥1542</span></div>
+    <div>剩余审核时间 ：45分钟</div>
+</div>
+
+<div style="font-weight:600;margin-top:10px;margin-bottom:5px;width: 94%;margin-left: 3%;font-size: 0.9rem;color: #555;">
+    买家资料信息/交易凭证
+    <span @click="showBuy = !showBuy"
+    style="border: 1px solid #777;padding: 2px 10px;border-radius: 10px;font-weight: 500;font-size: 0.8rem;margin-left: 20px;">
+        <span v-if="!showBuy">点击查看</span>
+        <span v-if="showBuy">点击隐藏</span>
+    </span>
+</div>
+<div class="colUserCont" v-show="showBuy">
+    <div class="colLeft">
+        <div>付款时间 : 2020-03-12 34:34</div>
+        <div>手机号 ：15313241234</div>
+        <div>买家姓名 : 张三</div>
+        <div>付款凭证 : 见右图</div>
+    </div>
+    <div class="colRigth">
+        <img src="../img/erwm.png" style="width: 100%;height:100%;">
+    </div>
+    <div class="clear"></div>
+</div>
+<div style="width:94%;margin-left: 3%;font-size:0.8rem;color: #777;line-height: 1.2rem;margin-top:10px;">
+    温馨提示 ：为避免您的经济损失，请确保您已收款再点击审核通过，一旦交易审核通过将不可回退 。 <br/>
+    如您没有收到交易款，请按照如下步骤进行操作<br/>
+    1. 仔细查看您的银行卡，支付宝，微信各种收款方式是否有进账记录。<br/>
+    2. 点击“查看买家信息”，通过微信或电话联系买家确认是否有进行支付，如买家还未支付可提醒买家尽快支付 。<br/> 
+    3. 以上方式都未得到处理，您可以到售后服务中心申请强制冻结此单，此操作将会冻结您买家的账号，等待系统审查。
+</div>
+
+
+<br/>
+<div class="but-cont">
+    <div class="btn btn-200">审 核 通 过</div>
+</div>
+
+<br/><br/><br/><br/><br/>
+</section>
+
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a href="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="../activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            showBuy:false,
+            payType:0,
+            bigInfo:{
+                vipGrade:1,
+                vipGradeName:'青铜VIP卡'
+            }
+        }
+      },
+      created() {
+      },
+      methods:{
+          //选择支付方式
+          selectPayType(payType){
+              this.payType = payType;
+          }
+      }
+    })
+  </script>
+
+</html>

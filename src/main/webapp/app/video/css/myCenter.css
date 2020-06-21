@@ -184,7 +184,7 @@
     float: left;
 }
 .colUserCont .colLeft div{
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 .colUserCont .colRigth{
     width: 150px;
@@ -276,4 +276,22 @@
     font-size: 1.2rem;
     padding: 5px;
     border: 1.2px solid #f67e1c;
+}
+.setPayMoney{
+    width: 90%;
+    font-size: 0.9rem;
+    color: #555;
+    margin-left: 5%;
+}
+.setPayMoney input{
+    width: 78%;
+    height: 40px;
+    font-size: 0.8rem;
+    border: 1px solid #dfdfdf;
+    text-align: center;
+    color: #777;
+}
+.setPayMoney input::-webkit-input-placeholder{
+    font-size: 0.8rem;
+    color: #777;
 }
