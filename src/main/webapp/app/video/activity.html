@@ -70,7 +70,8 @@
       <img :src="`img/V${item.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" value="立 即 抢 购" :class="`active-but  v${item.vipGrade}-bg`"/>
+    <input type="button" value="立 即 抢 购" :class="`active-but  v${item.vipGrade}-bg`" 
+        onclick="window.location.href='cardBag/bagPayWait.html'"/>
 </div>
 </section>
 

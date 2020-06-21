@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/user.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+ </head>
+ <body style="background-color: #F0F0F0;">
+  
+<section class="main"  id="app">
+  <div class="title">
+    <img src="../img/to-left.png" onclick="history.back(-1)"/>
+      会员体系
+  </div>
+
+    <!--vipInfo-->
+    <div :class="`vipInfo v${vipGrade}-c`" :style="`background-image: url('../img/V${vipGrade}_BG.png`">
+      <span style="margin-bottom:5px;">{{vipGradeName[vipGrade]}}</span>
+        当前成长值 :123
+        <div class="v-numver">
+          距离升级还需要1点成长值
+          <div class="jdt-father">
+              <div id="Son" :class="`v${vipGrade}-bg`"></div>
+          </div>
+          <span style="float:left;">V{{vipGrade}}</span>
+          <span style="float:right;">V{{vipGrade+1}}</span>
+          <span class="clear"></span>
+      </div>
+      <img v-if="vipGrade!=0" :src="`../img/V${vipGrade}_IC.png`" class="v-img"/>
+      <a href="#tips" :class="`v${vipGrade}-c`">
+        <div style="position: absolute;right:48px;margin-top:70px;font-weight:600;">成长攻略</div>
+      </a>
+    </div>
+    <div class="clear"></div>
+<div style="width:94%;margin-left: 3%;">
+  <div class="contentTitle">当前会员等级特权</div>
+  <div class="equityLable">
+    <span style="display: block;height:18px;">1.1倍观</span>
+    <span>观看权益</span>
+  </div>
+  <div class="equityLable">
+    <span style="display: block;height:18px;">签到领</span>
+    <span>成长值</span>
+  </div>
+  <div class="clear"></div>
+
+  <a name="tips"> </a>
+  <div class="contentTitle">会员等级介绍</div>
+  <table class="equityTtable">
+      <tr>
+          <th>会员等级</th>
+          <th>要求成值</th>
+          <th>基础权益</th>
+      </tr>
+      <tr>
+          <td>V1青铜会员</td>
+          <td>1-2000</td>
+          <td>1.1倍观看权益</td>
+      </tr>
+      <tr>
+        <td>V2白银会员</td>
+        <td>2001-4000</td>
+        <td>1.2倍观看权益</td>
+      </tr>
+      <tr>
+        <td>V3黄金会员</td>
+        <td>4001-6000</td>
+        <td>1.3倍观看权益</td>
+      </tr>
+      <tr>
+        <td>V4铂金会员</td>
+        <td>6001-8000</td>
+        <td>1.4倍观看权益</td>
+      </tr>
+      <tr>
+        <td>V5砖石会员</td>
+        <td>8001-10000</td>
+        <td>1.5倍观看权益</td>
+      </tr>
+  </table>
+  
+  <div class="contentTitle">会员升级攻略</div>
+  <div class="equityLable">
+    <span style="display: block;height:18px;">邀请好友</span>
+    <span>得成长值</span>
+  </div>
+  <div class="equityLable">
+    <span style="display: block;height:18px;">每日签到</span>
+    <span>领取成长值</span>
+  </div>
+  <div class="equityLable">
+    <span style="display: block;height:18px;">购买VIP会</span>
+    <span>员卡得成长值</span>
+  </div>
+  <div class="clear"></div>
+  
+  <div class="contentTitle">成长值增值介绍</div>
+  <div class="equityContentInfo">
+    (1) 大于V0级的会员每日签到可领取1-50点成长值。<br/><br/>
+    (2) 所有会员在活动中心购买VIP会员卡后，在用户将会员卡转出时系统将会以您观影收益1比1的方式发放到您的会员成长值。<br/><br/>
+    (3) 邀请好友参与观影，好友会员等级达到V1系统将会赠送您1000的成长值（限前10位好友）。若您的好友邀请一个好友且会员等级达到V1后，您可再获得1000的成长值。
+  </div>
+</div>
+<br/><br/><br/>   
+
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+  <ul id="footer_list">
+     <li class="list_li home active">
+         <a href="../index.html" class="text">首页</a>
+     </li>
+     <li class="list_li follow" >
+         <a  href="../activity.html" class="text">活动中心</a>
+     </li>
+     <li class="list_li cart">
+         <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+     </li>
+     <li class="list_li profile">
+         <a  href="../myCenter.html" class="text">我的</a>
+     </li>
+ </ul>
+</footer>
+<!-- end footer-->
+</body>
+
+<script>
+   //进度条计算
+   var Son = document.getElementById("Son");
+    Son.style.width = Percentage(20, 100) + "%";
+    function Percentage(current, total) {
+        return current / total * 100;
+    }
+
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+          vipGrade : 1,    //会员等级
+          vipGradeName : { //会员等级昵称
+                0:'普通用户',
+                1:'V1青铜会员',
+                2:'V2白银会员',
+                3:'v3黄金会员'
+              }
+          //页面参数    
+        }
+      },
+      created() {
+          
+      },
+      methods:{
+        
+      }
+    })
+  </script>
+
+</html>

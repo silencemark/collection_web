@@ -25,16 +25,16 @@
             <img src="img/search.png">
         </section>
         <ul id="class_list">
-            <li class="list_li home active">
+            <li class="list_li home queryVideo active" onclick="queryVideo(this,0)">
                 <span>所有影片</span>
             </li>
-            <li class="list_li follow" >
+            <li class="list_li queryVideo follow"  onclick="queryVideo(this,2)">
                 <span>珍藏电影</span>
             </li>
-            <li class="list_li cart">
+            <li class="list_li queryVideo cart" onclick="queryVideo(this,3)">
                 <span>动漫</span>
             </li>
-            <li class="list_li profile">
+            <li class="list_li queryVideo profile" onclick="queryVideo(this,4)">
                 <span>电视剧</span>
             </li>
             <li class="clear"></li>
@@ -48,11 +48,11 @@
             <li><a href="#"><img src="https://puui.qpic.cn/tv/0/928089421_1080607/0"></a></li>
             <li v-for="(item,i) in bannerList">
                 <a :href="reqPath+item.httpurl"><img :src="reqPath+item.imgurl"></a>
-                <div>我的是{{i+1}}个滚动图片哟</div>
+                <div>精彩好礼送不停</div>
             </li>
             <li v-for="(item,i) in bannerList">
                 <a :href="reqPath+item.httpurl"><img :src="reqPath+item.imgurl"></a>
-                <div>我的是{{i+1}}个滚动图片哟</div>
+                <div>精彩好礼送不停</div>
             </li>
         </ul>
         <ul class="swipe-btn-list" id="swipe-btn-list">
@@ -118,12 +118,16 @@
        </ul>
       </footer>
         <!-- end footer-->
-</div></body>
+</div>
+<div class="loading" id="loadingWindow" style="display: block;"><img src="img/timg.gif"/></div>
+</body>
 
 
 
 <script>
+
 $(function(){
+  //type : 0：全部 1 会员专享 2、珍藏电影、3、动漫、4、电视剧
   vm = new Vue({
     el:'#app',
     data:{
@@ -138,10 +142,22 @@ $(function(){
   jAjax("/appIndex/getBanner",{type:1},function(data){ vm.bannerList = data; });
   //获取广告图片
   jAjax("/appIndex/getAdvertisement",{},function(data){ vm.advertisement = data[0];  });
-  //获取首页电影
-  jAjax("/appIndex/getHomePageMovie",{},function(data){ vm.homePageMovie = data;  });
+  //获取首页图片
+  queryVideo(null,0);
+  $("#loadingWindow").remove();
 });
-  
+
+//查询影片
+function queryVideo(obj,type){
+    if(obj){
+        $(".queryVideo").removeClass("active");
+        $(obj).addClass("active");
+    }
+    //获取首页电影
+    jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
+      vm.homePageMovie = data;  
+    });
+}
 
 
 </script>

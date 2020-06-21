@@ -192,6 +192,15 @@ header .searchCont input::-webkit-input-placeholder{
     background-position: top;
     z-index: 2;
  }
+ .contentTitle{
+     width: 100%;
+     padding: 5px 0 5px 0;
+     font-size: 1rem;
+     font-weight: 600;
+     color: #555;
+     margin-bottom: 5px;
+     margin-top: 10px;
+ }
  /**不同等级会员字体颜色*/
  .v0-c{color: #555555;}
  .v1-c{color: #805333;}
