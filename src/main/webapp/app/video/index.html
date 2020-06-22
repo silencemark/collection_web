@@ -15,7 +15,10 @@
      <script src="js/base.js"></script>
     <script src="js/slideshow.js"></script>
  </head>
- <body><div id="app">
+ <body>
+    <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
+    
+    <div id="app">
      <header>
          <section class="logo">
             <img  src="img/logo.png"/>
@@ -70,33 +73,25 @@
 
 <section class="main">
 
-    <div class="prdClassCont">
+    <div class="prdClassCont" v-for="(item , i) in homePageMovie">
         <div class="prd-title">
-            <span>热门推荐</span>
+            <span>{{item.typename}}</span>
             <span class="clear"></span>
-            邀请好友领取更多观影收益&nbsp;&nbsp;
-            <img src="img/fire.png"/>
+            <font v-if="i==0" style="font-size:0.85rem;">邀请好友领取更多观影收益&nbsp;&nbsp;</font>
+            <img v-if="i==0" src="img/fire.png"/>
         </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930235325_498280/0" onclick="window.location.href='cardBag/bagComment.html'"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
+        <div class="ImgCont" v-for="(movie , j) in item.movielist">
+            <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='${reqPath+movie.httpurl}'`" />
+            <div class="prdName">{{movie.title}}</div>
+            <div class="prdRemark">{{movie.description}}</div>
         </div>
-
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930381272_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-
 
         <div class="clear"></div>
-        <div class="refresh-cont">
+        <div class="refresh-cont" v-if="item.movielist.length>1">
             <img src="img/ref.png"/>&nbsp;
             <span>换一批</span>
         </div>
     </div>
-
 
     <br/><br/><br/><br/><br/>
 </section>
@@ -119,7 +114,7 @@
       </footer>
         <!-- end footer-->
 </div>
-<div class="loading" id="loadingWindow" style="display: block;"><img src="img/timg.gif"/></div>
+
 </body>
 
 
@@ -144,7 +139,6 @@ $(function(){
   jAjax("/appIndex/getAdvertisement",{},function(data){ vm.advertisement = data[0];  });
   //获取首页图片
   queryVideo(null,0);
-  $("#loadingWindow").remove();
 });
 
 //查询影片
@@ -154,6 +148,7 @@ function queryVideo(obj,type){
         $(obj).addClass("active");
     }
     //获取首页电影
+    console.log({type:type});
     jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
       vm.homePageMovie = data;  
     });

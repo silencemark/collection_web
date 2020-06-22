@@ -14,6 +14,7 @@
      <script src="js/slideshow.js"></script>
  </head>
  <body>
+ <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
 
 <section class="main"  id="app">
     <div class="title">
@@ -24,28 +25,28 @@
 <div class="layout">
     <div class="banner">
         <ul class="swipe" id="swipe">
-            <li><!--第一张会闪过BUG-->
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/929410352_1080607/0"></a>111</li>
+            <!--第一张会闪过BUG-->
+            <li><a href="#"><img src="https://puui.qpic.cn/tv/0/1006866271_1080607/0"></a>111</li>
             <li>
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/919680367_1080607/0"></a>
-                <div>我的是一个滚动图片哟</div>
+                <a href="#"><img src="https://puui.qpic.cn/tv/0/1013512686_1080607/0"></a>
+                <div>【黄鹂鸟·首播】林允张新成启奏蜜恋交响曲</div>
+            </li>    
+            <li>
+                <a href="#"><img src="https://puui.qpic.cn/tv/0/1006866271_1080607/0"></a>
+                <div>【斗罗大陆·更新】隔空相望，我……好想你</div>
             </li>
             <li><a href="#">
-                <img src="https://puui.qpic.cn/tv/0/928037501_1080607/0"></a>
-                <div>我的是二个滚动图片哟</div>
-            </li>
-            <li>
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/928089421_1080607/0"></a>
-                <div>我的是三个滚动图片哟</div>
+                <img src="https://puui.qpic.cn/tv/0/1015145605_1080607/0"></a>
+                <div>【传闻中的陈芊芊】赵露思丁禹兮开启剧本人生</div>
             </li>
             <!--JS有问题必须多加两个查询-->
             <li>
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/930216812_1080607/0"></a>
-                <div>我的是四个滚动图片哟</div>
-            </li>
+                <a href="#"><img src="https://puui.qpic.cn/tv/0/1013512686_1080607/0"></a>
+                <div>【黄鹂鸟·首播】林允张新成启奏蜜恋交响曲</div>
+            </li>  
             <li>
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/923478276_1080607/0"></a>
-                <div>我的是五个滚动图片哟</div>
+                <a href="#"><img src="https://puui.qpic.cn/tv/0/1006866271_1080607/0"></a>
+                <div>【斗罗大陆·更新】隔空相望，我……好想你</div>
             </li>
         </ul>
         <ul class="swipe-btn-list" id="swipe-btn-list"><li class="now"></li><li></li><li></li><li></li><li></li></ul>
@@ -55,22 +56,22 @@
 
 
 <!--vipInfo-->
-<div v-for="(item,i) in activList" style="margin-bottom:15px;">
-    <div  :class="`vipInfo-active vipInfo  v${item.vipGrade}-c`" 
-    :style="`background-image:url('img/V${item.vipGrade}_BG.png')`">
-      <span style="margin-bottom:5px;">{{item.vipGradeName}}</span>
-      即日起购买白银VIP卡 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+<div v-for="(item,i) in vipCardList" style="margin-bottom:15px;">
+    <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
+    :style="`background-image:url('img/V${item.forder}_BG.png')`">
+      <span style="margin-bottom:5px;">{{item.typename}}</span>
+      即日起购买白银VIP卡 {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
-            <div>价格范围：304 - 456</div>
-            <div>VIP卡期限：20天</div>
-            <div>开放时间：13:00 - 40:00</div>
-            <div>消耗XGO币：3</div>
+            <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
+            <div>VIP卡期限：{{item.watchdays}}</div>
+            <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
+            <div>消耗XGO币：{{item.xgocoin}}</div>
             <span class="clear">
       </div>
-      <img :src="`img/V${item.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+      <img :src="`img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" value="立 即 抢 购" :class="`active-but  v${item.vipGrade}-bg`" 
+    <input type="button" value="立 即 抢 购" :class="`active-but  v${item.forder}-bg`" 
         onclick="window.location.href='cardBag/bagPayWait.html'"/>
 </div>
 </section>
@@ -98,39 +99,21 @@
 </body>
 
 <script>
+$(function(){
+    vm = new Vue({
+        el:'#app',
+        data:{
+           vipCardList : [],
+       }
+    });
 
-    new Vue({
-      el: '#app',
-      data: function() {
-        return {
-            activList:[
-                {
-                    vipGrade : 1,
-                    vipGradeName : '青铜VIP卡'  
-                },{
-                    vipGrade : 2,
-                    vipGradeName : '白银VIP卡'  
-                },{
-                    vipGrade : 3,
-                    vipGradeName : '黄金VIP卡'  
-                },{
-                    vipGrade : 4,
-                    vipGradeName : '铂金VIP卡'  
-                },{
-                    vipGrade : 5,
-                    vipGradeName : '砖石VIP卡'  
-                },{
-                    vipGrade : 6,
-                    vipGradeName : '星耀VIP卡'  
-                }
-            ] 
-        }
-      },
-      created() {
-      },
-      methods:{
-      }
-    })
+    //获取活动
+    jAjax("/appVipCard/getVipCardList",{},function(data){
+        console.log(data);
+        vm.vipCardList = data;  
+    });
+});
+
   </script>
 
 </html>

@@ -65,12 +65,18 @@
     .ImgCont .prdName{
         margin-top: 6px;
         color: #000028;
-        font-size: 14px;
+        font-size: 0.9rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
     .ImgCont .prdRemark{
         margin-top: 3px;
         color: #a2a2b6;
-        font-size: 12px;
+        font-size: 0.8rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
     .refresh-cont{
         width: 100%;
