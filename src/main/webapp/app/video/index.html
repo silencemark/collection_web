@@ -81,7 +81,8 @@
             <img v-if="i==0" src="img/fire.png"/>
         </div>
         <div class="ImgCont" v-for="(movie , j) in item.movielist">
-            <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='${reqPath+movie.httpurl}'`" />
+            <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='${reqPath+movie.httpurl}'`" /> -->
+            <img :src="reqPath+movie.coverimg" onclick="window.location.href='cardBag/bagComment.html'" />
             <div class="prdName">{{movie.title}}</div>
             <div class="prdRemark">{{movie.description}}</div>
         </div>

@@ -10,11 +10,19 @@
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
      <script src="../js/jq-alert.js"></script>
+
+
+    <!--视频-->
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/willesPlay.css"/>
+    <script src="../js/willesPlay.js" type="text/javascript" charset="utf-8"></script>
+
  </head>
  <body>
 
 <section class="main"  id="app">
-    <div class="title">
+    <div class="title" style="font-size: 1.4rem;">
         <img src="../img/to-left.png" onclick="history.back(-1)"/>
         观影好评
     </div>
@@ -29,9 +37,72 @@
     </span>
     <img src="../img/edit-ic.png"/>
 </div>
-<iframe src="https://www.wanmeikk.me/project/16.html"  scrolling="no"  class="videoFrame">
-<!-- <iframe src="" class="videoFrame"  scrolling="no"> -->
-</iframe>
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="willesPlay">
+	<div class="playHeader">
+		<div class="videoName">Tara - 懂的那份感觉</div>
+	</div>
+	<div class="playContent">
+		<div class="turnoff">
+			<ul>
+				<li><a href="javascript:;" title="喜欢" class="glyphicon glyphicon-heart-empty"></a></li>
+				<li><a href="javascript:;" title="关灯" class="btnLight on glyphicon glyphicon-sunglasses"></a></li>
+				<li><a href="javascript:;" title="分享" class="glyphicon glyphicon-share"></a></li>
+			</ul>
+		</div>
+		<video width="100%" height="100%" id="playVideo">
+			<source src="https://cloud189-beijing-gpz-corp.oos-hq-bj.ctyunapi.cn/32c32f9f-06fb-4633-8afb-c8d0238c4369.mp4?x-amz-UFID=4155416487893070&x-amz-CLIENTNETWORK=UNKNOWN&x-amz-FSIZE=328215669&response-content-type=video/mp4&Expires=1592941708&x-amz-UID=566074404&response-content-disposition=attachment%3Bfilename%3D%22%C3%A6%C2%96%C2%97%C3%A7%C2%BD%C2%97%20%C3%A7%C2%AC%C2%AC04%C3%A9%C2%9B%C2%86%20720P%20AVC.mp4%22&AWSAccessKeyId=32406b68f116fdc230fa&x-amz-limitrate=61440&x-amz-CLOUDTYPEIN=PERSON&x-amz-CLIENTTYPEIN=WEB&Signature=EsTDfkzwHqpKzZbKfISM2n5iWJk%3D" type="video/mp4"></source>
+			当前浏览器不支持 video直接播放，点击这里下载视频： <a href="/">下载视频</a>
+		</video>
+		<div class="playTip glyphicon glyphicon-play"></div>
+	</div>
+	<div class="playControll">
+		<div class="playPause playIcon"></div>
+		<div class="timebar">
+			<span class="currentTime">0:00:00</span>
+			<div class="progress">
+				<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+				</div>
+			<span class="duration" style="margin-left:-45px;">0:00:00</span>
+		</div>
+		<div class="otherControl">
+			<span class="volume glyphicon glyphicon-volume-down"></span>
+			<span class="fullScreen glyphicon glyphicon-fullscreen"></span>
+			<div class="volumeBar">
+					<div class="volumewrap">
+						<div class="progress">
+						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 8px;height: 40%;"></div>
+					</div>
+						</div>
+                        </div>
+                </div>
+            </div>
+        </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
 
 
  <footer id="footer">
@@ -91,7 +162,8 @@
 </section>
 </body>
 
-<script>
+
+<script  type="text/javascript">
     $(function(){
         $(".commentLabe").click(function(){
             $(".commentLabe").removeClass("commentLabeActiv");
@@ -151,6 +223,7 @@
           confirmSubComment(){
                 jqtoast('评论成功');
                 $("#commentWindow").hide();
+                $("#willesPlay").removeClass("mtop1000");
                 this.scvTime();
           },
           scvTime(){
@@ -164,6 +237,7 @@
         //打开评论窗口
         goComment(){
             $("#commentWindow").show();
+            $("#willesPlay").addClass("mtop1000");
             this.comment.commentText='';
             this.wMin = 10;
         }
