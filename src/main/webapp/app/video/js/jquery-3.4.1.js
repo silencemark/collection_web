@@ -10896,7 +10896,7 @@ function jAjax(url,resData,sucCbk,errCbk){
 	});
 }
 
-/**chkck url is White*/
+/**check url in White list*/
 function chkUrlISWhite(url){
 	var whiteList = [
 		"/appLogin/getVerificationCode",//发送验证码
@@ -10914,10 +10914,10 @@ function chkUrlISWhite(url){
 
 /**begin user Sesssion */
 function setCptToken(data){
-	localStorage.setItem("cptToken",JSON.stringify(data));
+	localStorage.setItem("cptToken",data);
 }
 function getCptToken(){
-	return JSON.parse(localStorage.getItem("cptToken"));
+	return localStorage.getItem("cptToken");
 }
 function loginOut(){
 	localStorage.removeItem("cptToken");
