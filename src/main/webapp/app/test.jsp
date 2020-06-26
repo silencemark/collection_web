@@ -9,6 +9,7 @@
 <script type="text/javascript" src="appcssjs/script/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="appcssjs/script/constantpc.js"></script>
 <script type="text/javascript" src="appcssjs/script/cache.js"></script>
+<script type="text/javascript" src="../../js/md5.js"></script>
 </head>
 <body>
 <center>
@@ -87,7 +88,6 @@ function saveUserInfo(){
 }
 
 $(function(){
-	
 	$('#parameter').change(function(){
 		var parameter=$('#parameter').val();
 		var array=parameter.split('&');

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.base.controller.BaseController;
 import com.collection.redis.RedisUtil;
 import com.collection.service.IAppUserCenterService;
 import com.collection.util.Constants;
@@ -28,7 +29,7 @@ import com.collection.util.QRcode;
  */
 @Controller
 @RequestMapping("/appUserCenter")
-public class AppUserCenterController {
+public class AppUserCenterController extends BaseController{
 	
 	@Resource private IAppUserCenterService appUserCenterService;
 	
@@ -49,6 +50,13 @@ public class AppUserCenterController {
 	public Map<String, Object> myCenter(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		data = this.appUserCenterService.getMyCenter(map);
 		return data;	
 	}
@@ -68,6 +76,13 @@ public class AppUserCenterController {
 	public Map<String, Object> signIn(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		this.appUserCenterService.signIn(map);
 		data.put("status", 0);
 		data.put("message", "签到成功");
@@ -89,6 +104,13 @@ public class AppUserCenterController {
 	public Map<String, Object> myGrowthValue(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = this.appUserCenterService.myGrowthValue(map);
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		return data;	
 	}
 	
@@ -107,6 +129,13 @@ public class AppUserCenterController {
 	public Map<String, Object> certification(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		Map<String, Object> certMap = this.appUserCenterService.getCertification(map);
 		if(certMap!= null && certMap.size() > 0 && "0".equals(certMap.get("status").toString())) {
 			data.put("status", 1);
@@ -137,7 +166,15 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> getCertification(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> data = this.appUserCenterService.getCertification(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data = this.appUserCenterService.getCertification(map);
 		return data;	
 	}
 	
@@ -155,7 +192,15 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> myTeam(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> data = this.appUserCenterService.myTeam(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data = this.appUserCenterService.myTeam(map);
 		return data;	
 	}
 	
@@ -173,7 +218,15 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> myAssets(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> data = this.appUserCenterService.myAssets(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data = this.appUserCenterService.myAssets(map);
 		return data;	
 	}
 	
@@ -190,9 +243,17 @@ public class AppUserCenterController {
 	 */
 	@RequestMapping("/getExchangeList")
 	@ResponseBody
-	public List<Map<String, Object>> getExchangeList(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+	public Map<String, Object> getExchangeList(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		List<Map<String, Object>> data = this.appUserCenterService.getExchangeList(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data.put("resultlist", this.appUserCenterService.getExchangeList(map));
 		return data;	
 	}
 	
@@ -210,7 +271,16 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> exchangeVipCard(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		return this.appUserCenterService.exchangeVipCard(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data = this.appUserCenterService.exchangeVipCard(map);
+		return data;
 	}
 	
 	/**
@@ -229,6 +299,13 @@ public class AppUserCenterController {
 			HttpServletResponse response) {
 		//获取我的邀请码和 qr二维码地址
 		Map<String, Object> codeMap = this.appUserCenterService.myInviteCode(map);
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			codeMap.put("status", 1);
+			codeMap.put("message", "签名校验失败");
+			return codeMap;
+		}
 		//如果没有qr二维码就生成一个入库
 		if(codeMap.get("invitecodeqrcode") == null) {
 			//用注册地址带参 生成二维码
@@ -258,7 +335,15 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> getMyUserInfo(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> data = this.appUserCenterService.getMyUserInfo(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data = this.appUserCenterService.getMyUserInfo(map);
 		return data;	
 	}
 	
@@ -277,6 +362,13 @@ public class AppUserCenterController {
 	public Map<String, Object> updateHeadImg(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		this.appUserCenterService.updateHeadImg(map);
 		data.put("status", 0);
 		data.put("message", "头像修改成功");
@@ -298,6 +390,13 @@ public class AppUserCenterController {
 	public Map<String, Object> updateNickname(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		this.appUserCenterService.updateNickName(map);
 		data.put("status", 0);
 		data.put("message", "昵称修改成功");
@@ -321,7 +420,15 @@ public class AppUserCenterController {
 		//1、把密码都MD5加密
 		map.put("oldpassword", Md5Util.getMD5(map.get("oldpassword").toString()));
 		map.put("newpassword", Md5Util.getMD5(map.get("newpassword").toString()));
-		Map<String, Object> data = this.appUserCenterService.updatePassWord(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data  = this.appUserCenterService.updatePassWord(map);
 		return data;	
 	}
 	
@@ -340,6 +447,13 @@ public class AppUserCenterController {
 	public Map<String, Object> setPayPassWord(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		//获取的手机号验证码
 		Map<String, Object> checkcodeMap = RedisUtil.getObject(""+map.get("phone"));
 		String checkcode = null;
@@ -377,7 +491,16 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> getPaymentMethod(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		return this.appUserCenterService.getPaymentMethod(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data = this.appUserCenterService.getPaymentMethod(map);
+		return data;
 	}
 	
 	/**
@@ -394,8 +517,15 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> updateAddPaymentMethod(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		this.appUserCenterService.updatePaymentMethod(map);
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appUserCenterService.updatePaymentMethod(map);
 		data.put("status", 0);
 		data.put("message", "修改成功");
 		return data;
@@ -413,9 +543,18 @@ public class AppUserCenterController {
 	 */
 	@RequestMapping("/getMyQuestion")
 	@ResponseBody
-	public List<Map<String, Object>> getMyQuestion(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+	public Map<String, Object> getMyQuestion(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		return this.appUserCenterService.getMyQuestion(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data.put("resultlist", this.appUserCenterService.getMyQuestion(map));
+		return data;
 	}
 	
 	/**
@@ -432,8 +571,15 @@ public class AppUserCenterController {
 	@ResponseBody
 	public Map<String, Object> addMyQuestion(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		this.appUserCenterService.addMyQuestion(map);
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appUserCenterService.addMyQuestion(map);
 		data.put("status", 0);
 		data.put("message", "提交成功");
 		return data;

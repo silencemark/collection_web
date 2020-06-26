@@ -10,6 +10,8 @@
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/hhutil.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/app/appcssjs/sweetalert/dist/sweetalert.css">
 <script src="<%=request.getContextPath() %>/app/appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
 <script type="text/javascript">
@@ -61,37 +63,53 @@ function examineOrder(orderid, status){
 		title : "",
 		text : "确认审核拒绝？",
 		type : "error",
-		showCancelButton : false,
+		showCancelButton : true,
 		confirmButtonColor : "#ff7922",
 		confirmButtonText : "确认",
 		cancelButtonText : "取消",
 		closeOnConfirm : true
 	}, function(){
-		$('#orderform').submit();
+		$('#orderform').submit();a
 	})
 }
 
-function frozenOrder(orderid){
-	$.ajax({
-		type:"post",
-		dataType:"json",
-		url:"<%=request.getContextPath()%>/managebackstage/frozenOrder",
-		data:{"orderid":orderid},
-		success:function(data){
-			swal({
-				title : "",
-				text : data.message,
-				type : "success",
-				showCancelButton : false,
-				confirmButtonColor : "#ff7922",
-				confirmButtonText : "确认",
-				cancelButtonText : "取消",
-				closeOnConfirm : true
-			}, function(){
-				location.reload();
-			})
-		}
+function frozenOrder(orderid, status){
+	swal({
+		title : "",
+		text : "确认冻结买家/卖家双方用户？",
+		type : "error",
+		showCancelButton : true,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		$.ajax({
+			type:"post",
+			dataType:"json",
+			url:"<%=request.getContextPath()%>/managebackstage/frozenOrder",
+			data:{"orderid":orderid, "status":status},
+			success:function(data){
+				var message = "success";
+				if(data.status == 1){
+					var message = "error";
+				}
+				swal({
+					title : "",
+					text : data.message,
+					type : message,
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					location.reload();
+				})
+			}
+		})
 	})
+	
 }
 
 //显示隐藏窗口
@@ -110,6 +128,18 @@ function checkHide(rum,selltime,rushtime,buytime,duetime){
 		$("#rushtime").text(rushtime);
 		$("#buytime").text(buytime);
 		$("#duetime").text(duetime);
+	}
+}
+
+//显示隐藏支付凭证
+function checkPayOrderShowHide(rum,payorder){
+	if(rum == 1 ){
+		$("#payorderdiv").hide();	
+		$(".div_mask").css("display","none");
+	}else{
+		$("#payorderdiv").show();	
+		$(".div_mask").css("display","block");
+		$("#payorder").attr("src", payorder);
 	}
 }
 </script>
@@ -144,6 +174,7 @@ function checkHide(rum,selltime,rushtime,buytime,duetime){
 	            	<option value="4" <c:if test="${map.status == '4' }">selected="selected"</c:if>>已到期(可出售)</option>
 	            	<option value="5" <c:if test="${map.status == '5' }">selected="selected"</c:if>>已过期(无法出售)</option>
 	            </select>
+	            <input type="text" class="text" placeholder="请输入订单日期"  name="ordertime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" value="${map.ordertime}"/></td>
 	            <input type="submit" value="搜索" class="find_btn"  />
             </form>
             <div class="clear"></div>
@@ -173,7 +204,7 @@ function checkHide(rum,selltime,rushtime,buytime,duetime){
 	                    <td>${li.cardprice }元</td>
 	                    <td>${li.ordertype ==1?'普通订单':'兑换订单' }</td>
 	                    <td>${li.type==1?"是":"否" }</td>
-	                    <td><img src="${li.payorder }" width="48pxs" height="48px" alt="" /></td>
+	                    <td onclick="checkPayOrderShowHide(0,'${li.payorder }');"><img src="${li.payorder }" width="48pxs" height="48px" alt="" /></td>
 	                    <td>${li.profitprice }元</td>
 	                    <td>${li.createtime }</td>
 	                    <c:choose>
@@ -187,11 +218,11 @@ function checkHide(rum,selltime,rushtime,buytime,duetime){
 	                    	</c:when>
 	                    	<c:when test="${li.status == 2 }">
 	                    		<td><i class="red">待审核</i></td>
-	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="examineOrder('${li.orderid}', -1)" class="blue">审核拒绝</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="frozenOrder('${li.orderid}')" class="blue">冻结买/卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
+	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="examineOrder('${li.orderid}', -1)" class="blue">审核拒绝</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
 	                    	</c:when>
 	                    	<c:when test="${li.status == 3 }">
 	                    		<td><i class="red">已审核通过</i></td>
-	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="frozenOrder('${li.orderid}')" class="blue">冻结买/卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
+	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="frozenOrder('${li.orderid}',-2)" class="blue">冻结买/卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
 	                    	</c:when>
 	                    	<c:when test="${li.status == 4 }">
 	                    		<td><i class="red">已到期</i></td>
@@ -200,6 +231,10 @@ function checkHide(rum,selltime,rushtime,buytime,duetime){
 	                    	<c:when test="${li.status == 5 }">
 	                    		<td><i class="red">已过期(历史订单)</i></td>
 	                    		<td><a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
+	                    	</c:when>
+	                    	<c:when test="${li.status == -2 }">
+	                    		<td><i class="red">已冻结双方用户</i></td>
+	                    		<td><a href="javascript:void(0)" onclick="frozenOrder('${li.orderid}',3)" class="blue">解冻结买/卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
 	                    	</c:when>
 	                    	<c:otherwise>
 	                    		<td><i class="greed">审核失败</i></td>
@@ -221,7 +256,7 @@ function checkHide(rum,selltime,rushtime,buytime,duetime){
 <div class="div_mask" style="display:none;"></div>
 
 <div class="tc_changetext"  id="timediv"  style="display:none;"><!--修改手机号-->
-	<div class="tc_title"><span>相关卖出买出时间</span><a href="#" onclick="checkHide(1)">×</a></div>
+	<div class="tc_title"><span>相关卖出买出时间</span><a href="#" onclick="checkHide(1,'','','','')">×</a></div>
     <div class="box">
     	<span>预计售出时间</span>
         <i id="selltime"></i>
@@ -238,6 +273,16 @@ function checkHide(rum,selltime,rushtime,buytime,duetime){
         <div class="clear"></div>
     </div>
     <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="checkHide(1,'','','','')">确定</a></div>
+</div>
+
+<div class="tc_changetext"  id="payorderdiv"  style="display:none;width: 560px;top:40%;"><!--修改手机号-->
+	<div class="tc_title"><span>展示支付凭证</span><a href="#" onclick="checkPayOrderShowHide(1,'')">×</a></div>
+    <div class="box">
+    	<span>支付凭证</span>
+        <img id="payorder" width="400px" height="500px"></i>
+        <div class="clear"></div>
+    </div>
+    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="checkPayOrderShowHide(1,'')">确定</a></div>
 </div>
 </body>
 </html>

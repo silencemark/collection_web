@@ -1,5 +1,6 @@
 package com.collection.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,10 +44,19 @@ public class AppIndexController extends BaseController{
 	 */
 	@RequestMapping("/getBanner")
 	@ResponseBody
-	public List<Map<String, Object>> getBanner(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getBanner(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		List<Map<String, Object>> bannerlist=this.appindexService.getHomePageBanner(map);
-		return bannerlist;
+		data.put("resultlist", bannerlist);
+		return data;
 	}
 	
 	/**
@@ -60,10 +70,19 @@ public class AppIndexController extends BaseController{
 	 */
 	@RequestMapping("/getAdvertisement")
 	@ResponseBody
-	public List<Map<String, Object>> getAdvertisement(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getAdvertisement(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		List<Map<String, Object>> advertlist = this.appindexService.getAdvertisement(map);
-		return advertlist;
+		data.put("resultlist", advertlist);
+		return data;
 	}
 	
 	
@@ -78,9 +97,18 @@ public class AppIndexController extends BaseController{
 	 */
 	@RequestMapping("/getHomePageMovie")
 	@ResponseBody
-	public List<Map<String, Object>> getHomePageMovie(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getHomePageMovie(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		List<Map<String, Object>> movielist = this.appindexService.getHomePageMovie(map);
-		return movielist;
+		data.put("resultlist", movielist);
+		return data;
 	}
 }

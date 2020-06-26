@@ -10,8 +10,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/app/appcssjs/sweetalert/dist/sweetalert.css">
 <script src="<%=request.getContextPath() %>/app/appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/My97DatePicker/WdatePicker.js"></script>
-<script src="<%=request.getContextPath() %>/js/ajaxfileupload.js"></script>  
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/hhutil.js"></script>
+<script src="<%=request.getContextPath() %>/js/ajaxfileupload.js"></script>  
+
 
 </head>
 <script type="text/javascript">

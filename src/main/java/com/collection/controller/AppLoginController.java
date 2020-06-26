@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.base.controller.BaseController;
 import com.collection.redis.RedisUtil;
 import com.collection.service.IAppLoginService;
 import com.collection.util.DateUtil;
@@ -29,7 +30,7 @@ import com.collection.util.Md5Util;
  */
 @Controller
 @RequestMapping("/appLogin")
-public class AppLoginController {
+public class AppLoginController extends BaseController{
 	private transient static Log log = LogFactory.getLog(AppLoginController.class);
 	
 	@Resource private IAppLoginService appLoginService;
@@ -51,6 +52,14 @@ public class AppLoginController {
 		Map<String, Object> data=new HashMap<String, Object>();
 		String phone=map.get("phone")+"";
 		String code = "6666";
+		//先判断是否过期
+		Map<String, Object> timeMap = RedisUtil.getObject(map.get("phone")+"time");
+		if(timeMap != null && timeMap.size() > 0) {
+			//60秒内不可重发
+			data.put("status", 1);
+			data.put("message", "请勿重复获取，60秒后再试");
+			return data;
+		}
 		// 发送验证码
 		/*try {
 			Random r = new Random();
@@ -65,6 +74,7 @@ public class AppLoginController {
 		Map<String, Object> codemap=new HashMap<String, Object>();
 		codemap.put("code", code);
 		RedisUtil.setObject(phone,codemap, 1);
+		RedisUtil.setSecondObject(phone+"time", codemap, 60);
 		//request.getSession().setAttribute(phone, code);
 		data.put("status", 0);
 		data.put("message", "获取成功");
@@ -186,6 +196,13 @@ public class AppLoginController {
 	public Map<String, Object> updateUserInfo(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		try {
 			//获取用户信息
 			Map<String, Object> userInfo = this.appLoginService.getUserInfo(map);
