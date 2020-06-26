@@ -45,6 +45,8 @@ public class ManageBackstageController {
 	@Resource private UserInfoService userInfoService;
 	
 	
+	/**-----------------------------------------管理员登录及密码操作start-------------------------------------------------------**/
+	
 	/**
 	 * 用户登录
 	 * @param map
@@ -186,7 +188,9 @@ public class ManageBackstageController {
 		return "redirect:/managebackstage/login";
 	}
 	
-	/**-----------------------------------------用户信息管理开始----------------------------------------------------**/
+	/**-----------------------------------------管理员登录及密码操作end-------------------------------------------------------**/
+	
+	/**-----------------------------------------用户信息管理start----------------------------------------------------**/
 	
 	/**
 	 * 获取用户信息列表
@@ -229,11 +233,11 @@ public class ManageBackstageController {
 		return "redirect:/managebackstage/getUserList";
 	}
 	
-	/**-----------------------------------------用户信息管理结束----------------------------------------------------**/
+	/**-----------------------------------------用户信息管理end----------------------------------------------------**/
 	
 	
 	
-	/**-----------------------------------------banner管理开始-----------------------------------------------------**/
+	/**-----------------------------------------banner管理start-----------------------------------------------------**/
 	
 	/**
 	 * 获取banner管理列表
@@ -352,10 +356,10 @@ public class ManageBackstageController {
 		return "redirect:/managebackstage/getBannerList";
 	}
 	
-	/**-----------------------------------------banner管理结束-----------------------------------------------------**/
+	/**-----------------------------------------banner管理end-----------------------------------------------------**/
 	
 	
-	/**-----------------------------------------订单管理开始-------------------------------------------------------**/
+	/**-----------------------------------------订单管理start-------------------------------------------------------**/
 	/**
 	 * 获取订单管理列表
 	 * @param map
@@ -414,6 +418,84 @@ public class ManageBackstageController {
 			data.put("message", "冻结失败");
 		}
 		return data;
+	}
+	
+	/**-----------------------------------------订单管理end-------------------------------------------------------**/
+	
+	
+	/**-----------------------------------------首页免费电影管理start-------------------------------------------------------**/
+	/**
+	 * 获取首页免费电影管理列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getIndexMovieList")
+	public String getIndexMovieList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getIndexMovieListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getIndexMovieList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/indexmovie_list";
+	}
+	
+	/**
+	 * 新增/修改首页免费电影信息
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/insertOrupdateIndexMovie")
+	public String updateIndexMovie(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		if(map!=null && map.get("movieid")!=null && !"".equals(map.get("movieid").toString())){
+			//有主键id 修改信息
+			Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+			map.put("updateid", userInfo.get("userid"));
+			map.put("updatetime",new Date());
+			this.manageBackstageService.updateIndexMovie(map);
+		} else {
+			//新增信息
+			Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+			map.put("createid", userInfo.get("userid"));
+			map.put("createtime",new Date());
+			this.manageBackstageService.insertIndexMovie(map);
+		}
+		return "redirect:/managebackstage/getIndexMovieList";
+	}
+	
+	/**-----------------------------------------首页免费电影管理end-------------------------------------------------------**/
+	
+	/**
+	 * 获取会员卡管理列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getMemberCardList")
+	public String getMemberCardList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getMemberCardListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getMemberCardList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/membercard_list";
 	}
 	
 }

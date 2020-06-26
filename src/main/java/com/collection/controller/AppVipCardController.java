@@ -44,10 +44,19 @@ public class AppVipCardController extends BaseController{
 	 */
 	@RequestMapping("/getVipCardList")
 	@ResponseBody
-	public List<Map<String, Object>> getVipCardList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getVipCardList(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		List<Map<String, Object>> cardlist=this.appVipCardService.getVipCardList(map);
-		return cardlist;
+		data.put("resultlist", cardlist);
+		return data;
 	}
 	
 	/**
@@ -63,13 +72,20 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> rushToBuyCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		/**
 		 *  1、根据抢购的人数分配系统中待出售的会员卡订单 比例按30-50%分配 不够的 补系统会员卡，比如10个人抢保证3到5个人抢到，如果只有2条vip在出售，那么系统就放出1到3个会员卡 供用户抢购
 			2、抢购直接更新到订单 信息里面的买家 userid
 			3、算出购买时间和到期时间更新入库
 		 */
 		this.appVipCardService.insertRushToBuy(map);
-		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("status", 0);
 		data.put("message", "参与抢购成功,请到我的抢购中查看抢购结果");
 		return data;
@@ -87,13 +103,20 @@ public class AppVipCardController extends BaseController{
 	 */
 	@RequestMapping("/getRushToBuyList")
 	@ResponseBody
-	public List<Map<String, Object>> getRushToBuyList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getRushToBuyList(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		List<Map<String, Object>> cardlist=this.appVipCardService.getRushToBuyList(map);
-		return cardlist;
+		data.put("resultlist", cardlist);
+		return data;
 	}
-	
-	
 	
 	/**
 	 * 获取VIP会员卡（待支付）列表页面
@@ -106,10 +129,19 @@ public class AppVipCardController extends BaseController{
 	 */
 	@RequestMapping("/getWaitPayCard")
 	@ResponseBody
-	public List<Map<String, Object>> getWaitPayCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getWaitPayCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		List<Map<String, Object>> cardlist=this.appVipCardService.getWaitPayCard(map);
-		return cardlist;
+		data.put("resultlist", cardlist);
+		return data;
 	}
 	
 	
@@ -126,6 +158,14 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> getPayVipCardInfo(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		Map<String, Object> card=this.appVipCardService.getPayVipCardInfo(map);
 		return card;
 	}
@@ -144,8 +184,15 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> payVipCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		this.appVipCardService.payVipCard(map);
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appVipCardService.payVipCard(map);
 		data.put("status", 0);
 		data.put("message", "支付成功，等待审核");
 		return data;
@@ -164,7 +211,15 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> getSellOrBuyUserInfo(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> data = this.appVipCardService.getContactPhone(map);
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data = this.appVipCardService.getContactPhone(map);
 		return data;
 	}
 	
@@ -181,10 +236,19 @@ public class AppVipCardController extends BaseController{
 	 */
 	@RequestMapping("/getSaleCardList")
 	@ResponseBody
-	public List<Map<String, Object>> getSaleCardList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getSaleCardList(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		List<Map<String, Object>> cardlist=this.appVipCardService.getSaleCardList(map);
-		return cardlist;
+		data.put("resultlist", cardlist);
+		return data;
 	}
 	
 	/**
@@ -200,8 +264,16 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> initExamine(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> examine=this.appVipCardService.getExamineInfo(map);
-		return examine;
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data=this.appVipCardService.getExamineInfo(map);
+		return data;
 	}
 	
 	/**
@@ -217,8 +289,15 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> examinePast(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		this.appVipCardService.examinePast(map);
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appVipCardService.examinePast(map);
 		data.put("status", 0);
 		data.put("message", "审核成功");
 		return data;
@@ -236,10 +315,20 @@ public class AppVipCardController extends BaseController{
 	 */
 	@RequestMapping("/getMyCardList")
 	@ResponseBody
-	public List<Map<String, Object>> getMyCardList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+	public Map<String, Object> getMyCardList(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
 		List<Map<String, Object>> cardlist=this.appVipCardService.getMyCardList(map);
-		return cardlist;
+		data.put("resultlist", cardlist);
+		
+		return data;
 	}
 	
 	/**
@@ -255,8 +344,16 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> getMovieByCardId(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> cardlist=this.appVipCardService.getMemberCardInfo(map);
-		return cardlist;
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data=this.appVipCardService.getMemberCardInfo(map);
+		return data;
 	}
 	
 	/**
@@ -272,8 +369,16 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> initSellCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> cardlist=this.appVipCardService.getSellCardInfo(map);
-		return cardlist;
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data = this.appVipCardService.getSellCardInfo(map);
+		return data;
 	}
 	
 	/**
@@ -289,8 +394,15 @@ public class AppVipCardController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> commitSellCard(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		this.appVipCardService.commitSellCard(map);
 		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appVipCardService.commitSellCard(map);
 		data.put("status", 0);
 		data.put("message", "出售成功");
 		return data;
