@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/user.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
+     <style>
+         .xgoInfo{
+            font-size: 0.95rem !important;
+            line-height: 35px;
+            height: auto;
+            padding-bottom: 5px;
+            margin-top: 5px;
+         }
+         .xgoInfo .xgoAddNum{
+            margin-top: -4px !important;
+            left: 10px;
+            margin-top: -2px;
+            margin-left: 260px;
+         }
+         .xgoInfo img{
+             width: 25px;
+             height: 25px;
+         }
+         .xgoInfoUname{
+            position: absolute;
+            margin-left: 30px;
+            margin-top: -4px;
+            font-size: 0.9rem;
+         }
+         .usertwo img{
+            margin-left: 60px !important;
+         }
+         .usertwo .xgoInfoUname{
+            margin-left: 120px !important;
+         }
+         .moneyText{
+            margin-top: 35px;
+            font-size: 0.8rem;
+            line-height: 14px;
+         }
+         .xgoInfo .xgoAddNum{
+            margin-top: 5px !important;
+            left: 40px;
+         }
+     </style>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        我的资产
+    </div>
+    <div class="xgoInfo">
+        <img src="../img/money-ic.png"/>
+        <span class="xgoInfoUname">累计流水</span>
+        <div class="xgoAddNum">+32</div>
+        <div class="moneyText">累计总资产表示您的账户所有流水资产总和</div >
+    </div>
+    <div class="xgoInfo">
+        <img src="../img/money-ic.png"/>
+        <span class="xgoInfoUname">累计总收益</span>
+        <div class="xgoAddNum">+32</div>
+        <div class="moneyText">累计总收益表示您历史总观影收益 + 您全部的好友推荐收益</div >
+    </div>
+    <div class="xgoInfo">
+        <img src="../img/money-ic.png"/>
+        <span class="xgoInfoUname">锁定资产</span>
+        <div class="xgoAddNum">+32</div>
+        <div class="moneyText">锁定资产即是您的账号现拥有的VIP会员卡总金额</div >
+    </div>
+    <div class="xgoInfo">
+        <img src="../img/money-ic.png"/>
+        <span class="xgoInfoUname">可兑换资产</span>
+        <div class="xgoAddNum">+32</div>
+        <div class="moneyText">
+            可兑换资产 = 好友推荐收益 + 会员卡溢出的观影收益，
+            邀请好友后您可以获得一级好友观影收益的5%，二级好友观影收益的2%
+        </div >
+    </div>
+<br/><br/><br/><br/><br/>
+</section>
+
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a href="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="../activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            
+        }
+      },
+      created() {
+      },
+      methods:{
+        
+      }
+    })
+  </script>
+
+</html>

@@ -6,11 +6,19 @@
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="css/index.css"/>
      <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <script src="js/jquery-3.4.1.js"></script>
+     <script src="js/vue.js"></script>
+     <script src="js/jq-alert.js"></script>
 
-     <!--轮播CSS-->
+     <!--轮播CSS -->
      <link rel="stylesheet" type="text/css" href="css/slideshow.css">
+     <script src="js/base.js"></script>
+    <script src="js/slideshow.js"></script>
  </head>
  <body>
+    <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
+    
+    <div id="app">
      <header>
          <section class="logo">
             <img  src="img/logo.png"/>
@@ -20,16 +28,16 @@
             <img src="img/search.png">
         </section>
         <ul id="class_list">
-            <li class="list_li home active">
+            <li class="list_li home queryVideo active" onclick="queryVideo(this,0)">
                 <span>所有影片</span>
             </li>
-            <li class="list_li follow" >
+            <li class="list_li queryVideo follow"  onclick="queryVideo(this,2)">
                 <span>珍藏电影</span>
             </li>
-            <li class="list_li cart">
+            <li class="list_li queryVideo cart" onclick="queryVideo(this,3)">
                 <span>动漫</span>
             </li>
-            <li class="list_li profile">
+            <li class="list_li queryVideo profile" onclick="queryVideo(this,4)">
                 <span>电视剧</span>
             </li>
             <li class="clear"></li>
@@ -39,156 +47,48 @@
 <div class="layout">
     <div class="banner">
         <ul class="swipe" id="swipe">
-            <li><!--第一张会闪过BUG-->
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/929410352_1080607/0"></a>111</li>
-            <li>
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/919680367_1080607/0"></a>
-                <div>我的是一个滚动图片哟</div>
+            <!--图片低于5张出问题直接轮播两组-->
+            <li><a href="#"><img src="https://puui.qpic.cn/tv/0/928089421_1080607/0"></a></li>
+            <li v-for="(item,i) in bannerList">
+                <a :href="reqPath+item.httpurl"><img :src="reqPath+item.imgurl"></a>
+                <div>精彩好礼送不停</div>
             </li>
-            <li><a href="#">
-                <img src="https://puui.qpic.cn/tv/0/928037501_1080607/0"></a>
-                <div>我的是二个滚动图片哟</div>
-            </li>
-            <li>
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/928089421_1080607/0"></a>
-                <div>我的是三个滚动图片哟</div>
-            </li>
-            <!--JS有问题必须多加两个查询-->
-            <li>
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/930216812_1080607/0"></a>
-                <div>我的是四个滚动图片哟</div>
-            </li>
-            <li>
-                <a href="#"><img src="https://puui.qpic.cn/tv/0/923478276_1080607/0"></a>
-                <div>我的是五个滚动图片哟</div>
+            <li v-for="(item,i) in bannerList">
+                <a :href="reqPath+item.httpurl"><img :src="reqPath+item.imgurl"></a>
+                <div>精彩好礼送不停</div>
             </li>
         </ul>
-        <ul class="swipe-btn-list" id="swipe-btn-list"><li class="now"></li><li></li><li></li><li></li><li></li></ul>
+        <ul class="swipe-btn-list" id="swipe-btn-list">
+            <li v-for="(item,i) in bannerList"></li>
+            <li></li><li></li>
+        </ul>
     </div>
 </div>
-<script src="js/base.js"></script>
-<script src="js/slideshow.js"></script>
 <!--end 轮播-->
 
 <!--广告图片-->
-<img src="img/activity-img.jpg" class="activity-img"/>
+<img :src="reqPath+advertisement.imgurl" :onclick="`window.location.href='${reqPath+advertisement.httpurl}'`" class="activity-img" />
 <!--end广告图片-->
 
 
 <section class="main">
-    <div class="prdClassCont">
+
+    <div class="prdClassCont" v-for="(item , i) in homePageMovie">
         <div class="prd-title">
-            <span>热门推荐</span>
+            <span>{{item.typename}}</span>
             <span class="clear"></span>
-            邀请好友领取更多观影收益&nbsp;&nbsp;
-            <img src="img/fire.png"/>
+            <font v-if="i==0" style="font-size:0.85rem;">邀请好友领取更多观影收益&nbsp;&nbsp;</font>
+            <img v-if="i==0" src="img/fire.png"/>
         </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930235325_498280/0" onclick="window.location.href='cardBag/bagComment.html'"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
+        <div class="ImgCont" v-for="(movie , j) in item.movielist">
+            <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='${reqPath+movie.httpurl}'`" /> -->
+            <img :src="reqPath+movie.coverimg" onclick="window.location.href='cardBag/bagComment.html'" />
+            <div class="prdName">{{movie.title}}</div>
+            <div class="prdRemark">{{movie.description}}</div>
         </div>
 
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930381272_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
         <div class="clear"></div>
-        <div class="refresh-cont">
-            <img src="img/ref.png"/>&nbsp;
-            <span>换一批</span>
-        </div>
-    </div>
-
-
-
-
-    <div class="prdClassCont">
-        <div class="prd-title">
-            <span>会员专享</span>
-            <span class="clear"></span>
-            VIP会员专享视频，有你好看&nbsp;&nbsp;
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930381272_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930381272_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930381272_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="clear"></div>
-        <div class="refresh-cont">
-            <img src="img/ref.png"/>&nbsp;
-            <span>换一批</span>
-        </div>
-    </div>
-
-
-
-
-    <div class="prdClassCont">
-        <div class="prd-title">
-            <span>电影</span>
-            <span class="clear"></span>
-            邀请好友领取更多观影收益&nbsp;&nbsp;
-            <img src="img/fire.png"/>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930381272_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930381272_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="ImgCont">
-            <img src="https://puui.qpic.cn/tv/0/930381272_498280/0"/>
-            <div class="prdName">创造营·异域舞娘</div>
-            <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
-        </div>
-        <div class="clear"></div>
-        <div class="refresh-cont">
+        <div class="refresh-cont" v-if="item.movielist.length>1">
             <img src="img/ref.png"/>&nbsp;
             <span>换一批</span>
         </div>
@@ -196,9 +96,6 @@
 
     <br/><br/><br/><br/><br/>
 </section>
- 
-
-
       <!--footer-->
       <footer id="footer">
         <ul id="footer_list">
@@ -217,5 +114,47 @@
        </ul>
       </footer>
         <!-- end footer-->
+</div>
+
 </body>
+
+
+
+<script>
+
+$(function(){
+  //type : 0：全部 1 会员专享 2、珍藏电影、3、动漫、4、电视剧
+  vm = new Vue({
+    el:'#app',
+    data:{
+        reqPath : reqPath,
+        bannerList : [],//轮播图
+        advertisement:{},//广告图
+        homePageMovie:[],//首页电影列表
+    }
+  });
+
+  //获取轮播图片
+  jAjax("/appIndex/getBanner",{type:1},function(data){ vm.bannerList = data; });
+  //获取广告图片
+  jAjax("/appIndex/getAdvertisement",{},function(data){ vm.advertisement = data[0];  });
+  //获取首页图片
+  queryVideo(null,0);
+});
+
+//查询影片
+function queryVideo(obj,type){
+    if(obj){
+        $(".queryVideo").removeClass("active");
+        $(obj).addClass("active");
+    }
+    //获取首页电影
+    console.log({type:type});
+    jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
+      vm.homePageMovie = data;  
+    });
+}
+
+
+</script>
 </html>

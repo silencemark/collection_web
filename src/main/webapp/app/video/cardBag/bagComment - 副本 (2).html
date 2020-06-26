@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
+
+
+    <!--视频-->
+    <link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/willesPlay.css"/>
+    <script src="../js/willesPlay.js" type="text/javascript" charset="utf-8"></script>
+
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title" style="font-size: 1.4rem;">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        观影好评
+    </div>
+
+<div class="comment">
+    <span style="font-weight:600;margin-left:20px;">全部好评</span>
+    <span style="float: right;margin-right:55px;" v-if="wMin<=1" @click="goComment">
+        参与评论
+    </span>
+    <span style="float: right;margin-right:55px;" v-if="wMin>1">
+        再观看{{wMin}}秒可评论
+    </span>
+    <img src="../img/edit-ic.png"/>
+</div>
+
+
+
+<iframe width="100%" height="100%" src="https://www.wanmeikk.me/project/2213.html" 
+frameborder="0" allowfullscreen="true" border="0" marginwidth="0" marginheight="0" scrolling="no" style="" ></iframe>
+
+
+
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="willesPlay">
+	<div class="playHeader">
+		<div class="videoName">Tara - 懂的那份感觉</div>
+	</div>
+	<div class="playContent">
+		<div class="turnoff">
+			<ul>
+				<li><a href="javascript:;" title="喜欢" class="glyphicon glyphicon-heart-empty"></a></li>
+				<li><a href="javascript:;" title="关灯" class="btnLight on glyphicon glyphicon-sunglasses"></a></li>
+				<li><a href="javascript:;" title="分享" class="glyphicon glyphicon-share"></a></li>
+			</ul>
+		</div>
+		<video width="100%" height="100%" id="playVideo">
+			<source src="https://cloud189-beijing-gpz-corp.oos-hq-bj.ctyunapi.cn/32c32f9f-06fb-4633-8afb-c8d0238c4369.mp4?x-amz-UFID=4155416487893070&x-amz-CLIENTNETWORK=UNKNOWN&x-amz-FSIZE=328215669&response-content-type=video/mp4&Expires=1592941708&x-amz-UID=566074404&response-content-disposition=attachment%3Bfilename%3D%22%C3%A6%C2%96%C2%97%C3%A7%C2%BD%C2%97%20%C3%A7%C2%AC%C2%AC04%C3%A9%C2%9B%C2%86%20720P%20AVC.mp4%22&AWSAccessKeyId=32406b68f116fdc230fa&x-amz-limitrate=61440&x-amz-CLOUDTYPEIN=PERSON&x-amz-CLIENTTYPEIN=WEB&Signature=EsTDfkzwHqpKzZbKfISM2n5iWJk%3D" type="video/mp4"></source>
+			当前浏览器不支持 video直接播放，点击这里下载视频： <a href="/">下载视频</a>
+		</video>
+		<div class="playTip glyphicon glyphicon-play"></div>
+	</div>
+	<div class="playControll">
+		<div class="playPause playIcon"></div>
+		<div class="timebar">
+			<span class="currentTime">0:00:00</span>
+			<div class="progress">
+				<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+				</div>
+			<span class="duration" style="margin-left:-45px;">0:00:00</span>
+		</div>
+		<div class="otherControl">
+			<span class="volume glyphicon glyphicon-volume-down"></span>
+			<span class="fullScreen glyphicon glyphicon-fullscreen"></span>
+			<div class="volumeBar">
+					<div class="volumewrap">
+						<div class="progress">
+						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 8px;height: 40%;"></div>
+					</div>
+						</div>
+                        </div>
+                </div>
+            </div>
+        </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+ <footer id="footer">
+    <ul id="footer_list" style="z-index: 2;">
+       <li class="list_li home active">
+           <a href="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="../activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+
+<!--评论窗口-->
+<div id="commentWindow" style="display: none;">
+    <div class="loading commentLoadCont" style="background-color:#fff;opacity: 0.9 !important;"></div>
+    <div class="commentWinCont">
+        <div class="xinCont">
+            为影片打分：
+            <img :src="comment.xNum>0?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=1" class="xin"/>
+            <img :src="comment.xNum>1?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=2" class="xin" style="margin-left: 30px;"/>
+            <img :src="comment.xNum>2?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=3" class="xin" style="margin-left: 60px;"/>
+            <img :src="comment.xNum>3?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=4" class="xin" style="margin-left: 90px;"/>
+            <img :src="comment.xNum>4?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=5" class="xin" style="margin-left: 120px;"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="margin-left:130px;">{{comment.xNum}}星</span>
+        </div>
+        <div style="width: 80%;margin-top: 30px;">
+            不想打字？嫌打字太麻烦？那么试试好评标签吧。一键您输入评论信息！
+        </div><br/>
+        <div style="width:88%;height: 108px;">
+            <div class="commentLabe">哇这个视频真好看</div>
+            <div class="commentLabe" style="margin-left:122px;margin-top:5px;">哎哟不错很棒棒哦</div>
+            <div class="commentLabe" style="margin-left:245px;margin-top:2px;">挺好看的</div>
+            <div class="commentLabe" style="margin-top:35px;">视频很好看，请问好评送女朋友吗？</div>
+            <div class="commentLabe" style="margin-top:48px;margin-left:222px;">天呐太精彩了</div>
+            <div class="commentLabe" style="margin-top: 70px;margin-left: 50px;">这世界那么美，有你才完美</div>
+        </div>
+        <div>我要评论:</div>
+        <textarea class="commentText" ref="commentText">
+        </textarea>
+        <div style="font-size: 0.8rem;color:#f67e1c;font-weight:500;">{{errMsg}}</div>
+        <div>
+            <div class="btn btn-200" @click="subComment" style="margin-left:18%;margin-top: 5px;">立 即 评 论</div>
+        </div>
+    </div>
+</div>
+<!--end评论窗口-->
+
+</section>
+</body>
+
+
+<script  type="text/javascript">
+    $(function(){
+        $(".commentLabe").click(function(){
+            $(".commentLabe").removeClass("commentLabeActiv");
+            $(this).addClass("commentLabeActiv");
+            $(".commentText").val($(this).html());
+        })
+    })
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            comment:{
+                xNum:3,
+                commentText:''
+            },
+            wMin:10,
+            bigInfo:{
+                vipGrade:1,
+                vipGradeName:'青铜VIP卡'
+            },
+            errMsg:'',
+        }
+      },
+      created() {
+          this.scvTime();
+      },
+      methods:{
+          //提交评论
+          subComment(){
+            this.comment.commentText = this.$refs.commentText.value;
+            if(!this.comment.commentText){
+                this.errMsg = "您还没有输入评论哟！";
+                return;
+            }
+            let sel = this;
+            if(this.comment.xNum<5){
+                $("#commentWindow").hide();
+                jqalert({
+                    title:'提示',
+                    prompt:'太难拉，考虑一下给个5星好不好',
+                    yestext:'考虑一下',
+                    notext:'就是不给',
+                    yesfn:function () {
+                        $("#jq-alert").remove();
+                        $("#commentWindow").show();
+                    },
+                    nofn:function () {
+                        sel.confirmSubComment();
+                    }
+                }) 
+            }else{
+                sel.confirmSubComment();
+            }
+          },
+          //确认提交评论
+          confirmSubComment(){
+                jqtoast('评论成功');
+                $("#commentWindow").hide();
+                $("#willesPlay").removeClass("mtop1000");
+                this.scvTime();
+          },
+          scvTime(){
+            var timer = setInterval(()=>{
+                this.wMin -= 1;
+                if(this.wMin<=1){
+                    clearInterval(timer);
+                }
+            },1000);
+        },
+        //打开评论窗口
+        goComment(){
+            $("#commentWindow").show();
+            $("#willesPlay").addClass("mtop1000");
+            this.comment.commentText='';
+            this.wMin = 10;
+        }
+      }
+    })
+  </script>
+
+</html>

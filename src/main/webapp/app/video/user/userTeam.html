@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/user.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
+     <style>
+         .xgoInfo{
+            font-size: 0.95rem !important;
+            line-height: 35px;
+         }
+         .xgoInfo .xgoAddNum{
+            margin-top: 5px !important;
+         }
+         .xgoInfoUname{
+            position: absolute;
+            margin-left: 55px;
+            font-size: 0.85rem;
+            margin-top: 8px;
+         }
+         .usertwo img{
+            margin-left: 60px !important;
+         }
+         .usertwo .xgoInfoUname{
+            margin-left: 120px !important;
+         }
+     </style>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        我的团队
+    </div>
+    <div class="xgoInfo">
+        <span>好友总人数 : 5</span>
+        <span style="float:right;margin-right:20px;">直属好友人数 : 5</span>
+        <span class="clear"></span>
+    </div>
+    <div class="xgoInfo h50">
+        <img src="../img/toux.png"/>
+        <span class="xgoInfoUname">艾瑞斯</span>
+        <div class="xgoAddNum">+32</div>
+    </div>
+    <div class="xgoInfo h50 usertwo">
+        <img src="../img/toux.png"/>
+        <span class="xgoInfoUname">艾瑞斯</span>
+        <div class="xgoAddNum">+32</div>
+    </div>
+    <div class="xgoInfo h50 usertwo">
+        <img src="../img/toux.png"/>
+        <span class="xgoInfoUname">艾瑞斯</span>
+        <div class="xgoAddNum">+32</div>
+    </div>
+    <div class="xgoInfo h50">
+        <img src="../img/toux.png"/>
+        <span class="xgoInfoUname">艾瑞斯</span>
+        <div class="xgoAddNum">+32</div>
+    </div>
+
+<br/><br/><br/><br/><br/>
+</section>
+
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a href="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="../activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            
+        }
+      },
+      created() {
+      },
+      methods:{
+        
+      }
+    })
+  </script>
+
+</html>

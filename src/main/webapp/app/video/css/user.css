@@ -1,0 +1,72 @@
+.equityLable{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    float: left;
+    background-color: #fff;
+    box-shadow: 2px 4px 6px #d5d1d1;
+    margin-right: 15px;
+    color: #777;
+    font-size: 0.85rem;
+    text-align: center;
+    line-height: 80px;
+}
+.equityTtable{
+    width: 100%;
+    border: 1px solid #DFDFDF;
+    font-size: 0.85rem;
+    color: #777777;
+    background: #fff;
+    border-collapse: collapse;
+}
+.equityTtable tr{
+    border-bottom: 1px solid #DFDFDF;
+}
+.equityTtable td{
+    width: 33.3%;
+    text-align: center;
+    height: 40px;
+}
+.equityTtable th{
+    width: 33.3%;
+    text-align: center;
+    height: 45px;
+    font-weight: 500;
+    background-color: #DFDFDF;
+}
+.equityContentInfo{
+    width: 97%;
+    font-size: 0.85rem;
+    color: #777;
+    line-height: 19px;
+    margin-left: 3%;
+}
+.xgoInfo{
+    width: 96%;
+    margin-left: 2%;
+    height: 50px;
+    border-bottom: 1px solid #ebebeb;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #555;
+    font-size: 0.85rem;
+    padding: 8px 0 0 10px;
+}
+.xgoInfo .xgoAddNum{
+    position: absolute;
+    right: 20px;
+    margin-top: -23px;
+    font-weight: 600;
+    color: #D05D09;  
+}
+.h50{
+    height: 66px !important;
+}
+.xgoInfo img{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+}
