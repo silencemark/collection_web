@@ -1,8 +1,6 @@
 package com.collection.controller.userbackstage;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.FileUtils;
@@ -31,7 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.collection.service.managebackstage.CustomerFileService;
 import com.collection.util.ImageUtil;
 import com.collection.util.UserUtil;
 
@@ -39,7 +36,6 @@ import com.collection.util.UserUtil;
 @RequestMapping("/upload")
 public class UploadController {
 
-	@Resource CustomerFileService customerFileService;
 	
 	private static final Logger LOGGER = Logger.getLogger(UploadController.class);
 	/**
@@ -90,7 +86,8 @@ public class UploadController {
 			    	file.createNewFile();
 			    }
 			    String path = request.getSession().getServletContext().getRealPath("upload/images")+"/"+newImg+".jpg"; 
-			    renameFile(file.toString(), path);
+			    Thumbnails.of(file).size(400,200).toFile(path);
+			    //renameFile(file.toString(), path);
 			    map.put("imgurl", path);
 			    map.put("imgkey", "/upload/images/"+newImg+".jpg");
 			}
@@ -153,7 +150,7 @@ public class UploadController {
 			    	param.put("size", fis.length());
 			    	param.put("type", request.getParameter("type"));
 			    	param.put("url", fileurl);
-					this.customerFileService.insertCustomerFileInfo(param);
+					//this.customerFileService.insertCustomerFileInfo(param);
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -263,7 +260,7 @@ public class UploadController {
 		    	param.put("size", size);
 		    	param.put("type", request.getParameter("type"));
 		    	param.put("url", originalFilename);
-				this.customerFileService.insertCustomerFileInfo(param);
+				//this.customerFileService.insertCustomerFileInfo(param);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -275,7 +272,7 @@ public class UploadController {
 	
 	
 	/**
-	 * 餐饮大师上传文件方法
+	 * 享GO影视上传文件方法
 	 * @param request
 	 * @param response
 	 * @return
@@ -465,7 +462,7 @@ public class UploadController {
 		    	param.put("size", fis.length());
 		    	param.put("type", request.getParameter("type"));
 		    	param.put("url", originalFilename);
-				this.customerFileService.insertCustomerFileInfo(param);
+				//this.customerFileService.insertCustomerFileInfo(param);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -477,7 +474,7 @@ public class UploadController {
 	
 	
 	/**
-	 * 餐饮大师上传文件方法
+	 * 享GO影视上传文件方法
 	 * @param request
 	 * @param response
 	 * @return

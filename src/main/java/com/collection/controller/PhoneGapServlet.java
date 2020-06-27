@@ -1,8 +1,6 @@
 package com.collection.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,25 +25,22 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.collection.service.managebackstage.CustomerFileService;
-import com.collection.util.ImageUtil;
-import com.collection.util.StringUtil;
+import com.collection.service.IAppVipCardService;
 
 public class PhoneGapServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private CustomerFileService customerFileService;
+	private IAppVipCardService appVipCardService;
 	private static Logger logger = Logger.getLogger(PhoneGapServlet.class);
 	@Override
 	public void init() throws ServletException { 
 		super.init(); 
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:local/springMvc.xml"); 
-		customerFileService = (CustomerFileService)context.getBean("customerFileService");
-		System.out.println(customerFileService);
+		appVipCardService = (IAppVipCardService)context.getBean("appVipCardService");
+		System.out.println(appVipCardService);
 	}
  
 	protected void doGet(HttpServletRequest request,
@@ -166,9 +160,9 @@ public class PhoneGapServlet extends HttpServlet {
 						}
 						paramMap.put("type", type);
 						paramMap.put("url", "/customerfile"+fileDirectory+fileName);
-						logger.info("customerFileService.insertCustomerFileInfo begin！");
-						this.customerFileService.insertCustomerFileInfo(paramMap);
-						logger.info("customerFileService.insertCustomerFileInfo end！");
+						logger.info("appVipCardService.insertCustomerFileInfo begin！");
+						//this.appVipCardService.insertCustomerFileInfo(paramMap);
+						logger.info("appVipCardService.insertCustomerFileInfo end！");
 					} catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
