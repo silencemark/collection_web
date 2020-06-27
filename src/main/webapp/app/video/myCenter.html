@@ -8,15 +8,11 @@
      <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
      <script src="js/jquery-3.4.1.js"></script>
      <script src="js/vue.js"></script>
+     <script src="js/jq-alert.js"></script>
  </head>
  <body>
 
 <section class="main"  id="app">
-   <!--  <div class="title">
-        <img src="img/to-left.png"/>
-        个人中心
-    </div> -->
-
     <!--userInfo-->
     <div class="userInfo">
         <img src="img/toux.png"/>
@@ -84,7 +80,7 @@
       <span>服务中心</span>
       <img src="img/to-right.png" style="right:5%;"/>
     </div>
-    <div class="operationEl" style="border: 0;" @click="loginOut">
+    <div class="operationEl" style="border: 0;" onclick="loginOut();">
       <img src="img/set-ic.png"/>
       <span>退出登录</span></a>
       <img src="img/to-right.png" style="right:5%;"/>
@@ -120,12 +116,12 @@
     function Percentage(current, total) {
         return current / total * 100
     }
-
 ;
     new Vue({
       el: '#app',
       data: function() {
         return {
+          myCenterData:{},
           vipGrade : 0,    //会员等级
           vipGradeName : { //会员等级昵称
                 0:'普通用户',
@@ -137,11 +133,15 @@
         }
       },
       created() {
-          
+          this.getMyCenterData();
       },
       methods:{
-        loginOut(){
-          window.location.href="login.html";
+        getMyCenterData(){
+          var reqData = {userid:getCptToken()}
+          console.log(reqData);
+          jAjax("/appUserCenter/myCenter",reqData,function(data){
+              console.log(data);
+          });
         }
       }
     })

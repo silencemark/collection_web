@@ -149,7 +149,6 @@ function queryVideo(obj,type){
         $(obj).addClass("active");
     }
     //获取首页电影
-    console.log({type:type});
     jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
       vm.homePageMovie = data;  
     });

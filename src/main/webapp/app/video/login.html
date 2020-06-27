@@ -50,12 +50,18 @@
             passwordErrMsg:'',
         }
       },
-      created() {},
+      created() {
+	    if(getCptToken()){
+            window.location.href='index.html';
+            return;
+        }
+      },
       methods:{
           //提交登录
           login(){
             if(this.chkRegForm()){
                 jAjax("/appLogin/userlogin",this.user,function(data){
+                    setCptToken(data.userInfo.userid);
                     if(data.status==0){
                         window.location.href='index.html';
                     }else{

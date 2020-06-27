@@ -2,7 +2,6 @@
 /*alert弹出层*/
 function jqalert(param) {
     if(document.getElementById("jq-alert")){
-        console.log("jqalert hava a one")
         return;
     }
     var title = param.title,
