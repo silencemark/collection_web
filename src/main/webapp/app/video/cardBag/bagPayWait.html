@@ -8,8 +8,10 @@
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
  </head>
  <body>
+    <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div>
 
 <section class="main"  id="app">
     <div class="title">
@@ -25,54 +27,54 @@
     <b class="clear"></b>
 </div>
 
-
-<div style="margin-bottom:15px;">
-    <div  class="vipInfo-active vipInfo  v6-c" 
-    style="background-image:url('../img/V6_BG.png')">
-      <span style="margin-bottom:5px;">星耀VIP卡</span>
-      即日起购买星耀VIP卡 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
-        <div class="v-numver" style="width: 90%;margin-top:45px;">
-            <div>已抢购时间：1分钟3秒</div>
-            <div>VIP卡期限：30天</div>
-            <div>预计价格：235 - 1300</div>
-            <div>交易状态： <a style="font-weight:600;color:#BA4A33;">抢购中</a></div>
-            <span class="clear">
-      </div>
-      <img src="../img/V6_IC.png" class="v-img" style="width:120px;height:120px;"/>
+<!--抢购中-->
+<div v-for="(item,i) in rushToBuyList" class="defaultNone">
+    <div style="margin-bottom:15px;">
+        <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`"
+        :style="`background-image:url('../img/V${item.forder}_BG.png')`">
+        <span style="margin-bottom:5px;">{{item.typename}}</span>
+        即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
+            <div class="v-numver" style="width: 90%;margin-top:45px;">
+                <div>已抢购时间：{{fmtTimeSecond(item.secondbuy,item)}}</div>
+                <div>VIP卡期限：{{item.watchdays}}天</div>
+                <div>预计价格：{{item.minprice}} - {{item.maxprice}}</div>
+                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">抢购中</a></div>
+                <span class="clear">
+        </div>
+        <img v-if="item.forder" :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+        </div>
+        <div class="clear"></div>
+        <input type="button" value="正在抢购中..." :class="`active-but  v${item.forder}-bg`"/>
     </div>
-    <div class="clear"></div>
-    <input type="button" value="正在抢购中..." class="active-but  v6-bg"/>
+    <div class="payWaitLoad"><img src="../img/timg.gif"/></div>
 </div>
-<div class="payWaitLoad"><img src="../img/timg.gif"/></div>
-
-<!--vipInfo-->
-<div v-for="(item,i) in activList" style="margin-bottom:15px;">
-    <div  :class="`vipInfo-active vipInfo  v${item.vipGrade}-c`" 
-    :style="`background-image:url('../img/V${item.vipGrade}_BG.png')`">
-      <span style="margin-bottom:5px;">{{item.vipGradeName}}</span>
-      即日起购买白银VIP卡 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+<!--待支付-->
+<div v-for="(item,i) in waitPayCardList" style="margin-bottom:15px;" class="defaultNone">
+    <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
+    :style="`background-image:url('../img/V${item.forder}_BG.png')`">
+      <span style="margin-bottom:5px;">{{item.typename}}</span>
+      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.remaincount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
-            <div>交易单号：XGO23534524</div>
-            <div>VIP卡期限：30天</div>
-            <div>购买价格：235</div>
+            <div>交易单号：{{item.ordernum}}</div>
+            <div>VIP卡期限：{{item.watchdays}}天</div>
+            <div>购买价格：{{item.cardprice}}</div>
             <div>交易状态：
-                <a style="font-weight:600;color:#BA4A33;" v-if="i==0">待支付</a>
-                <a style="font-weight:600;color:#BA4A33;" v-if="i>0">待审核</a>
+                <a style="font-weight:600;color:#BA4A33;" v-if="item.status==1">待支付</a>
+                <a style="font-weight:600;color:#BA4A33;" v-if="item.status==2">待审核</a>
             </div>
             <span class="clear">
       </div>
-      <img :src="`../img/V${item.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+      <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" v-if="i==0" value="立即支付(倒计时：59分25秒)" :class="`active-but  v${item.vipGrade}-bg`"
-    onclick="window.location.href='bagPay.html'"/>
-    <input type="button" v-if="i>0"  value="自动审核时间(倒计时：46分47秒)" :class="`active-but  v${item.vipGrade}-bg`"/>
+
+    <input type="button" v-if="item.status==1" :value="`立即支付(倒计时：${fmtTimeSecond(item.remaintime,item,true)})`" 
+        :class="`active-but  v${item.forder}-bg`" :onclick="`window.location.href='bagPay.html?orderid=${item.orderid}'`"/>
+
+    <!-- <input type="button" v-if="i>0"  value="自动审核时间(倒计时：46分47秒)" :class="`active-but  v${item.forder}-bg`"/> -->
 </div>
-
+<div v-if="rushToBuyList.length==0 && waitPayCardList.length==0" class="notList">没有抢购中的记录</div>
 </section>
-
-
-
 
 
  <!--footer-->
@@ -97,36 +99,56 @@
 </body>
 
 <script>
-
-    new Vue({
-      el: '#app',
-      data: function() {
-        return {
-            activList:[
-                {
-                    vipGrade : 1,
-                    vipGradeName : '青铜VIP卡'  
-                },{
-                    vipGrade : 2,
-                    vipGradeName : '白银VIP卡'  
-                },{
-                    vipGrade : 3,
-                    vipGradeName : '黄金VIP卡'  
-                },{
-                    vipGrade : 4,
-                    vipGradeName : '铂金VIP卡'  
-                },{
-                    vipGrade : 5,
-                    vipGradeName : '砖石VIP卡'  
-                }
-            ] 
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        rushToBuyList : [],
+        waitPayCardList : [],
+        timer : undefined
+    }
+    },
+    created() {
+        this.getWaitPayCard();
+    },
+    methods:{
+        //查询抢购中 以及 待支付列表
+        getWaitPayCard(){
+            var vueThis = this;
+            jAjax("/appVipCard/getRushToBuyList",{userid:getCptToken()},function(data){
+                vueThis.rushToBuyList = data.resultlist;  
+            });
+            jAjax("/appVipCard/getWaitPayCard",{userid:getCptToken()},function(data){
+                vueThis.waitPayCardList = data.resultlist;
+            });
+        },
+        //格式化 秒 时间显示
+        fmtTimeSecond(second,item,isCount){
+            if(isCount){
+                this.setInterFun(item)
+            }
+            if(second<60){
+                return second+'秒';
+            }else{
+                return parseInt(second/60)+'分'+(second%60)+'秒';
+            }
+        },
+        //定时函数
+        setInterFun(item){
+            var vueThis = this;
+            if(!vueThis.timer){
+                vueThis.timer = setInterval(()=>{
+                    item.remaintime -= 1;
+                    if(item.remaintime<=0){
+                        item.isbuy = 1;
+                        clearInterval(vueThis.timer);
+                    }
+                },1000);
+            }
         }
-      },
-      created() {
-      },
-      methods:{
-      }
-    })
-  </script>
+
+  }
+})
+</script>
 
 </html>

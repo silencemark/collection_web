@@ -8,40 +8,42 @@
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
+     <script src="../js/exif.js"></script>
  </head>
  <body>
-
+    <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div>
 <section class="main"  id="app">
     <div class="title">
         <img src="../img/to-left.png" onclick="history.back(-1)"/>
         购买VIP
     </div>
-
+<div class="defaultNone">
 <!--vipInfo-->
 <div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
-    <div  :class="`vipInfo-active vipInfo  v${bigInfo.vipGrade}-c`" 
-    :style="`background-image:url('../img/V${bigInfo.vipGrade}_BG.png')`">
-      <span style="margin-bottom:5px;">{{bigInfo.vipGradeName}}专享视频</span>
-      即日起购买{{bigInfo.vipGradeName}} 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
-      <img :src="`../img/V${bigInfo.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    <div  :class="`vipInfo-active vipInfo  v${orderInfo.forder}-c`" 
+    :style="`background-image:url('../img/V${orderInfo.forder}_BG.png')`">
+      <span style="margin-bottom:5px;">{{orderInfo.typename}}专享视频</span>
+      即日起购买{{orderInfo.typename}} {{orderInfo.commentstartdays}} 天后且您再观影好评{{orderInfo.commentcount}} 次可转让您的VIP卡！领取{{orderInfo.yield}}%观影收益。
+      <img :src="`../img/V${orderInfo.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
 </div>
 
 <div class="payVipInfoCont">
-    <div style="font-weight: 600;">{{bigInfo.vipGradeName}}专享影视</div>
-    <div>交易单号 ：AG23049583942</div>
-    <div>购买日期 ：2020-03-24 23:12:34</div>
-    <div>VIP有效期至 ：2020-03-24 23:12:34</div>
+    <div style="font-weight: 600;">{{orderInfo.forderName}}专享影视</div>
+    <div>交易单号 ：{{orderInfo.ordernum}}</div>
+    <div>购买日期 ：{{orderInfo.buytime}}</div>
+    <div>VIP有效期至 ：{{orderInfo.duetime}}</div>
     <div>交易状态 ：<span style="color:#F36257;font-weight:600;">待支付</span></div>
-    <div>购买价格 ：<span style="color:#F36257;font-weight:600;">1542</span></div>
+    <div>购买价格 ：<span style="color:#F36257;font-weight:600;">{{orderInfo.cardprice}}</span></div>
 </div>
 
 <div style="font-weight:600;font-size: 0.9rem;color:#555;margin-left:4%;margin-top:10px;">请选择支付方式</div>
 <div class="operationEl payOption">
     <img src="../img/XGO-ic.png"/>
     <span>XGO币</span>
-    <span class="money"><span style="color:#555;font-weight:500;font-size:0.9em;">余额：</span>20</span>
+    <span class="money"><span style="color:#555;font-weight:500;font-size:0.9em;">余额：</span>{{orderInfo.xgocoin}}</span>
 </div>
 <div class="operationEl payOption" @click="selectPayType(1)">
     <img src="../img/wx-ic.png"/>
@@ -75,13 +77,21 @@
 </div>
 <div class="payVoucher" v-if="payType!=0">
     <div style="font-weight:600;margin-top:10px;">请上传支付凭证</div> 
-    <img src="../img/default-zfpz.png"/>    
-</div>
-<br/>
-<div class="but-cont"v-if="payType!=0">
-    <div class="btn btn-200" onclick="window.location.href='bagPayWait.html'">我 已 支 付</div>
+
+    <input onchange="fileChangeFun2(this,'pzImg','pzBase64');" class="imgFileInput" type="file" accept="image/*" multiple="">
+    <img src="../img/default-zfpz.png" id="pzImg"/> 
+    <input id="pzBase64" ref="pzBase64" type="hidden" />
+
 </div>
 
+
+
+
+<br/>
+<div class="but-cont"v-if="payType!=0">
+    <div class="btn btn-200" @click="commitPay">我 已 支 付</div>
+</div>
+</div>
 <br/><br/><br/><br/><br/>
 </section>
 
@@ -105,27 +115,111 @@
 </body>
 
 <script>
-
-    new Vue({
-      el: '#app',
-      data: function() {
+new Vue({
+    el: '#app',
+    data: function() {
         return {
             payType:0,
-            bigInfo:{
-                vipGrade:1,
-                vipGradeName:'青铜VIP卡'
-            }
+            orderInfo:{}
         }
-      },
-      created() {
-      },
-      methods:{
-          //选择支付方式
-          selectPayType(payType){
-              this.payType = payType;
-          }
-      }
-    })
-  </script>
+    },
+    created() {
+        this.getPayVipCardInfo(this.GetQueryString('orderid'));
+    },
+    methods:{
+        //查询抢购中 以及 待支付列表
+        getPayVipCardInfo(orderid){
+            var vueThis = this;
+            jAjax("/appVipCard/getPayVipCardInfo",{orderid:orderid},function(data){
+                vueThis.orderInfo = data;  
+            });
+        },
+        //选择支付方式
+        selectPayType(payType){
+            this.payType = payType;
+        },
+        //提交支付
+        commitPay(){
+            var pzBase64 = this.$refs.pzBase64.value;
+            if(!pzBase64){
+                jqtoast('请上传支付凭证！');
+                return;
+            }
+        },
+        //获取URL参数
+        GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+  }
+})
+
+
+
+		/**
+		 * input:file的change事件函数
+		 * @param item    第一个参数固定this
+		 * @param imgId   图片上传完后给页面img的src赋值
+		 * @param dataId  图片上传完后给页面的隐藏域赋值，把Base64传给后台
+		 */
+         function fileChangeFun2(item,imgId,dataId){
+			var reader = new FileReader();
+			var AllowImgFileSize = 2100000;
+			var $file = $(item);
+			var fileObj = $file[0];
+			var file = fileObj.files[0];
+			var windowURL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+			var dataURL;
+			var $img = $("#"+imgId);
+			EXIF.getData(file, function() {
+		        EXIF.getAllTags(this);
+		        var Orientation = EXIF.getTag(this, 'Orientation');//获取拍照手势
+		        if(fileObj && fileObj.files && fileObj.files[0]){
+		    		reader.readAsDataURL(fileObj.files[0]);
+		    		reader.onload = function(e){
+		    			var imgBase64Pic = reader.result;
+		    			var img = new Image();
+		    		    if(windowURL){
+		    		      img.src = imgBase64Pic;
+		    		      img.onload = function(e){
+		    		        window.URL.revokeObjectURL(this.src);//方便引用无效回收
+		    		        var expectWidth = this.naturalWidth;
+		                    var expectHeight = this.naturalHeight;
+		                    if (this.naturalWidth > this.naturalHeight && this.naturalWidth > 1024) {
+		                        expectWidth = 1024;
+		                        expectHeight = expectWidth * this.naturalHeight / this.naturalWidth;
+		                    } else if (this.naturalHeight > this.naturalWidth && this.naturalHeight > 768) {
+		                        expectHeight = 768;
+		                        expectWidth = expectHeight * this.naturalWidth / this.naturalHeight;
+		                    }
+		                    var cacheCanvas = document.createElement("canvas");//缓存区的cavans
+		                    cacheCanvas.width = expectWidth;
+		                    cacheCanvas.height = expectHeight;
+                            var ctx = cacheCanvas.getContext("2d");
+                            ctx.drawImage(this, 0, 0, expectWidth, expectHeight);
+                            var newBase64 = cacheCanvas.toDataURL("image/jpeg", 0.8);
+		                    if(AllowImgFileSize != 0 && AllowImgFileSize < newBase64.length){
+		        				alert("上传失败，请上传不大于2M的图片");
+		        				return;
+		        			}else{
+                                $img.attr('src',newBase64);
+                                console.log(newBase64);
+		                        $("#"+dataId).val(newBase64.replace(/^data:image\/(png|jpeg);base64,/,"")); //把声明信息替换掉变成加密的字符串传给后台 这个供识别用的
+		        				$file.val("");//最后清空input File的val
+		        			}
+		    		      }
+		    		    }
+		    		};
+		    	}else{
+		    		dataURL = $file.val();
+		    		var imgObj = document.getElementById(imgId);
+		    		imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+		    		imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+		    	}
+		    });
+        };
+        
+</script>
 
 </html>

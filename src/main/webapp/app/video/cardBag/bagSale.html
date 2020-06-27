@@ -8,8 +8,10 @@
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
  </head>
  <body>
+ <div class="loading" id="loadingWindow"><img src="../img/timg.gif"/></div> 
 
 <section class="main"  id="app">
     <div class="title">
@@ -26,11 +28,11 @@
 </div>
 
 <!--vipInfo-->
-<div v-for="(item,i) in activList" style="margin-bottom:15px;">
-    <div  :class="`vipInfo-active vipInfo  v${item.vipGrade}-c`" 
-    :style="`background-image:url('../img/V${item.vipGrade}_BG.png')`">
-      <span style="margin-bottom:5px;">{{item.vipGradeName}}</span>
-      即日起购买白银VIP卡 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+<div v-for="(item,i) in saleCardList" style="margin-bottom:15px;" class="defaultNone">
+    <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
+    :style="`background-image:url('../img/V${item.forder}_BG.png')`">
+      <span style="margin-bottom:5px;">{{item.forderName}}</span>
+      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
             <div v-if="i==0" style="width: 100%;">
                 <div style="width: 100%;">预计出售时间：2020-09-03 20:20:03</div>
@@ -51,13 +53,13 @@
             </div>
             <span class="clear">
       </div>
-      <img :src="`../img/V${item.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+      <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" v-if="i==1" value="联 系 卖 家" :class="`active-but  v${item.vipGrade}-bg`"/>
-    <input type="button" v-if="i>1" onClick="window.location.href='bagCheck.html'" value="立 即 审 核" :class="`active-but  v${item.vipGrade}-bg`"/>
+    <input type="button" v-if="i==1" value="联 系 卖 家" :class="`active-but  v${item.forder}-bg`"/>
+    <input type="button" v-if="i>1" onClick="window.location.href='bagCheck.html'" value="立 即 审 核" :class="`active-but  v${item.forder}-bg`"/>
 </div>
-
+<div v-if="saleCardList.length==0" class="notList">没有出售中的记录</div>
 </section>
 
 
@@ -86,39 +88,27 @@
 </body>
 
 <script>
-
-    new Vue({
-      el: '#app',
-      data: function() {
+new Vue({
+    el: '#app',
+    data: function() {
         return {
-            activList:[
-                {
-                    vipGrade : 1,
-                    vipGradeName : '青铜VIP卡'  
-                },{
-                    vipGrade : 2,
-                    vipGradeName : '白银VIP卡'  
-                },{
-                    vipGrade : 3,
-                    vipGradeName : '黄金VIP卡'  
-                },{
-                    vipGrade : 4,
-                    vipGradeName : '铂金VIP卡'  
-                },{
-                    vipGrade : 5,
-                    vipGradeName : '砖石VIP卡'  
-                },{
-                    vipGrade : 6,
-                    vipGradeName : '星耀VIP卡'  
-                }
-            ] 
+            saleCardList : [],
         }
-      },
-      created() {
-      },
-      methods:{
-      }
-    })
+    },
+    created() {
+        this.getSaleCardList();
+    },
+    methods:{
+    //查询出售列表
+    getSaleCardList(){
+        var vueThis = this;
+        jAjax("/appVipCard/getSaleCardList",{userid:getCptToken()},function(data){
+            vueThis.saleCardList = data.resultlist;  
+        });
+    }
+
+  }
+})
   </script>
 
 </html>

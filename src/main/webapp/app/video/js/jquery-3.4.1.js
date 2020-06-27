@@ -10850,6 +10850,9 @@ function binl2b64(binarray)
 
 
 var reqPath = "http://117.18.12.193";
+var LOCURL = unescape(window.location.href).replace( "file:///","");
+LOCURL = LOCURL.substring(0,LOCURL.lastIndexOf("/")+1).replace("\\","/");
+LOCURL = LOCURL.split("\/video")[0]+"/video/"
 /**
  * ajax 方法调用
  * @param {*} url 请求地址
@@ -10858,7 +10861,7 @@ var reqPath = "http://117.18.12.193";
  * @param {*} errCbk  失败回调方法
  */
 function jAjax(url,resData,sucCbk,errCbk){
-	$("body").append('<div class="loading" id="loadingWindow"><img src="img/timg.gif"/></div> ');
+	$("body").append('<div class="loading" id="loadingWindow"><img src="'+LOCURL+'img/timg.gif" /></div> ');
 	var isWhite = chkUrlISWhite(url);
 	console.log(url+" in White :"+isWhite);
 	if(!isWhite){
@@ -10868,7 +10871,7 @@ function jAjax(url,resData,sucCbk,errCbk){
 				prompt:'您还没有登录，请您去登录！',
 				yestext:'立即登录',
 				yesfn:function () {
-					window.location.href="login.html";
+					window.location.href= LOCURL+"login.html";
 				}
 			});
 			return;
@@ -10886,10 +10889,13 @@ function jAjax(url,resData,sucCbk,errCbk){
 		data : resData,
 		async:false, 
 		success : function(data) {
+			console.log(data);
 			$("body").find("div[id='loadingWindow']").remove();
+			$(".defaultNone").removeClass("defaultNone");
 			if(sucCbk) sucCbk(data);
 		},error : function(e){
 			$("body").find("div[id='loadingWindow']").remove();
+			$(".defaultNone").removeClass("defaultNone");
 			if(errCbk) errCbk(e);
 			jqtoast('系统繁忙，请稍后重试');
 		}
@@ -10901,6 +10907,7 @@ function chkUrlISWhite(url){
 	var whiteList = [
 		"/appLogin/getVerificationCode",//发送验证码
 		"/appLogin/register",//注册
+		"/appLogin/userlogin",//登录
 		"/appLogin/findPassWord",//找回密码
 		"/appIndex/getBanner",//获取banner图
 		"/appIndex/getAdvertisement",//获取活动图

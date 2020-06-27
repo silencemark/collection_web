@@ -57,23 +57,38 @@
 
 
 <!--vipInfo-->
-<div v-for="(item,i) in vipCardList" style="margin-bottom:15px;">
-    <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
-    :style="`background-image:url('img/V${item.forder}_BG.png')`">
-      <span style="margin-bottom:5px;">{{item.typename}}</span>
-      即日起购买白银VIP卡 {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
-        <div class="v-numver" style="width: 90%;margin-top:45px;">
-            <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
-            <div>VIP卡期限：{{item.watchdays}}</div>
-            <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
-            <div>消耗XGO币：{{item.xgocoin}}</div>
-            <span class="clear">
-      </div>
-      <img :src="`img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+<div v-for="(item,i) in vipCardList" class="defaultNone">
+    <div style="margin-bottom:15px;">
+        <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
+        :style="`background-image:url('img/V${item.forder}_BG.png')`">
+        <span style="margin-bottom:5px;">{{item.typename}}</span>
+        即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
+            <div class="v-numver" style="width: 90%;margin-top:45px;">
+                <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
+                <div>VIP卡期限：{{item.watchdays}}</div>
+                <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
+                <div>消耗XGO币：{{item.xgocoin}}</div>
+                <span class="clear">
+        </div>
+        <img :src="`img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+        </div>
+        <div class="clear"></div>
+        <div v-if="item.secondbuy && item.secondbuy<120 && item.secondbuy>0">
+            <input type="button" :value="fmtTimeSecond(item.secondbuy,item)" :class="`active-but  v${item.forder}-bg`"/>
+        </div>
+        <div v-else>
+            <input type="button" v-if="item.isbuy==1 && !item.havabuy" @click="rushToBuyCard(item.forder,i)" value="立 即 抢 购" :class="`active-but  v${item.forder}-bg`" />
+            <input type="button" v-if="item.isbuy==0 && !item.havabuy" value="暂 未 开 启" :class="`active-but  v${item.forder}-bg`"/>
+    
+            <input type="button" v-if="item.havabuy==1" value="抢 购 中" :class="`active-but  v${item.forder}-bg`"/>
+    
+            <input type="button" v-if="item.havabuy==2" value="抢购成功/前往支付" :class="`active-but  v${item.forder}-bg`" 
+                onclick="window.location.href='cardBag/bagPayWait.html'"/>
+        </div>
+
+       
     </div>
-    <div class="clear"></div>
-    <input type="button" value="立 即 抢 购" :class="`active-but  v${item.forder}-bg`" 
-        onclick="window.location.href='cardBag/bagPayWait.html'"/>
+    <div class="payWaitLoad" v-if="item.havabuy==1"><img src="img/timg.gif"/></div>
 </div>
 </section>
 
@@ -100,21 +115,59 @@
 </body>
 
 <script>
-$(function(){
-    vm = new Vue({
-        el:'#app',
-        data:{
-           vipCardList : [],
-       }
-    });
-
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        vipCardList : [],
+        timer:undefined,//定时函数
+    }
+    },
+    created() {
+        this.getVipCardList();
+    },
+    methods:{
     //获取活动
-    jAjax("/appVipCard/getVipCardList",{},function(data){
-        console.log(data);
-        vm.vipCardList = data;  
-    });
-});
+    getVipCardList(){
+        var vueThis = this;
+        jAjax("/appVipCard/getVipCardList",{userid:getCptToken()},function(data){
+            vueThis.vipCardList = data.resultlist;  
+            //vueThis.vipCardList[0].secondbuy = 100;//测试数据倒计时
+        });
+    },
+    //立即抢购
+    rushToBuyCard(cardid,cardIndex){
+        var vueThis = this;
+        var reqData = {userid:getCptToken(),cardid:cardid};
+        jAjax("/appVipCard/rushToBuyCard",reqData,function(data){
+            window.location.href='cardBag/bagPayWait.html';
+        });
+    },
+    //格式化 秒 时间显示
+    fmtTimeSecond(second,item){
+        this.setInterFun(item)
+        if(second<60){
+            return '倒计时'+second+'秒';
+        }else{
+            return '倒计时'+parseInt(second/60)+'分'+(second%60)+'秒';
+        }
+    },
+    //定时函数
+    setInterFun(item){
+        var vueThis = this;
+        if(!vueThis.timer){
+            vueThis.timer = setInterval(()=>{
+                item.secondbuy -= 1;
+                if(item.secondbuy<=0){
+                    item.isbuy = 1;
+                    clearInterval(vueThis.timer);
+                }
+            },1000);
+        }
+    }
 
-  </script>
+  }
+})
+</script>
 
 </html>

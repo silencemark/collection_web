@@ -24,8 +24,11 @@
       text-decoration: underline;
       color: #000;
   }
-  input{
+  input,button{
     outline:none;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
   }
   .clear{
       clear: both;
@@ -381,3 +384,15 @@ header .searchCont input::-webkit-input-placeholder{
 .loading{width: 100%;height: 100%;background: #000;opacity: .5;position: fixed;top:0;left:0;bottom:0;right:0;z-index: 99;display:block;}
 .loading img{display: block;width: 150px;height: 150px;position: fixed;top:50%;left: 50%;margin-left: -75px;margin-top: -75px;}
 /*end jq-alert弹出层封装样式*/
+.defaultNone{
+    display: none !important;
+}
+.imgFileInput{
+    width: 100%;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    margin-top: 10px;
+}

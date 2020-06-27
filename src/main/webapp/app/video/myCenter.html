@@ -11,34 +11,38 @@
      <script src="js/jq-alert.js"></script>
  </head>
  <body>
+  <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
 
-<section class="main"  id="app">
+<section class="main defaultNone"  id="app">
     <!--userInfo-->
     <div class="userInfo">
-        <img src="img/toux.png"/>
+        <img :src="myCenterData.headimage" v-if="myCenterData.headimage"/>
+        <img src="img/toux.png" v-if="!myCenterData.headimage"/>
         <div class="userName">
-            <span style="margin-top:3px;">蒙娜丽莎</span>
+            <span style="margin-top:3px;">{{myCenterData.nickname}}</span>
             <img src="img/duop.png" style="margin-top:5px;"/>
-            <span class="renz">未认证</span> 
+            <span class="renz" v-if="myCenterData.isrealname==1">已认证</span> 
+            <span class="renz" v-if="myCenterData.isrealname==0">未认证</span> 
         </div>
         <div class="btn qiand" @click="签到">签到</div>
         <div class="clear"></div>
     </div>
 
     <!--vipInfo-->
-    <div :class="`vipInfo v${vipGrade}-c`" :style="`background-image: url('img/V${vipGrade}_BG.png`">
-      <span style="margin-bottom:5px;">{{vipGradeName[vipGrade]}}</span>
-        当前成长值 : 0
+    <div :class="`vipInfo v${myCenterData.levelenum}-c`" :style="`background-image: url('img/V${myCenterData.levelenum}_BG.png`">
+      <span style="margin-bottom:5px;">{{myCenterData.levelname}}</span>
+        当前成长值 : {{myCenterData.growthvalue}}
         <div class="v-numver">
-          距离升级还需要1点成长值
+          距离升级还需要{{myCenterData.needgrowthvalue}}点成长值
           <div class="jdt-father">
-              <div id="Son" :class="`v${vipGrade}-bg`"></div>
+              <div id="son" :class="`v${myCenterData.levelenum}-bg`" 
+              :style="`width:${(myCenterData.growthvalue - myCenterData.mingrowthvalue)*100/(myCenterData.maxgrowthvalue-myCenterData.mingrowthvalue)}%;`"></div>
           </div>
-          <span style="float:left;">V{{vipGrade}}</span>
-          <span style="float:right;">V{{vipGrade+1}}</span>
+          <span style="float:left;">V{{myCenterData.levelenum}}</span>
+          <span style="float:right;">V{{myCenterData.levelenum+1}}</span>
           <span class="clear"></span>
       </div>
-      <img v-if="vipGrade!=0" :src="`img/V${vipGrade}_IC.png`" class="v-img"/>
+      <img v-if="myCenterData.levelenum!=0" :src="`img/V${myCenterData.levelenum}_IC.png`" class="v-img"/>
     </div>
     <div class="clear"></div>
 
@@ -46,7 +50,7 @@
     <div class="operationEl" style="margin-top:10px;">
         <img src="img/integral-ic.png"/>
         <span>XGO币</span>
-        <span class="money">20</span>
+        <span class="money">{{myCenterData.xgocoin?myCenterData.xgocoin:0}}</span>
         <div class="userXGOBut" onclick="window.location.href='user/xgoInfo.html'">明细</div>
         <div class="userXGOBut" style="margin-right:30px;">转赠</div>
     </div>
@@ -110,26 +114,11 @@
 </body>
 
 <script>
-   //进度条计算
-   var Son = document.getElementById("Son");
-    Son.style.width = Percentage(0, 100) + "%";
-    function Percentage(current, total) {
-        return current / total * 100
-    }
-;
     new Vue({
       el: '#app',
       data: function() {
         return {
           myCenterData:{},
-          vipGrade : 0,    //会员等级
-          vipGradeName : { //会员等级昵称
-                0:'普通用户',
-                1:'V1青铜会员',
-                2:'V2白银会员',
-                3:'v3黄金会员'
-              }
-          //页面参数    
         }
       },
       created() {
@@ -138,11 +127,16 @@
       methods:{
         getMyCenterData(){
           var reqData = {userid:getCptToken()}
-          console.log(reqData);
+          var vueThis = this;
           jAjax("/appUserCenter/myCenter",reqData,function(data){
-              console.log(data);
+            data.levelenum = 1;
+            data.growthvalue=2500;
+            data.mingrowthvalue=2000;
+            data.maxgrowthvalue=4000;
+            vueThis.myCenterData = data;
           });
         }
+        
       }
     })
   </script>
