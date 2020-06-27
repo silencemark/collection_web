@@ -62,43 +62,51 @@ $(document).ready(function(){
 //隐藏窗口
 function checkHide(num){
 	if(num == 1) {
-		$('#movieform').submit();
+		$('#memberform').submit();
 	}else {
-		$("#moviediv").hide();	
+		$("#updatediv").hide();	
 		$(".div_mask").css("display","none");
-		$("#movieid").text("");
-		$("#coverimg").text("");
-		$("#coverimgurl").attr("src", "");
-		$("#title").text(title);
+		$("#cardid").text("");
+		$("#typename").text("");
+		$("#cardicon").text("");
+		$("#cardiconurl").attr("src", "");
+		$("#cardimg").text("");
+		$("#cardimgurl").attr("src", "");
+		$("#minprice").text("");
+		$("#maxprice").text("");
+		$("#xgocoin").text("");
+		$("#starttime").text("");
+		$("#endtime").text("");
+		$("#commentstartdays").text("");
+		$("#watchdays").text("");
+		$("#commentcount").text("");
+		$("#yield").text("");
+		$("#introduction").text("");
 		$("#description").val("");
-		$("#httpurl").text("");
-		$("#type").val("");
 		$("#status").val("");
 	}
 }
 
 //显示隐藏窗口
-
-
 function update(cardid,typename,cardicon,cardimg,minprice,maxprice,xgocoin,starttime,endtime,commentstartdays,watchdays,commentcount,yield,introduction,description,status){
 	$("#updatediv").show();	
 	$(".div_mask").css("display","block");
-	$("#cardid").text(cardid);
-	$("#typename").text(typename);
-	$("#cardicon").text(cardicon);
+	$("#cardid").val(cardid);
+	$("#typename").val(typename);
+	$("#cardicon").val(cardicon);
 	$("#cardiconurl").attr("src", cardicon);
-	$("#cardimg").text(cardimg);
+	$("#cardimg").val(cardimg);
 	$("#cardimgurl").attr("src", cardimg);
-	$("#minprice").text(minprice);
-	$("#maxprice").text(maxprice);
-	$("#xgocoin").text(xgocoin);
-	$("#starttime").text(starttime);
-	$("#endtime").text(endtime);
-	$("#commentstartdays").text(commentstartdays);
-	$("#watchdays").text(watchdays);
-	$("#commentcount").text(commentcount);
-	$("#yield").text(yield);
-	$("#introduction").text(introduction);
+	$("#minprice").val(minprice);
+	$("#maxprice").val(maxprice);
+	$("#xgocoin").val(xgocoin);
+	$("#starttime").val(starttime);
+	$("#endtime").val(endtime);
+	$("#commentstartdays").val(commentstartdays);
+	$("#watchdays").val(watchdays);
+	$("#commentcount").val(commentcount);
+	$("#yield").val(yield);
+	$("#introduction").val(introduction);
 	$("#description").val(description);
 	$("#status").val(status);
 }
@@ -186,55 +194,55 @@ function checkImageShowHide(rum,imagesrc){
 
 <div class="tc_changetext"  id="updatediv"  style="display:none;top: 40%;left: 40%; width: 650px;">
 	<div class="tc_title"><span>修改会员卡VIP信息</span><a href="#" onclick="checkHide(0)">×</a></div>
-    <form action="<%=request.getContextPath() %>/managebackstage/updateMemberCard" id="movieform" method="post">
-    <input type="hidden" name="cardid" />
+    <form action="<%=request.getContextPath() %>/managebackstage/updateMemberCard" id="memberform" method="post">
+    <input type="hidden" name="cardid" id="cardid" />
     <div class="box">
     	<span>会员卡名称</span>
         <input type="text" class="text2"  placeholder="请输入会员VIP名称"  name="typename" id="typename"/>
         <div class="clear"></div>
     	<span>会员卡图标</span>
-    	<input type="hidden" name="cardicon" />
+    	<input type="hidden" name="cardicon" id="cardicon" />
         <div class="img3"><img src="" onclick="$('#fileName').click();" width="150px" height="80px" id="cardiconurl"/></div>
         <div class="clear"></div>
         <span>会员卡大图</span>
-    	<input type="hidden" name="cardimg" />
+    	<input type="hidden" name="cardimg" id="cardimg"/>
         <div class="img3"><img src="" onclick="$('#fileName1').click();" width="150px" height="80px" id="cardimgurl"/></div>
         <div class="clear"></div>
         <span>简介</span>
-        <input type="text" class="text2"  placeholder="请输入简介"  name="introduction"/>
+        <input type="text" class="text2"  placeholder="请输入简介"  name="introduction" id="introduction"/>
         <div class="clear"></div>
         <span>详细描述</span>
         <textarea placeholder="请输入详细描述，最多允许输入800字符" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" name="description" id="description"></textarea>
         <div class="clear"></div>
         <span>最小价格</span>
-        <input type="text" class="text2"  placeholder="请输入会员卡最小价格"  name="minprice"/>
+        <input type="text" class="text2"  placeholder="请输入会员卡最小价格"  name="minprice" id="minprice"/>
         <div class="clear"></div>
         <span>最大价格</span>
-        <input type="text" class="text2"  placeholder="请输入会员卡最大价格"  name="maxprice"/>
+        <input type="text" class="text2"  placeholder="请输入会员卡最大价格"  name="maxprice"  id="maxprice"/>
         <div class="clear"></div>
         <span>所需XGO币</span>
-        <input type="text" class="text2"  placeholder="请输入所需XGO币"  name="xgocoin"/>
+        <input type="text" class="text2"  placeholder="请输入所需XGO币"  name="xgocoin"  id="xgocoin" />
         <div class="clear"></div>
         <span>购买开始时分</span>
-        <input type="text" class="text2"  placeholder="请输入购买开始时分"  name="starttime"/>
+        <input type="text" class="text2"  placeholder="请输入购买开始时分"  name="starttime" id="starttime"/>
         <div class="clear"></div>
         <span>购买结束时分</span>
-        <input type="text" class="text2"  placeholder="请输入购买结束时分"  name="endtime"/>
+        <input type="text" class="text2"  placeholder="请输入购买结束时分"  name="endtime" id="endtime"/>
         <div class="clear"></div>
         <span>几天后可出售</span>
-        <input type="text" class="text2"  placeholder="请输入几天才开始出售"  name="commentstartdays"/>
+        <input type="text" class="text2"  placeholder="请输入几天才开始出售"  name="commentstartdays" id="commentstartdays"/>
         <div class="clear"></div>
         <span>观看期限(天)</span>
-        <input type="text" class="text2"  placeholder="请输入观看期限（天）"  name="watchdays"/>
+        <input type="text" class="text2"  placeholder="请输入观看期限（天）"  name="watchdays"  id="watchdays"/>
         <div class="clear"></div>
         <span>所需好评次数</span>
-        <input type="text" class="text2"  placeholder="请输入所需好评次数"  name="commentcount"/>
+        <input type="text" class="text2"  placeholder="请输入所需好评次数"  name="commentcount" id="commentcount"/>
         <div class="clear"></div>
         <span>收益率</span>
-        <input type="text" class="text2"  placeholder="请输入收益率(%)"  name="yield"/>
+        <input type="text" class="text2"  placeholder="请输入收益率(%)"  name="yield" id="yield" />
         <div class="clear"></div>
         <span>是否有效</span>
-        <select class="sel" name="status">
+        <select class="sel" name="status" id="status">
            	<option value="1">有效</option>
            	<option value="0">无效</option>
          </select>
@@ -244,15 +252,6 @@ function checkImageShowHide(rum,imagesrc){
     <div class="tc_btnbox"><a href="#" class="bg_gay2" onclick="checkHide(0)">取消</a><a href="#"  class="bg_yellow" onclick="checkHide(1)">确认</a></div>
 </div>
 
-<div class="tc_changetext"  id="imgdiv"  style="display:none;width: 560px;top:40%;">
-	<div class="tc_title"><span>展示电影封面</span><a href="#" onclick="checkImageShowHide(0,'')">×</a></div>
-    <div class="box">
-    	<span>电影封面</span>
-        <img id="imagesrc" width="400px" height="500px"></i>
-        <div class="clear"></div>
-    </div>
-    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="checkImageShowHide(0,'')">确定</a></div>
-</div>
 
 <input type="file" name="myfiles" style="display: none" id="fileName" T="file_headimg" onchange="ajaxFileUpload('img')"/>
 <input type="file" name="myfiles" style="display: none" id="fileName1" T="file_headimg" onchange="ajaxFileUpload1('img')"/>
@@ -285,7 +284,7 @@ function ajaxFileUpload(id,Fileid,noimg){
 
 function ajaxFileUpload1(id,Fileid,noimg){
 	if(!Fileid){
-		Fileid = "fileName";
+		Fileid = "fileName1";
 	}
 	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/manageheadimg",Fileid,function(data){
 			if(data.imgkey){

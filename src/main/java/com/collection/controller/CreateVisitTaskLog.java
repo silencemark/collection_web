@@ -12,7 +12,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.collection.service.IndexService;
+import com.collection.service.IAppVipCardService;
 import com.collection.util.Constants;
 
 @Service
@@ -21,19 +21,19 @@ public class CreateVisitTaskLog implements Job {
 	@Autowired
 	private static CreateVisitTaskLog createVisitTaskLog;
 	//private OfficeService officeService;
-	private IndexService indexService;
+	private IAppVipCardService appVipCardService;
 	public void init() {
 		createVisitTaskLog = this;
 		//createVisitTaskLog.officeService=this.officeService;
-		createVisitTaskLog.indexService = this.indexService;
+		createVisitTaskLog.appVipCardService = this.appVipCardService;
 	}
 	
-	public IndexService getIndexService() {
-		return createVisitTaskLog.indexService;
+	public IAppVipCardService getappVipCardService() {
+		return createVisitTaskLog.appVipCardService;
 	}
 
-	public void setIndexService(IndexService indexService) {
-		this.indexService = indexService;
+	public void setappVipCardService(IAppVipCardService appVipCardService) {
+		this.appVipCardService = appVipCardService;
 	}
 
 	public void execute(JobExecutionContext arg0) throws JobExecutionException{
@@ -73,7 +73,8 @@ public class CreateVisitTaskLog implements Job {
 		if(type.equals("registrationid")){
 			//查询用户的registrationid
 			try {
-				String registrationid = getIndexService().getRegistrationIdByUserId(userid);
+				//String registrationid = getappVipCardService().getRegistrationIdByUserId(userid);
+				String registrationid = "";
 				if(!"".equals(registrationid) && registrationid != null){
 					//推送信息
 					//JPushRegIdUtil.PushUrlByRegId(registrationid, title, url);

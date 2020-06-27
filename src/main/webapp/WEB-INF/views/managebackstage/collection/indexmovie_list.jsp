@@ -65,12 +65,12 @@ function checkHide(num){
 	}else {
 		$("#moviediv").hide();	
 		$(".div_mask").css("display","none");
-		$("#movieid").text("");
-		$("#coverimg").text("");
+		$("#movieid").val("");
+		$("#coverimg").val("");
 		$("#coverimgurl").attr("src", "");
-		$("#title").text(title);
+		$("#title").val(title);
 		$("#description").val("");
-		$("#httpurl").text("");
+		$("#httpurl").val("");
 		$("#type").val("");
 		$("#status").val("");
 	}
@@ -80,12 +80,12 @@ function checkHide(num){
 function updatemovie(movieid, coverimg, title, description, httpurl, type, status){
 	$("#moviediv").show();	
 	$(".div_mask").css("display","block");
-	$("#movieid").text(movieid);
-	$("#coverimg").text(coverimg);
+	$("#movieid").val(movieid);
+	$("#coverimg").val(coverimg);
 	$("#coverimgurl").attr("src", coverimg);
-	$("#title").text(title);
+	$("#title").val(title);
 	$("#description").val(description);
-	$("#httpurl").text(httpurl);
+	$("#httpurl").val(httpurl);
 	$("#type").val(type);
 	$("#status").val(status);
 }
@@ -182,7 +182,7 @@ function checkImageShowHide(rum,imagesrc){
         <div class="img3"><img src="" onclick="$('#fileName').click();" width="150px" height="200px" id="coverimgurl"/></div>
         <div class="clear"></div>
         <span>电影名称</span>
-        <input type="text" class="text2"  placeholder="请输入电影名称"  name="title" id = "title"/>
+        <input type="text" class="text2"  placeholder="请输入电影名称"  name="title" id="title"/>
         <div class="clear"></div>
         <span>电影描述</span>
         <textarea placeholder="请输入电影描述，最多允许输入800字符" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" name="description" id="description"></textarea>
@@ -198,7 +198,7 @@ function checkImageShowHide(rum,imagesrc){
          </select>
         <div class="clear"></div>
         <span>是否有效</span>
-        <select class="sel" name="status" name="id">
+        <select class="sel" name="status" name="status">
            	<option value="1">有效</option>
            	<option value="0">无效</option>
          </select>

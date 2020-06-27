@@ -88,6 +88,7 @@ function saveUserInfo(){
 }
 
 $(function(){
+	
 	$('#parameter').change(function(){
 		var parameter=$('#parameter').val();
 		var array=parameter.split('&');

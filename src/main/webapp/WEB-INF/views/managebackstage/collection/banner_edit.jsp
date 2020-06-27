@@ -106,7 +106,7 @@ function submitdata(){
 					cancelButtonText : "取消",
 					closeOnConfirm : true
 				}, function(){
-					location.reload();
+					location.href="<%=request.getContextPath() %>/managebackstage/getBannerList";
 				})
 			}
 		})
@@ -132,7 +132,7 @@ function submitdata(){
 					cancelButtonText : "取消",
 					closeOnConfirm : true
 				}, function(){
-					location.reload();
+					location.href="<%=request.getContextPath() %>/managebackstage/getBannerList";
 				})
 			}
 		})

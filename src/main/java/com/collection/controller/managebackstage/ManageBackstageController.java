@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.collection.service.IManageBackStageService;
-import com.collection.service.IndexService;
-import com.collection.service.SystemService;
-import com.collection.service.UserInfoService;
+import com.collection.service.ISystemService;
 import com.collection.util.CookieUtil;
 import com.collection.util.Md5Util;
 import com.collection.util.PageHelper;
@@ -34,15 +30,9 @@ import com.collection.util.UserUtil;
 @Controller
 @RequestMapping("/managebackstage")
 public class ManageBackstageController {
-	private transient static Log log = LogFactory.getLog(ManageBackstageController.class);
-	
 	@Resource private IManageBackStageService manageBackstageService;
 	
-	@Resource private SystemService systemService;
-	
-	@Resource private IndexService indexService;
-
-	@Resource private UserInfoService userInfoService;
+	@Resource private ISystemService systemService;
 	
 	
 	/**-----------------------------------------管理员登录及密码操作start-------------------------------------------------------**/
@@ -165,8 +155,8 @@ public class ManageBackstageController {
 	@RequestMapping("/initreset")
 	public String initreset(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> userInfo=this.systemService.getUserInfo(map);
-		model.addAttribute("userInfo", userInfo);
+		/*Map<String, Object> userInfo=this.systemService.getUserInfo(map);
+		model.addAttribute("userInfo", userInfo);*/
 		return "/managebackstage/password_reset";
 	}
 	
@@ -184,7 +174,7 @@ public class ManageBackstageController {
 			HttpServletResponse response) {
 		String password=Md5Util.getMD5(map.get("password")+"");
 		map.put("password", password);
-		this.systemService.updateUserInfo(map);
+		/*this.systemService.updateUserInfo(map);*/
 		return "redirect:/managebackstage/login";
 	}
 	
@@ -496,6 +486,21 @@ public class ManageBackstageController {
 			e.printStackTrace();
 		}
 		return "/managebackstage/collection/membercard_list";
+	}
+	
+	/**
+	 * 修改会员卡信息
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/updateMemberCard")
+	public String updateMemberCard(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+		map.put("updateid", userInfo.get("userid"));
+		map.put("updatetime",new Date());
+		this.manageBackstageService.updateMemberCard(map);
+		return "redirect:/managebackstage/getMemberCardList";
 	}
 	
 }

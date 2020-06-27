@@ -10,7 +10,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.collection.service.IndexService;
+import com.collection.service.IAppVipCardService;
 import com.collection.util.Constants;
 import com.collection.util.SDKTestSendTemplateSMS;
 
@@ -19,23 +19,24 @@ import com.collection.util.SDKTestSendTemplateSMS;
 public class CreateVisitLogPrice implements Job {
 	@Autowired
 	private static CreateVisitLogPrice createVisitLogPrice;
-	private IndexService indexService;
+	private IAppVipCardService appVipCardService;
 	public void init() {
 		createVisitLogPrice = this;
-		createVisitLogPrice.indexService=this.indexService;
+		createVisitLogPrice.appVipCardService=this.appVipCardService;
 	}
 
-	public IndexService getIndexService() {
-		return createVisitLogPrice.indexService;
+	public IAppVipCardService getappVipCardService() {
+		return createVisitLogPrice.appVipCardService;
 	}
 
-	public void setIndexService(IndexService indexService) {
-		this.indexService = indexService;
+	public void setappVipCardService(IAppVipCardService appVipCardService) {
+		this.appVipCardService = appVipCardService;
 	}
 
 	public void execute(JobExecutionContext arg0) throws JobExecutionException{
 		System.out.println("--------quertz 10:00 reserveamount");
-	    List<Map<String, Object>> returnlist=getIndexService().getReturnAmountListagree();
+	    //List<Map<String, Object>> returnlist=getappVipCardService().getReturnAmountListagree();
+		List<Map<String, Object>> returnlist= null;
 	    for(Map<String, Object> returnmap: returnlist){
 	    	try {
 		    	String userid=returnmap.get("createid")+"";
@@ -47,7 +48,8 @@ public class CreateVisitLogPrice implements Job {
 				if(type.equals("registrationid")){
 					//查询用户的registrationid
 					try {
-						String registrationid = getIndexService().getRegistrationIdByUserId(userid);
+						//String registrationid = getappVipCardService().getRegistrationIdByUserId(userid);
+						String registrationid = "";
 						if(!"".equals(registrationid) && registrationid != null){
 							//推送信息
 							//JPushRegIdUtil.PushUrlByRegId(registrationid, title, url);
