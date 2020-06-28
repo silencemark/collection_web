@@ -119,11 +119,13 @@ new Vue({
     el: '#app',
     data: function() {
         return {
+            orderid:'',
             payType:0,
             orderInfo:{}
         }
     },
     created() {
+        this.orderid = this.GetQueryString('orderid');
         this.getPayVipCardInfo(this.GetQueryString('orderid'));
     },
     methods:{
@@ -145,6 +147,16 @@ new Vue({
                 jqtoast('请上传支付凭证！');
                 return;
             }
+            var reqData = {orderid:this.orderid,payorder:pzBase64,status:2};
+            jAjax("/appVipCard/payVipCard",reqData,function(data){
+                if(data.status=='0'){
+                    jqtoast('提交成功！');
+                    window.location.href = "bagPayWait.html";
+                }else{
+                    jqtoast('上传图片格式不合法！');
+                }
+                
+            });
         },
         //获取URL参数
         GetQueryString(name){
@@ -204,7 +216,6 @@ new Vue({
 		        				return;
 		        			}else{
                                 $img.attr('src',newBase64);
-                                console.log(newBase64);
 		                        $("#"+dataId).val(newBase64.replace(/^data:image\/(png|jpeg);base64,/,"")); //把声明信息替换掉变成加密的字符串传给后台 这个供识别用的
 		        				$file.val("");//最后清空input File的val
 		        			}

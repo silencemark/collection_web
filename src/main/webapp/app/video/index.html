@@ -71,7 +71,7 @@
 <!--end广告图片-->
 
 
-<section class="main">
+<section class="main defaultNone">
 
     <div class="prdClassCont" v-for="(item , i) in homePageMovie">
         <div class="prd-title">
@@ -150,7 +150,6 @@ function queryVideo(obj,type){
     }
     //获取首页电影
     jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
-      console.log(data);
       vm.homePageMovie = data;  
     });
 }
