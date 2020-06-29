@@ -32,7 +32,7 @@
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
-      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
+      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.remaincount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
             <div>购买时间：2020-09-03</div>
             <div>购买价格：123</div>
@@ -43,11 +43,18 @@
       <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" v-if="i==0" value="立 即 观 影" :class="`active-but  v${item.forder}-bg`" 
-        onclick="window.location.href='bagOwnInfo.html'"/>
+    <div v-if="item.remaincount>0 && false">
+        <input type="button" value="立 即 观 影" :class="`active-but  v${item.forder}-bg`" 
+            :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
+    </div>
+    <div v-else>
+        <input type="button" value="立 即 观 影" :class="`active-but  v${item.forder}-bg`" style="float:left;width:47%;margin:1px 0 0 2%;"
+            :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
 
-    <input type="button" v-if="i>0"  value="立 即 出 售" :class="`active-but  v${item.forder}-bg`"
-        onclick="window.location.href='bagSelling.html'"/>
+        <input type="button" value="立 即 出 售" :class="`active-but  v${item.forder}-bg`"  style="float:left;width:47%;margin:1px 0 0 2%;"
+            :onclick="`window.location.href='bagSelling.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
+    </div>
+    
 </div>
 <div v-if="myCardList.length==0" class="notList">您还没有拥有VIP会员卡</div>
 </section>
@@ -92,6 +99,7 @@ new Vue({
         var vueThis = this;
         jAjax("/appVipCard/getMyCardList",{userid:getCptToken()},function(data){
             vueThis.myCardList = data.resultlist;  
+            vueThis.myCardList[0].forder = 1;
         });
     }
 

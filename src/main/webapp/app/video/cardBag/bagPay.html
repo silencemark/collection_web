@@ -126,10 +126,10 @@ new Vue({
     },
     created() {
         this.orderid = this.GetQueryString('orderid');
-        this.getPayVipCardInfo(this.GetQueryString('orderid'));
+        this.getPayVipCardInfo(this.orderid);
     },
     methods:{
-        //查询抢购中 以及 待支付列表
+        //查询
         getPayVipCardInfo(orderid){
             var vueThis = this;
             jAjax("/appVipCard/getPayVipCardInfo",{orderid:orderid},function(data){

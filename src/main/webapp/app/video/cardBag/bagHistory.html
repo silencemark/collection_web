@@ -31,13 +31,13 @@
 <div v-for="(item,i) in historyCardList" style="margin-bottom:15px;" class="defaultNone">
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
-      <span style="margin-bottom:5px;">{{item.forderName}}</span>
-      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
-        <div class="v-numver" style="width: 90%;margin-top:45px;">
-            <div>交易单号：XGO23534524</div>
-            <div>VIP卡期限：0天</div>
-            <div>购买价格：235</div>
-            <div>交易状态：<b>已过期</b></div>
+      <span style="margin-bottom:5px;">{{item.typename}}</span>
+      卫视热播电视剧、优质自制剧，您可以享受提前观看，新鲜好剧快人一步解锁剧情。热播剧集更新过程中会员可提前观看VIP集。
+        <div class="v-numver" style="width: 90%;margin-top:35px;">
+            <div>交易单号：{{item.ordernum}}</div>
+            <div>出售时间：{{item.buytime.substr(0,10)}}</div>
+            <div>观影收益：{{item.profitprice}}</div>
+            <div>VIP状态：<b>已过期</b></div>
             <span class="clear">
       </div>
       <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>

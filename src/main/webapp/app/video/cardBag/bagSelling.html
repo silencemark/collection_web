@@ -20,17 +20,17 @@
 
 <!--vipInfo-->
 <div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
-    <div  :class="`vipInfo-active vipInfo  v${bigInfo.vipGrade}-c`" 
-    :style="`background-image:url('../img/V${bigInfo.vipGrade}_BG.png')`">
-      <span style="margin-bottom:5px;">{{bigInfo.vipGradeName}}专享视频</span>
-      即日起购买{{bigInfo.vipGradeName}} 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
-      <img :src="`../img/V${bigInfo.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    <div  :class="`vipInfo-active vipInfo  v${orderInfo.vipGrade}-c`" 
+    :style="`background-image:url('../img/V${orderInfo.vipGrade}_BG.png')`">
+      <span style="margin-bottom:5px;">{{orderInfo.vipGradeName}}专享视频</span>
+      即日起购买{{orderInfo.vipGradeName}} 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
+      <img :src="`../img/V${orderInfo.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
 </div>
 
 <div class="payVipInfoCont" style="font-size:0.8rem;">
-    <div style="font-weight:600;">{{bigInfo.vipGradeName}}专享影视</div>
+    <div style="font-weight:600;">{{orderInfo.vipGradeName}}专享影视</div>
     <div>交易单号 ：AG23049583942</div>
     <div>购买日期 ：2020-03-24 23:12:34</div>
     <div>VIP有效期至 ：2020-03-24 23:12:34</div>
@@ -42,10 +42,10 @@
 </div>
 
 <div class="setPayMoney">
-    <div>最高出售价格：<span style="color:#EB4747;font-weight:600;">{{bigInfo.maxMoney}}</span><br/><br/></div>
+    <div>最高出售价格：<span style="color:#EB4747;font-weight:600;">{{orderInfo.maxMoney}}</span><br/><br/></div>
     
     <input placeholder="请输入您的出售价格" v-model="sellInfo.payMoney"  maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
-    <input value="最 大" placeholder="最大" style="width:19%" @click="sellInfo.payMoney = bigInfo.maxMoney" readonly/>
+    <input value="最 大" placeholder="最大" style="width:19%" @click="sellInfo.payMoney = orderInfo.maxMoney" readonly/>
 </div>
 <div class="but-cont" style="margin-top: 30px;">
     <div class="btn btn-200" @click="sell" >立 即 出 售</div>
@@ -82,22 +82,36 @@
             sellInfo:{
                 payMoney:'',
             },
-            bigInfo:{
-                vipGrade:1,
-                vipGradeName:'青铜VIP卡',
-                maxMoney:234,
-            }
+            orderid:'',
+            cardid:'',
+            orderInfo:{}
         }
       },
       created() {
+        this.orderid = this.GetQueryString('orderid');
+        this.cardid = this.GetQueryString('cardid');
+        this.getPayVipCardInfo();
       },
       methods:{
+        //查询
+        getPayVipCardInfo(orderid){
+            var vueThis = this;
+            jAjax("/appVipCard/initSellCard",{cardid:this.cardid,orderid:this.orderid},function(data){
+                vueThis.orderInfo = data;  
+            });
+        },
         sell(){
             if(!this.sellInfo.payMoney){
                 jqtoast('请输入您的出售价格！');
                 return;
             }
             window.location.href="bagSale.html"
+        },
+        //获取URL参数
+        GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
         }
       }
     })
