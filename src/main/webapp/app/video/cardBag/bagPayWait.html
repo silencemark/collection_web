@@ -28,7 +28,7 @@
 </div>
 
 <!--抢购中-->
-<div v-for="(item,i) in rushToBuyList" class="defaultNone">
+<div v-for="(item,i) in rushToBuyList" v-cloak>
     <div style="margin-bottom:15px;">
         <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`"
         :style="`background-image:url('../img/V${item.forder}_BG.png')`">
@@ -49,7 +49,7 @@
     <div class="payWaitLoad"><img src="../img/timg.gif"/></div>
 </div>
 <!--待支付-->
-<div v-for="(item,i) in waitPayCardList" style="margin-bottom:15px;" class="defaultNone">
+<div v-for="(item,i) in waitPayCardList" style="margin-bottom:15px;" v-cloak>
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
