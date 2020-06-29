@@ -158,16 +158,6 @@ function update(levelid, levelname, levelenum, mingrowthvalue, maxgrowthvalue, i
     <div class="tc_btnbox"><a href="#" class="bg_gay2" onclick="checkHide(0)">取消</a><a href="#"  class="bg_yellow" onclick="checkHide(1)">确认</a></div>
 </div>
 
-<div class="tc_changetext"  id="imgdiv"  style="display:none;width: 560px;top:40%;">
-	<div class="tc_title"><span>展示电影封面</span><a href="#" onclick="checkImageShowHide(0,'')">×</a></div>
-    <div class="box">
-    	<span>电影封面</span>
-        <img id="imagesrc" width="400px" height="500px"></i>
-        <div class="clear"></div>
-    </div>
-    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="checkImageShowHide(0,'')">确定</a></div>
-</div>
-
 <input type="file" name="myfiles" style="display: none" id="fileName" T="file_headimg" onchange="ajaxFileUpload('img')"/>
 <script type="text/javascript">
 function ajaxFileUpload(id,Fileid,noimg){

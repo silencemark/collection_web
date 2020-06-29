@@ -546,5 +546,140 @@ public class ManageBackstageController {
 	/**-----------------------------------------会员等级管理end-------------------------------------------------------**/
 	
 	
+	/**-----------------------------------------收款方式管理start-------------------------------------------------------**/
+	/**
+	 * 获取收款方式管理列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getPaymentMethodList")
+	public String getPaymentMethodList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getPaymentMethodListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getPaymentMethodList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/paymentmethod_list";
+	}
+	/**-----------------------------------------收款方式管理end-------------------------------------------------------**/
+	
+	/**-----------------------------------------实名认证管理start-------------------------------------------------------**/
+	/**
+	 * 获取实名认证管理列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getCertificationList")
+	public String getCertificationList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getCertificationListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getCertificationList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/certification_list";
+	}
+	/**
+	 * 审核身份认证信息
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/updateCertification")
+	public String updateCertification(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+		map.put("updateid", userInfo.get("userid"));
+		map.put("updatetime",new Date());
+		this.manageBackstageService.updateCertification(map);
+		return "redirect:/managebackstage/getCertificationList";
+	}
+	/**-----------------------------------------实名认证管理end-------------------------------------------------------**/
+	
+	
+	/**-----------------------------------------投诉与建议管理start-------------------------------------------------------**/
+	/**
+	 * 获取投诉与建议列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getQuestionList")
+	public String getQuestionList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getQuestionListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getQuestionList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/question_list";
+	}
+	/**
+	 * 回复投诉与建议
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/replyQuestion")
+	public String replyQuestion(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+		map.put("systemuserid", userInfo.get("userid"));
+		map.put("updatetime",new Date());
+		this.manageBackstageService.replyQuestion(map);
+		return "redirect:/managebackstage/getQuestionList";
+	}
+	/**-----------------------------------------投诉建议管理end-------------------------------------------------------**/
+	
+	
+	/**-----------------------------------------兑换记录管理start-------------------------------------------------------**/
+	/**
+	 * 获取兑换记录列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getExchangeList")
+	public String getExchangeList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getExchangeListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getExchangeList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/exchange_list";
+	}
+
+	/**-----------------------------------------兑换记录管理end-------------------------------------------------------**/
+	
 	
 }

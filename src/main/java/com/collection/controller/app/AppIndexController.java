@@ -1,4 +1,4 @@
-package com.collection.controller;
+package com.collection.controller.app;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.collection.controller;
+package com.collection.controller.app;
 
 import java.util.HashMap;
 import java.util.List;

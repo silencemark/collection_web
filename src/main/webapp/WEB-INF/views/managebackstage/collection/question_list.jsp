@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>收款方式管理-管理方后台</title>
+<title>投诉与建议管理-管理方后台</title>
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
@@ -53,31 +53,29 @@
 });
 	
 $(document).ready(function(){
-	$('#paymentlist').parent().parent().find("span").attr("class","bg_hidden");
-	$('#paymentlist').attr('class','active li_active');
+	$('#questionlist').parent().parent().find("span").attr("class","bg_hidden");
+	$('#questionlist').attr('class','active li_active');
 })
 
-//显示隐藏微信
-function weixinShowHide(rum,imagesrc){
-	if(rum == 1 ){
-		$("#weixinimgdiv").hide();	
+
+//隐藏窗口
+function checkHide(num){
+	if(num == 1) {
+		$('#updateform').submit();
+	}else {
+		$("#updatediv").hide();	
 		$(".div_mask").css("display","none");
-	}else{
-		$("#weixinimgdiv").show();	
-		$(".div_mask").css("display","block");
-		$("#weixinimagesrc").attr("src", imagesrc);
+		$("#questionid").val("");
+		$("#replycontent").val("");
 	}
 }
-//显示支付宝
-function alipayImageShowHide(rum,imagesrc){
-	if(rum == 1 ){
-		$("#alipayimgdiv").hide();	
-		$(".div_mask").css("display","none");
-	}else{
-		$("#alipayimgdiv").show();	
-		$(".div_mask").css("display","block");
-		$("#alipayimagesrc").attr("src", imagesrc);
-	}
+
+//显示隐藏窗口
+function update(questionid, questioncontent, replycontent){
+	$("#updatediv").show();	
+	$(".div_mask").css("display","block");
+	$("#questionid").val(questionid);
+	$("#replycontent").val(replycontent);
 }
 
 </script>
@@ -87,12 +85,12 @@ function alipayImageShowHide(rum,imagesrc){
 <jsp:include page="../top.jsp" ></jsp:include>
 <div class="main_page">
 	<jsp:include page="../left.jsp" ></jsp:include>
-	<div class="page_nav"><p><a href="#">收款方式管理</a><i>/</i><span>收款方式列表</span></p></div>        
+	<div class="page_nav"><p><a href="#">投诉与建议管理</a><i>/</i><span>投诉与建议列表</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">收款方式管理列表</span></div>
+        <div class="tab_name"><span class="gray1">投诉与建议管理列表</span></div>
         <div class="sel_box">
-        	<form action="<%=request.getContextPath()%>/managebackstage/getPaymentMethodList" method="post">
-        		<input type="text" class="text" placeholder="请输入收款人姓名" name="realname" value="${map.realname}"/>
+        	<form action="<%=request.getContextPath()%>/managebackstage/getQuestionList" method="post">
+        		<input type="text" class="text" placeholder="请输入会员昵称" name="nickname" value="${map.nickname}"/>
 	            <input type="submit" value="搜索" class="find_btn"  />
             </form>
             <div class="clear"></div>
@@ -101,30 +99,28 @@ function alipayImageShowHide(rum,imagesrc){
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td">
                 	<td>用户昵称</td>
-                    <td>微信号</td>
-                    <td>微信收款码</td>
-                    <td>微信收款人姓名</td>
-                    <td>支付宝账号</td>
-                    <td>支付宝收款码</td>
-                    <td>支付宝收款人姓名</td>
-                    <td>开户行</td>
-                    <td>银行卡号</td>
-                    <td>持卡人真实姓名</td>
-                    <td>修改时间</td>
+                    <td>提问内容</td>
+                    <td>提问时间</td>
+                    <td>回复内容</td>
+                    <td>回复时间</td>
+                    <td>操作</td>
                 </tr>
                 <c:forEach items="${list }" var="li">
                 	<tr>
 	                	<td>${li.nickname }</td>
-	                    <td>V${li.weixinnum }</td>
-	                    <td onclick="weixinShowHide(0,'${li.weixinqrcode }');"><img src="${li.weixinqrcode }" width="48pxs" height="48px" alt="" /></td>
-	                    <td>${li.weixinrealname }</td>
-	                    <td>${li.alipaynum }</td>
-	                    <td onclick="alipayImageShowHide(0,'${li.alipayqrcode }');"><img src="${li.alipayqrcode }" width="48pxs" height="48px" alt="" /></td>
-	                    <td>${li.alipayrealname }</td>
-	                    <td>${li.bank }</td>
-	                    <td>${li.banknum }</td>
-	                    <td>${li.bankrealname }</td>
+	                    <td>${li.questioncontent }</td>
+	                    <td>${li.createtime }</td>
+	                    <td>${li.replycontent }</td>
 	                    <td>${li.updatetime }</td>
+	                    <td>
+	                    <c:choose>
+	                    	<c:when test="${li.replycontent == null || li.replycontent == '' }">
+	                    		<a href="javascript:void(0)" onclick="update('${li.questionid}','${li.questioncontent}', '')" class="blue">回复</a>
+	                    	</c:when>
+	                    	<c:otherwise>
+	                    		<a href="javascript:void(0)" onclick="update('${li.questionid}','${li.questioncontent}', '${li.replycontent}')" class="blue">修改回复</a>
+	                    	</c:otherwise>
+	                    </c:choose></td>
 	                </tr>
                 </c:forEach>
             </table>
@@ -135,24 +131,20 @@ function alipayImageShowHide(rum,imagesrc){
 
 <div class="div_mask" style="display:none;"></div>
 
-<div class="tc_changetext"  id="weixinimgdiv"  style="display:none;width: 560px;top:40%;">
-	<div class="tc_title"><span>展示微信收款码/span><a href="#" onclick="weixinShowHide(0,'')">×</a></div>
+<div class="tc_changetext"  id="updatediv"  style="display:none;top: 40%;left: 40%; width: 650px;">
+	<div class="tc_title"><span>回复投诉与建议</span><a href="#" onclick="checkHide(0)">×</a></div>
+    <form action="<%=request.getContextPath() %>/managebackstage/replyQuestion" id="updateform" method="post">
+    <input type="hidden" name="certificationid"  id="certificationid"/>
     <div class="box">
-    	<span>微信收款码</span>
-        <img id="weixinimagesrc" width="400px" height="500px"></i>
+        <span>提问内容：</span>
+        <textarea  maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" id="questioncontent" readonly="readonly"></textarea>
+        <div class="clear"></div>
+        <span>回复内容：</span>
+        <textarea placeholder="请输入回复内容" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" name="replycontent" id="replycontent"></textarea>
         <div class="clear"></div>
     </div>
-    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="weixinShowHide(0,'')">确定</a></div>
-</div>
-
-<div class="tc_changetext"  id="alipayimgdiv"  style="display:none;width: 560px;top:40%;">
-	<div class="tc_title"><span>展示支付宝收款码/span><a href="#" onclick="alipayImageShowHide(0,'')">×</a></div>
-    <div class="box">
-    	<span>支付宝收款码</span>
-        <img id="alipayimagesrc" width="400px" height="500px"></i>
-        <div class="clear"></div>
-    </div>
-    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="alipayImageShowHide(0,'')">确定</a></div>
+    </form>
+    <div class="tc_btnbox"><a href="#" class="bg_gay2" onclick="checkHide(0)">取消</a><a href="#"  class="bg_yellow" onclick="checkHide(1)">确认</a></div>
 </div>
 </body>
 </html>

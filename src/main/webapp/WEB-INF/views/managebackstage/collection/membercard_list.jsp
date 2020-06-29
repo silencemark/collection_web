@@ -111,17 +111,6 @@ function update(cardid,typename,cardicon,cardimg,minprice,maxprice,xgocoin,start
 	$("#status").val(status);
 }
 
-//显示隐藏支付凭证
-function checkImageShowHide(rum,imagesrc){
-	if(rum == 1 ){
-		$("#imgdiv").hide();	
-		$(".div_mask").css("display","none");
-	}else{
-		$("#imgdiv").show();	
-		$(".div_mask").css("display","block");
-		$("#imagesrc").attr("src", imagesrc);
-	}
-}
 </script>
 </head>
 <style>
