@@ -240,7 +240,7 @@ public class AppLoginController extends BaseController{
 			HttpServletResponse response) {
 		Map<String, Object> data=new HashMap<String, Object>();
 		map.put("password", Md5Util.getMD5(map.get("password").toString()));
-		logger.info("用户"+map.get("phone")+"登录系统"+DateUtil.sysDateTime());
+		logger.info("用户"+map.get("phone")+"登录系统"+map.get("password")+"-----"+DateUtil.sysDateTime()+map);
 		Map<String, Object> userInfo = this.appLoginService.login(map);
 		if(userInfo!=null && userInfo.size()>0){
 			if ("1".equals(userInfo.get("status"))){

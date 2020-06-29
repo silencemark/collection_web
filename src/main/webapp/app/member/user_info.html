@@ -394,9 +394,6 @@ function checkUpdateEamil(){
 
 //判断是谁进来这个页面：1：本人进来，可以修改基本信息；2：点击头像进来，判断是否有权修改，	$("#").attr({ "disabled": "disabled" });
 function onloadData(){
-	$("#headimage").attr("src",projectpath+'/upload/images/9405816_202118647149_2.jpg');
-	fundispaly();
-	/* 
 	var param = new Object();
 	param.userid= userid;
 	$.ajax({
@@ -535,7 +532,7 @@ function onloadData(){
 				}
 			}
 		}
-	}) */
+	})
 }
 function onPhotoDataSuccess(imageData){
 	$.ajax({

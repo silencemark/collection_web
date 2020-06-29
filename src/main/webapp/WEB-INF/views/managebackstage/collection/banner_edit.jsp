@@ -201,11 +201,6 @@ $(document).ready(function(){
 </div>
 <input type="file" name="myfiles" style="display: none" id="fileName" T="file_headimg" onchange="ajaxFileUpload('img')"/>
 <script type="text/javascript">
-function changesex(obj,sex){
-	$(obj).parent().find("a").attr("class","radio");
-	$(obj).attr("class","radio_ed");
-	$("input[name=sex]").val(sex);
-}
 function ajaxFileUpload(id,Fileid,noimg){
 	if(!Fileid){
 		Fileid = "fileName";

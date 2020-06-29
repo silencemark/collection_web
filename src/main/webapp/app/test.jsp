@@ -92,6 +92,7 @@ $(function(){
 	$('#parameter').change(function(){
 		var parameter=$('#parameter').val();
 		var array=parameter.split('&');
+		var timestamp = new Date().getTime();
 		var param="";
 		for(var i=0;i<array.length;i++){
 			var value=array[i].split('=');
