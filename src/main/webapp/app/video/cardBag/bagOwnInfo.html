@@ -7,6 +7,7 @@
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
      <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/slideshow.css">
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
  </head>
@@ -42,22 +43,22 @@
         <span>电影</span>
         <span class="clear"></span>
     </div>
-    <div class="ImgCont" style="width: 48%;">
+    <div class="ImgCont">
         <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
         <div class="prdName">创造营·异域舞娘</div>
         <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
     </div>
-    <div class="ImgCont" style="width: 48%;">
+    <div class="ImgCont">
         <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
         <div class="prdName">创造营·异域舞娘</div>
         <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
     </div>
-    <div class="ImgCont" style="width: 48%;">
+    <div class="ImgCont">
         <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
         <div class="prdName">创造营·异域舞娘</div>
         <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
     </div>
-    <div class="ImgCont" style="width: 48%;">
+    <div class="ImgCont">
         <img src="https://puui.qpic.cn/tv/0/930235325_498280/0"/>
         <div class="prdName">创造营·异域舞娘</div>
         <div class="prdRemark">彪啊彪这些长腿好魅惑哦</div>
@@ -91,22 +92,28 @@
 </body>
 
 <script>
-
-    new Vue({
-      el: '#app',
-      data: function() {
-        return {
-            bigInfo:{
-                vipGrade:1,
-                vipGradeName:'青铜VIP卡'
-            }
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        cardList : []
+    }
+    },
+    created() {
+        this.orderid = this.GetQueryString('orderid');
+        this.getMovieByCardId();
+    },
+    methods:{
+        //查询会员视频
+        getMovieByCardId(){
+            var vueThis = this;
+            jAjax("/appVipCard/getMovieByCardId",{userid:getCptToken()},function(data){
+                vueThis.rushToBuyList = data.resultlist;  
+            });
         }
-      },
-      created() {
-      },
-      methods:{
-      }
-    })
+
+  }
+})
   </script>
 
 </html>
