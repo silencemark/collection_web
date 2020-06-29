@@ -322,12 +322,12 @@ $(document).ready(function(){
                     <td class="l_text" width="140">手机号</td>
                   <td colspan="2" class="img_td">
                   <i class="info_wid">${userinfo.phone}</i>
-                  <a href="#" class="info_btn"  onclick="checkOpen(1)">更换手机号</a><div class="info_xx">
+                  <!-- <a href="#" class="info_btn"  onclick="checkOpen(1)">更换手机号</a> --><div class="info_xx">
                 </tr>
                 <tr>
                     <td class="l_text" width="140">电子邮件地址</td>
                     <td colspan="2" ><i class="info_wid" id="email">${userinfo.email}</i>
-                    <a href="#" class="info_btn"   onclick="checkOpen(2)">更换邮箱</a></td>
+                    <!-- <a href="#" class="info_btn"   onclick="checkOpen(2)">更换邮箱</a> --></td>
                 </tr>
                 <tr>
                     <td class="l_text" width="140">地址</td>
