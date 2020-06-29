@@ -2,15 +2,19 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html> 
-<title>统计-管理方后台</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>投诉与建议管理-管理方后台</title>
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/hhutil.js"></script>
+<script src="<%=request.getContextPath() %>/js/ajaxfileupload.js"></script>  
 <link rel="stylesheet" href="<%=request.getContextPath() %>/app/appcssjs/sweetalert/dist/sweetalert.css">
 <script src="<%=request.getContextPath() %>/app/appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
-
-</head>
 <script type="text/javascript">
 	var pageWidth = window.innerWidth;
 	var pageHeight = window.innerHeight;
@@ -47,10 +51,12 @@
 			  }
 			);			
 });
+	
 $(document).ready(function(){
-	$('#statistics').parent().parent().find("span").attr("class","bg_hidden");
-	$('#statistics').attr('class','active li_active');
+	$('#exchangelist').parent().parent().find("span").attr("class","bg_hidden");
+	$('#exchangelist').attr('class','active li_active');
 })
+
 </script>
 </head>
 
@@ -58,18 +64,35 @@ $(document).ready(function(){
 <jsp:include page="../top.jsp" ></jsp:include>
 <div class="main_page">
 	<jsp:include page="../left.jsp" ></jsp:include>
-	<div class="page_nav"><p><a href="#">首页</a><i>/</i><span>统计</span></p></div>        
+	<div class="page_nav"><p><a href="#">兑换记录管理</a><i>/</i><span>兑换记录列表</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">统计</span></div>
-      	<div class="skydrive_ico">
-        	<ul>
-            	<li><a href="<%=request.getContextPath()%>/managebackstage/getStatisticsToday"><b class="bg_green2"><img src="../userbackstage/images/page/total_ico01.png" width="32" height="32" /></b></a><span>日活统计</span></li>
-                <li><a href="<%=request.getContextPath()%>/managebackstage/getBlackList"><b class="bg_purple"><img src="../userbackstage/images/page/total_ico02.png" width="32" height="32" /></b></a><span>红黑榜</span></li>
-                <li><a href="<%=request.getContextPath()%>/managebackstage/getOrderStatistics"><b class="bg_yellow"><img src="../userbackstage/images/page/total_ico03.png" width="32" height="32" /></b></a><span>新增统计</span></li>
-                <li><a href="javascript:void(0)" onclick="alert('攻城狮疯狂开发中~~~')"><b class="bg_blue"><img src="../userbackstage/images/page/total_ico04.png" width="32" height="32" /></b></a><span>企业空间统计</span></li>
-            </ul>
+        <div class="tab_name"><span class="gray1">兑换记录列表</span></div>
+        <div class="sel_box">
+        	<form action="<%=request.getContextPath()%>/managebackstage/getExchangeList" method="post">
+        		<input type="text" class="text" placeholder="请输入会员昵称" name="nickname" value="${map.nickname}"/>
+	            <input type="submit" value="搜索" class="find_btn"  />
+            </form>
             <div class="clear"></div>
         </div>
+        <div class="tab_list">
+        	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+            	<tr class="head_td">
+                	<td>用户昵称</td>
+                    <td>兑换金额</td>
+                    <td>兑换生成的订单</td>
+                    <td>兑换时间</td>
+                </tr>
+                <c:forEach items="${list }" var="li">
+                	<tr>
+	                	<td>${li.nickname }</td>
+	                    <td>${li.amount }</td>
+	                    <td>${li.ordernum }</td>
+	                    <td>${li.createtime }</td>
+	                </tr>
+                </c:forEach>
+            </table>
+        </div>
+        <div id="Pagination" style="width:450px;">${pager }</div>
     </div>
 </div>
 </body>

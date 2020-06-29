@@ -23,6 +23,7 @@
     <dubbo:reference id="appVipCardService" interface="com.collection.service.IAppVipCardService"/>
     <dubbo:reference id="appUserCenterService" interface="com.collection.service.IAppUserCenterService"/>
     <dubbo:reference id="manageBackStageService" interface="com.collection.service.IManageBackStageService"/>
+    <dubbo:reference id="manageStatisticsService" interface="com.collection.service.IManageStatisticsService"/>
     
     <!-- 管理方后台管理 -->
     <dubbo:reference id="systemService" interface="com.collection.service.ISystemService"/>

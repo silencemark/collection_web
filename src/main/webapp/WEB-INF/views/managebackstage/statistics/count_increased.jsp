@@ -63,7 +63,7 @@ $(document).ready(function(){
     <div class="page_tab">
         <div class="tab_name"><span class="gray1">新增统计</span></div>
         <div class="sel_box">
-        	<form action="<%=request.getContextPath() %>/managebackstage/getNewStatistics" method="post">          
+        	<form action="<%=request.getContextPath() %>/managebackstage/getOrderStatistics" method="post">          
             <input type="text" class="text" placeholder="开始时间" name="starttime" value="${map.starttime}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />            
             <input type="text" class="text" placeholder="结束时间" name="endtime" value="${map.endtime}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
             <input type="submit" value="统计" class="find_btn"  />
@@ -79,12 +79,12 @@ $(document).ready(function(){
 </div>
 <script type="text/javascript">
 function onloaddata(){
-	<c:if test="${usercountlist.size()>0}">
+	<c:if test="${ordermoneylist.size()>0}">
 		var timedataArray1 = new Array();
 		var nowdataArray1 = new Array();
-		<c:forEach items="${usercountlist }" var="user" varStatus="st">
-			timedataArray1[${st.index}]='${user.comparetime}';
-			nowdataArray1[${st.index}]='${user.count}';
+		<c:forEach items="${ordermoneylist }" var="money" varStatus="st">
+			timedataArray1[${st.index}]='${money.comparetime}';
+			nowdataArray1[${st.index}]='${money.count}';
 		</c:forEach>
 		option = {
 			    
@@ -94,7 +94,7 @@ function onloaddata(){
 			        trigger: 'axis'
 			    },
 			    legend: {
-			    	data:["人员"]
+			    	data:["金额"]
 			    },
 			    toolbox: {
 			        show: true,
@@ -118,7 +118,7 @@ function onloaddata(){
 			    },
 			    series: [
 			        {
-			        	name:'人员',
+			        	name:'金额',
 			            type:'line',
 			            data:nowdataArray1
 			        }
@@ -129,12 +129,12 @@ function onloaddata(){
 		var myChart1 = echarts.init(document.getElementById("echarts_two"));
 		myChart1.setOption(option);
 	</c:if>
-	<c:if test="${companycountlist.size()>0}">
+	<c:if test="${ordercountlist.size()>0}">
 		var timedataArray = new Array();
 		var nowdataArray = new Array();
-		<c:forEach items="${companycountlist }" var="company" varStatus="st">
-			timedataArray[${st.index}]='${company.comparetime}';
-			nowdataArray[${st.index}]='${company.count}';
+		<c:forEach items="${ordercountlist }" var="order" varStatus="st">
+			timedataArray[${st.index}]='${order.comparetime}';
+			nowdataArray[${st.index}]='${order.count}';
 		</c:forEach>
 		option = {
 			    
@@ -144,7 +144,7 @@ function onloaddata(){
 			        trigger: 'axis'
 			    },
 			    legend: {
-			    	data:["企业"]
+			    	data:["订单数"]
 			    },
 			    toolbox: {
 			        show: true,
@@ -168,7 +168,7 @@ function onloaddata(){
 			    },
 			    series: [
 			        {
-			        	name:'企业',
+			        	name:'订单数',
 			            type:'line',
 			            data:nowdataArray
 			        }

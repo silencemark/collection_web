@@ -1,7 +1,6 @@
-package com.collection.controller;
+package com.collection.controller.app;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -525,10 +524,7 @@ public class AppUserCenterController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		this.appUserCenterService.updatePaymentMethod(map);
-		data.put("status", 0);
-		data.put("message", "修改成功");
-		return data;
+		return this.appUserCenterService.updatePaymentMethod(map);
 	}
 	
 	/**
