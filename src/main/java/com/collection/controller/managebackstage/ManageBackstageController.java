@@ -464,6 +464,7 @@ public class ManageBackstageController {
 	
 	/**-----------------------------------------首页免费电影管理end-------------------------------------------------------**/
 	
+	/**-----------------------------------------会员卡管理页面start-------------------------------------------------------**/
 	/**
 	 * 获取会员卡管理列表
 	 * @param map
@@ -502,5 +503,48 @@ public class ManageBackstageController {
 		this.manageBackstageService.updateMemberCard(map);
 		return "redirect:/managebackstage/getMemberCardList";
 	}
+	/**-----------------------------------------会员卡管理页面end-------------------------------------------------------**/
+	
+	/**-----------------------------------------会员等级管理start-------------------------------------------------------**/
+	/**
+	 * 获取会员卡管理列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getLevelList")
+	public String getLevelList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getLevelListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getLevelList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/level_list";
+	}
+	/**
+	 * 修改会员等级信息
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/updateLevel")
+	public String updateLevel(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+		map.put("updateid", userInfo.get("userid"));
+		map.put("updatetime",new Date());
+		this.manageBackstageService.updateLevel(map);
+		return "redirect:/managebackstage/getLevelList";
+	}
+	/**-----------------------------------------会员等级管理end-------------------------------------------------------**/
+	
+	
 	
 }

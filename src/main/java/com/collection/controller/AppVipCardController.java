@@ -192,10 +192,7 @@ public class AppVipCardController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		this.appVipCardService.payVipCard(map);
-		data.put("status", 0);
-		data.put("message", "支付成功，等待审核");
-		return data;
+		return this.appVipCardService.payVipCard(map);
 	}
 	
 	/**
