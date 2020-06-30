@@ -8,6 +8,7 @@
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
      <style>
        .userSetMsg{
         float: right;
@@ -22,39 +23,42 @@
         <img src="../img/to-left.png" onclick="history.back(-1)"/>
         账号设置
     </div>
-    <div class="operationEl" style="margin-top:5px;">
+    <div class="operationEl" style="margin-top:5px;height: 50px;">
       <img src="../img/handPor-ic.png" style="width:45px;height:45px;margin-top:5px;"/>
       <!-- <span>修改头像</span> -->
-      <span class="userSetMsg">修改头像</span>
+      <span class="userSetMsg" >修改头像</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
       <img src="../img/edit-ic.png"/>
       <span>修改昵称</span>
-      <span class="userSetMsg">蒙娜丽莎</span>
+      <span class="userSetMsg"  v-cloak>{{userInfo.nickname}}</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
       <img src="../img/phone-ic.png"/>
       <span>手机号码</span>
-      <span class="userSetMsg">14323428761</span>
+      <span class="userSetMsg"  v-cloak>{{userInfo.phone}}</span>
     </div>
     <div class="operationEl">
       <img src="../img/set-ic.png"/>
       <span>修改支付密码</span>
-      <span class="userSetMsg">未设置</span>
+      <span class="userSetMsg" v-if="userInfo.ispaypass==0"  v-cloak>未设置</span>
+      <span class="userSetMsg" v-if="userInfo.ispaypass==1"  v-cloak>已设置</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
       <img src="../img/handPor-ic.png"/>
       <span>实名认证</span>
-      <span class="userSetMsg">未认证</span>
+      <span class="userSetMsg" v-if="userInfo.isrealname==0"  v-cloak>未认证</span>
+      <span class="userSetMsg" v-if="userInfo.isrealname==1"  v-cloak>已认证</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
       <img src="../img/bank-ic.png"/>
       <span>收款方式管理</span>
-      <span class="userSetMsg">未设置</span>
+      <span class="userSetMsg" onclick="window.location.href='bindPayType.html'" v-if="userInfo.ispaymentmethod==0"  v-cloak>未设置</span>
+      <span class="userSetMsg" onclick="window.location.href='bindPayType.html'"  v-if="userInfo.ispaymentmethod==1"  v-cloak>已设置</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
@@ -87,18 +91,27 @@
 </body>
 
 <script>
-    new Vue({
-      el: '#app',
-      data: function() {
-        return {
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        userInfo : {},
+    }
+    },
+    created() {
+        this.getMyUserInfo();
+    },
+    methods:{
+        //查询用户信息
+        getMyUserInfo(){
+            var vueThis = this;
+            jAjax("/appUserCenter/getMyUserInfo",{userid:getCptToken()},function(data){
+                vueThis.userInfo = data;
+            });
         }
-      },
-      created() {
-          
-      },
-      methods:{
-      }
-    })
+
+  }
+})
   </script>
 
 </html>

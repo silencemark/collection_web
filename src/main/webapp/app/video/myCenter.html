@@ -13,23 +13,23 @@
  <body>
   <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
 
-<section class="main defaultNone"  id="app">
+<section class="main"  id="app">
     <!--userInfo-->
     <div class="userInfo">
         <img :src="myCenterData.headimage" v-if="myCenterData.headimage"/>
         <img src="img/toux.png" v-if="!myCenterData.headimage"/>
         <div class="userName">
-            <span style="margin-top:3px;">{{myCenterData.nickname}}</span>
+            <span style="margin-top:3px;" v-cloak>{{myCenterData.nickname}}</span>
             <img src="img/duop.png" style="margin-top:5px;"/>
-            <span class="renz" v-if="myCenterData.isrealname==1">已认证</span> 
-            <span class="renz" v-if="myCenterData.isrealname==0">未认证</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==1">已认证</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==0">未认证</span> 
         </div>
         <div class="btn qiand" @click="签到">签到</div>
         <div class="clear"></div>
     </div>
 
     <!--vipInfo-->
-    <div :class="`vipInfo v${myCenterData.levelenum}-c`" :style="`background-image: url('img/V${myCenterData.levelenum}_BG.png`">
+    <div :class="`vipInfo v${myCenterData.levelenum}-c`" v-cloak :style="`background-image: url('img/V${myCenterData.levelenum}_BG.png`">
       <span style="margin-bottom:5px;">{{myCenterData.levelname}}</span>
         当前成长值 : {{myCenterData.growthvalue}}
         <div class="v-numver">
@@ -50,7 +50,7 @@
     <div class="operationEl" style="margin-top:10px;">
         <img src="img/integral-ic.png"/>
         <span>XGO币</span>
-        <span class="money">{{myCenterData.xgocoin?myCenterData.xgocoin:0}}</span>
+        <span class="money" v-cloak>{{myCenterData.xgocoin?myCenterData.xgocoin:0}}</span>
         <div class="userXGOBut" onclick="window.location.href='user/xgoInfo.html'">明细</div>
         <div class="userXGOBut" style="margin-right:30px;">转赠</div>
     </div>

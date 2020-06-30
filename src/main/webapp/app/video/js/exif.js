@@ -803,3 +803,66 @@
     }
 }.call(this));
 
+
+
+/**
+ * input:file的change事件函数
+ * @param item    第一个参数固定this
+ * @param imgId   图片上传完后给页面img的src赋值
+ * @param dataId  图片上传完后给页面的隐藏域赋值，把Base64传给后台
+ */
+function fileChangeFun2(item,imgId,dataId){
+    var reader = new FileReader();
+    var AllowImgFileSize = 2100000;
+    var $file = $(item);
+    var fileObj = $file[0];
+    var file = fileObj.files[0];
+    var windowURL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+    var dataURL;
+    var $img = $("#"+imgId);
+    EXIF.getData(file, function() {
+        EXIF.getAllTags(this);
+        var Orientation = EXIF.getTag(this, 'Orientation');//获取拍照手势
+        if(fileObj && fileObj.files && fileObj.files[0]){
+            reader.readAsDataURL(fileObj.files[0]);
+            reader.onload = function(e){
+                var imgBase64Pic = reader.result;
+                var img = new Image();
+                if(windowURL){
+                    img.src = imgBase64Pic;
+                    img.onload = function(e){
+                    window.URL.revokeObjectURL(this.src);//方便引用无效回收
+                    var expectWidth = this.naturalWidth;
+                    var expectHeight = this.naturalHeight;
+                    if (this.naturalWidth > this.naturalHeight && this.naturalWidth > 1024) {
+                        expectWidth = 1024;
+                        expectHeight = expectWidth * this.naturalHeight / this.naturalWidth;
+                    } else if (this.naturalHeight > this.naturalWidth && this.naturalHeight > 768) {
+                        expectHeight = 768;
+                        expectWidth = expectHeight * this.naturalWidth / this.naturalHeight;
+                    }
+                    var cacheCanvas = document.createElement("canvas");//缓存区的cavans
+                    cacheCanvas.width = expectWidth;
+                    cacheCanvas.height = expectHeight;
+                    var ctx = cacheCanvas.getContext("2d");
+                    ctx.drawImage(this, 0, 0, expectWidth, expectHeight);
+                    var newBase64 = cacheCanvas.toDataURL("image/jpeg", 0.8);
+                    if(AllowImgFileSize != 0 && AllowImgFileSize < newBase64.length){
+                        alert("上传失败，请上传不大于2M的图片");
+                        return;
+                    }else{
+                        $img.attr('src',newBase64);
+                        $("#"+dataId).val(newBase64.replace(/^data:image\/(png|jpeg);base64,/,"")); //把声明信息替换掉变成加密的字符串传给后台 这个供识别用的
+                        $file.val("");//最后清空input File的val
+                    }
+                    }
+                }
+            };
+        }else{
+            dataURL = $file.val();
+            var imgObj = document.getElementById(imgId);
+            imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+            imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+        }
+    });
+};

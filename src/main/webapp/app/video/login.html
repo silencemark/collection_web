@@ -52,7 +52,7 @@
       },
       created() {
 	    if(getCptToken()){
-            window.location.href='index.html';
+            window.location.href='myCenter.html';
             return;
         }
       },
@@ -63,7 +63,7 @@
                 jAjax("/appLogin/userlogin",this.user,function(data){
                     if(data.status==0){
                         setCptToken(data.userInfo.userid);
-                        window.location.href='index.html';
+                        window.location.href='myCenter.html';
                     }else{
                         jqtoast(data.message);
                     }

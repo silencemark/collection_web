@@ -10891,11 +10891,9 @@ function jAjax(url,resData,sucCbk,errCbk){
 		success : function(data) {
 			console.log(data);
 			$("body").find("div[id='loadingWindow']").remove();
-			$(".defaultNone").removeClass("defaultNone");
 			if(sucCbk) sucCbk(data);
 		},error : function(e){
 			$("body").find("div[id='loadingWindow']").remove();
-			$(".defaultNone").removeClass("defaultNone");
 			if(errCbk) errCbk(e);
 			jqtoast('系统繁忙，请稍后重试');
 		}

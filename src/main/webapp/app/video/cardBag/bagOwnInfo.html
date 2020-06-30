@@ -13,7 +13,7 @@
  </head>
  <body>
 
-<section class="main defaultNone"  id="app">
+<section class="main"  id="app">
     <div class="title">
         <img src="../img/to-left.png" onclick="history.back(-1)"/>
         VIP专享视频
@@ -22,7 +22,7 @@
 <!--vipInfo-->
 <div style="margin-bottom: 15px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
     <div  :class="`vipInfo-active vipInfo  v${bigInfo.forder}-c`" 
-    :style="`background-image:url('../img/V${bigInfo.forder}_BG.png')`">
+    :style="`background-image:url('../img/V${bigInfo.forder}_BG.png')`" v-cloak>
       <span style="margin-bottom:5px;">{{bigInfo.typename}}专享视频</span>
       即日起购买{{bigInfo.typename}} {{bigInfo.commentstartdays}} 天后且您再观影好评{{bigInfo.commentcount}} 次可转让您的VIP卡！领取{{bigInfo.yield}} %观影收益。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
