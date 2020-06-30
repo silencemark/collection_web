@@ -52,16 +52,15 @@
 });
 var realname = "",
 	position = "",
-	birthday ="",
-	sex = 1;
+	birthday ="";
 function onloadData(){
 	 var sexs=${userinfo.sex!=null && userinfo.sex!=undefined && userinfo.sex!=''?userinfo.sex:'1'};
 	 if(sexs == 1 ){
-		 sex = 1;
+		 $("#sex").val(1);
 		 $("#nan").attr("class","radio_ed");
 		 $("#nv").attr("class","radio");
 	 }else if(sexs == 0){
-		 sex = 0;
+		 $("#sex").val(0);
 		 $("#nan").attr("class","radio");
 		 $("#nv").attr("class","radio_ed");
 	 }
@@ -71,11 +70,11 @@ function checkUpdata(sexs){
 	 if(sexs == 1){
 		 $("#nan").attr("class","radio_ed");
 		 $("#nv").attr("class","radio");
-		 sex = 1;
+		 $("#sex").val(1);
 	 }else if(sexs == 0){
-		 sex = 0;
 		 $("#nan").attr("class","radio");
 		 $("#nv").attr("class","radio_ed");
+		 $("#sex").val(0);
 	 }
 }
 //保存按钮   修改
@@ -98,7 +97,7 @@ function checkUpdataUserInfo(){
 	}else
 	
 	if(num == 1){
-		location.href="/managebackstage/updateSystemUserInfo?realname="+realname+"&address="+address+"&birthday="+birthday+"&sex="+sex+"&headimage="+img;
+		$("#updateform").submit();
 	}else{
 		swal({
 			title : "",
@@ -126,6 +125,7 @@ function ajaxFileUpload(id,Fileid,noimg){
 	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/manageheadimg",Fileid,function(data){
 			if(data.imgkey){
 				$("#img").attr("src",data.imgkey);
+				$("#headimage").val(data.imgkey);s
 			}else{
 				swal({
 					title : "",
@@ -160,18 +160,21 @@ $(document).ready(function(){
     <div class="page_tab">
         <div class="tab_name"><span class="gray1">修改个人信息</span></div>
         <div class="tab_list">
+        	<form action="<%=request.getContextPath()%>/managebackstage/updateSystemUserInfo" method="post" id="updateform">
         	<table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size:12px;">
                 <tr class="noneborder">
                     <td class="l_text" width="140">头像</td>
                     <td width="48" class="img_td"><div class="img3"><img src="${userinfo.headimage}" width="48" height="48" id="img"/></div></td>
                     <td class="gray_word"><a href="#" class="yellow" onclick="uploadbanner()">修改</a></td>
+                    <input type="hidden" name="headimage" id ="headimage"/>
                     <input type="file" name="myfiles" style="display: none" id="fileName" T="file_headimg" onchange="ajaxFileUpload('img')"/>
                 </tr>
                 <tr class="noneborder">
                     <td class="l_text" width="140">姓名</td>
-                    <td colspan="2" ><input type="text" class="text" placeholder="请输入姓名" id="realname" value="${userinfo.realname}"/></td>
+                    <td colspan="2" ><input type="text" class="text" placeholder="请输入姓名" name="realname" id="realname" value="${userinfo.realname}"/></td>
                 </tr>
                 <tr class="noneborder">
+                	<input type="hidden" name="sex" id ="sex"/>
                     <td class="l_text" width="140">性别</td>
                     <td colspan="2" >
                     <a href="#" class="radio_ed" id="nan" onclick="checkUpdata(1)">选择</a>
@@ -181,21 +184,25 @@ $(document).ready(function(){
                 </tr>
                 <tr class="noneborder">
                     <td class="l_text" width="140">出生年月</td>
-                   <td colspan="2"><input onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" name="endtime" value="${userinfo.birthday}"  class="text" type="text" placeholder="出生年月" id="birthday"/></td>
+                   <td colspan="2"><input onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" name="birthday" value="${userinfo.birthday}"  class="text" type="text" placeholder="出生年月" id="birthday"/></td>
                 </tr>
                 <tr class="noneborder">
                     <td class="l_text" width="140">地址</td>
-                    <td colspan="2" ><input type="text" class="text" placeholder="请输入地址" value="${userinfo.address}" id="address" /></td>
+                    <td colspan="2" ><input type="text" class="text" placeholder="请输入地址" name="address" value="${userinfo.address}" id="address" /></td>
                 </tr>                
                 <tr class="foot_td">
                 	<td>&nbsp;</td>
                     <td colspan="2"><a href="#" class="a_btn bg_yellow" onclick="checkUpdataUserInfo()">保存</a><a href="<%=request.getContextPath() %>/managebackstage/getSystemUser" class="a_btn bg_gay2">取消</a></td>
                 </tr>
             </table>
+            </form>
         </div>
     </div>
 </div>
 
+
+
+</form>
 
 </body>
 </html>
