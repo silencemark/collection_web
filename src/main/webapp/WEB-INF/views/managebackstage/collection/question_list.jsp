@@ -75,6 +75,7 @@ function update(questionid, questioncontent, replycontent){
 	$("#updatediv").show();	
 	$(".div_mask").css("display","block");
 	$("#questionid").val(questionid);
+	$("#questioncontent").val(questioncontent);
 	$("#replycontent").val(replycontent);
 }
 
@@ -134,13 +135,13 @@ function update(questionid, questioncontent, replycontent){
 <div class="tc_changetext"  id="updatediv"  style="display:none;top: 40%;left: 40%; width: 650px;">
 	<div class="tc_title"><span>回复投诉与建议</span><a href="#" onclick="checkHide(0)">×</a></div>
     <form action="<%=request.getContextPath() %>/managebackstage/replyQuestion" id="updateform" method="post">
-    <input type="hidden" name="certificationid"  id="certificationid"/>
+    <input type="hidden" name="questionid"  id="questionid"/>
     <div class="box">
         <span>提问内容：</span>
-        <textarea  maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" id="questioncontent" readonly="readonly"></textarea>
+        <textarea  maxlength="800" cols="43" style="border: 1px solid #eee;" rows="3" id="questioncontent" readonly="readonly"></textarea>
         <div class="clear"></div>
         <span>回复内容：</span>
-        <textarea placeholder="请输入回复内容" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" name="replycontent" id="replycontent"></textarea>
+        <textarea placeholder="请输入回复内容" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="5" name="replycontent" id="replycontent"></textarea>
         <div class="clear"></div>
     </div>
     </form>
