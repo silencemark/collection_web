@@ -129,10 +129,6 @@
           var reqData = {userid:getCptToken()}
           var vueThis = this;
           jAjax("/appUserCenter/myCenter",reqData,function(data){
-            data.levelenum = 1;
-            data.growthvalue=2500;
-            data.mingrowthvalue=2000;
-            data.maxgrowthvalue=4000;
             vueThis.myCenterData = data;
           });
         }

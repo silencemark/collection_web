@@ -1,6 +1,6 @@
 .equityLable{
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 10px;
     float: left;
     background-color: #fff;
@@ -9,7 +9,8 @@
     color: #777;
     font-size: 0.85rem;
     text-align: center;
-    line-height: 80px;
+    line-height: 75px;
+    margin-bottom: 10px;
 }
 .equityTtable{
     width: 100%;
@@ -32,7 +33,7 @@
     text-align: center;
     height: 45px;
     font-weight: 500;
-    background-color: #DFDFDF;
+    background-color: #fafafa;
 }
 .equityContentInfo{
     width: 97%;

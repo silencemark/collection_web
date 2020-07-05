@@ -10,7 +10,7 @@
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
  </head>
- <body style="background-color: #F0F0F0;">
+ <body style="background-color: #fafafa">
   
 <section class="main"  id="app">
   <div class="title">
@@ -19,20 +19,20 @@
   </div>
 
     <!--vipInfo-->
-    <div :class="`vipInfo v${vipGrade}-c`" :style="`background-image: url('../img/V${vipGrade}_BG.png`">
-      <span style="margin-bottom:5px;">{{vipGradeName[vipGrade]}}</span>
-        当前成长值 :123
+    <div :class="`vipInfo v${growthValueData.levelenum}-c`" :style="`background-image: url('../img/V${growthValueData.levelenum}_BG.png`">
+      <span style="margin-bottom:5px;"  v-cloak>V{{growthValueData.levelenum}}{{growthValueData.levelname}}</span>
+        当前成长值 :<font  v-cloak>{{growthValueData.growthvalue}}</font>
         <div class="v-numver">
-          距离升级还需要1点成长值
+          距离升级还需要<font  v-cloak>{{growthValueData.needgrowthvalue}}</font>点成长值
           <div class="jdt-father">
-              <div id="Son" :class="`v${vipGrade}-bg`"></div>
+              <div id="Son" :class="`v${growthValueData.levelenum}-bg`"></div>
           </div>
-          <span style="float:left;">V{{vipGrade}}</span>
-          <span style="float:right;">V{{vipGrade+1}}</span>
+          <span style="float:left;"  v-cloak>V{{growthValueData.levelenum}}</span>
+          <span style="float:right;"  v-cloak>V{{growthValueData.levelenum+1}}</span>
           <span class="clear"></span>
       </div>
-      <img v-if="vipGrade!=0" :src="`../img/V${vipGrade}_IC.png`" class="v-img"/>
-      <a href="#tips" :class="`v${vipGrade}-c`">
+      <img  v-cloak v-if="growthValueData.levelenum!=0" :src="`../img/V${growthValueData.levelenum}_IC.png`" class="v-img"/>
+      <a href="#tips" :class="`v${growthValueData.levelenum}-c`">
         <div style="position: absolute;right:48px;margin-top:70px;font-weight:600;">成长攻略</div>
       </a>
     </div>
@@ -40,7 +40,7 @@
 <div style="width:94%;margin-left: 3%;">
   <div class="contentTitle">当前会员等级特权</div>
   <div class="equityLable">
-    <span style="display: block;height:18px;">1.1倍观</span>
+    <span style="display: block;height:18px;"  v-cloak>{{growthValueData.interesttimes}}倍观</span>
     <span>观看权益</span>
   </div>
   <div class="equityLable">
@@ -57,31 +57,11 @@
           <th>要求成值</th>
           <th>基础权益</th>
       </tr>
-      <tr>
-          <td>V1青铜会员</td>
-          <td>1-2000</td>
-          <td>1.1倍观看权益</td>
-      </tr>
-      <tr>
-        <td>V2白银会员</td>
-        <td>2001-4000</td>
-        <td>1.2倍观看权益</td>
-      </tr>
-      <tr>
-        <td>V3黄金会员</td>
-        <td>4001-6000</td>
-        <td>1.3倍观看权益</td>
-      </tr>
-      <tr>
-        <td>V4铂金会员</td>
-        <td>6001-8000</td>
-        <td>1.4倍观看权益</td>
-      </tr>
-      <tr>
-        <td>V5砖石会员</td>
-        <td>8001-10000</td>
-        <td>1.5倍观看权益</td>
-      </tr>
+      <tr v-for="(bo,i) in memberGrowList"  v-cloak>
+          <th>V{{bo.levelenum}}{{bo.levelname}}</th>
+          <th>{{bo.mingrowthvalue}}-{{bo.maxgrowthvalue}}</th>
+          <th>{{bo.interesttimes}}倍观看权益</th>
+      </trv-for="(bo,i) in memberGrowList">
   </table>
   
   <div class="contentTitle">会员升级攻略</div>
@@ -140,25 +120,27 @@
         return current / total * 100;
     }
 
-
     new Vue({
       el: '#app',
       data: function() {
         return {
-          vipGrade : 1,    //会员等级
-          vipGradeName : { //会员等级昵称
-                0:'普通用户',
-                1:'V1青铜会员',
-                2:'V2白银会员',
-                3:'v3黄金会员'
-              }
-          //页面参数    
+          growthValueData:{},
+          memberGrowList:[],
         }
       },
       created() {
-          
+          this.myGrowthValue();
       },
       methods:{
+        myGrowthValue(){
+          var reqData = {userid:getCptToken()}
+          var vueThis = this;
+          jAjax("/appUserCenter/myGrowthValue",reqData,function(data){
+            data.levelenum = 0;
+            vueThis.growthValueData = data;
+            vueThis.memberGrowList = data.memberGrowList;
+          });
+        }
         
       }
     })
