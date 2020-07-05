@@ -52,7 +52,7 @@
         <span>XGO币</span>
         <span class="money" v-cloak>{{myCenterData.xgocoin?myCenterData.xgocoin:0}}</span>
         <div class="userXGOBut" onclick="window.location.href='user/xgoInfo.html'">明细</div>
-        <div class="userXGOBut" style="margin-right:30px;">转赠</div>
+        <div class="userXGOBut"  onclick="window.location.href='user/xgoGive.html'"style="margin-right:30px;">转赠</div>
     </div>
     <div class="operationEl" onclick="window.location.href='user/systemVip.html'">
       <img src="img/vipSystem-ic.png"/>
@@ -126,9 +126,11 @@
       },
       methods:{
         getMyCenterData(){
-          var reqData = {userid:getCptToken()}
           var vueThis = this;
-          jAjax("/appUserCenter/myCenter",reqData,function(data){
+          jAjax("/appUserCenter/myCenter",{},function(data){
+            // data.growthvalue = 1000;
+            // data.mingrowthvalue = 1;
+            // data.maxgrowthvalue = 2000;
             vueThis.myCenterData = data;
           });
         }

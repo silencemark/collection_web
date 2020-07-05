@@ -80,13 +80,13 @@ new Vue({
     }
     },
     created() {
-        this.getHistoryCardList();
+        this.getMyHisCardList();
     },
     methods:{
     //查询已拥有列表
-    getHistoryCardList(){
+    getMyHisCardList(){
         var vueThis = this;
-        jAjax("/appVipCard/getMyCardList",{userid:getCptToken()},function(data){
+        jAjax("/appVipCard/getMyHisCardList",{},function(data){
             vueThis.historyCardList = data.resultlist;  
         });
     }

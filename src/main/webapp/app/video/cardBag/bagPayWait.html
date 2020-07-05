@@ -116,10 +116,10 @@ new Vue({
         //查询抢购中 以及 待支付列表
         getWaitPayCard(){
             var vueThis = this;
-            jAjax("/appVipCard/getRushToBuyList",{userid:getCptToken()},function(data){
+            jAjax("/appVipCard/getRushToBuyList",{},function(data){
                 vueThis.rushToBuyList = data.resultlist;  
             });
-            jAjax("/appVipCard/getWaitPayCard",{userid:getCptToken()},function(data){
+            jAjax("/appVipCard/getWaitPayCard",{},function(data){
                 vueThis.waitPayCardList = data.resultlist;
             });
         },

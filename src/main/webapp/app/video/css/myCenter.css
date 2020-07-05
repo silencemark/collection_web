@@ -44,7 +44,7 @@
 .vipInfo-active{
     width: 96% !important;
     margin-left: 2% !important;
-    padding: 15px 75px 0 15px !important;
+    padding: 15px 80px 0 15px !important;
 }
 .vipInfo span{
     font-size: 1.3rem;
@@ -84,6 +84,13 @@
     width: 100%;
     height: 100%;
     border-radius: 10px;
+}
+.operationElFirst{
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding-left: 3% !important;
+    box-sizing: border-box !important;
+    background: #f9f9f9 !important;
 }
 .operationEl{
     width: 94%;
@@ -320,4 +327,13 @@
     position: inherit !important;
     margin-top: 0 !important;
     border: 1px dashed #dfdfdf;
+}
+.payConfirmCont{
+    width: 100%;
+    height: 180px;
+    position: fixed;
+    bottom: 0;
+    background: #f8f8f8;
+    z-index: 3;
+    border-top: 1px solid #e9e9e9;
 }

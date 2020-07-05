@@ -77,18 +77,18 @@
             <input type="button" :value="fmtTimeSecond(item.secondbuy,item)" :class="`active-but  v${item.forder}-bg`"/>
         </div>
         <div v-else>
-            <input type="button" v-if="item.isbuy==1 && !item.havabuy" @click="rushToBuyCard(item.forder,i)" value="立 即 抢 购" :class="`active-but  v${item.forder}-bg`" />
-            <input type="button" v-if="item.isbuy==0 && !item.havabuy" value="暂 未 开 启" :class="`active-but  v${item.forder}-bg`"/>
-    
-            <input type="button" v-if="item.havabuy==1" value="抢 购 中" :class="`active-but  v${item.forder}-bg`"/>
-    
-            <input type="button" v-if="item.havabuy==2" value="抢购成功/前往支付" :class="`active-but  v${item.forder}-bg`" 
-                onclick="window.location.href='cardBag/bagPayWait.html'"/>
+            <div v-if="item.havebuy==1 || item.havebuy==2">
+                <input type="button" v-if="item.havebuy==1" value="抢 购 中" :class="`active-but  v${item.forder}-bg`"/>
+                <input type="button" v-if="item.havebuy==2" value="已抢购成功" :class="`active-but  v${item.forder}-bg`" 
+                    onclick="window.location.href='cardBag/bagPayWait.html'"/>
+            </div>
+            <div v-else>
+                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)" value="立 即 抢 购" :class="`active-but  v${item.forder}-bg`" />
+                <input type="button" v-if="item.isbuy==0" value="暂 未 开 启" :class="`active-but  v${item.forder}-bg`"/>
+            </div>
         </div>
-
-       
     </div>
-    <div class="payWaitLoad" v-if="item.havabuy==1"><img src="img/timg.gif"/></div>
+    <div class="payWaitLoad" v-if="item.havebuy==1"><img src="img/timg.gif"/></div>
 </div>
 </section>
 
@@ -130,7 +130,7 @@ new Vue({
     //获取活动
     getVipCardList(){
         var vueThis = this;
-        jAjax("/appVipCard/getVipCardList",{userid:getCptToken()},function(data){
+        jAjax("/appVipCard/getVipCardList",{},function(data){
             vueThis.vipCardList = data.resultlist;  
             //vueThis.vipCardList[0].secondbuy = 100;//测试数据倒计时
         });
@@ -138,7 +138,7 @@ new Vue({
     //立即抢购
     rushToBuyCard(cardid,cardIndex){
         var vueThis = this;
-        var reqData = {userid:getCptToken(),cardid:cardid};
+        var reqData = {cardid:cardid};
         jAjax("/appVipCard/rushToBuyCard",reqData,function(data){
             window.location.href='cardBag/bagPayWait.html';
         });

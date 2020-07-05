@@ -10879,6 +10879,7 @@ function jAjax(url,resData,sucCbk,errCbk){
 		//set token
 		resData.token = getCptToken();
 		resData.timestamp = new Date().getTime();
+		resData.userid = resData.token;
 		resData.sign = hex_md5(resData.token+resData.timestamp+"255.xgo") ;
 	}
 	console.log(resData);
@@ -10927,5 +10928,23 @@ function getCptToken(){
 function loginOut(){
 	localStorage.removeItem("cptToken");
 	window.location.href="login.html";
-}
+};
 /**end user Sesssion */
+
+
+/**工具方法调用 */
+
+//显示文本框输入数字以及1位小数
+;
+function onlyNonNegative(obj) {
+	obj.value = obj.value.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符     
+	obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的     
+	obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+	obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); //只能输入两个小数     
+	if(obj.value.indexOf(".") < 0 && obj.value != "") {   
+		obj.value = parseFloat(obj.value);
+	}
+}
+;
+
+/**end 工具方法调用 */

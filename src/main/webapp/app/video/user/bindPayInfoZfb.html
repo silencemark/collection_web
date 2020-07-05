@@ -24,10 +24,10 @@
         <img src="../img/to-left.png" onclick="history.back(-1)"/>
         收款账户管理
     </div>
-    <div class="operationEl">
+    <div class="operationEl operationElFirst">
         <img src="../img/wx-ic.png"/>
         <span>支付宝收款</span>
-        <div style="font-size:0.75rem;margin-top:-20px;">温馨提示 ：为避免您的经济损失，请仔细核对您的收款账号信息</div>
+        <div style="font-size:0.75rem;margin-top:-20px;">提示 ：为避免您的经济损失，请仔细核对收款账号信息</div>
     </div>
 
     <div class="operationEl">
@@ -92,7 +92,7 @@ new Vue({
         //查询用户信息
         getMyUserInfo(){
             var vueThis = this;
-            jAjax("/appUserCenter/getPaymentMethod",{userid:getCptToken()},function(data){
+            jAjax("/appUserCenter/getPaymentMethod",{},function(data){
                 vueThis.userInfo = data;
             });
         },

@@ -32,31 +32,31 @@
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
-      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
+      卫视热播电视剧、优质自制剧。热播剧集更新过程中会员可提前观看VIP集。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
             <div v-if="item.status==0" style="width: 100%;">
-                <div style="width: 100%;">预计出售时间：{{item.buytime}}</div>
+                <div style="width: 100%;">预计出售时间：{{item.selltime}}</div>
                 <div>出售价格：{{item.cardprice}}</div>
                 <div>交易状态： <a style="font-weight:600;color:#BA4A33;">待出售</a></div>
             </div>
             <div v-if="item.status==1" style="width: 100%;">
-                <div>交易单号：{{item.ordernum}}</div>
-                <div>出售价格：{{item.cardprice}}</div>
-                <div>剩余支付时间：{{fmtTimeSecond(item.remaintime,item,true)}}</div>
-                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">待支付</a></div>
+                <div style="width:55%">交易单号：{{item.ordernum}}</div style="width:55%">
+                <div style="width:45%">出售价格：{{item.cardprice}}</div style="width:45%">
+                <div style="width:55%">剩余支付时间：{{fmtTimeSecond(item.remaintime,saleCardList[i],true)}}</div style="width:55%">
+                <div style="width:45%">交易状态： <a style="font-weight:600;color:#BA4A33;">待支付</a></div style="width:45%">
             </div>
             <div v-if="item.status==2" style="width: 100%;">
-                <div>交易单号：{{item.ordernum}}</div>
-                <div>付款金额：{{item.cardprice}}</div>
-                <div>剩余审核时间：{{fmtTimeSecond(item.remaintime,item,true)}}</div>
-                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">待审核</a></div>
+                <div style="width:55%">交易单号：{{item.ordernum}}</div>
+                <div style="width:45%">付款金额：{{item.cardprice}}</div style="width:55%">
+                <div style="width:55%">剩余审核时间：{{fmtTimeSecond(item.remaintime,saleCardList[i],true)}}</div style="width:55%">
+                <div style="width:45%">交易状态： <a style="font-weight:600;color:#BA4A33;">待审核</a></div style="width:55%">
             </div>
             <span class="clear">
       </div>
       <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" v-if="item.status==1" value="联系卖家支付" :class="`active-but  v${item.forder}-bg`"/>
+    <!-- <input type="button" v-if="item.status==1" value="联系卖家支付" :class="`active-but  v${item.forder}-bg`"/> -->
     
      <input type="button" v-if="item.status==2" value="立即审核" :class="`active-but  v${item.forder}-bg`" @click="chkOrder(item.orderid)"/>
 
@@ -104,7 +104,7 @@ new Vue({
     //查询出售列表
     getSaleCardList(){
         var vueThis = this;
-        jAjax("/appVipCard/getSaleCardList",{userid:getCptToken()},function(data){
+        jAjax("/appVipCard/getSaleCardList",{},function(data){
             vueThis.saleCardList = data.resultlist;  
         });
     },

@@ -9,6 +9,7 @@
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
      <script src="../js/jq-alert.js"></script>
+     <script src="../js/exif.js"></script>
      <style>
        .userSetMsg{
         float: right;
@@ -21,35 +22,35 @@
 <section class="main" id="app">
     <div class="title">
         <img src="../img/to-left.png" onclick="history.back(-1)"/>
-        收款账户管理
+        XGO转赠
     </div>
     <div class="operationEl operationElFirst">
-        <img src="../img/wx-ic.png"/>
-        <span>银行卡收款</span>
-        <div style="font-size:0.75rem;margin-top:-20px;">提示 ：为避免您的经济损失，请仔细核对收款账号信息</div>
+        <img src="../img/integral-ic.png"/>
+        <span style="font-size: 0.85rem;">当前可转赠XGO：21</span>
+        <div style="font-size:0.75rem;margin-top:-20px;">温馨提示 ：交易一旦完成不可回退，请谨慎操作！</div>
     </div>
 
     <div class="operationEl">
-        <span style="margin-left:0;">姓名：</span>
+        <span style="margin-left:0;">请输入好友手机：</span>
         <div style="margin-top:-20px;">
-            <input v-model="userInfo.bankrealname" placeholder="请输入收款人真实姓名" style="width:90%;height:30px;border:0;color:#555;"/>
+            <input v-model="giveInfo.phone" placeholder="" style="width:90%;height:30px;border:0;color:#555;"/>
         </div>
     </div>
     <div class="operationEl">
-        <span style="margin-left:0;">银行卡号：</span>
+        <span style="margin-left:0;">请输入转赠数量：</span>
         <div style="margin-top:-20px;">
-            <input v-model="userInfo.banknum" placeholder="请输入银行卡号" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+            <input v-model="giveInfo.number" placeholder="" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
         </div>
     </div>
     <div class="operationEl">
-        <span style="margin-left:0;">所属银行：</span>
+        <span style="margin-left:0;">请输入交易密码：</span>
         <div style="margin-top:-20px;">
-            <input v-model="userInfo.bank" placeholder="输入卡号所属银行" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+            <input v-model="giveInfo.pwd" type="password" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
         </div>
     </div>
     <br>
     <div class="but-cont">
-        <div class="btn btn-200" @click="savePayment" >立 即 保 存</div>
+        <div class="btn btn-200" @click="savePayment" >立 即 转 赠</div>
     </div>
 </section>
 
@@ -81,45 +82,20 @@ new Vue({
     data: function() {
         return {
             reqPath : reqPath,
-            userInfo:{}, 
+            giveInfo:{}
         }
     },
     created() {
-        this.getMyUserInfo();
     },
     methods:{
-        //查询用户信息
-        getMyUserInfo(){
+        //giveXgo
+        giveXgo(){
             var vueThis = this;
             jAjax("/appUserCenter/getPaymentMethod",{},function(data){
                 vueThis.userInfo = data;
             });
-        },
-        //保存支付方式
-        savePayment(){
-            if(!this.userInfo.bankrealname){
-                jqtoast("请输入收款人真实姓名！");
-                return;
-            }
-            if(!this.userInfo.banknum){
-                jqtoast("请输入银行卡号！");
-                return;
-            }
-            if(!this.userInfo.bank){
-                jqtoast("请输入所属银行！");
-                return;
-            }
-            this.userInfo.userid = getCptToken();
-            this.userInfo.alipayqrcode = "";
-            this.userInfo.weixinqrcode = "";
-            jAjax("/appUserCenter/updateAddPaymentMethod",this.userInfo,function(data){
-                window.location.href="bindPayType.html";
-            });
-            
-
         }
-
-  }
+    }
 })
   </script>
 

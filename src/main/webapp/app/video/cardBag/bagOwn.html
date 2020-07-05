@@ -34,16 +34,16 @@
       <span style="margin-bottom:5px;">{{item.typename}}</span>
       即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.remaincount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
-            <div>购买时间：2020-09-03</div>
-            <div>购买价格：123</div>
-            <div>VIP卡剩余天数：5天</div>
-            <div>观影好评次数：3</div>
+            <div>购买时间：{{item.buytime.substr(0,10)}}</div>
+            <div>VIP卡有效期：{{item.duetime.substr(0,10)}}</div>
+            <div>购买价格：{{item.cardprice}}</div>
+            <div>已好评次数：{{item.commentcount}}</div>
             <span class="clear">
       </div>
       <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <div v-if="item.remaincount>0 && false">
+    <div v-if="item.remaincount>0">
         <input type="button" value="立 即 观 影" :class="`active-but  v${item.forder}-bg`" 
             :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
     </div>
@@ -97,9 +97,8 @@ new Vue({
     //查询已拥有列表
     getWaitPayCard(){
         var vueThis = this;
-        jAjax("/appVipCard/getMyCardList",{userid:getCptToken()},function(data){
+        jAjax("/appVipCard/getMyCardList",{},function(data){
             vueThis.myCardList = data.resultlist;  
-            vueThis.myCardList[0].forder = 1;
         });
     }
 

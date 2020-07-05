@@ -25,8 +25,8 @@
     :style="`background-image:url('../img/V${bigInfo.forder}_BG.png')`" v-cloak>
       <span style="margin-bottom:5px;">{{bigInfo.typename}}专享视频</span>
       即日起购买{{bigInfo.typename}} {{bigInfo.commentstartdays}} 天后且您再观影好评{{bigInfo.commentcount}} 次可转让您的VIP卡！领取{{bigInfo.yield}} %观影收益。
-        <div class="v-numver" style="width: 90%;margin-top:45px;">
-            <div style="width:60%;">购买时间：{{bigInfo.duetime}}</div>
+        <div class="v-numver" style="width: 90%;margin-top:45px;"  v-cloak>
+            <div style="width:60%;">购买时间：{{bigInfo.buytime}}</div>
             <div style="width:40%;">购买价格：{{bigInfo.cardprice}}</div>
             <div style="width:60%;">到期时间：{{bigInfo.duetime}}</div>
             <div style="width:40%;">好评次数：{{bigInfo.alreadycount}}</div>
@@ -45,8 +45,8 @@
     </div>
     <div class="ImgCont" v-for="(movie,i) in bigInfo.movielist">
         <img :src="reqPath + movie.coverimg" :onclick="`window.location.href='bagComment.html?orderid=${bigInfo.cardid}&mv=${reqPath+movie.httpurl}'`"/>
-        <div class="prdName">{{movie.title}}</div>
-        <div class="prdRemark">{{movie.description}}</div>
+        <div class="prdName"  v-cloak>{{movie.title}}</div>
+        <div class="prdRemark"  v-cloak>{{movie.description}}</div>
     </div>
     <div class="clear"></div>
 </div>

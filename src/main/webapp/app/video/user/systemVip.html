@@ -11,7 +11,7 @@
      <script src="../js/vue.js"></script>
  </head>
  <body style="background-color: #fafafa">
-  
+  <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div>
 <section class="main"  id="app">
   <div class="title">
     <img src="../img/to-left.png" onclick="history.back(-1)"/>
@@ -21,7 +21,7 @@
     <!--vipInfo-->
     <div :class="`vipInfo v${growthValueData.levelenum}-c`" :style="`background-image: url('../img/V${growthValueData.levelenum}_BG.png`">
       <span style="margin-bottom:5px;"  v-cloak>V{{growthValueData.levelenum}}{{growthValueData.levelname}}</span>
-        当前成长值 :<font  v-cloak>{{growthValueData.growthvalue}}</font>
+        当前成长值 : <font  v-cloak>{{growthValueData.growthvalue}}</font>
         <div class="v-numver">
           距离升级还需要<font  v-cloak>{{growthValueData.needgrowthvalue}}</font>点成长值
           <div class="jdt-father">
@@ -133,9 +133,8 @@
       },
       methods:{
         myGrowthValue(){
-          var reqData = {userid:getCptToken()}
           var vueThis = this;
-          jAjax("/appUserCenter/myGrowthValue",reqData,function(data){
+          jAjax("/appUserCenter/myGrowthValue",{},function(data){
             data.levelenum = 0;
             vueThis.growthValueData = data;
             vueThis.memberGrowList = data.memberGrowList;

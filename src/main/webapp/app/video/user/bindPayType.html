@@ -98,7 +98,7 @@ new Vue({
         //查询用户信息
         getMyUserInfo(){
             var vueThis = this;
-            jAjax("/appUserCenter/getPaymentMethod",{userid:getCptToken()},function(data){
+            jAjax("/appUserCenter/getPaymentMethod",{},function(data){
                 vueThis.userInfo = data;
             });
         }

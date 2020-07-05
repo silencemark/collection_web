@@ -11,7 +11,7 @@
      <script src="../js/jq-alert.js"></script>
  </head>
  <body>
-
+    <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div>
 <section class="main"  id="app">
     <div class="title">
         <img src="../img/to-left.png" onclick="history.back(-1)"/>
@@ -19,33 +19,33 @@
     </div>
 
 <!--vipInfo-->
-<div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
-    <div  :class="`vipInfo-active vipInfo  v${orderInfo.vipGrade}-c`" 
-    :style="`background-image:url('../img/V${orderInfo.vipGrade}_BG.png')`">
-      <span style="margin-bottom:5px;">{{orderInfo.vipGradeName}}专享视频</span>
-      即日起购买{{orderInfo.vipGradeName}} 7 天后且您再观影好评10 次可转让您的VIP卡！领取2%观影收益。
-      <img :src="`../img/V${orderInfo.vipGrade}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+<div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;" v-cloak>
+    <div  :class="`vipInfo-active vipInfo  v${orderInfo.cardid}-c`" 
+    :style="`background-image:url('../img/V${orderInfo.cardid}_BG.png')`">
+      <span style="margin-bottom:5px;">{{orderInfo.typename}}</span>
+      卫视热播电视剧、优质自制剧，您可以享受提前观看，新鲜好剧快人一步解锁剧情。热播剧集更新过程中会员可提前观看VIP集。
+      <img :src="`../img/V${orderInfo.cardid}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
 </div>
 
-<div class="payVipInfoCont" style="font-size:0.8rem;">
-    <div style="font-weight:600;">{{orderInfo.vipGradeName}}专享影视</div>
-    <div>交易单号 ：AG23049583942</div>
-    <div>购买日期 ：2020-03-24 23:12:34</div>
-    <div>VIP有效期至 ：2020-03-24 23:12:34</div>
-    <div>已观影好评次数 ：5 (次)</div>
+<div class="payVipInfoCont" style="font-size:0.8rem;" v-cloak>
+    <div style="font-weight:600;">{{orderInfo.cardidName}}专享影视</div>
+    <div>VIP单号 ：{{orderInfo.ordernum}}</div>
+    <div>购买日期 ：{{orderInfo.buytime}}</div>
+    <div>VIP有效期至 ：{{orderInfo.duetime}}</div>
+    <div>已观影好评次数 ：{{orderInfo.alreadycount}} (次)</div>
     <div>
-        完成观影好评任务即可将您的VIP分享给他人，具体详情详参考您的VIP会员卡片等级!您当前为砖石VIP卡，
-        即购买日期 3 天后且再观影好评 10 次即可将您的VIP会员分享他人。
+        恭喜您以及完成了会员VIP卡观影好评任务，如您不再需要此会员卡，您可以将您的VIP会员卡分享
+        给其他会员，同时您还可以领取2%的观影收益。祝你观影愉快！
     </div>
 </div>
 
 <div class="setPayMoney">
-    <div>最高出售价格：<span style="color:#EB4747;font-weight:600;">{{orderInfo.maxMoney}}</span><br/><br/></div>
+    <div>最高出售价格：<span style="color:#EB4747;font-weight:600;">{{orderInfo.maxprice}}</span><br/><br/></div>
     
-    <input placeholder="请输入您的出售价格" v-model="sellInfo.payMoney"  maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
-    <input value="最 大" placeholder="最大" style="width:19%" @click="sellInfo.payMoney = orderInfo.maxMoney" readonly/>
+    <input placeholder="请输入您的出售价格" v-model="sellInfo.cardprice"  maxlength="6" onkeyup="onlyNonNegative(this)"/>
+    <input value="最 大" @click="sellInfo.cardprice = orderInfo.maxprice" style="width:19%;position:absolute;border-left:0;" readonly/>
 </div>
 <div class="but-cont" style="margin-top: 30px;">
     <div class="btn btn-200" @click="sell" >立 即 出 售</div>
@@ -80,32 +80,45 @@
       data: function() {
         return {
             sellInfo:{
-                payMoney:'',
+                cardprice:'',
+                orderid:'',
+                cardid:'',
             },
-            orderid:'',
-            cardid:'',
             orderInfo:{}
         }
       },
       created() {
-        this.orderid = this.GetQueryString('orderid');
-        this.cardid = this.GetQueryString('cardid');
+        this.sellInfo.orderid =  this.GetQueryString('orderid');
+        this.sellInfo.cardid = this.GetQueryString('cardid');
         this.getPayVipCardInfo();
       },
       methods:{
         //查询
         getPayVipCardInfo(orderid){
             var vueThis = this;
-            jAjax("/appVipCard/initSellCard",{cardid:this.cardid,orderid:this.orderid},function(data){
+            jAjax("/appVipCard/initSellCard",this.sellInfo,function(data){
                 vueThis.orderInfo = data;  
             });
         },
         sell(){
-            if(!this.sellInfo.payMoney){
+            if(!this.sellInfo.cardprice){
                 jqtoast('请输入您的出售价格！');
                 return;
             }
-            window.location.href="bagSale.html"
+            if(this.sellInfo.cardprice>this.orderInfo.maxprice){
+                jqtoast('出售价格不能大于最高出售价！');
+                return;
+            }
+            jAjax("/appVipCard/commitSellCard",this.sellInfo,function(data){
+                if(data.status=='0'){
+                    jqtoast('出售成功');
+                    window.location.href="bagSale.html"
+                }else{
+                    jqtoast(data.msg);
+                }
+                vueThis.orderInfo = data;  
+            });
+           
         },
         //获取URL参数
         GetQueryString(name){
