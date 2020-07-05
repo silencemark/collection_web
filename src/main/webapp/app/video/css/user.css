@@ -21,7 +21,7 @@
     border-collapse: collapse;
 }
 .equityTtable tr{
-    border-bottom: 1px solid #DFDFDF;
+    border-bottom: 1px solid #f1f1f1;
 }
 .equityTtable td{
     width: 33.3%;

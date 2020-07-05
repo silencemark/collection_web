@@ -63,7 +63,7 @@
         :style="`background-image:url('img/V${item.forder}_BG.png')`" >
         <span style="margin-bottom:5px;">{{item.typename}}</span>
         即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
-            <div class="v-numver" style="width: 90%;margin-top:45px;">
+            <div class="v-numver" style="width: 90%;">
                 <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
                 <div>VIP卡期限：{{item.watchdays}}</div>
                 <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
@@ -89,6 +89,8 @@
         </div>
     </div>
     <div class="payWaitLoad" v-if="item.havebuy==1"><img src="img/timg.gif"/></div>
+    <div class="payWaitLoad" v-if="item.havebuy==2"></div>
+
 </div>
 </section>
 
