@@ -37,7 +37,7 @@
 
 
 
-<iframe src="https://www.wanmeikk.me/project/2213.html"  scrolling="no"  class="videoFrame">
+<iframe :src="httpurl"  scrolling="no"  class="videoFrame">
 </iframe>
 <!-- <noscript>
 <iframe src="https://www.wanmeikk.me/user/login.html"  scrolling="no" id="addFrame" class="videoFrame">
@@ -125,9 +125,10 @@
 	      el: '#app',
 	      data: function() {
 	        return {
-	            comment:{
+	            httpurl:'',
+				comment:{
 	                xNum:3,
-	                commentText:''
+	                commentText:'',
 	            },
 	            wMin:10,
 	            bigInfo:{
@@ -138,6 +139,7 @@
 	        }
 	      },
 	      created() {
+			  this.httpurl = this.GetQueryString("httpurl");
 	          this.scvTime();
 	      },
 	      methods:{
@@ -189,7 +191,13 @@
 	            //$("#willesPlay").addClass("mtop1000");
 	            this.comment.commentText='';
 	            this.wMin = 10;
-	        }
+	        },
+			//获取URL参数
+			GetQueryString(name){
+				var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r!=null)return  unescape(r[2]); return null;
+			}
 	      }
 	    })
 	  </script>

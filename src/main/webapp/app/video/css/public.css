@@ -57,6 +57,11 @@ header{
     width: 100%;
     height: auto;
     margin-bottom: 10px;
+    position: fixed;
+    background: #fff;
+    z-index: 3;
+    padding-bottom: 4px;
+    top: 0;
 }
 header .logo{
     width: 35%;
@@ -85,14 +90,14 @@ header .searchCont input{
     width: 80%;
     font-size: 0.7rem;
     border: 0;
-    color: #e96120;
+    color: #8e8a8a;
     text-align: right;
-    padding-right: 40px;
-    background: #ebebeb;
+    padding-right: 45px;
+    background: #f7f7f7;
     border-radius: 15px;
 }
 header .searchCont input::-webkit-input-placeholder{
-    color: #e96120;
+    color: #8e8a8a;
 }
 .but-cont{
     width: 100%;
@@ -106,7 +111,7 @@ header .searchCont input::-webkit-input-placeholder{
     background-color: transparent;
     color: #fff;
     border-radius: 0;
-    background-image: linear-gradient(90deg,#f5daab,#cca366);
+    background-image: linear-gradient(90deg,#77cdfe,#c0c0ec);
     border-radius: 50px;
     font-size: 13px;
     display: inline-block;

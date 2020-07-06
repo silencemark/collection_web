@@ -44,7 +44,7 @@
         </ul>
      </header>
 <!--轮播-->
-<div class="layout">
+<div class="layout" style="margin-top:80px;">
     <div class="banner">
         <ul class="swipe" id="swipe">
             <!--图片低于5张出问题直接轮播两组-->
@@ -67,13 +67,14 @@
 <!--end 轮播-->
 
 <!--广告图片-->
-<img :src="reqPath+advertisement.imgurl" :onclick="`window.location.href='${reqPath+advertisement.httpurl}'`" class="activity-img" />
+<!-- <img :src="reqPath+advertisement.imgurl" :onclick="`window.location.href='${reqPath+advertisement.httpurl}'`" class="activity-img" /> -->
 <!--end广告图片-->
 
 
 <section class="main">
 
-    <div class="prdClassCont" v-for="(item , i) in homePageMovie" v-cloak>
+    <div class="prdClassCont" v-for="(item , i) in homePageMovie" v-cloak >
+        <div style="height:245px;" v-if="i==2"></div>
         <div class="prd-title">
             <span>{{item.typename}}</span>
             <span class="clear"></span>
@@ -82,7 +83,7 @@
         </div>
         <div class="ImgCont" v-for="(movie , j) in item.movielist">
             <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='${reqPath+movie.httpurl}'`" /> -->
-            <img :src="reqPath+movie.coverimg" onclick="window.location.href='cardBag/bagComment.html'" />
+            <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=${movie.httpurl}'`" />
             <div class="prdName">{{movie.title}}</div>
             <div class="prdRemark">{{movie.description}}</div>
         </div>
@@ -91,6 +92,17 @@
         <div class="refresh-cont" v-if="item.movielist.length>1">
             <img src="img/ref.png"/>&nbsp;
             <span>换一批</span>
+        </div>
+        <!--广告-->
+        <div v-if="i==0">
+            <video id="videoId" muted style="width:100%;height:100%;" src="img/activMp41.mp4" controls="controls"  preload >
+                该浏览器不支持该格式视频
+            </video>
+           <img style="width: 100%;" src="img/activMp41Title.jpg"/>
+
+        </div>
+        <div v-if="i==1">
+            <img src="img/activi1.jpg"  class="activity-img" />
         </div>
     </div>
 
@@ -121,23 +133,43 @@
 
 
 <script>
+window.addEventListener('scroll', this.scrollHandle, true);
+document.getElementsByTagName('body')[0].scrollTop = 0;    
+window.onscroll=function(){
+    scrollHandle();
+}
+function scrollHandle () {
+    var videoEle = document.getElementById("videoId");
+    const offset = videoEle.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
+    const offsetTop = offset.top;
+    const offsetBottom = offset.bottom;
+    const offsetHeight = offset.height;
+    // 进入可视区域
+    if (offsetTop <= window.innerHeight && offsetBottom >= 0) {
+        videoEle.play();
+    } else {
+        videoEle.pause();
+    }
+}
+
 
 $(function(){
+  
   //type : 0：全部 1 会员专享 2、珍藏电影、3、动漫、4、电视剧
   vm = new Vue({
     el:'#app',
     data:{
         reqPath : reqPath,
         bannerList : [],//轮播图
-        advertisement:{},//广告图
+        // advertisement:{},//广告图
         homePageMovie:[],//首页电影列表
     }
   });
 
   //获取轮播图片
   jAjax("/appIndex/getBanner",{type:1},function(data){ vm.bannerList = data; });
-  //获取广告图片
-  jAjax("/appIndex/getAdvertisement",{},function(data){ vm.advertisement = data[0];  });
+//   获取广告图片
+//   jAjax("/appIndex/getAdvertisement",{},function(data){ vm.advertisement = data[0];  });
   //获取首页图片
   queryVideo(null,0);
 });
