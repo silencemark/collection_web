@@ -66,11 +66,6 @@
 </div>
 <!--end 轮播-->
 
-<!--广告图片-->
-<!-- <img :src="reqPath+advertisement.imgurl" :onclick="`window.location.href='${reqPath+advertisement.httpurl}'`" class="activity-img" /> -->
-<!--end广告图片-->
-
-
 <section class="main">
 
     <div class="prdClassCont" v-for="(item , i) in homePageMovie" v-cloak >
@@ -99,11 +94,14 @@
                 该浏览器不支持该格式视频
             </video>
            <img style="width: 100%;" src="img/activMp41Title.jpg"/>
-
         </div>
+
+        <!-- 广告图片-->
         <div v-if="i==1">
             <img src="img/activi1.jpg"  class="activity-img" />
+            <!-- <img :src="reqPath+advertisement.imgurl"  class="activity-img" /> -->
         </div>
+        <!--end广告图片 -->
     </div>
 
     <br/><br/><br/><br/><br/>
@@ -161,14 +159,14 @@ $(function(){
     data:{
         reqPath : reqPath,
         bannerList : [],//轮播图
-        // advertisement:{},//广告图
+        advertisement:{},//广告图
         homePageMovie:[],//首页电影列表
     }
   });
 
   //获取轮播图片
   jAjax("/appIndex/getBanner",{type:1},function(data){ vm.bannerList = data; });
-//   获取广告图片
+  //获取广告图片
 //   jAjax("/appIndex/getAdvertisement",{},function(data){ vm.advertisement = data[0];  });
   //获取首页图片
   queryVideo(null,0);
