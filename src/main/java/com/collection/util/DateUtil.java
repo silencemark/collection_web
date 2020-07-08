@@ -19,6 +19,10 @@ public class DateUtil {
 	
 	static SimpleDateFormat YMDHMS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 	
+	public static String COMM_YMDHMS = "yyyy-MM-dd HH:mm:ss";
+	
+	public static String COMM_YMD = "yyyy-MM-dd";
+	
 	/**
 	 * 获取当前时间yyyy-MM-dd
 	 */
@@ -33,6 +37,57 @@ public class DateUtil {
 		return YMDHMS.format(new Date());
 	}
 	
+	/**
+	 * 日期转字符串
+	 * yyyy-MM-dd HH:mm:ss
+	 * @param datstr
+	 * @return
+	 */
+	public static String dateTimeToString(Date datstr){
+		return YMDHMS.format(datstr);
+	}
+	
+	/**
+	 * 日期转字符串
+	 * @param datstr
+	 * @param fmt
+	 * @return
+	 */
+	public static String dateToString(Date datstr, String fmt){
+		SimpleDateFormat sdf = new SimpleDateFormat(fmt);  
+		return sdf.format(datstr);
+	}
+	
+	/**
+	 * 字符串转日期
+	 * yyyy-MM-dd HH:mm:ss
+	 * @param fmt
+	 * @return
+	 */
+	public static Date stringToDateTime(String datstr, String fmt){
+		try {
+			return YMDHMS.parse(datstr);
+		} catch (ParseException e) {
+			LOGGER.info("字符串日期格式转换失败："+e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
+	 * 字符串转日期
+	 * @param datstr
+	 * @param fmt
+	 * @return
+	 */
+	public static Date StringTodate(String datstr, String fmt){
+		SimpleDateFormat sdf = new SimpleDateFormat(fmt);  
+		try {
+			return sdf.parse(datstr);
+		} catch (ParseException e) {
+			LOGGER.info("字符串日期格式转换失败："+e.getMessage());
+			return null;
+		}
+	}
 	
 	/**
 	 * 获取某一时间  这一周日期

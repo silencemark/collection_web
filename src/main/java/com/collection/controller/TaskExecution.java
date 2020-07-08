@@ -34,27 +34,6 @@ public class TaskExecution implements ServletContextListener {
 			sched.scheduleJob(trigger);
 			sched.start();
 			
-			sf = new StdSchedulerFactory();
-			sched = sf.getScheduler();
-			// 备用金定时生成日志信息
-			job = new JobDetail("reserveprice", "group2", CreateVisitLogPrice.class);
-			trigger = new CronTrigger("trigger2", "group2", "reserveprice", "group2",
-					"0 0 10 * * ?");// 秒：分：时
-			sched.addJob(job, true);
-			sched.scheduleJob(trigger);
-			sched.start();
-			
-			
-			//监听任务进度，离完成1个小时前 发送提示信息
-			sf = new StdSchedulerFactory();
-			sched = sf.getScheduler();
-			job = new JobDetail("listeningTask","group3",CreateVisitTaskLog.class);
-			trigger = new CronTrigger("trigger3","group3","listeningTask","group3",
-					"0 0/1 * * * ?");
-			sched.addJob(job, true);
-			sched.scheduleJob(trigger);
-			sched.start();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

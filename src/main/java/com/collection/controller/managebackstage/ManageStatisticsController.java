@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +11,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +27,6 @@ import com.collection.service.IManageStatisticsService;
 @Controller
 @RequestMapping("/managebackstage")
 public class ManageStatisticsController extends BaseController{
-	
-	private transient static Log log = LogFactory.getLog(ManageStatisticsController.class);
 	
 	@Resource private IManageStatisticsService manageStatisticsService;
 	
@@ -59,8 +54,6 @@ public class ManageStatisticsController extends BaseController{
 	 */
 	@RequestMapping("/getStatisticsToday")
 	public String getStatisticsToday(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
-		Map<String, Object> data=new HashMap<String, Object>();
-		
 		return "/managebackstage/statistics/count_daily";
 	}
 	
@@ -106,8 +99,6 @@ public class ManageStatisticsController extends BaseController{
 	 */
 	@RequestMapping("/getOrderStatistics")
 	public String getNewStatistics(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
-		Map<String, Object> data=new HashMap<String, Object>();
-		
 		if((!map.containsKey("starttime") || "".equals(map.get("starttime"))) && (!map.containsKey("endtime") || "".equals(map.get("endtime")))){
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String stoptime = sdf.format(new Date());

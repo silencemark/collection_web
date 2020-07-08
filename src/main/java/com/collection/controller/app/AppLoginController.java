@@ -243,11 +243,11 @@ public class AppLoginController extends BaseController{
 		logger.info("用户"+map.get("phone")+"登录系统"+map.get("password")+"-----"+DateUtil.sysDateTime()+map);
 		Map<String, Object> userInfo = this.appLoginService.login(map);
 		if(userInfo!=null && userInfo.size()>0){
-			if ("1".equals(userInfo.get("status"))){
+			if ("1".equals(userInfo.get("status").toString())){
 				data.put("status", 1);
 				data.put("message", "您好，您的账号已被禁用 ！");
 				return data;
-			} else if ("2".equals(userInfo.get("status"))){
+			} else if ("2".equals(userInfo.get("status").toString())){
 				data.put("status", 1);
 				data.put("message", "您好，您的账号已被冻结！");
 				return data;
