@@ -44,7 +44,7 @@
     font-size: 1rem;
     color: #333333;
     text-align: center;
-    display: none;
+    /* display: none; */
 }
 .title img{
     width: 40px;
