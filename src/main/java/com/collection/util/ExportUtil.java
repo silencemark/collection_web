@@ -85,7 +85,7 @@ public class ExportUtil {
 				System.out.println("导出excel成功！");
 				fout.close();
 			} catch (Exception e) {
-				LOGGER.error(Constants.LOGGER_EXCEPTION,e);
+				//LOGGER.error(Constants.LOGGER_EXCEPTION,e);
 			}
 	}
 	

@@ -24,6 +24,8 @@
     <dubbo:reference id="appUserCenterService" interface="com.collection.service.IAppUserCenterService"/>
     <dubbo:reference id="manageBackStageService" interface="com.collection.service.IManageBackStageService"/>
     <dubbo:reference id="manageStatisticsService" interface="com.collection.service.IManageStatisticsService"/>
+    <dubbo:reference id="taskService" interface="com.collection.service.ITaskService"/>
+    <dubbo:reference id="rushBuyClacService" interface="com.collection.service.IRushBuyClacService"/>
     
     <!-- 管理方后台管理 -->
     <dubbo:reference id="systemService" interface="com.collection.service.ISystemService"/>

@@ -30,6 +30,14 @@
 	
 	<!-- 配置自动扫描的包 -->
 	<context:component-scan base-package="com" />
+	
+	<context:property-placeholder location="classpath:thread.properties"/>
+	
+	<!-- 配置定时任务启动类 -->
+	<bean id="baseApplication" class="com.collection.common.BaseApplication">
+		<property name="taskPkgPattern" value = "com.collection.task"></property>
+	</bean>
+	
 	<import resource="dubbo.xml" />
 	<!-- 静态资源支持 -->
 	<mvc:default-servlet-handler />
