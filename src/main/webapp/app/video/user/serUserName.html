@@ -2,7 +2,7 @@
  <html lang="en">
  <head>
      <meta charset="UTF-8">
-     <title>享GO</title>
+     <title>修改昵称</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
@@ -21,19 +21,19 @@
 
 <section class="main" id="app">
     <div class="title">
-        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        <!-- <img src="../img/to-left.png" onclick="history.back(-1)"/> -->
         修改昵称
     </div>
 
     <div class="operationEl">
         <span style="margin-left:0;">您的昵称：</span>
         <div style="margin-top:-20px;">
-            <input v-model="giveInfo.phone" placeholder="请输入您的昵称" style="width:90%;height:30px;border:0;color:#555;text-align:center;"/>
+            <input v-model="userInfo.nickname" maxlength="6" placeholder="请输入您的昵称" style="width:90%;height:30px;border:0;color:#555;text-align:center;"/>
         </div>
     </div>
     <br><br>
     <div class="but-cont">
-        <div class="btn btn-200" @click="savePayment" >立 即 保 存</div>
+        <div class="btn btn-200" @click="updateNickname" >立 即 修 改</div>
     </div>
 </section>
 
@@ -65,18 +65,44 @@ new Vue({
     data: function() {
         return {
             reqPath : reqPath,
-            giveInfo:{}
+            userInfo:{
+                nickname:''
+            },
+            oldName:'',
         }
     },
     created() {
+        var nickname = this.GetQueryString("nickname");
+        if(nickname){
+            this.userInfo.nickname = nickname;
+            this.oldName = nickname;
+        }
     },
     methods:{
-        //giveXgo
-        giveXgo(){
+        //
+        updateNickname(){
             var vueThis = this;
-            jAjax("/appUserCenter/getPaymentMethod",{},function(data){
-                vueThis.userInfo = data;
+            if(!this.userInfo.nickname){
+                jqtoast('请输入您的昵称');
+                return;
+            }
+            if(this.oldName==this.userInfo.nickname){
+                history.back(-1);
+                return;
+            }
+            jAjax("/appUserCenter/updateNickname",this.userInfo,function(data){
+                if(data.status==0){
+                    window.location.href='setUser.html';
+                }else{
+                    jqtoast(data.message);
+                }
             });
+        },
+        //获取URL参数
+        GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
         }
     }
 })

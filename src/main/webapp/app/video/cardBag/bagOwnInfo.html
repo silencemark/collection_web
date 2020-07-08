@@ -2,7 +2,7 @@
  <html lang="en">
  <head>
      <meta charset="UTF-8">
-     <title>享GO</title>
+     <title>VIP专享视频</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
@@ -10,12 +10,13 @@
      <link rel="stylesheet" type="text/css" href="../css/slideshow.css">
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
  </head>
  <body>
 
 <section class="main"  id="app">
     <div class="title">
-        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        <!-- <img src="../img/to-left.png" onclick="history.back(-1)"/> -->
         VIP专享视频
     </div>
 
@@ -52,7 +53,9 @@
 </div>
 
 
-
+<div class="but-cont">
+    <div class="btn btn-200" onclick="openw('https:\/\/www.0855y.com/x/14155-1-1.html','10');">观看10秒后评论</div>
+</div>
 
 <br/><br/><br/><br/><br/>
 </section>
@@ -77,6 +80,10 @@
 </body>
 
 <script>
+function openw(url,orderid){
+    window.location.href='bagComment.html?httpurl='+url+'&orderid='+orderid;
+}
+    
 new Vue({
     el: '#app',
     data: function() {

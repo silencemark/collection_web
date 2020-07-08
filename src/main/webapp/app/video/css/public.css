@@ -44,6 +44,7 @@
     font-size: 1rem;
     color: #333333;
     text-align: center;
+    display: none;
 }
 .title img{
     width: 40px;
@@ -69,8 +70,10 @@ header .logo{
     padding: 10px 0 0px 15px;
 }
 header .logo img{
-    width: 90px;
-    height: 30px;
+    width: 105px;
+    height: 35px;
+    position: absolute;
+    top: 7px;
 }
 header .searchCont{
     text-align: right;

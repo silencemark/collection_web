@@ -10845,6 +10845,31 @@ function binl2b64(binarray)
 
 //END MD5
 
+/** errr*/ 
+;
+var system = {};
+var p = navigator.platform;
+var u = navigator.userAgent;
+system.win = p.indexOf("Win") == 0;
+system.mac = p.indexOf("Mac") == 0;
+system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+if (system.win || system.mac || system.xll) {
+　　if (u.indexOf('Windows Phone') > -1) {
+　　} else {
+		try{localStorage.setItem("err",'err');}catch(err){}
+　　　　 window.location.href = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594234820100&di=bb3fc99c664c547a2d902ed6d2f76216&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F24%2F32%2F59228af4cff60_610.jpg";
+　　}
+};
+try{
+	if(localStorage.getItem("err")){
+		localStorage.setItem("err",'err');
+		window.location.href = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594234820100&di=bb3fc99c664c547a2d902ed6d2f76216&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F24%2F32%2F59228af4cff60_610.jpg";
+	}
+}catch(err){}
+
+/**errr*/ 
+
+
 
 
 
@@ -10904,13 +10929,13 @@ function jAjax(url,resData,sucCbk,errCbk){
 /**check url in White list*/
 function chkUrlISWhite(url){
 	var whiteList = [
-		"/appLogin/getVerificationCode",//发送验证码
-		"/appLogin/register",//注册
-		"/appLogin/userlogin",//登录
-		"/appLogin/findPassWord",//找回密码
-		"/appIndex/getBanner",//获取banner图
-		"/appIndex/getAdvertisement",//获取活动图
-		"/appIndex/getHomePageMovie",//获取首页产品
+		"/appLogin/getVerificationCode",
+		"/appLogin/register",
+		"/appLogin/userlogin",
+		"/appLogin/findPassWord",
+		"/appIndex/getBanner",
+		"/appIndex/getAdvertisement",
+		"/appIndex/getHomePageMovie",
 	];
 	for(var j=0;j<whiteList.length;j++){
 		if(url==whiteList[j]) return true;

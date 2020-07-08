@@ -21,8 +21,8 @@
         font-weight: bold;
    }
    .active{
-        color: #e96120 !important;
-        border-bottom: 1px solid #e96120;
+        color: #69aeff !important;
+        border-bottom: 1px solid #69aeff;
         padding-bottom: 5px;
     }
     .activity-img{

@@ -2,7 +2,7 @@
  <html lang="en">
  <head>
      <meta charset="UTF-8">
-     <title>享GO</title>
+     <title>设置支付密码</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
@@ -21,32 +21,38 @@
 
 <section class="main" id="app">
     <div class="title">
-        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        <!-- <img src="../img/to-left.png" onclick="history.back(-1)"/> -->
         设置支付密码
     </div>
     <div class="operationEl">
         <span style="margin-left:0;">请输入支付密码：</span>
         <div style="margin-top:-20px;">
-            <input v-model="password" placeholder="" type="password"  maxlength="16" style="width:90%;height:30px;border:0;color:#555;"/>
+            <input v-model="userInfo.paypassword"  type="password"  maxlength="16" style="width:90%;height:30px;border:0;color:#555;"/>
         </div>
     </div>
     <div class="operationEl">
         <span style="margin-left:0;">确认支付密码：</span>
         <div style="margin-top:-20px;">
-            <input v-model="confimrPassword" placeholder="" type="password" maxlength="16" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+            <input v-model="userInfo.confimrPassword"  type="password" maxlength="16" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+        </div>
+    </div>
+    <div class="operationEl">
+        <span style="margin-left:0;">您的手机号码：</span>
+        <div style="margin-top:-20px;">
+            <input  type="text" :value="fmtPhone" readonly style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
         </div>
     </div>
     <div class="operationEl">
         <span style="margin-left:0;">短信验证码：</span>
         <div style="margin-top:-20px;">
-            <input v-model="confimrPassword" placeholder="" maxlength="4"  style="width:60%;height:30px;border:0;color:#555;" v-cloak/>
-            <div class="btn"  @click="sendYzm">{{sendYzmMsg}}</div>
+            <input v-model="userInfo.checkcode"  maxlength="4"  style="width:60%;height:30px;border:0;color:#555;" v-cloak/>
+            <div class="btn" style="position:absolute;right:20px;margin-top:15px;"  @click="sendYzm">{{sendYzmMsg}}</div>
         </div>
     </div>
     
     <br>
     <div class="but-cont">
-        <div class="btn btn-200" >立 即 保 存</div>
+        <div class="btn btn-200" @click="setPayPassWord">立 即 保 存</div>
     </div>
 </section>
 
@@ -77,26 +83,55 @@ new Vue({
     el: '#app',
     data: function() {
         return {
-            password:'',
-            confimrPassword:'',
+            userInfo:{
+                paypassword:'',
+                confimrPassword:'',
+                phone:'',
+                checkcode:'',
+            },
+            fmtPhone:'',
             reqPath : reqPath,
             sendYzmMsg :'获取验证码',
             sendYzmSleep:0,//验证码按钮睡眠时间
-            user:{},
         }
     },
     created() {
+        this.userInfo.phone = this.GetQueryString("phone");
+        this.fmtPhone = this.userInfo.phone.substr(0,3)+"****"+this.userInfo.phone.substr(7,4);
     },
     methods:{
+        setPayPassWord(){
+            var vueThis = this;
+            if(!this.userInfo.checkcode){
+                jqtoast('请输入验证码!');
+                return;
+            }
+            if(!this.userInfo.paypassword){
+                jqtoast('请输入您的支付密码!');
+                return;
+            }
+            if(this.userInfo.paypassword != this.userInfo.confimrPassword){
+                jqtoast('确认密码与支付密码不一致!');
+                return;
+            }
+            jAjax("/appUserCenter/setPayPassWord",this.userInfo,function(data){
+                if(data.status==0){
+                    window.location.href='setUser.html';
+                }else{
+                    jqtoast(data.message);
+                }
+            });
+        },
        //发送验证码
        sendYzm(){
             if(this.sendYzmSleep>0) return;
             //发送短信
             var sendSuc = false;
-            jAjax("/appLogin/getVerificationCode",this.user,function(data){
+            var vThis = this;
+            jAjax("/appLogin/getVerificationCode",this.userInfo,function(data){
                 if(data.status==0){
                     sendSuc = true;
-                    jqtoast('验证码已发送至您的手机！');
+                    jqtoast('验证码已发送至您的手机号'+vThis.fmtPhone);
                 }else{
                     jqtoast(data.message);
                 }
@@ -114,7 +149,13 @@ new Vue({
                     }
                 },1000);
             }
-          }
+          },
+            //获取URL参数
+            GetQueryString(name){
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if(r!=null)return  unescape(r[2]); return null;
+            }
 
     }
 })

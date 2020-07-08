@@ -2,7 +2,7 @@
  <html lang="en">
  <head>
      <meta charset="UTF-8">
-     <title>享GO</title>
+     <title>我的卡包</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
@@ -15,7 +15,7 @@
 
 <section class="main"  id="app">
     <div class="title">
-        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        <!-- <img src="../img/to-left.png" onclick="history.back(-1)"/> -->
         我的卡包
     </div>
 
@@ -32,7 +32,7 @@
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
-      卫视热播电视剧、优质自制剧，您可以享受提前观看，新鲜好剧快人一步解锁剧情。热播剧集更新过程中会员可提前观看VIP集。
+      卫视电视剧、新鲜好剧快人一步解锁剧情。剧集更新过程中会员可提前观看VIP集
         <div class="v-numver" style="width: 90%;margin-top:35px;">
             <div>交易单号：{{item.ordernum}}</div>
             <div>出售时间：{{item.buytime.substr(0,10)}}</div>

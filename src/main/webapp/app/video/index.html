@@ -77,7 +77,8 @@
             <img v-if="i==0" src="img/fire.png"/>
         </div>
         <div class="ImgCont" v-for="(movie , j) in item.movielist">
-            <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='${reqPath+movie.httpurl}'`" /> -->
+            <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=https://www.0855y.com/v/14155/'`" /> -->
+            <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=https://www.0855y.com/x/14155-1-1.html'`" /> -->
             <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=${movie.httpurl}'`" />
             <div class="prdName">{{movie.title}}</div>
             <div class="prdRemark">{{movie.description}}</div>
@@ -95,7 +96,6 @@
             </video>
            <img style="width: 100%;" src="img/activMp41Title.jpg"/>
         </div>
-
         <!-- 广告图片-->
         <div v-if="i==1">
             <img src="img/activi1.jpg"  class="activity-img" />
