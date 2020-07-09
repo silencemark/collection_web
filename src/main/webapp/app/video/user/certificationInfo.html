@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>身份认证</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
+     <script src="../js/exif.js"></script>
+     <style>
+       .userSetMsg{
+        float: right;
+        margin-right: 35px;
+       }
+     </style>
+ </head>
+ <body>
+
+<section class="main" id="app">
+    <div class="title">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+       身份认证
+   </div>
+    <div style="text-align:center;padding: 10px 0 5px 0;"  v-if="userInfo.status==1">
+        <img src="../img/rzSuc.png" style="width: 100px;height: 100px;"/>
+    </div>
+    <div class="sfrzing"  v-if="userInfo.status==2">
+        <img src="../img/resLoad.png" class="imgsfrzingImg"/>
+        您的身份证信息审核已经提交，请耐心等待，一般情况系统将在24小时内完成审核
+    </div>
+    <div class="operationEl">
+        <span style="margin-left: 10px;">姓名 ：<font v-cloak>{{userInfo.realname}}</font v-cloak></span>
+    </div>
+    <div class="operationEl">
+        <span style="margin-left: 10px;">身份证号码 ：<font v-cloak>{{userInfo.idcard}}</font v-cloak></span>
+    </div>
+    <div class="operationEl">
+        <span style="margin-left: 10px;">
+            认证状态 ：
+            <font style="color:#E76C6C;"  v-cloak v-if="userInfo.status==2">认证中</font>
+            <font style="color:#E76C6C;" v-cloak  v-if="userInfo.status==3">认证失败</font>
+            <font style="color:rgb(141,201,249);" v-cloak  v-if="userInfo.status==1">认证通过</font>
+        </span >
+    </div>
+    <br><br>
+    <div class="but-cont">
+        <div class="btn btn-200" onclick="history.back(-1)"> 返 回 </div>
+    </div>
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+  <ul id="footer_list">
+     <li class="list_li home active">
+         <a href="../index.html" class="text">首页</a>
+     </li>
+     <li class="list_li follow" >
+         <a  href="../activity.html" class="text">活动中心</a>
+     </li>
+     <li class="list_li cart">
+         <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+     </li>
+     <li class="list_li profile">
+         <a  href="../myCenter.html" class="text">我的</a>
+     </li>
+ </ul>
+</footer>
+<!-- end footer-->
+</body>
+
+<script>
+new Vue({
+    el: '#app',
+    data: function() {
+        return {
+            userInfo:{},
+            reqPath : reqPath,
+        }
+    },
+    created() {
+        this.getCertification();
+    },
+    methods:{
+        getCertification(){
+            var vThis = this;
+            jAjax("/appUserCenter/getCertification",{},function(data){
+                vThis.userInfo = data;
+            });
+        }
+    }
+})
+  </script>
+
+</html>

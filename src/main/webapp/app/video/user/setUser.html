@@ -51,9 +51,10 @@
     </div>
     <div class="operationEl">
       <img src="../img/handPor-ic.png"/>
-      <span>实名认证</span>
-      <span class="userSetMsg" v-if="userInfo.isrealname==0"  v-cloak>未认证</span>
-      <span class="userSetMsg" v-if="userInfo.isrealname==1"  v-cloak>已认证</span>
+      <span>身份认证</span>
+      <span class="userSetMsg" v-if="userInfo.isrealname==0" onclick="window.location.href='certification.html'" v-cloak>未认证</span>
+      <span class="userSetMsg" v-if="userInfo.isrealname==1" onclick="window.location.href='certificationInfo.html'" v-cloak>已认证</span>
+      <span class="userSetMsg" v-if="userInfo.isrealname==2" onclick="window.location.href='certificationInfo.html'" v-cloak>认证中</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
