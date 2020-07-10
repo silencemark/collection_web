@@ -190,6 +190,10 @@ $(document).ready(function(){
                     </c:choose>
                     </td>
                 </tr>
+                <tr class="noneborder">
+                    <td class="l_text" width="140">描述</td>
+                    <td colspan="2" ><textarea placeholder="请输入描述" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" name="description" >${bannerInfo.description}</textarea></td>
+                </tr>
                 <tr class="foot_td">
                 	<td>&nbsp;</td>
                     <td colspan="2"><a href="javascript:void(0)" onclick="submitdata()" class="a_btn bg_yellow">保存</a><a href="javascript:void(0)" onclick="window.history.go(-1);" class="a_btn bg_gay2">取消</a></td>

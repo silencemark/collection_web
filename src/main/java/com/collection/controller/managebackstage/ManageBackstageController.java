@@ -110,19 +110,18 @@ public class ManageBackstageController {
 	@RequestMapping("/index")
 	public String index(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		//查询首页信息
-		/*Map<String, Object> indexInfo=this.systemService.getIndexInfo();
-		model.addAttribute("indexInfo", indexInfo);*/
+		Map<String, Object> indexInfo=this.manageBackstageService.getIndexInfo();
+		model.addAttribute("indexInfo", indexInfo);
 		
 		//初始化分页
-		PageHelper pageHelper = new PageHelper(request);
-		pageHelper.initPage(map);
-		//List<Map<String, Object>> noticeList = systemService.getNoticeList(map);
-		int num = 10;
-		pageHelper.setTotalCount(num);
-		//model.addAttribute("noticeList", noticeList);
-		model.addAttribute("pager", pageHelper.cateringPage().toString());
-		model.addAttribute("map", map);
+		PageHelper page = new PageHelper(request);
+		int count = this.manageBackstageService.getNoticeListCount(map);
+		page.setTotalCount(count);
+		page.initPage(map);
+		List<Map<String,Object>> noticeList = this.manageBackstageService.getNoticeList(map);
+		request.setAttribute("noticeList", noticeList);
+		request.setAttribute("map", map);
+		request.setAttribute("pager", page.cateringPage().toString());
 		return "/managebackstage/index";
 	}
 	

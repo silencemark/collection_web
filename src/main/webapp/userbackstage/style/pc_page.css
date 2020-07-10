@@ -58,8 +58,8 @@
 .right_page { width:1030px; float:right;}
 .page_name { background:#f8f8f8; border-bottom:1px solid #e2e2e2; height:62px; padding:0px 30px;}
 .page_name span { display:block; float:left; font-size:16px; color:#2f2f2f; line-height:62px;}
-.page_name a { display:block; float:right; width:58px; height:30px; border:1px solid #ff9b30; background:#ff9b30; color:#fff; margin:15px 0px 15px 20px; text-align:center; line-height:30px;}
-.page_name a.back { background:#fff; color:#ff9b30;}
+.page_name a { display:block; float:right; width:58px; height:30px; border:1px solid #6EAEFE; background:#6EAEFE; color:#fff; margin:15px 0px 15px 20px; text-align:center; line-height:30px;}
+.page_name a.back { background:#fff; color:#6EAEFE;}
 .page_name a.wid_01 { width:88px;}
 .page_name a.ico_calendar { width:24px; height:24px; background:none; border:0px; margin:19px 0px;}
 .page_name a.ico_shop { background:url(../images/pc_page/ico_shop.png) no-repeat left; background-size:22px 22px; border:0px; height:32px; line-height:32px; width:auto; padding-left:30px; color:#666; font-size:16px;}
@@ -74,7 +74,7 @@
 .sel_box span { display:block; width:20px; line-height:32px; text-align:center; float:left;}
 .sel_box .m_r20 { margin-right:20px;}
 .sel_box .find_btn { float:right; width:78px; height:32px; background:#a3a3a3 url(../images/pc_page/find_btn.png) no-repeat center; color:#fff; border:0px; cursor:pointer; margin-left:20px;}
-.sel_box .find_btn:hover { background:#ff9b30 url(../images/pc_page/find_btn.png) no-repeat center;}
+.sel_box .find_btn:hover { background:#6EAEFE url(../images/pc_page/find_btn.png) no-repeat center;}
 
 .tab_list td { line-height:20px; padding:10px 10px; border-bottom:1px solid #eee;}
 .tab_list .head_td td { background:#f6f6f6 url(../images/page/td_bg.gif) repeat-x 0px bottom; padding-bottom:13px; border-bottom:1px solid #eee; border-top:1px solid #eee; color:#2f2f2f;}
@@ -130,14 +130,14 @@
 .tab_list .star_box img { float:left; width:20px; height:20px; display:block;}
 .tab_list .ico_del { display:block; width:16px; height:16px; margin:2px 10px 2px 0px;}
 .tab_list .rang_num { padding:0px 10px;}
-.tab_list span.rank_bg { display:block; float:left; line-height:40px; color:#ff9b30; background:url(../images/pc_page/num_top.png) no-repeat 10px 5px; padding-right:17px;}
+.tab_list span.rank_bg { display:block; float:left; line-height:40px; color:#6EAEFE; background:url(../images/pc_page/num_top.png) no-repeat 10px 5px; padding-right:17px;}
 .tab_list .img_list { padding:12px 0px 0px 0px;}
 .tab_list .img_list .img_box { float:left; width:54px; height:54px; position:relative; margin-right:10px;}
-.tab_list .img_list .img_box b { display:block; width:54px; height:54px; border:1px solid #ff9b30; border-radius:3px; overflow:hidden;}
+.tab_list .img_list .img_box b { display:block; width:54px; height:54px; border:1px solid #6EAEFE; border-radius:3px; overflow:hidden;}
 .tab_list .img_list .img_box img { width:54px; height:54px;}
 .tab_list .img_list .del { width:23px; height:23px; position:absolute; right:-8px; top:-8px; z-index:2; background:url(../images/pc_page/ico_del2.png) no-repeat; background-size:23px 23px; text-indent:-999px;}
 .tab_list .img_list .img_add { float:left; border:1px solid #d5d5d5; width:54px; height:54px; background:#fcfcfc url(../images/pc_page/add_img.png) no-repeat center; background-size:34px 34px; text-indent:-9999px; overflow:hidden; margin-right:10px; border-radius:3px;}
-.tab_list .img_list .talk { float:left; border:1px solid #ff9b30; width:54px; height:54px; background:#fcfcfc url(../images/pc_page/add_talk2.png) no-repeat center; background-size:34px 34px; text-indent:-9999px; margin-right:10px; border-radius:3px; position:relative;}
+.tab_list .img_list .talk { float:left; border:1px solid #6EAEFE; width:54px; height:54px; background:#fcfcfc url(../images/pc_page/add_talk2.png) no-repeat center; background-size:34px 34px; text-indent:-9999px; margin-right:10px; border-radius:3px; position:relative;}
 .tab_list .img_list .talk_add { float:left; border:1px solid #d5d5d5; width:54px; height:54px; background:#fcfcfc url(../images/pc_page/add_talk.png) no-repeat center; background-size:34px 34px; text-indent:-9999px; overflow:hidden; border-radius:3px;}
 .tab_list .m_top10 { margin-top:10px;}
 .tab_list .appraise_td { padding:0px;}
@@ -179,14 +179,14 @@
 .comment .text_box b { display:block; border:1px solid #eee; background:#fafafa; padding:2px 10px;}
 .comment .text_box b textarea { width:100%; height:60px; resize:none; border:0px; background:none; color:#666; line-height:20px;}
 .comment .text_box span { display:block; text-align:right; padding:10px 0px 0px 0px;}
-.comment .text_box span input { width:72px; height:30px; border:0px; background:#ff9b30; color:#fff; cursor:pointer;}
+.comment .text_box span input { width:72px; height:30px; border:0px; background:#6EAEFE; color:#fff; cursor:pointer;}
 .comment .ul_list li { padding:10px 0px; border-bottom:1px solid #eee;}
 .comment .ul_list li:last-child { border-bottom:0px;}
 .comment .ul_list li .user { width:800px; margin-right:10px; float:left; position:relative; min-height:30px; padding:5px 0px 0px 45px;}
 .comment .ul_list li .user b { display:block; width:30px; height:30px; border-radius:50%; overflow:hidden; position:absolute; left:0px; top:0px;}
 .comment .ul_list li .user span { color:#323232; line-height:20px; overflow:hidden;}
 .comment .ul_list li .user i { color:#999; margin:0px 10px 0px 15px;}
-.comment .ul_list li .user em { color:#ff9b30;}
+.comment .ul_list li .user em { color:#6EAEFE;}
 .comment .ul_list li .txt { margin-top:5px; line-height:24px; color:#8d8d8d;}
 .comment .ul_list li .time { float:right; line-height:30px; color:#afafaf;}
 
@@ -206,7 +206,7 @@
 
 .shop_sel { border-bottom:1px solid #eee; padding:0px 0px 10px 0px;}
 .shop_sel span { display:block; float:left; height:28px; line-height:28px; background:url(../images/pc_page/ico_shop.png) no-repeat left; background-size:20px 20px; padding-left:30px; font-size:16px; color:#323232;}
-.shop_sel a { display:block; float:right; border:1px solid #ff9b30; color:#ff9b30; border-radius:14px; line-height:26px; padding:0px 15px;}
+.shop_sel a { display:block; float:right; border:1px solid #6EAEFE; color:#6EAEFE; border-radius:14px; line-height:26px; padding:0px 15px;}
 
 .chart_imgbox { padding:20px 0px;}
 .charttab_box { background:#fff; border-top:1px solid #e5e5e5; position:relative;}
@@ -219,7 +219,7 @@
 .charttab_box .tab { margin:0px 30px;}
 .charttab_box .tab_name { border-top:1px solid #e5e5e5; border-right:1px solid #e5e5e5; height:44px;}
 .charttab_box .tab_name span { display:block; width:483px; float:left; border-left:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5; text-align:center; line-height:42px; font-size:16px;color:#424242; height:43px; cursor:pointer;}
-.charttab_box .tab_name span.active { color:#ff9b30; border-bottom:1px solid #ff9b30;}
+.charttab_box .tab_name span.active { color:#6EAEFE; border-bottom:1px solid #6EAEFE;}
 .charttab_box td { line-height:40px; text-align:center; border-top:1px solid #e5e5e5;}
 .charttab_box .head_td td { text-align:center; background:#f8f8f8; color:#424242; border-top:0px;}
 .charttab_box li { padding:0px 15px; line-height:40px; background:url(../images/pc_page/link_left.png) no-repeat 95% 50%; background-size:13px 13px; border-bottom:1px solid #e5e5e5;}
@@ -235,21 +235,21 @@
 
 .mrbb_nav { height:82px; border-top:1px solid #e5e5e5; border-left:1px solid #e5e5e5; margin-top:20px;}
 .mrbb_nav li { float:left; line-height:40px; width:241px; border-right:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5; text-align:center;}
-.mrbb_nav li.active { width:242px; border-bottom:1px solid #ff9b30;}
+.mrbb_nav li.active { width:242px; border-bottom:1px solid #6EAEFE;}
 .mrbb_nav li a { display:block; color:#2f2f2f; font-size:14px;}
-.mrbb_nav li.active a { color:#ff9b30;}
+.mrbb_nav li.active a { color:#6EAEFE;}
 
 .rsgj_nav { height:41px; border-top:1px solid #e5e5e5; border-left:1px solid #e5e5e5; margin-bottom:10px;}
 .rsgj_nav li { float:left; line-height:40px; width:322px; border-right:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5; text-align:center;}
-.rsgj_nav li.active { width:322px; border-bottom:1px solid #ff9b30;}
+.rsgj_nav li.active { width:322px; border-bottom:1px solid #6EAEFE;}
 .rsgj_nav li a { display:block; color:#2f2f2f; font-size:14px;}
-.rsgj_nav li.active a { color:#ff9b30;}
+.rsgj_nav li.active a { color:#6EAEFE;}
 
 .qywp_nav { height:41px; border-top:1px solid #e5e5e5; border-left:1px solid #e5e5e5;}
 .qywp_nav li { float:left; line-height:40px; width:483px; border-right:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5; text-align:center;}
-.qywp_nav li.active { width:484px; border-bottom:1px solid #ff9b30;}
+.qywp_nav li.active { width:484px; border-bottom:1px solid #6EAEFE;}
 .qywp_nav li a { display:block; color:#2f2f2f; font-size:14px;}
-.qywp_nav li.active a { color:#ff9b30;}
+.qywp_nav li.active a { color:#6EAEFE;}
 
 .mrbb_chartbox { padding:20px 0px;}
 
@@ -258,7 +258,7 @@
 .time_sel i { display:block; width:24px; height:24px; overflow:hidden; text-indent:-9999px; overflow:hidden; float:left; cursor:pointer;}
 .time_sel i.pre { background:url(../images/pc_page/link_right.png) no-repeat left; background-size:14px 14px;}
 .time_sel i.next { background:url(../images/pc_page/link_left.png) no-repeat right; background-size:14px 14px;}
-.time_sel input { width:132px; text-align:center; line-height:24px; font-size:16px; color:#ff9b30; float:left; font-weight:normal;}
+.time_sel input { width:132px; text-align:center; line-height:24px; font-size:16px; color:#6EAEFE; float:left; font-weight:normal;}
 
 .appraise .xx { height:40px; line-height:40px; padding:0px 10px;}
 .appraise .xx span { display:block; float:left; width:436px;}
@@ -297,7 +297,7 @@
 .sky_detail .fiel_box { height:42px;}
 .sky_detail .fiel_name { float:left; line-height:32px; line-height:32px; color:#333; background:url(../images/page/flie.png) no-repeat left; padding-left:20px;}
 .sky_detail .fiel_num { float:left; line-height:32px; color:#999; padding:0px 20px;}
-.sky_detail .fiel_link { float:left; line-height:32px; color:#ff9b30; text-decoration:underline;}
+.sky_detail .fiel_link { float:left; line-height:32px; color:#6EAEFE; text-decoration:underline;}
 .sky_detail .p_box { padding:20px 0px; border-top:1px solid #e5e5e5;}
 .sky_detail .p_box p { margin-bottom:20px; line-height:24px;}
 
@@ -311,15 +311,15 @@
 .memo_list { background:#fff; margin-top:8px;}
 .memo_list .name { padding:0px 0px; border-bottom:1px solid #d5d5d5; height:52px;}
 .memo_list .name span { display:block; float:left; color:#424242; font-size:16px; line-height:52px;}
-.memo_list .name a { display:block; float:right; width:60px; height:32px; margin:10px 0px; color:#fff; background:#ff9b30; text-align:center; line-height:32px;}
+.memo_list .name a { display:block; float:right; width:60px; height:32px; margin:10px 0px; color:#fff; background:#6EAEFE; text-align:center; line-height:32px;}
 .memo_list .li_list { padding:10px 15px 10px 18px; position:relative;}
 .memo_list .li_list .ul_head { width:12px; height:18px; background:#fff; position:absolute; left:13px; top:8px;}
 .memo_list .li_list .ul_foot { width:12px; height:18px; background:#fff; position:absolute; left:13px; bottom:5px;}
 .memo_list .li_list ul { border-left:1px solid #d5d5d5; padding-left:15px;}
 .memo_list .li_list li { border-bottom:1px solid #e5e5e5; line-height:38px; position:relative; padding-left:60px;}
 .memo_list .li_list li .point { background:#fff; width:11px; height:11px; border:1px solid #d5d5d5; border-radius:11px; position:absolute; left:-22px; top:14px; z-index:10;}
-.memo_list .li_list li.active { color:#ff9b30;}
-.memo_list .li_list li.active .point { background:#ff9b30; border:1px solid #ff9b30;}
+.memo_list .li_list li.active { color:#6EAEFE;}
+.memo_list .li_list li.active .point { background:#6EAEFE; border:1px solid #6EAEFE;}
 .memo_list .li_list li i { display:block; width:60px; position:absolute; line-height:38px; left:0px; top:0px;}
 .memo_list .li_list li span { display:block; background:url(../images/public/link_left.png) no-repeat right; background-size:13px 13px; padding-right:20px; height:40px; overflow:hidden;}
 .memo_list .li_list li:last-child { border-bottom:0px;}
@@ -339,12 +339,12 @@
 .share_text textarea { width:100%; height:60px; border:0px; background:none; resize:none;}
 .share_text .img_list { padding:10px 0px 0px 0px;}
 .share_text .img_list .img_box { float:left; width:54px; height:54px; position:relative; margin-right:10px;}
-.share_text .img_list .img_box b { display:block; width:54px; height:54px; border:1px solid #ff9b30; border-radius:3px; overflow:hidden;}
+.share_text .img_list .img_box b { display:block; width:54px; height:54px; border:1px solid #6EAEFE; border-radius:3px; overflow:hidden;}
 .share_text .img_list .img_box img { width:54px; height:54px;}
 .share_text .img_list .del { width:23px; height:23px; position:absolute; right:-8px; top:-8px; z-index:2; background:url(../images/pc_page/ico_del2.png) no-repeat; background-size:23px 23px; text-indent:-999px;}
 .share_text .img_list .img_add { float:left; border:1px solid #d5d5d5; width:54px; height:54px; background:#fcfcfc url(../images/pc_page/add_img.png) no-repeat center; background-size:34px 34px; text-indent:-9999px; overflow:hidden; margin-right:10px; border-radius:3px;}
 .share_btn { padding:10px 0px; text-align:right;}
-.share_btn input { width:72px; height:36px; border:0px; background:#ff9b30; color:#fff;}
+.share_btn input { width:72px; height:36px; border:0px; background:#6EAEFE; color:#fff;}
 
 .share_list { background:#fff;}
 .share_list li { border-bottom:1px solid #d5d5d5; padding:8px 15px;}
@@ -359,17 +359,17 @@
 .share_list li .ico_box a { display:block; float:right; margin-left:25px; padding-left:20px;}
 .share_list li .ico_box a.ico_zan { background:url(../images/pc_page/ico_zan.png) no-repeat left; background-size:16px 16px;}
 .share_list li .ico_box a.ico_pl { background:url(../images/pc_page/ico_pl.png) no-repeat left; background-size:16px 16px;}
-.share_list li .ico_box a.ico_zaned { background:url(../images/pc_page/ico_zan2.png) no-repeat left; background-size:16px 16px; color:#ff9b30}
-.share_list li .ico_box a.ico_pled { background:url(../images/pc_page/ico_pl2.png) no-repeat left; background-size:16px 16px; color:#ff9b30;}
+.share_list li .ico_box a.ico_zaned { background:url(../images/pc_page/ico_zan2.png) no-repeat left; background-size:16px 16px; color:#6EAEFE}
+.share_list li .ico_box a.ico_pled { background:url(../images/pc_page/ico_pl2.png) no-repeat left; background-size:16px 16px; color:#6EAEFE;}
 .share_list li .com_list { border-top:1px solid #e5e5e5; padding:8px 0px; margin-left:70px;}
-.share_list li .zan_box { padding-left:25px; color:#ff9b30; background:url(../images/pc_page/ico_zan3.png) no-repeat 0px 3px; background-size:18px 18px; line-height:24px; font-size:12px;}
+.share_list li .zan_box { padding-left:25px; color:#6EAEFE; background:url(../images/pc_page/ico_zan3.png) no-repeat 0px 3px; background-size:18px 18px; line-height:24px; font-size:12px;}
 .share_list li .li_list { margin-top:5px;}
 .share_list li .li_list p { line-height:20px; padding:3px 0px;}
-.share_list li .li_list span { color:#ff9b30;}
+.share_list li .li_list span { color:#6EAEFE;}
 .share_list li:last-child { border-bottom:0px;}
 .share_list .com_textbox { margin:5px 0px 5px 70px;}
 .share_list .com_textbox .text_area { width:848px; border:1px solid #e5e5e5; border-radius:3px; overflow:hidden; padding:4px 10px; line-height:20px; height:50px; resize:none; margin-bottom:10px;}
-.share_list .com_textbox .btn { width:72px; height:30px; color:#fff; background:#ff9b30; border:0px; border-radius:2px; overflow:hidden; float:right;}
+.share_list .com_textbox .btn { width:72px; height:30px; color:#fff; background:#6EAEFE; border:0px; border-radius:2px; overflow:hidden; float:right;}
 
 .tc_changetext { width:410px; background:#fff; position:fixed; left:50%; margin-left:-205px; top:50%; margin-top:-175px; z-index:9999;}
 .tc_changetext .box { padding:10px 25px; border-bottom:2px solid #eee;}

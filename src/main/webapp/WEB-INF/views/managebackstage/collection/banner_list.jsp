@@ -98,12 +98,13 @@ function deleteBanner(bannerid){
         <div class="tab_list">
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td">
-                	<td width="22%">图片</td>
-                    <td width="18%">链接地址</td>
-                    <td width="12%">所属页面</td>
-                    <td width="12%">修改时间</td>
-                    <td width="10%">创建时间 </td>
-                    <td width="12%">状态</td>
+                	<td>图片</td>
+                    <td>链接地址</td>
+                    <td>所属页面</td>
+                    <td>描述</td>
+                    <td>修改时间</td>
+                    <td>创建时间 </td>
+                    <td>状态</td>
                     <td>操作</td>
                 </tr>
                 <c:forEach items="${list }" var="li">
@@ -118,6 +119,7 @@ function deleteBanner(bannerid){
 	                    		会员页面banner图
 	                    	</c:otherwise>
 	                    </c:choose></td>
+	                    <td>${li.description }</td>
 	                    <td>${li.updatetime }</td>
 	                    <td>${li.createtime }</td>
 	                    <c:choose>

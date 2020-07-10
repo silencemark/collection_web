@@ -115,7 +115,7 @@ function alipayImageShowHide(rum,imagesrc){
                 <c:forEach items="${list }" var="li">
                 	<tr>
 	                	<td>${li.nickname }</td>
-	                    <td>V${li.weixinnum }</td>
+	                    <td>${li.weixinnum }</td>
 	                    <td onclick="weixinShowHide(0,'${li.weixinqrcode }');"><img src="${li.weixinqrcode }" width="48pxs" height="48px" alt="" /></td>
 	                    <td>${li.weixinrealname }</td>
 	                    <td>${li.alipaynum }</td>
@@ -136,23 +136,23 @@ function alipayImageShowHide(rum,imagesrc){
 <div class="div_mask" style="display:none;"></div>
 
 <div class="tc_changetext"  id="weixinimgdiv"  style="display:none;width: 560px;top:40%;">
-	<div class="tc_title"><span>展示微信收款码/span><a href="#" onclick="weixinShowHide(0,'')">×</a></div>
+	<div class="tc_title"><span>展示微信收款码</span><a href="#" onclick="weixinShowHide(1,'')">×</a></div>
     <div class="box">
     	<span>微信收款码</span>
         <img id="weixinimagesrc" width="400px" height="500px"></i>
         <div class="clear"></div>
     </div>
-    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="weixinShowHide(0,'')">确定</a></div>
+    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="weixinShowHide(1,'')">确定</a></div>
 </div>
 
 <div class="tc_changetext"  id="alipayimgdiv"  style="display:none;width: 560px;top:40%;">
-	<div class="tc_title"><span>展示支付宝收款码/span><a href="#" onclick="alipayImageShowHide(0,'')">×</a></div>
+	<div class="tc_title"><span>展示支付宝收款</span><a href="#" onclick="alipayImageShowHide(0,'')">×</a></div>
     <div class="box">
     	<span>支付宝收款码</span>
         <img id="alipayimagesrc" width="400px" height="500px"></i>
         <div class="clear"></div>
     </div>
-    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="alipayImageShowHide(0,'')">确定</a></div>
+    <div class="tc_btnbox"><a href="#"  class="bg_yellow" onclick="alipayImageShowHide(1,'')">确定</a></div>
 </div>
 </body>
 </html>

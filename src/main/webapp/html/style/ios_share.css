@@ -16,14 +16,14 @@
 .share_list li .ico_box a { display:block; float:right; margin-left:25px; padding-left:20px;}
 .share_list li .ico_box a.ico_zan { background:url(../images/share/ico_zan.png) no-repeat left; background-size:16px 16px;}
 .share_list li .ico_box a.ico_pl { background:url(../images/share/ico_pl.png) no-repeat left; background-size:16px 16px;}
-.share_list li .ico_box a.ico_zaned { background:url(../images/share/ico_zan2.png) no-repeat left; background-size:16px 16px; color:#ff9b30}
-.share_list li .ico_box a.ico_pled { background:url(../images/share/ico_pl2.png) no-repeat left; background-size:16px 16px; color:#ff9b30;}
+.share_list li .ico_box a.ico_zaned { background:url(../images/share/ico_zan2.png) no-repeat left; background-size:16px 16px; color:#6EAEFE}
+.share_list li .ico_box a.ico_pled { background:url(../images/share/ico_pl2.png) no-repeat left; background-size:16px 16px; color:#6EAEFE;}
 .share_list li .com_list { border-top:1px solid #e5e5e5; padding:8px 0px;}
-.share_list li .zan_box { padding-left:25px; color:#ff9b30; background:url(../images/share/ico_zan3.png) no-repeat 0px 3px; background-size:18px 18px; line-height:18px; font-size:14px;}
+.share_list li .zan_box { padding-left:25px; color:#6EAEFE; background:url(../images/share/ico_zan3.png) no-repeat 0px 3px; background-size:18px 18px; line-height:18px; font-size:14px;}
 .share_list li .li_list { margin-top:5px;}
 .share_list li .li_list p { line-height:20px; padding:3px 0px;}
-.share_list li .li_list span { color:#ff9b30;}
+.share_list li .li_list span { color:#6EAEFE;}
 .share_list li:last-child { border-bottom:0px;}
 .share_list .com_textbox { margin:5px 0px;}
 .share_list .com_textbox .text_area { width:100%; border:1px solid #e5e5e5; border-radius:3px; overflow:hidden; padding:4px 10px; line-height:20px; height:50px; resize:none; margin-bottom:10px;}
-.share_list .com_textbox .btn { width:72px; height:30px; color:#fff; background:#ff9b30; border:0px; border-radius:2px; overflow:hidden; float:right;}
+.share_list .com_textbox .btn { width:72px; height:30px; color:#fff; background:#6EAEFE; border:0px; border-radius:2px; overflow:hidden; float:right;}

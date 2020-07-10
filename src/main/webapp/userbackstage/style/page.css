@@ -25,10 +25,10 @@
 .page_tab { margin:16px 16px 0px 16px; background:#fff; padding:0px 30px 5px 30px; min-height:400px;}
 .page_tab .tab_name { border-bottom:2px solid #eee; height:55px; line-height:55px;}
 .page_tab .tab_name span { display:block; float:left; font-size:16px;}
-.page_tab .tab_name a { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#ff9b30; text-align:center;}
+.page_tab .tab_name a { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#6EAEFE; text-align:center;}
 .page_tab .tab_name a.wid_01 { width:90px;}
 .page_tab .tab_name .btn { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#a3a3a3; text-align:center; border:0px; cursor:pointer;}
-.page_tab .tab_name .btn:hover { background:#ff9b30;}
+.page_tab .tab_name .btn:hover { background:#6EAEFE;}
 .page_tab .tab_name .text { width:242px; border:1px solid #eee; height:30px; padding-left:10px; color:#666; float:right; margin:12px 0px 11px 0px;}
 .tab_list td { line-height:20px; padding:10px 10px; border-bottom:1px solid #eee;}
 .tab_list .head_td td { background:#f6f6f6 url(../images/page/td_bg.gif) repeat-x 0px bottom; padding-bottom:13px; border-bottom:1px solid #eee; border-top:1px solid #eee; color:#2f2f2f;}
@@ -130,7 +130,7 @@
 .tc_powerxx .box { padding:20px 0px;}
 .tc_powerxx .box span { display:block; margin-bottom:15px;}
 .tc_powerxx .box a { display:block; width:190px; height:34px; border:1px solid #eee; text-align:center; line-height:34px; font-size:16px; color:#666; margin:0px auto;}
-.tc_powerxx .box a:hover { background:#ff9b30; color:#fff; border:1px solid #ff9b30;}
+.tc_powerxx .box a:hover { background:#6EAEFE; color:#fff; border:1px solid #6EAEFE;}
 
 .tc_structure { width:320px; padding:0px 25px; background:#fff; position:fixed; z-index:9999; left:50%; margin-left:-185px; top:50%; margin-top:-240px; }
 
@@ -155,7 +155,7 @@
 .enlarge { padding:15px 0px;}
 .enlarge .text { width:254px; border:1px solid #eee; height:30px; padding-left:10px; color:#666; margin-right:10px; float:left;}
 .enlarge span { display:block; float:left; line-height:32px;}
-.enlarge .btn { width:60px; height:32px; border:0px; background:#ff9b30; color:#fff; float:right; cursor:pointer;}
+.enlarge .btn { width:60px; height:32px; border:0px; background:#6EAEFE; color:#fff; float:right; cursor:pointer;}
 
 .tc_addbriefing { width:330px; height:310px; padding:0px 25px; position:fixed; z-index:9999; left:50%; margin-left:-165px; top:50%; margin-top:-155px; background:#fff;}
 .tc_addbriefing .box { border-bottom:2px solid #eee; padding:15px 0px;}
@@ -163,7 +163,7 @@
 .tc_addbriefing .box .text { width:202px; float:left; height:30px; padding-left:10px; color:#666; border:1px solid #eee;}
 .tc_addbriefing .box .img { width:102px; height:102px; background:#eee; float:left;}
 .tc_addbriefing .box .txt { float:left; padding-left:25px;}
-.tc_addbriefing .box .sc_btn { width:60px; height:32px; border:0px; background:#ff9b30; color:#fff;}
+.tc_addbriefing .box .sc_btn { width:60px; height:32px; border:0px; background:#6EAEFE; color:#fff;}
 .tc_addbriefing .box p { margin-top:8px; color:#999; line-height:20px;}
 
 .tc_addstru { width:350px; height:298px; padding:0px 25px; position:fixed; z-index:9999; left:50%; margin-left:-175px; top:50%; margin-top:-150px; background:#fff;}
@@ -195,10 +195,10 @@
 .detail_edit .fiel_box { float:left; width:86%;}
 .detail_edit .fiel_name { float:left; line-height:32px; line-height:32px; color:#333; background:url(../images/page/flie.png) no-repeat left; padding-left:20px;}
 .detail_edit .fiel_num { float:left; line-height:32px; color:#999; padding:0px 10px;}
-.detail_edit .fiel_link { float:left; line-height:32px; color:#ff9b30; text-decoration:underline;}
+.detail_edit .fiel_link { float:left; line-height:32px; color:#6EAEFE; text-decoration:underline;}
 .detail_edit .fiel_scbtn { padding:10px 0px 20px 0px;}
 .detail_edit .fiel_scbtn input { width:90px; height:32px; background:#a3a3a3; border:0px; color:#fff; cursor:pointer;}
-.detail_edit .fiel_scbtn input:hover { background:#ff9b30;}
+.detail_edit .fiel_scbtn input:hover { background:#6EAEFE;}
 .detail_edit .fiel_scbtn em { margin-left:20px;}
 
 .news_detail { padding:20px 0px;}
@@ -234,7 +234,7 @@
 .sug_detail .fiel_box { height:32px;}
 .sug_detail .fiel_name { float:left; line-height:32px; line-height:32px; color:#333; background:url(../images/page/flie.png) no-repeat left; padding-left:20px;}
 .sug_detail .fiel_num { float:left; line-height:32px; color:#999; padding:0px 10px;}
-.sug_detail .fiel_link { float:left; line-height:32px; color:#ff9b30; text-decoration:underline;}
+.sug_detail .fiel_link { float:left; line-height:32px; color:#6EAEFE; text-decoration:underline;}
 
 .login_box { width:320px; height:330px; background:#fff; padding:10px 32px 0px 32px; position:fixed; z-index:101; left:50%; margin-left:-192px; top:50%; margin-top:-170px;}
 .login_box .name { height:80px; background:url(../images/public/logo_ico.png) no-repeat 42px 50%; line-height:80px; font-size:20px; color:#586166; text-align:center; padding-left:40px;}
@@ -243,7 +243,7 @@
 .login_box .xx_01 i { display:block; float:left; margin-left:10px;}
 .login_box .text { padding:15px 0px 25px 0px;}
 .login_box .text input { height:34px; border:0px; background:#ececec; padding:0px 10px; width:300px;}
-.login_box .btn input { width:100%; height:34px; color:#fff; border:0px; background:#ff9b30; cursor:pointer;}
+.login_box .btn input { width:100%; height:34px; color:#fff; border:0px; background:#6EAEFE; cursor:pointer;}
 
 .tc_changetext { width:360px; padding:0px 25px; background:#fff; position:fixed; left:50%; margin-left:-205px; top:50%; margin-top:-175px; z-index:9999;}
 .tc_changetext .box { padding:10px 0px; border-bottom:2px solid #eee;}
@@ -256,15 +256,15 @@
 .tc_addfile { width:360px; padding:0px 25px; background:#fff; position:fixed; left:50%; margin-left:-205px; top:50%; margin-top:-130px; z-index:9999;}
 .tc_addfile .box { padding:30px 0px; border-bottom:1px solid #e0e0e0;}
 .tc_addfile .box .text { width:260px; padding:0px 10px; border:1px solid #e0e0e0; height:30px; float:left;}
-.tc_addfile .box .btn { width:60px; height:32px; background:#ff9b30; color:#fff; border:0px; float:right;}
+.tc_addfile .box .btn { width:60px; height:32px; background:#6EAEFE; color:#fff; border:0px; float:right;}
 .tc_addfile .box span { display:block; color:#999; line-height:24px; padding-top:10px;}
 
 .tc_progress_bar { height:12px; width:300px; position:absolute; left:50%; margin-left:-150px; top:50%; margin-top:-6px; background:#fff; border-radius:12px; overflow:hidden; z-index:9999;}
-.tc_progress_bar span { display:block; width:50%; background:#ff9b30; height:12px; text-indent:-9999px; overflow:hidden;}
+.tc_progress_bar span { display:block; width:50%; background:#6EAEFE; height:12px; text-indent:-9999px; overflow:hidden;}
 
 .tc_addbanner { width:360px; padding:0px 25px; background:#fff; position:fixed; left:50%; margin-left:-205px; top:50%; margin-top:-175px; z-index:9999;}
 .tc_addbanner .tab_list { padding:20px 0px; border-bottom:1px solid #eee;}
 .tc_addbanner .pic { width:102px; float:left;}
 .tc_addbanner .xx { float:left; margin-left:20px;}
-.tc_addbanner .xx a { display:block; width:60px; height:32px; background:#ff9b30; color:#fff; text-align:center; line-height:32px;}
+.tc_addbanner .xx a { display:block; width:60px; height:32px; background:#6EAEFE; color:#fff; text-align:center; line-height:32px;}
 .tc_addbanner .xx span { display:block; line-height:20px; margin-top:10px;}

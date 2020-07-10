@@ -27,12 +27,12 @@
 .detail_box  .yellow { width:22%;}
 .detail_box  .yellow a.check { background:url(../images/public/check.png) no-repeat; background-size:100% 100%;}
 .detail_box  .yellow a.check_ed { background:url(../images/public/check_ed.png) no-repeat; background-size:100% 100%;}
-.detail_box  .yellow span { color:#ff9b30;}
+.detail_box  .yellow span { color:#6EAEFE;}
 .detail_box  .red a.check { background:url(../images/public/check_redpng) no-repeat; background-size:100% 100%;}
 .detail_box  .red a.check_ed { background:url(../images/public/check_ed_red.png) no-repeat; background-size:100% 100%;}
 .detail_box  .red span { color:#f00; padding-right:0px;}
 .detail_box  .w_green { color:#56bc3a;}
-.detail_box  .w_yellow { color:#ff9b30;}
+.detail_box  .w_yellow { color:#6EAEFE;}
 .detail_box  .w_red { color:#f00;}
 .detail_box .s_text { background:#f1f1f1; border-radius:3px; border:0px; width:70px; text-align:center; height:30px; margin:5px 5px; float:right; color:#666;}
 
@@ -68,7 +68,7 @@
 .month_sel i { display:block; width:24px; height:24px; overflow:hidden; text-indent:-9999px; overflow:hidden; float:left;}
 .month_sel i.pre { background:url(../images/public/link_right.png) no-repeat left; background-size:14px 14px;}
 .month_sel i.next { background:url(../images/public/link_left.png) no-repeat right; background-size:14px 14px;}
-.month_sel span { width:72px; text-align:center; line-height:24px; font-size:16px; color:#ff9b30; float:left; font-weight:normal;}
+.month_sel span { width:72px; text-align:center; line-height:24px; font-size:16px; color:#6EAEFE; float:left; font-weight:normal;}
 
 .welfare_list { background:#fff; margin-top:8px;}
 .welfare_list li { padding:11px 15px 11px 80px; position:relative; height:71px; border-bottom:1px solid #e5e5e5;}
@@ -76,7 +76,7 @@
 .welfare_list li .img img { width:54px; height:54px;}
 .welfare_list li .name { line-height:24px; min-height:24px;}
 .welfare_list li .name span { display:block; float:left;}
-.welfare_list li .name i { display:block; float:right; color:#ff9b30; font-size:12px; }
+.welfare_list li .name i { display:block; float:right; color:#6EAEFE; font-size:12px; }
 .welfare_list li .txt { line-height:24px; font-size:12px; color:#afafaf; height:24px;}
 .welfare_list li .txt span { float:left;}
 .welfare_list li .txt i { float:right;}

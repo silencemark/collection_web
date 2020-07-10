@@ -21,7 +21,7 @@
 .chart_box { background:#fff; padding:0px 0px 20px 0px; position:relative;}
 .chart_box .s_name { border-bottom:1px solid #bababa; padding:12px 15px; height:49px;}
 .chart_box .s_name span { display:block; float:left; background:url(../images/purchase/ico_shop.png) no-repeat left; background-size:14px 14px; line-height:24px; padding-left:20px; color:#424242; font-size:18px;}
-.chart_box .s_name i { color:#ff9b30; display:block; float:right; border:1px solid #ff9b30; padding:0px 12px; border-radius:24px; line-height:22px; font-size:12px;}
+.chart_box .s_name i { color:#6EAEFE; display:block; float:right; border:1px solid #6EAEFE; padding:0px 12px; border-radius:24px; line-height:22px; font-size:12px;}
 .chart_box .m_bt { margin-bottom:15px;}
 .chart_box .chart_name { line-height:24px; font-size:16px; padding:12px 15px 0px 15px; color:#898989;}
 .chart_box .chart_img { padding:0px 15px;}
@@ -35,7 +35,7 @@
 .tab_box .xx span i { color:#ff725f;}
 .tab_box .tab_name { border-top:1px solid #cbcbcb; height:44px;}
 .tab_box .tab_name span { display:block; width:50%; float:left; border-left:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5; text-align:center; line-height:42px; font-size:16px;color:#424242; height:43px;}
-.tab_box .tab_name span.active { color:#ff9b30; border-bottom:1px solid #ff9b30;}
+.tab_box .tab_name span.active { color:#6EAEFE; border-bottom:1px solid #6EAEFE;}
 .tab_box td { line-height:36px; text-align:center; border-top:1px solid #e5e5e5;}
 .tab_box .head_td td { text-align:center; background:#f8f8f8; color:#424242; border-top:0px;}
 .tab_box li { padding:0px 15px; line-height:36px; background:url(../images/public/link_left.png) no-repeat 95% 50%; background-size:13px 13px; border-bottom:1px solid #e5e5e5;}
@@ -78,7 +78,7 @@
 .pur_list .xx_01 i { display:block; float:right; margin-right:10px; background:url(../images/public/ico_user2.png) no-repeat left; background-size:13px 13px; padding-left:20px;}
 .pur_list .xx_02 { border-top:1px solid #e5e5e5; line-height:40px; height:41px;}
 .pur_list .xx_02 span { display:block; float:left; color:#757575;}
-.pur_list .xx_02 span em { color:#ff9b30; padding:0px 2px;}
+.pur_list .xx_02 span em { color:#6EAEFE; padding:0px 2px;}
 .pur_list .xx_02 span.all { width:42%;}
 .pur_list .xx_02 span.num { width:25%;}
 .pur_list .xx_02 i { display:block; float:right; color:#afafaf; font-size:12px;}
@@ -95,7 +95,7 @@
 .xx_two { margin-top:8px; background:#fff;}
 .xx_two .name { color:#424242; line-height:42px; height:43px; padding:0px 15px; border-bottom:1px solid #d5d5d5; font-size:16px;}
 .xx_two .name span { display:block; float:left;}
-.xx_two .name a.add { display:block; float:right; height:22px; background:#ff9b30; line-height:22px; margin:10px 0px; font-size:12px; color:#fff; padding:0px 12px; border-radius:2px;}
+.xx_two .name a.add { display:block; float:right; height:22px; background:#6EAEFE; line-height:22px; margin:10px 0px; font-size:12px; color:#fff; padding:0px 12px; border-radius:2px;}
 .xx_two ul { padding:0px 10px 5px 10px;}
 .xx_two li { background:#f6f6f6; padding:5px; font-size:12px; color:#afafaf; margin-top:5px; position:relative;}
 .xx_two li .close { z-index:5; position:absolute; right:0px; top:1px; width:18px; height:18px;}
@@ -111,8 +111,8 @@
 .xx_two .total { border-top:1px solid #d5d5d5; padding:0px 15px; line-height:40px; color:#757575; height:41px;}
 .xx_two .total span { display:block; float:left; width:50%}
 .xx_two .total i { display:block; float:left;}
-.xx_two .total em { color:#ff9b30; padding:0px 3px;}
-.xx_two .total a.add { display:block; float:right; height:22px; background:#ff9b30; line-height:22px; margin:9px 0px; font-size:12px; color:#fff; padding:0px 12px; border-radius:2px;}
+.xx_two .total em { color:#6EAEFE; padding:0px 3px;}
+.xx_two .total a.add { display:block; float:right; height:22px; background:#6EAEFE; line-height:22px; margin:9px 0px; font-size:12px; color:#fff; padding:0px 12px; border-radius:2px;}
 
 .xx_three { background:#fff; padding:5px 10px; margin-top:8px;}
 .xx_three .txt { border-bottom:1px solid #e5e5e5; line-height:36px; color:#999; padding:0px 5px;}

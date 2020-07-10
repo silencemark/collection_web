@@ -368,10 +368,7 @@ public class AppUserCenterController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		this.appUserCenterService.updateHeadImg(map);
-		data.put("status", 0);
-		data.put("message", "头像修改成功");
-		return data;	
+		return this.appUserCenterService.updateHeadImg(map);
 	}
 	
 	/**

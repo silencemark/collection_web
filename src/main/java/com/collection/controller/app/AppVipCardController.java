@@ -405,6 +405,34 @@ public class AppVipCardController extends BaseController{
 		return data;
 	}
 	
+
+	/**
+	 * 评论视频接口
+	 * 传入参数{"cardid":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/commentMovie")
+	@ResponseBody
+	public Map<String, Object> commentMovie(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appVipCardService.commentMovie(map);
+		data.put("status", 0);
+		data.put("message", "评论成功");
+		return data;
+	}
+	
 	/**
 	 * 进入出售页面获取会员卡信息，（VIP出售按钮触发）
 	 * 传入参数{"cardid":"123456"}

@@ -11,17 +11,17 @@
 .index_top .cp_num { background:url(../images/page/ico_cop.png) no-repeat left; height:72px; padding:6px 0px;  padding-left:95px; width:170px;  margin:0px auto;}
 .index_top .cp_num span { display:block;height:36px; line-height:36px; overflow:hidden;}
 .index_top .cp_num i { display:block; float:left;}
-.index_top .cp_num em { display:block; float:left; width:75px; font-size:18px; margin-left:10px;}
+.index_top .cp_num em { display:block; float:left; font-size:18px; margin-left:10px;}
 
 .page_tab { margin:16px 16px 0px 16px; background:#fff; padding:0px 30px 10px 30px; min-height:400px;}
 .page_tab .tab_name { border-bottom:2px solid #eee; height:55px; line-height:55px;}
 .page_tab .tab_name span { display:block; float:left; font-size:16px;}
 .page_tab .tab_name span i { margin-left:20px;}
-.page_tab .tab_name a { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#ff9b30; text-align:center;}
+.page_tab .tab_name a { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#6EAEFE; text-align:center;}
 .page_tab .tab_name a.wid_01 { width:90px;}
 .page_tab .tab_name a.wid_02 { width:90px;}
 .page_tab .tab_name .btn { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#a3a3a3; text-align:center; border:0px; cursor:pointer;}
-.page_tab .tab_name .btn:hover { background:#ff9b30;}
+.page_tab .tab_name .btn:hover { background:#6EAEFE;}
 .page_tab .tab_name .text { width:242px; border:1px solid #eee; height:30px; padding-left:10px; color:#666; float:right; margin:12px 0px 11px 0px;}
 .page_tab .noneborder { border:0px;}
 .tab_list td { line-height:20px; padding:10px 10px; border-bottom:1px solid #eee;}
@@ -138,7 +138,7 @@
 .enlarge { padding:15px 0px;}
 .enlarge .text { width:254px; border:1px solid #eee; height:30px; padding-left:10px; color:#666; margin-right:10px; float:left;}
 .enlarge span { display:block; float:left; line-height:32px;}
-.enlarge .btn { width:60px; height:32px; border:0px; background:#ff9b30; color:#fff; float:right; cursor:pointer;}
+.enlarge .btn { width:60px; height:32px; border:0px; background:#6EAEFE; color:#fff; float:right; cursor:pointer;}
 
 .tc_addbriefing { width:330px; height:310px; padding:0px 25px; position:fixed; z-index:9999; left:50%; margin-left:-165px; top:50%; margin-top:-155px; background:#fff;}
 .tc_addbriefing .box { border-bottom:2px solid #eee; padding:15px 0px;}
@@ -146,7 +146,7 @@
 .tc_addbriefing .box .text { width:202px; float:left; height:30px; padding-left:10px; color:#666; border:1px solid #eee;}
 .tc_addbriefing .box .img { width:102px; height:102px; background:#eee; float:left;}
 .tc_addbriefing .box .txt { float:left; padding-left:25px;}
-.tc_addbriefing .box .sc_btn { width:60px; height:32px; border:0px; background:#ff9b30; color:#fff;}
+.tc_addbriefing .box .sc_btn { width:60px; height:32px; border:0px; background:#6EAEFE; color:#fff;}
 .tc_addbriefing .box p { margin-top:8px; color:#999; line-height:20px;}
 
 .detail_edit { padding:15px;}
@@ -193,7 +193,7 @@
 .sys_ico li .bg_09 { background:#8b8eff;}
 
 .app_title span { display:block;}
-.app_title a { display:block; width:100px; height:32px; color:#fff; background:#ff9b30; text-align:center; line-height:32px; margin:46px 0px 10px 0px;}
+.app_title a { display:block; width:100px; height:32px; color:#fff; background:#6EAEFE; text-align:center; line-height:32px; margin:46px 0px 10px 0px;}
 .app_title i { display:block; color:#999;}
 .app_img { float:left; width:80px; height:128px; position:relative; margin-right:22px;}
 .app_img .a_del { display:block; width:16px; height:16px; position:absolute; right:-6px; top:-6px;}
@@ -251,7 +251,7 @@
 .login_box .text input { height:34px; border:0px; background:#ececec; padding:0px 10px; width:300px;}
 .login_box .text .wid_01 { width:145px; float:left;}
 .login_box .text .ymz_img { width:130px; height:34px; float:right; background:#bdd484;}
-.login_box .btn input { width:100%; height:34px; color:#fff; border:0px; background:#ff9b30; cursor:pointer;}
+.login_box .btn input { width:100%; height:34px; color:#fff; border:0px; background:#6EAEFE; cursor:pointer;}
 .login_box .link { line-height:20px; padding-top:10px; text-align:right;}
 .login_box .link a { color:#999;}
 .login_box .link2 { line-height:20px; padding-top:10px;}
