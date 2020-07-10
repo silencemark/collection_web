@@ -8,6 +8,7 @@
     width: 50px;
     height: 50px;
     float: left;
+    border-radius: 25px;
 }
 .userInfo .userName{
     width: 110px;
@@ -110,6 +111,13 @@
 .operationEl span{
     margin-left: 35px;
 }
+.operationEl input{
+    letter-spacing: 2px;
+    /* font-weight: bold; */
+}
+.operationEl input::-webkit-input-placeholder{
+    color: #dfdfdf;
+}
 .userXGOBut{
     display: inline;
     float: right;
@@ -140,9 +148,9 @@
     border-bottom: 3px solid #ebe9e9;
 }
 .gabTitle .active{
-    border-bottom: 3px solid #ed602a !important;
+    border-bottom: 3px solid #69aeff  !important;
     font-weight: 600 !important;
-    color: #ed602a !important;
+    color: #69aeff  !important;
 }
 .payWaitLoad{
     width: 96%;
@@ -224,6 +232,7 @@
     /* border-bottom: 1px solid #f2f1f1; */
     background: #fff;
     z-index: 2;
+    top:45px;
     position: fixed;
 }
 .comment img{
@@ -239,6 +248,7 @@
     border: 0;
     position: absolute;
     z-index: 1;
+    margin-top: 45px;
 }
 .commentWinCont{
     width: 100%;

@@ -9,6 +9,7 @@
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
      <script src="../js/jq-alert.js"></script>
+     <script src="../js/exif.js"></script>
      <style>
        .userSetMsg{
         float: right;
@@ -24,9 +25,10 @@
         账号设置
     </div>
     <div class="operationEl" style="margin-top:5px;height: 50px;">
-      <img src="../img/handPor-ic.png" style="width:45px;height:45px;margin-top:5px;"/>
+      <img :src="userInfo.headimage" id="tx" style="width:45px;height:45px;margin-top:5px; border-radius:22.5px;" />
       <!-- <span>修改头像</span> -->
-      <span class="userSetMsg" >修改头像</span>
+      <input id="cf" onchange="chagntx(this,'tx');" class="imgFileInput" type="file" accept="image/*" multiple="" style="width:45px;height:45px;margin-left:2%;margin-top:0px;">
+      <span class="userSetMsg" onclick="$('#cf').click()">修改头像</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
@@ -53,8 +55,9 @@
       <img src="../img/handPor-ic.png"/>
       <span>身份认证</span>
       <span class="userSetMsg" v-if="userInfo.isrealname==0" onclick="window.location.href='certification.html'" v-cloak>未认证</span>
-      <span class="userSetMsg" v-if="userInfo.isrealname==1" onclick="window.location.href='certificationInfo.html'" v-cloak>已认证</span>
-      <span class="userSetMsg" v-if="userInfo.isrealname==2" onclick="window.location.href='certificationInfo.html'" v-cloak>认证中</span>
+      <span class="userSetMsg" v-if="userInfo.isrealname==1" onclick="window.location.href='certificationInfo.html'" v-cloak>认证中</span>
+      <span class="userSetMsg" v-if="userInfo.isrealname==2" onclick="window.location.href='certificationInfo.html'" v-cloak>认证通过</span>
+      <span class="userSetMsg" v-if="userInfo.isrealname==3" onclick="window.location.href='certificationInfo.html'" v-cloak>认证失败</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
@@ -64,7 +67,7 @@
       <span class="userSetMsg" onclick="window.location.href='bindPayType.html'"  v-if="userInfo.ispaymentmethod==1"  v-cloak>已设置</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
-    <div class="operationEl">
+    <div class="operationEl"  onclick="window.location.href='changePasswrod.html'">
       <img src="../img/set-ic.png"/>
       <span>修改登录密码</span>
       <img src="../img/to-right.png" style="right:5%;"/>
@@ -98,7 +101,10 @@ new Vue({
     el: '#app',
     data: function() {
     return {
-        userInfo : {},
+        reqPath : reqPath,
+        userInfo : {
+          headimage:'../img/defaulttx.png'
+        },
     }
     },
     created() {
@@ -109,6 +115,8 @@ new Vue({
         getMyUserInfo(){
             var vueThis = this;
             jAjax("/appUserCenter/getMyUserInfo",{},function(data){
+                if(data.headimage)
+                  data.headimage = vueThis.reqPath+data.headimage;
                 vueThis.userInfo = data;
             });
         }

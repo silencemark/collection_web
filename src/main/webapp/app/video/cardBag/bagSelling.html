@@ -23,7 +23,7 @@
     <div  :class="`vipInfo-active vipInfo  v${orderInfo.cardid}-c`" 
     :style="`background-image:url('../img/V${orderInfo.cardid}_BG.png')`">
       <span style="margin-bottom:5px;">{{orderInfo.typename}}</span>
-      卫视热播电视剧、优质自制剧，您可以享受提前观看，新鲜好剧快人一步解锁剧情。热播剧集更新过程中会员可提前观看VIP集。
+        您的任务奖励还可以翻倍哦！看视频，做任务，就用享购影视 邀请好友领取任务卡完成任务后还可获得翻倍任务奖励
       <img :src="`../img/V${orderInfo.cardid}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
@@ -31,13 +31,13 @@
 
 <div class="payVipInfoCont" style="font-size:0.8rem;" v-cloak>
     <div style="font-weight:600;">{{orderInfo.cardidName}}专享影视</div>
-    <div>VIP单号 ：{{orderInfo.ordernum}}</div>
+    <div>交易单号 ：{{orderInfo.ordernum}}</div>
     <div>购买日期 ：{{orderInfo.buytime}}</div>
-    <div>VIP有效期至 ：{{orderInfo.duetime}}</div>
-    <div>已观影好评次数 ：{{orderInfo.alreadycount}} (次)</div>
+    <div>任务有效期至 ：{{orderInfo.duetime}}</div>
+    <div>完成任务次数 ：{{orderInfo.alreadycount}} (次)</div>
     <div>
-        恭喜您以及完成了会员VIP卡观影好评任务，如您不再需要此会员卡，您可以将您的VIP会员卡分享
-        给其他会员，同时您还可以领取2%的观影收益。祝你观影愉快！
+        恭喜您完成了此次任务，您的任务奖励还可以翻倍哦！看视频，做任务，就用享购影视 邀请好友领取
+        任务卡完成任务后还可获得翻倍任务奖励
     </div>
 </div>
 

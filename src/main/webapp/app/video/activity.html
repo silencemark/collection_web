@@ -40,7 +40,6 @@
                 <img src="https://puui.qpic.cn/tv/0/1015145605_1080607/0"></a>
                 <div>【传闻中的陈芊芊】赵露思丁禹兮开启剧本人生</div>
             </li>
-            <!--JS有问题必须多加两个查询-->
             <li>
                 <a href="#"><img src="https://puui.qpic.cn/tv/0/1013512686_1080607/0"></a>
                 <div>【黄鹂鸟·首播】林允张新成启奏蜜恋交响曲</div>
@@ -62,10 +61,10 @@
         <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
         :style="`background-image:url('img/V${item.forder}_BG.png')`" >
         <span style="margin-bottom:5px;">{{item.typename}}</span>
-        即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
+        即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
             <div class="v-numver" style="width: 90%;">
                 <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
-                <div>VIP卡期限：{{item.watchdays}}</div>
+                <div>任务期限：{{item.watchdays}}</div>
                 <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
                 <div>消耗XGO币：{{item.xgocoin}}</div>
                 <span class="clear">
@@ -78,12 +77,12 @@
         </div>
         <div v-else>
             <div v-if="item.havebuy==1 || item.havebuy==2">
-                <input type="button" v-if="item.havebuy==1" value="抢 购 中" :class="`active-but  v${item.forder}-bg`"/>
+                <input type="button" v-if="item.havebuy==1" value="任 务 抢 购 中" :class="`active-but  v${item.forder}-bg`"/>
                 <input type="button" v-if="item.havebuy==2" value="已抢购成功" :class="`active-but  v${item.forder}-bg`" 
                     onclick="window.location.href='cardBag/bagPayWait.html'"/>
             </div>
             <div v-else>
-                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)" value="立 即 抢 购" :class="`active-but  v${item.forder}-bg`" />
+                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)" value="领 取 任 务" :class="`active-but  v${item.forder}-bg`" />
                 <input type="button" v-if="item.isbuy==0" value="暂 未 开 启" :class="`active-but  v${item.forder}-bg`"/>
             </div>
         </div>

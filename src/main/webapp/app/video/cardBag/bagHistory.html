@@ -23,7 +23,7 @@
     <div onclick="window.location.href='bagPayWait.html'">抢购中</div>
     <div onclick="window.location.href='bagOwn.html'">已拥有</div>
     <div onclick="window.location.href='bagSale.html'">出售中</div>
-    <div onclick="window.location.href='bagHistory.html'" class="active">历史VIP卡</div>
+    <div onclick="window.location.href='bagHistory.html'" class="active">历史任务</div>
     <b class="clear"></b>
 </div>
 
@@ -32,12 +32,12 @@
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
-      卫视电视剧、新鲜好剧快人一步解锁剧情。剧集更新过程中会员可提前观看VIP集
+      看视频，做任务，就用享购影视 邀请好友领取任务卡完成任务后还可以获得翻倍任务奖励哟！
         <div class="v-numver" style="width: 90%;margin-top:35px;">
             <div>交易单号：{{item.ordernum}}</div>
             <div>出售时间：{{item.buytime.substr(0,10)}}</div>
-            <div>观影收益：{{item.profitprice}}</div>
-            <div>VIP状态：<b>已过期</b></div>
+            <div>任务奖励：{{item.profitprice}}</div>
+            <div>任务状态：<b>已过期</b></div>
             <span class="clear">
       </div>
       <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>

@@ -33,18 +33,18 @@
         <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`"
         :style="`background-image:url('../img/V${item.forder}_BG.png')`">
         <span style="margin-bottom:5px;">{{item.typename}}</span>
-        即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
+        即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
             <div class="v-numver" style="width: 90%;margin-top:45px;">
-                <div>已抢购时间：{{fmtTimeSecond(item.secondbuy,item)}}</div>
-                <div>VIP卡期限：{{item.watchdays}}天</div>
+                <div>已抢购时间：{{fmtTimeSecond(item.secondbuy)}}</div>
+                <div>任务期限：{{item.watchdays}}天</div>
                 <div>预计价格：{{item.minprice}} - {{item.maxprice}}</div>
-                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">抢购中</a></div>
+                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">抢购中...</a></div>
                 <span class="clear">
         </div>
         <img v-if="item.forder" :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
         </div>
         <div class="clear"></div>
-        <input type="button" value="正在抢购中..." :class="`active-but  v${item.forder}-bg`"/>
+        <input type="button" value="任务抢购中" :class="`active-but  v${item.forder}-bg`"/>
     </div>
     <div class="payWaitLoad"><img src="../img/timg.gif"/></div>
 </div>
@@ -53,10 +53,10 @@
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
-      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.remaincount}} 次可转让您的VIP卡！领取{{item.yield}}%观影收益。
+      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
             <div>交易单号：{{item.ordernum}}</div>
-            <div>VIP卡期限：{{item.watchdays}}天</div>
+            <div>任务期限：{{item.watchdays}}天</div>
             <div>购买价格：{{item.cardprice}}</div>
             <div>交易状态：
                 <a style="font-weight:600;color:#BA4A33;" v-if="item.status==1">待支付</a>
@@ -68,10 +68,10 @@
     </div>
     <div class="clear"></div>
 
-    <input type="button" v-if="item.status==1" :value="`立即支付(倒计时：${fmtTimeSecond(item.remaintime,item,true)})`" 
+    <input type="button" v-if="item.status==1" :value="`立即支付(倒计时：${fmtTimeSecond(item.remaintime)})`" 
         :class="`active-but  v${item.forder}-bg`" :onclick="`window.location.href='bagPay.html?orderid=${item.orderid}'`"/>
 
-    <input type="button" v-if="item.status==2" :value="`剩余自动审核时间(${fmtTimeSecond(item.remaintime,item,true)})`" 
+    <input type="button" v-if="item.status==2" :value="`剩余自动审核时间(${fmtTimeSecond(item.remaintime)})`" 
      :class="`active-but  v${item.forder}-bg`"/>
 </div>
 <div v-if="rushToBuyList.length==0 && waitPayCardList.length==0" class="notList">没有抢购中的记录</div>
@@ -117,34 +117,34 @@ new Vue({
         getWaitPayCard(){
             var vueThis = this;
             jAjax("/appVipCard/getRushToBuyList",{},function(data){
-                vueThis.rushToBuyList = data.resultlist;  
+                vueThis.rushToBuyList = data.resultlist;
+                if(vueThis.rushToBuyList && vueThis.rushToBuyList.length>0){
+                    setInterval(()=>{
+                        for(var k=0;k<vueThis.rushToBuyList.length;k++){
+                            vueThis.rushToBuyList[k].secondbuy += 1;
+                        }
+                    },1000);
+                }
             });
             jAjax("/appVipCard/getWaitPayCard",{},function(data){
                 vueThis.waitPayCardList = data.resultlist;
+                if(vueThis.waitPayCardList && vueThis.waitPayCardList.length>0){
+                    setInterval(()=>{
+                        for(var k=0;k<vueThis.waitPayCardList.length;k++){
+                            if(vueThis.waitPayCardList[k].remaintime<=0){
+                                vueThis.waitPayCardList[k].remaintime -= 1;
+                            }
+                        }
+                    },1000);
+                }
             });
         },
         //格式化 秒 时间显示
-        fmtTimeSecond(second,item,isCount){
-            if(isCount){
-                this.setInterFun(item)
-            }
+        fmtTimeSecond(second){
             if(second<60){
                 return second+'秒';
             }else{
                 return parseInt(second/60)+'分'+(second%60)+'秒';
-            }
-        },
-        //定时函数
-        setInterFun(item){
-            var vueThis = this;
-            if(!vueThis.timer){
-                vueThis.timer = setInterval(()=>{
-                    item.remaintime -= 1;
-                    if(item.remaintime<=0){
-                        item.isbuy = 1;
-                        clearInterval(vueThis.timer);
-                    }
-                },1000);
             }
         }
 

@@ -9,6 +9,7 @@
      <script src="js/jquery-3.4.1.js"></script>
      <script src="js/vue.js"></script>
      <script src="js/jq-alert.js"></script>
+     <script src="js/exif.js"></script>
  </head>
  <body>
   <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
@@ -16,8 +17,8 @@
 <section class="main"  id="app">
     <!--userInfo-->
     <div class="userInfo">
-        <img :src="myCenterData.headimage" v-if="myCenterData.headimage"/>
-        <img src="img/toux.png" v-if="!myCenterData.headimage"/>
+        <img :src="myCenterData.headimage" id="tx"/>
+        <input id="cf" onchange="chagntx(this,'tx');" class="imgFileInput" type="file" accept="image/*" multiple="" style="width:50px;height:50px;margin-left:5%;margin-top:0px;">
         <div class="userName">
             <span style="margin-top:3px;" v-cloak>{{myCenterData.nickname}}</span>
             <img src="img/duop.png" style="margin-top:5px;"/>
@@ -118,7 +119,10 @@
       el: '#app',
       data: function() {
         return {
-          myCenterData:{},
+          reqPath : reqPath,
+          myCenterData:{
+            headimage:'img/defaulttx.png'
+          },
         }
       },
       created() {
@@ -128,6 +132,8 @@
         getMyCenterData(){
           var vueThis = this;
           jAjax("/appUserCenter/myCenter",{},function(data){
+            if(data.headimage)
+              data.headimage = vueThis.reqPath+data.headimage;
             // data.growthvalue = 1000;
             // data.mingrowthvalue = 1;
             // data.maxgrowthvalue = 2000;

@@ -866,3 +866,64 @@ function fileChangeFun2(item,imgId,dataId){
         }
     });
 };
+
+
+/**
+ * 修改头像
+ */
+function chagntx(item,imgId){
+    var reader = new FileReader();
+    var AllowImgFileSize = 2100000;
+    var $file = $(item);
+    var fileObj = $file[0];
+    var file = fileObj.files[0];
+    var windowURL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+    var dataURL;
+    var $img = $("#"+imgId);
+    EXIF.getData(file, function() {
+        EXIF.getAllTags(this);
+        var Orientation = EXIF.getTag(this, 'Orientation');
+        if(fileObj && fileObj.files && fileObj.files[0]){
+            reader.readAsDataURL(fileObj.files[0]);
+            reader.onload = function(e){
+                var imgBase64Pic = reader.result;
+                var img = new Image();
+                if(windowURL){
+                    img.src = imgBase64Pic;
+                    img.onload = function(e){
+                    window.URL.revokeObjectURL(this.src);
+                    var expectWidth = this.naturalWidth;
+                    var expectHeight = this.naturalHeight;
+                    if (this.naturalWidth > this.naturalHeight && this.naturalWidth > 1024) {
+                        expectWidth = 1024;
+                        expectHeight = expectWidth * this.naturalHeight / this.naturalWidth;
+                    } else if (this.naturalHeight > this.naturalWidth && this.naturalHeight > 768) {
+                        expectHeight = 768;
+                        expectWidth = expectHeight * this.naturalWidth / this.naturalHeight;
+                    }
+                    var cacheCanvas = document.createElement("canvas");//缓存区的cavans
+                    cacheCanvas.width = expectWidth;
+                    cacheCanvas.height = expectHeight;
+                    var ctx = cacheCanvas.getContext("2d");
+                    ctx.drawImage(this, 0, 0, expectWidth, expectHeight);
+                    var newBase64 = cacheCanvas.toDataURL("image/jpeg", 0.8);
+                    if(AllowImgFileSize != 0 && AllowImgFileSize < newBase64.length){
+                        alert("上传失败，请上传不大于2M的图片");
+                        return;
+                    }else{
+                        $img.attr('src',newBase64);
+                        var base64 = newBase64.replace(/^data:image\/(png|jpeg);base64,/,"");
+                        jAjax("/appUserCenter/updateHeadImg",{headimage:base64},function(data){});
+                        $file.val("");//最后清空input File的val
+                    }
+                    }
+                }
+            };
+        }else{
+            dataURL = $file.val();
+            var imgObj = document.getElementById(imgId);
+            imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+            imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+        }
+    });
+};

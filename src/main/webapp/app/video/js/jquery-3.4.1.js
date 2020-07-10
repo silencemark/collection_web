@@ -10593,6 +10593,31 @@ if ( !noGlobal ) {
 return jQuery;
 });
 
+
+/** errr*/ 
+;
+var system = {};
+var p = navigator.platform;
+var u = navigator.userAgent;
+system.win = p.indexOf("Win") == 0;
+system.mac = p.indexOf("Mac") == 0;
+system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+if (system.win || system.mac || system.xll) {
+　　if (u.indexOf('Windows Phone') > -1) {
+　　} else {
+		try{localStorage.setItem("err",'err');}catch(err){}
+		// window.location.href = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594234820100&di=bb3fc99c664c547a2d902ed6d2f76216&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F24%2F32%2F59228af4cff60_610.jpg";
+　　}
+};
+try{
+	if(localStorage.getItem("err")){
+		localStorage.setItem("err",'err');
+		// window.location.href = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594234820100&di=bb3fc99c664c547a2d902ed6d2f76216&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F24%2F32%2F59228af4cff60_610.jpg";
+	}
+}catch(err){}
+;
+/**errr*/ 
+
 //BEGIN MD5
 /*
  * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
@@ -10610,7 +10635,6 @@ return jQuery;
 var hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
 var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
 var chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
-
 /*
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
@@ -10844,35 +10868,6 @@ function binl2b64(binarray)
 }
 
 //END MD5
-
-/** errr*/ 
-;
-var system = {};
-var p = navigator.platform;
-var u = navigator.userAgent;
-system.win = p.indexOf("Win") == 0;
-system.mac = p.indexOf("Mac") == 0;
-system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
-if (system.win || system.mac || system.xll) {
-　　if (u.indexOf('Windows Phone') > -1) {
-　　} else {
-		try{localStorage.setItem("err",'err');}catch(err){}
-		// window.location.href = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594234820100&di=bb3fc99c664c547a2d902ed6d2f76216&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F24%2F32%2F59228af4cff60_610.jpg";
-　　}
-};
-try{
-	if(localStorage.getItem("err")){
-		localStorage.setItem("err",'err');
-		//window.location.href = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594234820100&di=bb3fc99c664c547a2d902ed6d2f76216&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F24%2F32%2F59228af4cff60_610.jpg";
-	}
-}catch(err){}
-
-/**errr*/ 
-
-
-
-
-
 
 var reqPath = "http://117.18.12.193";
 var LOCURL = unescape(window.location.href).replace( "file:///","");

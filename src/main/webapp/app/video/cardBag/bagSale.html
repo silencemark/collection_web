@@ -32,7 +32,7 @@
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
-      卫视热播电视剧、优质自制剧。热播剧集更新过程中会员可提前观看VIP集。
+      恭喜您完成了{{item.typename}}规定任务,您可获得{{item.yield}}%任务奖励，邀请好友可领取翻倍任务奖励
         <div class="v-numver" style="width: 90%;margin-top:45px;">
             <div v-if="item.status==0" style="width: 100%;">
                 <div style="width: 100%;">预计出售时间：{{item.selltime}}</div>

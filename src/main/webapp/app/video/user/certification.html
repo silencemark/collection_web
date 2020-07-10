@@ -25,6 +25,9 @@
         身份认证
     </div>
     <div class="sfrzTitle">身份认证</div>
+    <div class="operationEl" style="background:rgb(250,250,250)">
+        <span style="margin-left:0px;color:#777;">国籍 ：中国</span>
+    </div>
     <div class="operationEl">
         <span style="margin-left:0;">姓名：</span>
         <div style="margin-top:-20px;">
@@ -37,7 +40,6 @@
             <input v-model="userInfo.idcard" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"  placeholder="请输入您的真实身份证号"  maxlength="18" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
         </div>
     </div>
-    
     <br>
     <div class="but-cont">
         <div class="btn btn-200" @click="certification">立 即 认 证</div>
