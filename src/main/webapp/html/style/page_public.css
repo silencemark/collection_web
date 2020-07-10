@@ -51,7 +51,7 @@
 .index_menu .bs_bg3 { background:#57c9d6;}
 .index_menu .span_box { position:absolute; bottom:12px; height:2px; width:36px; left:50%; margin-left:-12px;}
 .index_menu .span_box span { display:block; float:left; width:12px; height:12px; border-radius:12px; background:#e5e5e5; overflow:hidden; text-indent:-999px; overflow:hidden; margin:0px 3px;}
-.index_menu .span_box span.active { background:#ff9b30;}
+.index_menu .span_box span.active { background:#6EAEFE;}
 .index_menu .news_b { padding:0px; width:62px; height:62px; overflow:hidden;}
 .index_menu .news_b img { width:62px; height:62px;}
 .index_menu .news_b .oa_img { width:62px; height:62px;}
@@ -98,7 +98,7 @@
 .page_list .xx_01 b img { float:left; width:16px; height:16px;}
 .page_list .xx_02 { border-top:1px solid #e5e5e5; line-height:40px; height:41px;}
 .page_list .xx_02 span { display:block; float:left; color:#757575;}
-.page_list .xx_02 span em { color:#ff9b30; padding:0px 2px;}
+.page_list .xx_02 span em { color:#6EAEFE; padding:0px 2px;}
 .page_list .xx_02 span.all { width:42%;}
 .page_list .xx_02 span.num { width:25%;}
 .page_list .xx_02 span.lb { width:39%;}
@@ -107,7 +107,7 @@
 .page_list .xx_02 span.sj { color:#999; float:right;}
 .page_list .xx_02 span.name { display:block; float:left; background:url(../images/public/ico_user.png) no-repeat left; background-size:13px 13px; padding-left:20px;}
 .page_list .xx_02 span.w_green { color:#56bc3a;}
-.page_list .xx_02 span.w_yellow { color:#ff9b30;}
+.page_list .xx_02 span.w_yellow { color:#6EAEFE;}
 .page_list .xx_02 span.w_red { color:#f00;}
 .page_list .xx_02 i { display:block; float:right; color:#afafaf; font-size:12px;}
 .page_list .xx_02 i em { padding:0px 4px;}

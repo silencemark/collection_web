@@ -4,7 +4,7 @@
 .chart_box { background:#fff; padding:0px 0px 20px 0px; position:relative;}
 .chart_box .s_name { border-bottom:1px solid #bababa; padding:12px 15px; height:49px;}
 .chart_box .s_name span { display:block; float:left; background:url(../images/purchase/ico_shop.png) no-repeat left; background-size:14px 14px; line-height:24px; padding-left:20px; color:#424242; font-size:18px;}
-.chart_box .s_name i { color:#ff9b30; display:block; float:right; border:1px solid #ff9b30; padding:0px 12px; border-radius:24px; line-height:22px; font-size:14px;}
+.chart_box .s_name i { color:#6EAEFE; display:block; float:right; border:1px solid #6EAEFE; padding:0px 12px; border-radius:24px; line-height:22px; font-size:14px;}
 .chart_box .s_bor { border-bottom:1px solid #e5e5e5;}
 .chart_box .m_bt { margin-bottom:15px;}
 .chart_box .chart_img { padding:0px 15px;}
@@ -19,7 +19,7 @@
 .tab_box .tab { border-top:1px solid #cbcbcb; }
 .tab_box .tab_name { height:44px;}
 .tab_box .tab_name span { display:block; width:50%; float:left; border-left:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5; text-align:center; line-height:42px; font-size:18px;color:#424242; height:43px;}
-.tab_box .tab_name span.active { color:#ff9b30; border-bottom:1px solid #ff9b30;}
+.tab_box .tab_name span.active { color:#6EAEFE; border-bottom:1px solid #6EAEFE;}
 .tab_box td { line-height:36px; text-align:center; border-top:1px solid #e5e5e5;}
 .tab_box .head_td td { text-align:center; background:#f8f8f8; color:#424242; border-top:0px;}
 .tab_box li { padding:0px 15px; line-height:36px; background:url(../images/public/link_left.png) no-repeat 95% 50%; background-size:13px 13px; border-bottom:1px solid #e5e5e5;}

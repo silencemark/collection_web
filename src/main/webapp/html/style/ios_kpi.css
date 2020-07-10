@@ -4,12 +4,12 @@
 .ranking { background:#fff;}
 .ranking li { padding:6px 15px; border-bottom:1px solid #e5e5e5; height:43px;}
 .ranking li .num { float:left; line-height:30px; width:30%;}
-.ranking li .bg { color:#ff9b30; background:url(../images/public/crown.png) no-repeat 10px 2px; background-size:8px 8px; padding-right:15px;}
+.ranking li .bg { color:#6EAEFE; background:url(../images/public/crown.png) no-repeat 10px 2px; background-size:8px 8px; padding-right:15px;}
 .ranking li .name { float:left; width:40%;}
 .ranking li .name b { display:block; float:left; width:30px; height:30px; overflow:hidden; border-radius:30px; box-shadow:0px 0px 1px 0px #acacac;}
 .ranking li .name span { display:block; float:left; line-height:30px; margin-left:8px;}
 .ranking li .start { float:right; line-height:30px; background:url(../images/public/start1.png) no-repeat left; background-size:16px 16px; width:54px; text-align:right;}
-.ranking li .yellow { color:#ff9b30;}
+.ranking li .yellow { color:#6EAEFE;}
 .ranking li:last-child { border-bottom:0px;}
 
 .rule_list { background:#fff; margin-top:8px;}
@@ -42,6 +42,6 @@
 .star_list li.n_bor { border-bottom:0px;}
 .star_list .total { text-align:right; line-height:40px; color:#999; padding:0px 5px; height:40px;}
 .star_list .total span { float:right;}
-.star_list .total i { color:#ff9b30; padding:0px 4px;}
-.star_list .total a.add { display:block; float:left; height:22px; background:#ff9b30; line-height:22px; margin:9px 0px; font-size:14px; color:#fff; padding:0px 12px; border-radius:2px;}
+.star_list .total i { color:#6EAEFE; padding:0px 4px;}
+.star_list .total a.add { display:block; float:left; height:22px; background:#6EAEFE; line-height:22px; margin:9px 0px; font-size:14px; color:#fff; padding:0px 12px; border-radius:2px;}
 

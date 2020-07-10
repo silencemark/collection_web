@@ -77,10 +77,10 @@
 .ch_info .check_ed { display:block; width:14px; height:14px; margin:5px 0px; background:url(../images/public/check_ed.png) no-repeat; text-indent:-999px; overflow:hidden; float:left; background-size:100% 100%;}
 .ch_info .check { display:block; width:14px; height:14px; margin:5px 0px; background:url(../images/public/check.png) no-repeat; text-indent:-999px; overflow:hidden; float:left; background-size:100% 100%;}
 .ch_info .yzm_box { padding-bottom:12px; height:48px; position:relative; padding-right:112px;}
-.ch_info .yzm_btn { position:absolute; right:0px; top:0px; background:#ff9b30; color:#fff; width:102px; height:36px; border:0px; border-radius:2px;}
-.ch_info .link_txl { position:absolute; right:0px; top:0px; background:#fff; color:#ff9b30; width:102px; height:36px; border:1px solid #ff9b30; border-radius:2px; text-align:center; line-height:34px;}
+.ch_info .yzm_btn { position:absolute; right:0px; top:0px; background:#6EAEFE; color:#fff; width:102px; height:36px; border:0px; border-radius:2px;}
+.ch_info .link_txl { position:absolute; right:0px; top:0px; background:#fff; color:#6EAEFE; width:102px; height:36px; border:1px solid #6EAEFE; border-radius:2px; text-align:center; line-height:34px;}
 .ch_info .text_area { border:1px solid #e5e5e5; width:100%; height:36px; padding:6px 12px; height:132px; line-height:20px; color:#666; border-radius:2px;}
-.ch_info .btn_big { background:#ff9b30; color:#fff; width:100%; height:36px; border:0px; border-radius:2px;}
+.ch_info .btn_big { background:#6EAEFE; color:#fff; width:100%; height:36px; border:0px; border-radius:2px;}
 
 .notice_detail { padding:12px 15px;}
 .notice_detail .title { color:#424242; line-height:26px; font-size:18px;}
@@ -89,13 +89,13 @@
 .notice_detail .p_box { padding-top:12px; line-height:24px;}
 .notice_detail .p_box p { text-indent:2em;}
 
-.ico_edit { background:url(../images/public/ico_edit.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#ff9b30;font-size:14px;}
-.ico_del { background:url(../images/public/ico_del3.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#ff9b30;font-size:14px;}
-.ico_yaoqing { background:url(../images/public/ico_yq.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#ff9b30;font-size:14px;}
-.ico_yaoqing2 { background:url(../images/public/ico_yq2.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#ff9b30;font-size:14px;}
-.ico_jinyong { background:url(../images/public/ico_jy.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#ff9b30;font-size:14px;}
-.ico_qiyong { background:url(../images/public/ico_qy.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#ff9b30;font-size:14px;}
-.ico_shouquan { background:url(../images/public/ico_sq.png) no-repeat left; background-size:15px 15px; padding-left:16px; color:#ff9b30;font-size:14px;}
+.ico_edit { background:url(../images/public/ico_edit.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#6EAEFE;font-size:14px;}
+.ico_del { background:url(../images/public/ico_del3.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#6EAEFE;font-size:14px;}
+.ico_yaoqing { background:url(../images/public/ico_yq.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#6EAEFE;font-size:14px;}
+.ico_yaoqing2 { background:url(../images/public/ico_yq2.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#6EAEFE;font-size:14px;}
+.ico_jinyong { background:url(../images/public/ico_jy.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#6EAEFE;font-size:14px;}
+.ico_qiyong { background:url(../images/public/ico_qy.png) no-repeat left; background-size:13px 13px; padding-left:16px; color:#6EAEFE;font-size:14px;}
+.ico_shouquan { background:url(../images/public/ico_sq.png) no-repeat left; background-size:15px 15px; padding-left:16px; color:#6EAEFE;font-size:14px;}
 
 .ico_a {  margin-left:20px; float:right;}
 
@@ -149,7 +149,7 @@
 .foot_per span.first a.check_ed { background:url(../images/public/check_ed2.png) no-repeat; background-size:100% 100%;}
 .foot_per span.first a.check { background:url(../images/public/check2.png) no-repeat; background-size:100% 100%;}
 .foot_per span.first i { display:block; float:right; font-weight:normal; font-size:16px;}
-.foot_per span.active { background:#ff9b30; color:#fff;}
+.foot_per span.active { background:#6EAEFE; color:#fff;}
 
 .sys_set { background:#fff; margin-top:8px; padding:0px 10px;}
 .sys_set li { border-bottom:1px solid #e5e5e5; min-height:41px; padding:0px 5px;}
@@ -158,7 +158,7 @@
 .sys_set li em { display:block; float:right; line-height:40px; color:#afafaf;}
 
 .out_box { padding:12px 15px;}
-.out_box a { margin:0px auto; display:block; width:42%; height:36px; background:#ff9b30; color:#fff; text-align:center; line-height:36px; border-radius:3px;}
+.out_box a { margin:0px auto; display:block; width:42%; height:36px; background:#6EAEFE; color:#fff; text-align:center; line-height:36px; border-radius:3px;}
 
 .logo_name { text-align:center; padding:32px 0px;}
 .logo_name img { width:50%; max-width:365px; min-width:160px;}

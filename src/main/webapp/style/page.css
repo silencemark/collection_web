@@ -25,10 +25,10 @@
 .page_tab { margin:16px 16px 0px 16px; background:#fff; padding:0px 40px 5px 40px; min-height:400px;}
 .page_tab .tab_name { border-bottom:2px solid #eee; height:55px; line-height:55px;}
 .page_tab .tab_name span { display:block; float:left; font-size:16px;}
-.page_tab .tab_name a { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#ff9b30; text-align:center;}
+.page_tab .tab_name a { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#6EAEFE; text-align:center;}
 .page_tab .tab_name a.wid_01 { width:90px;}
 .page_tab .tab_name .btn { display:block; float:right; width:60px; height:32px; line-height:32px; margin:12px 0px 11px 15px; color:#fff; background:#a3a3a3; text-align:center; border:0px; cursor:pointer;}
-.page_tab .tab_name .btn:hover { background:#ff9b30;}
+.page_tab .tab_name .btn:hover { background:#6EAEFE;}
 .page_tab .tab_name .text { width:242px; border:1px solid #eee; height:30px; padding-left:10px; color:#666; float:right; margin:12px 0px 11px 0px;}
 .tab_list td { line-height:20px; padding:10px 10px; border-bottom:1px solid #eee;}
 .tab_list .head_td td { background:#f6f6f6 url(../images/page/td_bg.gif) repeat-x 0px bottom; padding-bottom:13px; border-bottom:1px solid #eee; border-top:1px solid #eee; color:#2f2f2f;}
@@ -138,7 +138,7 @@
 .enlarge { padding:15px 0px;}
 .enlarge .text { width:254px; border:1px solid #eee; height:30px; padding-left:10px; color:#666; margin-right:10px; float:left;}
 .enlarge span { display:block; float:left; line-height:32px;}
-.enlarge .btn { width:60px; height:32px; border:0px; background:#ff9b30; color:#fff; float:right; cursor:pointer;}
+.enlarge .btn { width:60px; height:32px; border:0px; background:#6EAEFE; color:#fff; float:right; cursor:pointer;}
 
 .tc_addbriefing { width:330px; height:310px; padding:0px 25px; position:fixed; z-index:9999; left:50%; margin-left:-165px; top:50%; margin-top:-155px; background:#fff;}
 .tc_addbriefing .box { border-bottom:2px solid #eee; padding:15px 0px;}
@@ -146,7 +146,7 @@
 .tc_addbriefing .box .text { width:202px; float:left; height:30px; padding-left:10px; color:#666; border:1px solid #eee;}
 .tc_addbriefing .box .img { width:102px; height:102px; background:#eee; float:left;}
 .tc_addbriefing .box .txt { float:left; padding-left:25px;}
-.tc_addbriefing .box .sc_btn { width:60px; height:32px; border:0px; background:#ff9b30; color:#fff;}
+.tc_addbriefing .box .sc_btn { width:60px; height:32px; border:0px; background:#6EAEFE; color:#fff;}
 .tc_addbriefing .box p { margin-top:8px; color:#999; line-height:20px;}
 
 .tc_addstru { width:350px; height:298px; padding:0px 25px; position:fixed; z-index:9999; left:50%; margin-left:-175px; top:50%; margin-top:-150px; background:#fff;}
@@ -211,7 +211,7 @@
 .login_box .xx_01 i { display:block; float:left; margin-left:10px;}
 .login_box .text { padding:15px 0px 25px 0px;}
 .login_box .text input { height:34px; border:0px; background:#ececec; padding:0px 10px; width:300px;}
-.login_box .btn input { width:100%; height:34px; color:#fff; border:0px; background:#ff9b30; cursor:pointer;}
+.login_box .btn input { width:100%; height:34px; color:#fff; border:0px; background:#6EAEFE; cursor:pointer;}
 
 .tc_changetext { width:360px; padding:0px 25px; background:#fff; position:fixed; left:50%; margin-left:-205px; top:50%; margin-top:-175px; z-index:9999;}
 .tc_changetext .box { padding:10px 0px; border-bottom:2px solid #eee;}

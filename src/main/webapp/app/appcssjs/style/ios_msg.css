@@ -4,7 +4,7 @@
 .msg_nav { border-bottom:1px solid #e5e5e5;}
 .msg_nav span { display:block; float:left; width:34%; text-align:center; line-height:32px; height:32px; border-right:1px solid #e5e5e5;}
 .msg_nav span.last { width:32%; border-right:0px;}
-.msg_nav span.active { color:#ff9b30; border-bottom:2px solid #ff9b30;}
+.msg_nav span.active { color:#6EAEFE; border-bottom:2px solid #6EAEFE;}
 
 .msg_index { background:#fff;}
 .msg_index li { border-bottom:1px solid #d5d5d5; height:64px; overflow:hidden;}
@@ -55,7 +55,7 @@
 .info_box1 .user_list li b { display:block; width:52px; height:52px; overflow:hidden; border-radius:52px; margin:0px auto; box-shadow:0px 0px 1px #ddd;}
 .info_box1 .user_list li b img { min-height:52%;}
 .info_box1 .user_list li span { display:block; text-align:center; line-height:24px;}
-.info_box1 .user_list li b.add { background:url(../images/msg/add_img.png) no-repeat center; background-size:28px 28px; border:1px solid #ff9b30; text-indent:-9999px; overflow:hidden;}
+.info_box1 .user_list li b.add { background:url(../images/msg/add_img.png) no-repeat center; background-size:28px 28px; border:1px solid #6EAEFE; text-indent:-9999px; overflow:hidden;}
 
 .info_box2 { background:#fff; margin-top:8px;}
 .info_box2 li { border-bottom:1px solid #d5d5d5; padding:0px 15px; height:41px;}

@@ -7,6 +7,7 @@
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/My97DatePicker/WdatePicker.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/app/appcssjs/sweetalert/dist/sweetalert.css">
 <script src="<%=request.getContextPath() %>/app/appcssjs/sweetalert/dist/sweetalert-dev.js"></script>  
 
@@ -58,40 +59,48 @@
     <div class="index_top">    	
         <div class="wid_01">
             <div class="cp_num">
-                <span><i>目前市场金额</i><em class="yellow">200000</em><i>元</i><div class="clear"></div></span>
-                <span><i>多余市场金额</i><em class="yellow">50000</em><i>元</i><div class="clear"></div></span>
+                <span><i>市场总流水金额</i><em class="yellow">${indexInfo.sumprice}</em><i>元</i><div class="clear"></div></span>
+                <span><i>系统出售总金额</i><em class="yellow">${indexInfo.sysprice}</em><i>元</i><div class="clear"></div></span>
             </div>
         </div>
     	<div class="wid_02">
             <div class="user_num">
-                <span><i>已登录人员</i><em class="yellow">500</em><i>人</i><div class="clear"></div></span>
-                <span><i>未登陆人员</i><em class="yellow">200</em><i>人</i></span>
+                <span><i>总注册人数</i><em class="yellow">${indexInfo.usernum}</em><i>人</i><div class="clear"></div></span>
+                <span><i>有效用户人数</i><em class="yellow">${indexInfo.effectiveusernum}</em><i>人</i></span>
             </div> 
         </div>
         <div class="clear"></div>
     </div>    
     <div class="page_tab">
         <div class="tab_name"><span class="gray1">消息</span></div>
+        <div class="sel_box">
+        	<form action="<%=request.getContextPath()%>/managebackstage/index" method="post">
+        		<input type="text" class="text" placeholder="请输入标题" name="title" value="${map.title}"/>
+	            <input type="text" class="text" placeholder="请输入内容" name="message" value="${map.message }"/>
+	            <select class="sel" name="status">
+	            	<option>全部</option>
+	            	<option value="1" <c:if test="${map.status == '1' }">selected="selected"</c:if>>成功</option>
+	            	<option value="0" <c:if test="${map.status == '0' }">selected="selected"</c:if>>失败</option>
+	            </select>
+	            <input type="text" class="text" placeholder="请输入订单日期"  name="createtime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" value="${map.createtime}"/></td>
+	            <input type="submit" value="搜索" class="find_btn"  />
+            </form>
+            <div class="clear"></div>
+        </div>
         <div class="tab_list">
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td2">
-                	<td width="60%">摘要</td>
-                    <td width="30%">时间</td>
-                    <td>操作</td>
+                	<td>标题</td>
+                    <td>内容</td>
+                    <td>消息类别</td>
+                    <td>时间</td>
                 </tr>
                 <c:forEach items="${noticeList}" var="item">
 	                <tr>
-	                	<td>${item.content}</td>
+	                	<td>${item.title}</td>
+	                    <td>${item.message}</td>
+	                    <td>${item.status == 1?'成功':'失败'}</td>
 	                    <td>${item.createtime}</td>
-	                    <td><a href="javascript:void(0)" class="link">查看</a></td>
-	                    <%-- <c:choose>
-	                    	<c:when test="${item.type==1}">
-	                    		<td><a href="javascript:void(0)" onclick="linkurlpower(1,'${item.companyid}')" class="link">查看</a></td>
-	                    	</c:when>
-	                    	<c:otherwise>
-	                    		<td><a href="javascript:void(0)" onclick="linkurlpower(2,'${item.reasonid}')" class="link">查看</a></td>
-	                    	</c:otherwise>
-	                    </c:choose> --%>
 	                </tr>
                 </c:forEach>
             </table>

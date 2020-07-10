@@ -4,10 +4,10 @@
 .rst_report { background:#fff; margin-top:8px;}
 .rst_report .s_name { border-bottom:1px solid #bababa; padding:12px 15px; height:49px;}
 .rst_report .s_name span { display:block; float:left; background:url(../images/purchase/ico_shop.png) no-repeat left; background-size:14px 14px; line-height:24px; padding-left:20px; color:#424242; font-size:18px;}
-.rst_report .s_name i { color:#ff9b30; display:block; float:right; border:1px solid #ff9b30; padding:0px 12px; border-radius:24px; line-height:22px; font-size:12px;}
+.rst_report .s_name i { color:#6EAEFE; display:block; float:right; border:1px solid #6EAEFE; padding:0px 12px; border-radius:24px; line-height:22px; font-size:12px;}
 .rst_report .nav_list { height:41px; border-bottom:1px solid #e5e5e5;}
 .rst_report .nav_list li { float:left; line-height:40px; width:20%; border-right:1px solid #e5e5e5; text-align:center; overflow:hidden; color:#424242;}
-.rst_report .nav_list li.active { color:#ff9b30; border-bottom:1px solid #ff9b30;}
+.rst_report .nav_list li.active { color:#6EAEFE; border-bottom:1px solid #6EAEFE;}
 .rst_report .report_chart { padding:10px 10px;}
 
 .time_sel { background:#fff; height:34px; padding:0px 15px 10px 15px;}
@@ -15,7 +15,7 @@
 .time_sel i { display:block; width:24px; height:24px; overflow:hidden; text-indent:-9999px; overflow:hidden; float:left;}
 .time_sel i.pre { background:url(../images/public/link_right.png) no-repeat left; background-size:14px 14px;}
 .time_sel i.next { background:url(../images/public/link_left.png) no-repeat right; background-size:14px 14px;}
-.time_sel span { width:132px; text-align:center; line-height:24px; font-size:16px; color:#ff9b30; float:left; font-weight:normal;}
+.time_sel span { width:132px; text-align:center; line-height:24px; font-size:16px; color:#6EAEFE; float:left; font-weight:normal;}
 
 .appraise_list { background:#fff;}
 .appraise_list li { border-bottom:1px solid #d5d5d5;}
@@ -24,7 +24,7 @@
 .appraise_list li .head_line span.down { background:url(../images/public/link_down.png) no-repeat left; background-size:13px 13px; }
 .appraise_list li .head_line span.up { background:url(../images/public/link_up.png) no-repeat left; background-size:13px 13px;}
 .appraise_list li .head_line i { display:block; float:left; color:#757575; font-size:13px;}
-.appraise_list li .head_line em { color:#ff9b30;}
+.appraise_list li .head_line em { color:#6EAEFE;}
 .appraise_list li .head_line a { display:block; float:right; height:24px; font-size:12px; color:#6ac83c; border:1px solid #6ac83c; border-radius:24px; line-height:22px; width:66px; margin:8px 0px; text-align:center;}
 .appraise_list li .start_box { border-top:1px solid #d5d5d5;}
 .appraise_list li .start { margin:0px 15px; min-height:37px; border-bottom:1px solid #e5e5e5;}
@@ -64,7 +64,7 @@
 
 .nav_list { height:41px; border-bottom:1px solid #e5e5e5; background:#fff; overflow:hidden;}
 .nav_list span { display:block; float:left; line-height:40px; width:33%; border-left:1px solid #e5e5e5; text-align:center; overflow:hidden; color:#424242; font-size:16px;}
-.nav_list span.active { color:#ff9b30; border-bottom:1px solid #ff9b30;}
+.nav_list span.active { color:#6EAEFE; border-bottom:1px solid #6EAEFE;}
 .nav_list span.first { width:34%;}
 
 .ep_kpi { background:#fff;}
@@ -75,7 +75,7 @@
 .ep_kpi li .time_xx b { display:block; float:right; width:14px; height:14px; margin:13px 0px; text-indent:-999px; overflow:hidden;}
 .ep_kpi li .time_xx b.down { background:url(../images/public/link_down.png) no-repeat; background-size:14px 14px;}
 .ep_kpi li .time_xx b.up { background:url(../images/public/link_up.png) no-repeat; background-size:14px 14px;}
-.ep_kpi li em { color:#ff9b30;}
+.ep_kpi li em { color:#6EAEFE;}
 .ep_kpi li .num { line-height:40px; height:41px; border-top:1px solid #e5e5e5;}
 .ep_kpi li .num span { text-align:center; display:block; color:#757575; width:50%; float:left;}
 .ep_kpi li:last-child { border-bottom:0px;}
@@ -108,6 +108,6 @@
 .daily_xx .span_box span { display:block; float:left; line-height:20px; width:50%;}
 .daily_xx .close { z-index:5; position:absolute; right:0px; top:1px; width:18px; height:18px;}
 .daily_xx .btn_box { padding:5px 15px; height:32px;}
-.daily_xx a.add { display:block; float:left; height:22px; background:#ff9b30; line-height:22px; font-size:12px; color:#fff; padding:0px 12px; border-radius:2px;}
+.daily_xx a.add { display:block; float:left; height:22px; background:#6EAEFE; line-height:22px; font-size:12px; color:#fff; padding:0px 12px; border-radius:2px;}
 .daily_xx .txt { margin:5px 5px 0px 5px; background:#f6f6f6; padding:5px 10px; position:relative; font-size:12px; line-height:20px;}
 .pad_bt { padding-bottom:5px;}

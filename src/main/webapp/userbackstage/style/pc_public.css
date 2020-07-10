@@ -31,13 +31,13 @@ i,em { font-style:normal;}
 
 .gray1 { color:#2f2f2f;}
 .gray2 { color:#666;}
-.yellow { color:#ff9b30;}
+.yellow { color:#6EAEFE;}
 .blue { color:#058ce2;}
 .red { color:#ff1b1b;}
 .green { color:#72bf53;}
 .bg_gay1 { background:#a3a3a3; color:#fff;}
 .bg_gay2 { background:#ccc; color:#fff}
-.bg_yellow { background:#ff9b30; color:#fff;}
+.bg_yellow { background:#6EAEFE; color:#fff;}
 
 .head_box { background:#5f5b57; height:76px; overflow:hidden;}
 .head_box .box { width:1240px; height:76px; margin:0px auto;}
@@ -61,7 +61,7 @@ i,em { font-style:normal;}
 .list_none { text-align:center; padding:72px 0px; color:#b3afaf; font-size:14px;}
 .list_none b { display:block; width:293px; margin:0px auto;}
 .list_none span { display:block; line-height:22px; margin:15px; color:#afafaf;}
-.list_none .yellow { color:#ff9b30;}
+.list_none .yellow { color:#6EAEFE;}
 
 #Pagination { height:25px; margin:20px auto;}
 #Pagination .pagination { float:left; height:25px;}

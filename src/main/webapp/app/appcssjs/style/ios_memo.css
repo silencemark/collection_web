@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-.memo_top { background:#ff9b30; color:#fff; padding:20px 25px;}
+.memo_top { background:#6EAEFE; color:#fff; padding:20px 25px;}
 .memo_top .xx_l { float:left;}
 .memo_top .xx_l span { display:block; float:left; font-size:40px; font-weight:lighter; line-height:50px;}
 .memo_top .xx_l i { display:block; float:left; line-height:25px; padding-left:20px;}
@@ -18,8 +18,8 @@
 .memo_list .li_list ul { border-left:1px solid #d5d5d5; padding-left:15px;}
 .memo_list .li_list li { border-bottom:1px solid #e5e5e5; line-height:38px; position:relative; color:#424242; padding-left:60px;}
 .memo_list .li_list li .point { background:#fff; width:11px; height:11px; border:1px solid #d5d5d5; border-radius:11px; position:absolute; left:-21px; top:14px; z-index:10;}
-.memo_list .li_list li.active { color:#ff9b30;}
-.memo_list .li_list li.active .point { background:#ff9b30; border:1px solid #ff9b30;}
+.memo_list .li_list li.active { color:#6EAEFE;}
+.memo_list .li_list li.active .point { background:#6EAEFE; border:1px solid #6EAEFE;}
 .memo_list .li_list li i { display:block; width:60px; position:absolute; line-height:38px; left:0px; top:0px;}
 .memo_list .li_list li span { display:block; background:url(../images/public/link_left.png) no-repeat right; background-size:13px 13px; padding-right:20px; height:40px; overflow:hidden;}
 .memo_list .li_list li:last-child { border-bottom:0px;}

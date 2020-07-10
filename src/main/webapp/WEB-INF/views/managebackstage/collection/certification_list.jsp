@@ -153,8 +153,8 @@ function update(certificationid){
     <div class="box">
         <span>审核：</span>
         <select class="sel" name="status" name="status">
-           	<option value="1">审核通过</option>
-           	<option value="2">审核拒绝</option>
+           	<option value="2">审核通过</option>
+           	<option value="3">审核拒绝</option>
          </select>
         <div class="clear"></div>
         <span>拒绝原因</span>

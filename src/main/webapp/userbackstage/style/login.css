@@ -21,14 +21,14 @@
 .login_box .text_box span input { width:100%; font-size:18px; color:#666; height:55px; line-height:55px; border:0px; background:none;}
 .login_box .text_box span .yzm_btn { width:140px; height:42px; background:#ffc383;  border:0px; color:#fff; font-size:16px; position:absolute; right:0px; top:5px; line-height:42px; border-radius:2px;}
 .login_box .text_box b { display:block; padding-top:15px;}
-.login_box .text_box b input { width:100%; height:52px; background:#ff9b30; color:#fff; font-size:20px; border:0px; border-radius:2px;}
+.login_box .text_box b input { width:100%; height:52px; background:#6EAEFE; color:#fff; font-size:20px; border:0px; border-radius:2px;}
 .login_box .link_xx { height:30px; margin-top:10px; line-height:30px; font-size:14px;}
 .login_box .link_xx i { display:block; float:left; color:#666;}
-.login_box .link_xx i a { color:#ff9b30; text-decoration:underline;}
+.login_box .link_xx i a { color:#6EAEFE; text-decoration:underline;}
 .login_box .link_xx a.link_a { display:block; float:right; color:#666;}
 .login_box .ewm_xx { padding:30px 0px 30px 0px; text-align:center;}
 .login_box .ewm_xx b { display:block;}
-.login_box .ewm_xx span { display:block; color:#ff9b30; font-size:20px; line-height:30px; margin-top:5px;}
+.login_box .ewm_xx span { display:block; color:#6EAEFE; font-size:20px; line-height:30px; margin-top:5px;}
 .login_box .name { color:#424242; font-size:24px; line-height:62px; height:62px; background:#e5e5e5; padding:0px 30px;}
 .login_password { height:340px; margin-top:-135px;}
 .login_password .text_box { padding-top:25px;}
@@ -39,8 +39,8 @@
 .choice_cp ul { padding:32px 30px 16px 30px;}
 .choice_cp li { margin-bottom:16px;}
 .choice_cp li a { display:block; border:1px solid #e5e5e5; border-radius:3px; text-align:center; line-height:56px; font-size:18px;}
-.choice_cp li a.active { background:#ff9b30; color:#fff; border:1px solid #ff9b30;}
-.choice_cp li a:hover { background:#ff9b30; color:#fff; border:1px solid #ff9b30;}
+.choice_cp li a.active { background:#6EAEFE; color:#fff; border:1px solid #6EAEFE;}
+.choice_cp li a:hover { background:#6EAEFE; color:#fff; border:1px solid #6EAEFE;}
 
 .agreement { width:1130px; padding:10px 35px; background:#fff; margin:30px auto 0px auto; min-height:70%;}
 .agreement .name { font-size:24px; text-align:center; border-bottom:1px solid #e5e5e5; line-height:80px; margin-bottom:20px; color:#424242;}
@@ -49,14 +49,14 @@
 .reg_page { width:480px; background:#fff; padding:30px 30px; min-height:256px; position:fixed; z-index:101; left:50%; margin-left:-270px; top:50%;}
 .reg_nav { width:480px; height:56px;}
 .reg_nav span { display:block; float:left; width:32px; height:32px; background:#ccc; padding:12px; border-radius:56px;}
-.reg_nav .active { background:#ff9b30;}
+.reg_nav .active { background:#6EAEFE;}
 .reg_nav i { float:left; display:block; height:2px; background:#e1e1e1; width:69px; text-indent:-999px; overflow:hidden; margin:27px 8px;}
 
 .reg_box { padding-top:20px;}
 .reg_box span { display:block; border-bottom:1px solid #d5d5d5; line-height:50px; padding:0px 12px 0px 62px; position:relative;}
 .reg_box span input { width:100%; font-size:18px; color:#666; height:50px; line-height:50px; border:0px; background:none;}
 .reg_box .yzm_box { position:relative; padding-right:152px;}
-.reg_box .yzm_btn { width:140px; height:42px; background:#ff9b30;  border:0px; color:#fff; font-size:14px; position:absolute; right:0px; top:7px; line-height:36px; border-radius:3px;}
+.reg_box .yzm_btn { width:140px; height:42px; background:#6EAEFE;  border:0px; color:#fff; font-size:14px; position:absolute; right:0px; top:7px; line-height:36px; border-radius:3px;}
 .reg_box span.bg01 { background:url(../images/login/ico_01.png) no-repeat 15px 50%; background-size:24px 24px;}
 .reg_box span.bg02 { background:url(../images/login/ico_02.png) no-repeat 15px 50%; background-size:24px 24px;}
 .reg_box span.bg03 { background:url(../images/login/ico_03.png) no-repeat 15px 50%; background-size:24px 24px;}
@@ -64,9 +64,9 @@
 .reg_box span.bg05 { background:url(../images/login/ico_05.png) no-repeat 15px 50%; background-size:24px 24px;}
 .reg_box span.bg06 { background:url(../images/login/ico_06.png) no-repeat 15px 50%; background-size:24px 24px;}
 .reg_box b { display:block; padding-top:32px; height:52px;}
-.reg_box b .btn_login { width:100%; height:52px; background:#ff9b30; color:#fff; font-size:20px; border:0px; border-radius:2px;}
+.reg_box b .btn_login { width:100%; height:52px; background:#6EAEFE; color:#fff; font-size:20px; border:0px; border-radius:2px;}
 .reg_box b .btn_next { width:100%; height:52px; background:#ccc; color:#fff; font-size:20px; border:0px; border-radius:2px; float:left;}
 .reg_box em { display:block; line-height:40px; color:#b3b3b3; font-size:14px; margin-top:5px;}
-.reg_box em a { color:#ff9b30;}
+.reg_box em a { color:#6EAEFE;}
 .reg_box .must { color:#f00; position:absolute; left:5px; top:0px; line-height:42px;}
 .reg_box .succes { text-align:center; color:#999; font-size:18px; line-height:24px; padding:25px 0px;}

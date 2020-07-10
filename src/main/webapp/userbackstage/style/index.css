@@ -17,7 +17,7 @@
 .banner-box .hd ul li.on{background:#fff; opacity:1;}
 
 .index_menu { padding-top:6px;}
-.index_menu li { float:left; width:236px; height:112px; background:#ff9b30; border-radius:6px; overflow:hidden; margin-top:14px;}
+.index_menu li { float:left; width:236px; height:112px; background:#6EAEFE; border-radius:6px; overflow:hidden; margin-top:14px;}
 .index_menu li.mid { margin:14px 20px 0px 20px;}
 .index_menu li a { display:block; width:236px; height:112px; color:#fff; position:relative;}
 .index_menu li b { display:block; float:left; width:72px; height:72px; padding:20px 15px;}
