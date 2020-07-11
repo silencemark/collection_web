@@ -15,12 +15,12 @@
 
 	<section class="main"  id="app">
 	    <div class="title" style="position: fixed;z-index:3;">
-	         <img src="../img/to-left.png" onclick="history.back(-1)"/>
+	         <img src="../img/to-left.png" :onclick="`window.location.href='bagOwn.html?orderid=${comment.orderid}'`"/>
 	        观影好评
 	    </div>
 
 	<div class="comment">
-		<div v-if="orderid">
+		<div v-if="comment.orderid">
 			<span style="font-weight:600;margin-left:20px;">全部好评</span>
 			<span style="float: right;margin-right:55px;" v-if="wMin<=1" @click="goComment">
 				参与评论
@@ -71,13 +71,13 @@
 	    <div class="commentWinCont">
 	        <div class="xinCont">
 	            为影片打分：
-	            <img :src="comment.xNum>0?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=1" class="xin"/>
-	            <img :src="comment.xNum>1?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=2" class="xin" style="margin-left: 30px;"/>
-	            <img :src="comment.xNum>2?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=3" class="xin" style="margin-left: 60px;"/>
-	            <img :src="comment.xNum>3?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=4" class="xin" style="margin-left: 90px;"/>
-	            <img :src="comment.xNum>4?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=5" class="xin" style="margin-left: 120px;"/>
+	            <img :src="comment.stars>0?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=1" class="xin"/>
+	            <img :src="comment.stars>1?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=2" class="xin" style="margin-left: 30px;"/>
+	            <img :src="comment.stars>2?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=3" class="xin" style="margin-left: 60px;"/>
+	            <img :src="comment.stars>3?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=4" class="xin" style="margin-left: 90px;"/>
+	            <img :src="comment.stars>4?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=5" class="xin" style="margin-left: 120px;"/>
 	            &nbsp;&nbsp;&nbsp;&nbsp;
-	            <span style="margin-left:130px;">{{comment.xNum}}星</span>
+	            <span style="margin-left:130px;">{{comment.stars}}星</span>
 	        </div>
 	        <div style="width: 80%;margin-top: 30px;">
 	            不想打字？嫌打字太麻烦？那么试试好评标签吧。一键您输入评论信息！
@@ -122,39 +122,37 @@
 	      data: function() {
 	        return {
 	            httpurl:'',
-				orderid:'',
 				comment:{
-	                xNum:3,
-	                commentText:'',
+	                stars:3,
+					comment:'',
+					movieid:'',
+					orderid:'',
 	            },
 	            wMin:10,
-	            bigInfo:{
-	                vipGrade:1,
-	                vipGradeName:'青铜VIP卡'
-	            },
 	            errMsg:'',
 	        }
 	      },
 	      created() {
-			  this.httpurl = this.GetQueryString("httpurl");
-			  this.orderid = this.GetQueryString("orderid");
+			  this.httpurl = this.GetQueryString("mv");
+			  this.comment.orderid = this.GetQueryString("orderid");
+			  this.comment.movieid = this.GetQueryString("movieid");
 	          this.scvTime();
 	      },
 	      methods:{
 	          //提交评论
 	          subComment(){
-	            this.comment.commentText = this.$refs.commentText.value;
-	            if(!this.comment.commentText){
+	            this.comment.comment = this.$refs.commentText.value;
+	            if(!this.comment.comment){
 	                this.errMsg = "您还没有输入评论哟！";
 	                return;
 	            }
 	            let sel = this;
-	            if(this.comment.xNum<5){
+	            if(this.comment.stars<5){
 	                $("#commentWindow").hide();
 	                jqalert({
 	                    title:'提示',
 	                    prompt:'太难拉，考虑一下给个5星好不好',
-	                    yestext:'考虑一下',
+	                    yestext:'设施一个5星',
 	                    notext:'就是不给',
 	                    yesfn:function () {
 	                        $("#jq-alert").remove();
@@ -170,10 +168,16 @@
 	          },
 	          //确认提交评论
 	          confirmSubComment(){
-	                jqtoast('评论成功');
-	                $("#commentWindow").hide();
-	                //$("#willesPlay").removeClass("mtop1000");
-	                this.scvTime();
+				var vueThis = this;
+					jAjax("/appVipCard/commentMovie",this.comment,function(data){
+						$("#commentWindow").hide();
+						vueThis.scvTime();
+						if(data.status==0){
+							jqtoast('评论成功');
+						}else{
+							jqtoast(data.message);
+						}
+					});
 	          },
 	          scvTime(){
 	            var timer = setInterval(()=>{
@@ -186,8 +190,7 @@
 	        //打开评论窗口
 	        goComment(){
 	            $("#commentWindow").show();
-	            //$("#willesPlay").addClass("mtop1000");
-	            this.comment.commentText='';
+	            this.comment.comment='';
 	            this.wMin = 10;
 	        },
 			//获取URL参数

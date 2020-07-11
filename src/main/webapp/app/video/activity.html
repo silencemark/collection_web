@@ -58,13 +58,12 @@
 <!--vipInfo-->
 <div v-for="(item,i) in vipCardList" v-cloak>
     <div style="margin-bottom:15px;">
-        <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
-        :style="`background-image:url('img/V${item.forder}_BG.png')`" >
+        <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" :style="`background-image:url('img/V${item.forder}_BG.png')`" >
         <span style="margin-bottom:5px;">{{item.typename}}</span>
-        即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
+        领取{{item.typename}} {{item.commentstartdays}} 天后且完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
             <div class="v-numver" style="width: 90%;">
                 <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
-                <div>任务期限：{{item.watchdays}}</div>
+                <div>任务期限：{{item.watchdays}} 天</div>
                 <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
                 <div>消耗XGO币：{{item.xgocoin}}</div>
                 <span class="clear">
@@ -78,7 +77,7 @@
         <div v-else>
             <div v-if="item.havebuy==1 || item.havebuy==2">
                 <input type="button" v-if="item.havebuy==1" value="任 务 抢 购 中" :class="`active-but  v${item.forder}-bg`"/>
-                <input type="button" v-if="item.havebuy==2" value="已抢购成功" :class="`active-but  v${item.forder}-bg`" 
+                <input type="button" v-if="item.havebuy==2" value="今日任务已领取" :class="`active-but  v${item.forder}-bg`" 
                     onclick="window.location.href='cardBag/bagPayWait.html'"/>
             </div>
             <div v-else>
@@ -133,7 +132,6 @@ new Vue({
         var vueThis = this;
         jAjax("/appVipCard/getVipCardList",{},function(data){
             vueThis.vipCardList = data.resultlist;  
-            //vueThis.vipCardList[0].secondbuy = 100;//测试数据倒计时
         });
     },
     //立即抢购
@@ -141,7 +139,19 @@ new Vue({
         var vueThis = this;
         var reqData = {cardid:cardid};
         jAjax("/appVipCard/rushToBuyCard",reqData,function(data){
-            window.location.href='cardBag/bagPayWait.html';
+            if(data.status==0){
+                window.location.href='cardBag/bagPayWait.html';
+            }else{
+                jqalert({
+                    prompt:data.message+'  立即前往账户设置？',
+                    yestext:'立即前往',
+                    notext:'取消',
+                    yesfn:function () {
+                        window.location.href='user/setUser.html';
+                    },
+                    nofn:function () {}
+                });
+            }
         });
     },
     //格式化 秒 时间显示

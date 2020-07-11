@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>用户信息</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
+     <script src="../js/clipboard.min.js"></script>
+     <style>
+      .userInfoCont{
+        width: 94%;
+        margin-left: 3%;
+        color: #666;
+        font-size: 0.85rem;
+        padding-top: 20px;
+        letter-spacing: 0.5px;
+      }
+      .userInfoCont div{
+        margin-top: 5px;
+        font-size: 0.9rem;
+      }
+    </style>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+         <img src="../img/to-left.png" onclick="history.back(-1)"/>
+         用户信息
+    </div>
+    <div class="userInfoCont">
+      温馨提示 ：交易产生10分钟内不建议催促对方<br><br>
+      1.如果您是购买方且已支付交易款，系统会在一个小时后自动为您审核通过。
+      <br><br>
+      2.如果您是出售方，在20分钟内没有收到交易款，可以选择在20分钟过后再联系对方付款。
+      <br><br>
+      3.如果您出售的任务卡还未收到交易款，且对方表明已支付的情况,请先查看您设置的各个收款方式是否有收款记录，确认未收款立即联系对方如未得到处理，
+      您可以到个人中心里点击工单申请，输入您的交易单号且等信息，等待系统审查。
+      <br><br>
+      <div>对方姓名：<font v-cloak>{{userInfo.realname}}</font></div>
+      <div>手机号码：
+          <a  v-cloak id="uPhone" :href="`tel:${userInfo.phone}`">{{userInfo.phone}}</a>
+        <img src="../img/cp.jpg" id="cp" data-clipboard-action="copy" data-clipboard-target="#uPhone" @click="cp"  style="width:17px;height:17px;"/>
+      </div>
+      <div>微信号：<font v-cloak>{{userInfo.weixinnum}}</font v-cloak></div>
+    </div>
+
+
+</section>
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+  <ul id="footer_list">
+     <li class="list_li home active">
+         <a href="../index.html" class="text">首页</a>
+     </li>
+     <li class="list_li follow" >
+         <a  href="../activity.html" class="text">活动中心</a>
+     </li>
+     <li class="list_li cart">
+         <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+     </li>
+     <li class="list_li profile">
+         <a  href="../myCenter.html" class="text">我的</a>
+     </li>
+ </ul>
+</footer>
+<!-- end footer-->
+</body>
+
+<script>
+  var clipboard = new Clipboard('#cp');
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        reqPath : reqPath,
+        userInfo : {
+
+        },
+    }
+    },
+    created() {
+        this.getUserInfo();
+    },
+    methods:{
+      getUserInfo(){
+          var vueThis = this;
+          jAjax("/appVipCard/getSellOrBuyUserInfo",{uid:this.GetQueryString('uid')},function(data){
+              vueThis.userInfo = data;
+          });
+      },
+      cp(){
+        jqtoast('复制成功！');
+      },
+      //获取URL参数
+      GetQueryString(name){
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+      }
+
+  }
+})
+  </script>
+
+</html>

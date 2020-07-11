@@ -33,7 +33,7 @@
         <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`"
         :style="`background-image:url('../img/V${item.forder}_BG.png')`">
         <span style="margin-bottom:5px;">{{item.typename}}</span>
-        即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
+        领取{{item.typename}} {{item.commentstartdays}} 天后且完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
             <div class="v-numver" style="width: 90%;margin-top:45px;">
                 <div>已抢购时间：{{fmtTimeSecond(item.secondbuy)}}</div>
                 <div>任务期限：{{item.watchdays}}天</div>
@@ -53,10 +53,11 @@
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
-      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
+      领取{{item.typename}} {{item.commentstartdays}} 天后且完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
             <div>交易单号：{{item.ordernum}}</div>
-            <div>任务期限：{{item.watchdays}}天</div>
+            <div v-if="item.status!=2">任务期限：{{item.watchdays}}天</div>
+            <div v-else>自动审核时间：{{fmtTimeSecond(item.remaintime)}}</div>
             <div>购买价格：{{item.cardprice}}</div>
             <div>交易状态：
                 <a style="font-weight:600;color:#BA4A33;" v-if="item.status==1">待支付</a>
@@ -70,8 +71,8 @@
 
     <input type="button" v-if="item.status==1" :value="`立即支付(倒计时：${fmtTimeSecond(item.remaintime)})`" 
         :class="`active-but  v${item.forder}-bg`" :onclick="`window.location.href='bagPay.html?orderid=${item.orderid}'`"/>
-
-    <input type="button" v-if="item.status==2" :value="`剩余自动审核时间(${fmtTimeSecond(item.remaintime)})`" 
+        
+    <input type="button" v-if="item.status==2" :value="`查看卖家信息`"  :onclick="`window.location.href='../user/userInfo.html?uid=${item.selluserid}'`"
      :class="`active-but  v${item.forder}-bg`"/>
 </div>
 <div v-if="rushToBuyList.length==0 && waitPayCardList.length==0" class="notList">没有抢购中的记录</div>
@@ -131,7 +132,7 @@ new Vue({
                 if(vueThis.waitPayCardList && vueThis.waitPayCardList.length>0){
                     setInterval(()=>{
                         for(var k=0;k<vueThis.waitPayCardList.length;k++){
-                            if(vueThis.waitPayCardList[k].remaintime<=0){
+                            if(vueThis.waitPayCardList[k].remaintime>=0){
                                 vueThis.waitPayCardList[k].remaintime -= 1;
                             }
                         }

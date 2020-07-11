@@ -22,8 +22,10 @@
         <div class="userName">
             <span style="margin-top:3px;" v-cloak>{{myCenterData.nickname}}</span>
             <img src="img/duop.png" style="margin-top:5px;"/>
-            <span class="renz" v-cloak v-if="myCenterData.isrealname==1">已认证</span> 
             <span class="renz" v-cloak v-if="myCenterData.isrealname==0">未认证</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==1">审核中</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==2">已认证</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==3">认证失败</span> 
         </div>
         <div class="btn qiand" @click="签到">签到</div>
         <div class="clear"></div>
