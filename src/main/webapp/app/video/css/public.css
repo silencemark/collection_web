@@ -407,34 +407,3 @@ header .searchCont input::-webkit-input-placeholder{
 }
 [v-cloak]{display:none !important;}
 
-
-
-.dHead{
-    width: 100%;
-    height: 240px;
-    border-bottom: 1px solid red;
-    background-color: #fff;
-}
-.dHead .bg{
-    width:100%;position: absolute;top: 0;z-index: 0;
-}
-.dHead .yyb{
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 112px;
-    height: 31px;
-    z-index: 1;
-}
-.dHead .logInfoCont{
-    width: 100%;
-    height: auto;
-    text-align: center;
-    z-index: 2;
-    position: absolute;
-    top: 15px;
-}
-.logInfoCont .log{
-    width: 80px;
-    height: 80px;
-}
