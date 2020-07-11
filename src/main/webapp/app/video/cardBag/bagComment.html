@@ -43,9 +43,8 @@
 <div id="contMsg">
 
 </div>
-<iframe :src="httpurl"  scrolling="no"  class="videoFrame">
+<iframe :src="httpurl"  scrolling="no"  class="videoFrame" id="scrollWrap">
 </iframe>
-
 
 	 <footer id="footer">
 	    <ul id="footer_list" style="z-index: 2;">
@@ -108,7 +107,7 @@
 	document.write('<iframe seamless sandbox security="restricted" id="url_mainframe" frameborder="0" scrolling="yes" name="main" src="http://www.wanmeikk.me/project/2067.html" style="height:1000px; visibility: inherit; width: 100%; z-index: 1;overflow: visible;"></iframe>');
 </script> -->
 
-	<script  type="text/javascript">
+<script  type="text/javascript">
 	    $(function(){
 	        $(".commentLabe").click(function(){
 	            $(".commentLabe").removeClass("commentLabeActiv");
@@ -200,7 +199,69 @@
 				if(r!=null)return  unescape(r[2]); return null;
 			}
 	      }
-	    })
+		})
+//滚动条是否在顶部
+var isScroll_top = true;
+//滚动条是否在底部
+var isScrill_bottom = false;
+function restoreEvent(event) {
+	switch(event.type){
+		case "touchstart" :
+			$startY = event.touches[0].clientY;
+			break;
+		case "touchmove" :
+			$moveY = event.touches[0].clientY;
+			//滑动距离
+			touchesY = $startY - $moveY;
+			//滚动条顶部
+			if(isScroll_top) {
+				if(touchesY < 0) {
+					event.preventDefault();
+				}else{
+					var scrollWrap = document.getElementById("scrollWrap");
+					if(scrollWrap.scrollHeight == scrollWrap.clientHeight) {
+						event.preventDefault();
+					}else {
+						event.stopPropagation();
+					}
+				}
+			//滚动条底部
+			}else if(isScrill_bottom){
+				if(touchesY	> 0) {
+					event.preventDefault();
+				}else{
+					event.stopPropagation();
+				}
+			}
+			break;
+		case "touchend" :
+			break;
+	}
+}
+/*监听容器的 touch 触发事件处理逻辑*/
+document.getElementById("scrollWrap").addEventListener("touchstart",restoreEvent);
+document.getElementById("scrollWrap").addEventListener("touchmove",restoreEvent);
+document.getElementById("scrollWrap").addEventListener("touchend",restoreEvent);
+/*监听容器 scroll 滚动事件处理逻辑*/
+document.getElementById("scrollWrap").addEventListener("scroll",function() {
+    var tabView = document.getElementById("scrollWrap");
+    var contentHeight = tabView.scrollHeight, //内容高度
+    scrollTop = tabView.scrollTop; //滚动高度
+    viewHeight = tabView.clientHeight;
+
+	if(scrollTop == 0) {
+		isScroll_top = true;
+	}else{
+		isScroll_top = false;
+	}
+    if ((scrollTop / (contentHeight - viewHeight)) == 1 ) {
+        isScrill_bottom = true;
+    }else {
+    	isScrill_bottom = false;
+    }
+});
+
+
 	  </script>
 
 	</html>

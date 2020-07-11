@@ -15,22 +15,40 @@
   <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
 
 <section class="main"  id="app">
-    <!--userInfo-->
-    <div class="userInfo">
-        <img :src="myCenterData.headimage" id="tx"/>
-        <input id="cf" onchange="chagntx(this,'tx');" class="imgFileInput" type="file" accept="image/*" multiple="" style="width:50px;height:50px;margin-left:5%;margin-top:0px;">
-        <div class="userName">
-            <span style="margin-top:3px;" v-cloak>{{myCenterData.nickname}}</span>
-            <img src="img/duop.png" style="margin-top:5px;"/>
-            <span class="renz" v-cloak v-if="myCenterData.isrealname==0">未认证</span> 
-            <span class="renz" v-cloak v-if="myCenterData.isrealname==1">审核中</span> 
-            <span class="renz" v-cloak v-if="myCenterData.isrealname==2">已认证</span> 
-            <span class="renz" v-cloak v-if="myCenterData.isrealname==3">认证失败</span> 
-        </div>
-        <div class="btn qiand" @click="签到">签到</div>
-        <div class="clear"></div>
-    </div>
+   <!--userInfo-->
+   <div class="userInfo">
+      <img :src="myCenterData.headimage" id="tx"/>
+      <input id="cf" onchange="chagntx(this,'tx');" class="imgFileInput" type="file" accept="image/*" multiple="" style="width:50px;height:50px;margin-left:5%;margin-top:0px;">
+      <div class="userName">
+          <span style="margin-top:3px;" v-cloak>{{myCenterData.nickname}}</span>
+          <img src="img/duop.png" style="margin-top:5px;"/>
+          <span class="renz" v-cloak v-if="myCenterData.isrealname==0">未认证</span> 
+          <span class="renz" v-cloak v-if="myCenterData.isrealname==1">审核中</span> 
+          <span class="renz" v-cloak v-if="myCenterData.isrealname==2">已认证</span> 
+          <span class="renz" v-cloak v-if="myCenterData.isrealname==3">认证失败</span> 
+      </div>
+      <div class="btn qiand" @click="签到">签到</div>
+      <div class="clear"></div>
+  </div>
 
+<!--
+    <div class="centerHead">
+    <div style="width: 100%;text-align:center;margin-top:10px;">
+      <div style="width:290px;margin:0 auto;">
+        <div class="cenHeadBut"> <img src="img/vipbk.png"/> 会&nbsp;员</div>
+        <div class="cenHeadBut">
+          <img src="img/zhicfff.png"/> 资&nbsp;产 </div>
+        <div class="cenHeadBut"> <img src="img/kabfff.png"/> 卡&nbsp;券 </div>
+        <div class="cenHeadBut" style="margin:0"> <img src="img/ximsgfff.png"/> 消&nbsp;息 </div>
+        <div class="clear"></div>
+      </div>
+      <div class="centerVipCont">
+        <span v-cloak>{{myCenterData.levelname}}</span>
+        <span v-cloak style="float:right;margin-right:20px;">当前成值：{{myCenterData.growthvalue}}</span>
+      </div>
+    </div>
+  </div>
+   -->
     <!--vipInfo-->
     <div :class="`vipInfo v${myCenterData.levelenum}-c`" v-cloak :style="`background-image: url('img/V${myCenterData.levelenum}_BG.png`">
       <span style="margin-bottom:5px;">{{myCenterData.levelname}}</span>
@@ -49,6 +67,8 @@
     </div>
     <div class="clear"></div>
 
+
+
     <!--operationEl-->
     <div class="operationEl" style="margin-top:10px;">
         <img src="img/integral-ic.png"/>
@@ -59,7 +79,7 @@
     </div>
     <div class="operationEl" onclick="window.location.href='user/systemVip.html'">
       <img src="img/vipSystem-ic.png"/>
-      <span>会员体系</span>
+      <span>会员等级</span>
       <img src="img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl" onclick="window.location.href='user/moneyInfo.html'">
