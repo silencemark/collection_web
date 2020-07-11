@@ -10883,7 +10883,6 @@ LOCURL = LOCURL.split("\/video")[0]+"/video/"
 function jAjax(url,resData,sucCbk,errCbk){
 	$("body").append('<div class="loading" id="loadingWindow"><img src="'+LOCURL+'img/timg.gif" /></div> ');
 	var isWhite = chkUrlISWhite(url);
-	console.log(url+" in White :"+isWhite);
 	if(!isWhite){
 		if(!getCptToken()){
 			jqalert({
@@ -10902,7 +10901,6 @@ function jAjax(url,resData,sucCbk,errCbk){
 		resData.userid = resData.token;
 		resData.sign = hex_md5(resData.token+resData.timestamp+"255.xgo") ;
 	}
-	console.log(resData);
 	$.ajax({
 		type : "POST",
 		dataType:'json',
@@ -10965,6 +10963,13 @@ function onlyNonNegative(obj) {
 		obj.value = parseFloat(obj.value);
 	}
 }
+function checkWeChatBrowser() {
+　　var ua = navigator.userAgent.toLowerCase();
+　　if (ua.match(/MicroMessenger/i) == "micromessenger"){
+　　　　return true;
+　　}else{
+　　　　return false;
+　　}
+}
 ;
-
 /**end 工具方法调用 */

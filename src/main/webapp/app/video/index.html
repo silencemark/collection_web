@@ -79,7 +79,7 @@
         <div class="ImgCont" v-for="(movie , j) in item.movielist">
             <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=https://www.0855y.com/v/14155/'`" /> -->
             <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=https://www.0855y.com/x/14155-1-1.html'`" /> -->
-            <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=${movie.httpurl}'`" />
+            <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`" />
             <div class="prdName">{{movie.title}}</div>
             <div class="prdRemark">{{movie.description}}</div>
         </div>
@@ -91,7 +91,7 @@
         </div>
         <!--广告-->
         <div v-if="i==0">
-            <video id="videoId" muted style="width:100%;height:100%;" src="img/activMp41.mp4" controls="controls"  preload >
+            <video id="videoId" muted  poster="img/vioDefault.png" style="width:100%;height:100%;" src="img/activMp41.mp4" controls="controls"  preload >
                 该浏览器不支持该格式视频
             </video>
            <img style="width: 100%;" src="img/activMp41Title.jpg"/>
@@ -137,6 +137,7 @@ window.onscroll=function(){
     scrollHandle();
 }
 function scrollHandle () {
+    if(checkWeChatBrowser()) return;
     var videoEle = document.getElementById("videoId");
     const offset = videoEle.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
     const offsetTop = offset.top;
