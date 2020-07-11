@@ -84,15 +84,7 @@ public class AppVipCardController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		/**
-		 *  1、根据抢购的人数分配系统中待出售的会员卡订单 比例按30-50%分配 不够的 补系统会员卡，比如10个人抢保证3到5个人抢到，如果只有2条vip在出售，那么系统就放出1到3个会员卡 供用户抢购
-			2、抢购直接更新到订单 信息里面的买家 userid
-			3、算出购买时间和到期时间更新入库
-		 */
-		this.appVipCardService.insertRushToBuy(map);
-		data.put("status", 0);
-		data.put("message", "参与抢购成功,请到我的抢购中查看抢购结果");
-		return data;
+		return this.appVipCardService.insertRushToBuy(map);
 	}
 	
 
