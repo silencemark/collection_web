@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>消息中心</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.4.1.js"></script>
+     <script src="../js/vue.js"></script>
+     <script src="../js/jq-alert.js"></script>
+     <style>
+       .operationEl{    min-height: 55px;margin-top: 5px;}
+       .userSetMsg{
+        font-size: 0.8rem;
+        position: absolute;
+        right: 25px;
+        margin: 0;
+        margin-top: -10px;
+        color: #777;
+       }
+       .msgtitle{
+          position: absolute;
+          font-weight: bolder;
+          color: #333;
+          margin-top: -10px;
+       }
+       .msgcont{
+        font-size: 0.8rem;
+        width: 85%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 13px;
+        position: absolute;
+        -o-text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+        color: #777;
+       }
+       #msgInfo{
+        position: fixed;
+        z-index: 3;
+        width: 100%;
+        min-height: 100px;
+        top: 0;
+        background-color: #fff;
+       }
+       .msgInfoCont{
+         width: 94%;
+         margin-left: 3%;
+         color: #555;
+       }
+       .infoTitle{
+          font-weight: bolder;
+          color: #333;
+          margin-top: 5px;
+       }
+       .infoCont{
+          margin-top: 10px;
+          font-size: 0.85rem;
+          color: #999797;
+       }
+     </style>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+         <img src="../img/to-left.png" onclick="history.back(-1)"/>
+         消息中心
+    </div>
+    <!--消息列表-->
+    <div id="msgList">
+      <div class="operationEl" v-for="(msg,i) in msgList" @click="showInfo(msg)"  v-cloak >
+        <img src="../img/mxiaoxi.png"/>
+        <span class="msgtitle">{{msg.title}}</span>
+        <span class="userSetMsg" style="right:60px;">{{msg.createtime}}</span>
+        <span class="userSetMsg">
+          <font v-if="msg.status==0" style="color:#f85415">未读</font>
+          <font v-else style="color:rgb(25, 164, 74)">已读</font>
+        </span>
+        <span class="msgcont">{{msg.message}}</span>
+      </div>
+    </div>
+
+    
+    <div id="msgInfo" v-show="msgInfoFlg"  v-cloak >
+      <div class="title">
+            <img src="../img/to-left.png" @click="msgInfoFlg=false"/>
+            消息详情
+      </div>
+      <div class="msgInfoCont">
+        <div class="infoTitle">{{seMsg.title}}</div>
+        <div class="infoCont">{{seMsg.message}} </div>
+        <div class="infoCont" style="text-align:right;">{{seMsg.createtime}} </div>
+      </div>
+       
+    </div>
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+  <ul id="footer_list">
+     <li class="list_li home active">
+         <a href="../index.html" class="text">首页</a>
+     </li>
+     <li class="list_li follow" >
+         <a  href="../activity.html" class="text">活动中心</a>
+     </li>
+     <li class="list_li cart">
+         <a  href="../cardBag/bagOwn.html" class="text">卡包</a>
+     </li>
+     <li class="list_li profile">
+         <a  href="../myCenter.html" class="text">我的</a>
+     </li>
+ </ul>
+</footer>
+<!-- end footer-->
+</body>
+
+<script>
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        reqPath : reqPath,
+        seMsg:{},
+        msgInfoFlg:false,
+        msgList : [],
+    }
+    },
+    created() {
+        this.getMyUserInfo();
+    },
+    methods:{
+        //查看消息详情
+        showInfo(msg){
+            msg.status =1;
+            this.seMsg = msg;
+            this.msgInfoFlg = true
+            jAjax("/appUserCenter/updateNoticeStatus",{noticeid:msg.noticeid,status:1},function(data){
+                vueThis.msgList = data.resultlist;
+            });
+        },
+        //查询消息
+        getMyUserInfo(){
+            var vueThis = this;
+            jAjax("/appUserCenter/getUserNotice",{},function(data){
+                vueThis.msgList = data.resultlist;
+            });
+        }
+
+  }
+})
+  </script>
+
+</html>

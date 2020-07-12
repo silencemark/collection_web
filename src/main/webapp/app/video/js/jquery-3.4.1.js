@@ -10901,6 +10901,7 @@ function jAjax(url,resData,sucCbk,errCbk){
 		resData.userid = resData.token;
 		resData.sign = hex_md5(resData.token+resData.timestamp+"255.xgo") ;
 	}
+	console.log(resData);
 	$.ajax({
 		type : "POST",
 		dataType:'json',

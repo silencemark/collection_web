@@ -15,7 +15,12 @@
   <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
 
 <section class="main"  id="app">
-   <!--userInfo-->
+  <!--msg-->
+  <div class="maeeageTx" id="lookMsg">
+    <span v-if="wdmsgCount && wdmsgCount>0" >您有 {{wdmsgCount}} 条未读消息</span>
+  </div>
+  
+  <!--userInfo-->
    <div class="userInfo">
       <img :src="myCenterData.headimage" id="tx"/>
       <input id="cf" onchange="chagntx(this,'tx');" class="imgFileInput" type="file" accept="image/*" multiple="" style="width:50px;height:50px;margin-left:5%;margin-top:0px;">
@@ -137,11 +142,29 @@
 </body>
 
 <script>
-    new Vue({
+$(function(){
+  //查询消息
+  $("#lookMsg").click(function(){
+    var txt = "查看消息通知";
+    if($(this).html().indexOf("条未读消息")>0){
+      window.location.href="user/userMsg.html";
+    }else{
+        if($(this).html()==txt){
+          window.location.href="user/userMsg.html";
+        }else{
+          $(this).html(txt);
+        }
+    }
+  });
+
+})
+
+    var vm = new Vue({
       el: '#app',
       data: function() {
         return {
           reqPath : reqPath,
+          wdmsgCount:0,
           myCenterData:{
             headimage:'img/defaulttx.png'
           },
@@ -156,10 +179,17 @@
           jAjax("/appUserCenter/myCenter",{},function(data){
             if(data.headimage)
               data.headimage = vueThis.reqPath+data.headimage;
-            // data.growthvalue = 1000;
-            // data.mingrowthvalue = 1;
-            // data.maxgrowthvalue = 2000;
-            vueThis.myCenterData = data;
+              vueThis.myCenterData = data;
+              vueThis.getMsg();
+          });
+        },
+        //查消息
+        getMsg(){
+          var vueThis = this;
+          jAjax("/appUserCenter/getNoticeUnreadNum",{},function(data){
+            if(data && data.count && data.count>0){
+              vueThis.wdmsgCount = data.count;
+            }
           });
         }
         
