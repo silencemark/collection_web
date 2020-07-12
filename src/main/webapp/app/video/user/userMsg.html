@@ -41,7 +41,7 @@
         position: fixed;
         z-index: 3;
         width: 100%;
-        min-height: 100px;
+        height: 100%;
         top: 0;
         background-color: #fff;
        }
@@ -56,7 +56,7 @@
           margin-top: 5px;
        }
        .infoCont{
-          margin-top: 10px;
+          margin-top: 20px;
           font-size: 0.85rem;
           color: #999797;
        }
@@ -69,15 +69,16 @@
          <img src="../img/to-left.png" onclick="history.back(-1)"/>
          消息中心
     </div>
+    <div class="userSetMsg"@click="setReadAll" style="margin-top:7px;z-index: 2;">全部已读</div>
     <!--消息列表-->
-    <div id="msgList">
+    <div id="msgList" style="margin-top: 25px;">
       <div class="operationEl" v-for="(msg,i) in msgList" @click="showInfo(msg)"  v-cloak >
         <img src="../img/mxiaoxi.png"/>
         <span class="msgtitle">{{msg.title}}</span>
         <span class="userSetMsg" style="right:60px;">{{msg.createtime}}</span>
         <span class="userSetMsg">
           <font v-if="msg.status==0" style="color:#f85415">未读</font>
-          <font v-else style="color:rgb(25, 164, 74)">已读</font>
+          <font v-else style="color:rgb(11, 123, 50)">已读</font>
         </span>
         <span class="msgcont">{{msg.message}}</span>
       </div>
@@ -135,14 +136,21 @@ new Vue({
         this.getMyUserInfo();
     },
     methods:{
+        //全部标记已读
+        setReadAll(){
+          for(var j=0;j<this.msgList.length;j++){
+            this.msgList[j].status = 1;
+          }
+          jAjax("/appUserCenter/updateNoticeStatus",{status:1},function(data){});
+        },
         //查看消息详情
         showInfo(msg){
             msg.status =1;
             this.seMsg = msg;
             this.msgInfoFlg = true
-            jAjax("/appUserCenter/updateNoticeStatus",{noticeid:msg.noticeid,status:1},function(data){
-                vueThis.msgList = data.resultlist;
-            });
+            if(msg.status==0){
+              jAjax("/appUserCenter/updateNoticeStatus",{noticeid:msg.noticeid,status:1},function(data){});
+            }
         },
         //查询消息
         getMyUserInfo(){

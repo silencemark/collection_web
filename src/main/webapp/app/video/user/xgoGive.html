@@ -26,31 +26,31 @@
     </div>
     <div class="operationEl operationElFirst">
         <img src="../img/integral-ic.png"/>
-        <span style="font-size: 0.85rem;">当前可转赠XGO：21</span>
+        <span style="font-size: 0.85rem;">当前可转赠XGO：{{num}}</span>
         <div style="font-size:0.75rem;margin-top:-20px;">温馨提示 ：交易一旦完成不可回退，请谨慎操作！</div>
     </div>
 
     <div class="operationEl">
         <span style="margin-left:0;">请输入好友手机：</span>
         <div style="margin-top:-20px;">
-            <input v-model="giveInfo.phone" placeholder="" style="width:90%;height:30px;border:0;color:#555;"/>
+            <input v-model="giveInfo.phone" maxlength="11" type="tel" style="width:90%;height:30px;border:0;color:#555;"/>
         </div>
     </div>
     <div class="operationEl">
         <span style="margin-left:0;">请输入转赠数量：</span>
         <div style="margin-top:-20px;">
-            <input v-model="giveInfo.number" placeholder="" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+            <input v-model="giveInfo.xgocoin" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="7" type="tel" style="width:90%;height:30px;border:0;color:#555;"/>
         </div>
     </div>
     <div class="operationEl">
         <span style="margin-left:0;">请输入交易密码：</span>
         <div style="margin-top:-20px;">
-            <input v-model="giveInfo.pwd" type="password" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+            <input v-model="giveInfo.paypassword" maxlength="16" type="password" style="width:90%;height:30px;border:0;color:#555;"/>
         </div>
     </div>
     <br>
     <div class="but-cont">
-        <div class="btn btn-200" @click="savePayment" >立 即 转 赠</div>
+        <div class="btn btn-200" @click="giveXgo" >立 即 转 赠</div>
     </div>
 </section>
 
@@ -81,20 +81,58 @@ new Vue({
     el: '#app',
     data: function() {
         return {
+            num:0,
             reqPath : reqPath,
-            giveInfo:{}
+            giveInfo:{
+                xgocoin:0,
+                phone:'',
+                paypassword:''
+            }
         }
     },
     created() {
+        this.num = parseInt(this.GetQueryString("num"));
     },
     methods:{
         //giveXgo
         giveXgo(){
+            if(!this.giveInfo.phone){
+                jqtoast("请输入好友手机号码！");
+                return;
+            }
+            if(!this.giveInfo.xgocoin || this.giveInfo.xgocoin<1){
+                jqtoast("请输入转赠数量！");
+                return;
+            }
+            if(parseInt(this.giveInfo.xgocoin)>this.num){
+                jqtoast("您的XGO不足！");
+                return;
+            }
+            if(!this.giveInfo.paypassword){
+                jqtoast("请输入支付密码！");
+                return;
+            }
+            var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+            if (!myreg.test(this.giveInfo.phone)) {
+                jqtoast("请输入正确的手机号码！");
+                return false;
+            }
             var vueThis = this;
-            jAjax("/appUserCenter/getPaymentMethod",{},function(data){
-                vueThis.userInfo = data;
+            jAjax("/appUserCenter/giveXgoToOther",{},function(data){
+                if(data.status==0){
+                    jqtoast("转赠成功！");
+                    vueThis.num = parseInt(vueThis.num) - parseInt(vueThis.giveInfo.xgocoin);
+                }else{
+                    jqtoast(data.message);
+                }
             });
-        }
+        },
+        //获取URL参数
+        GetQueryString(name){
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
     }
 })
   </script>

@@ -77,8 +77,6 @@
             <img v-if="i==0" src="img/fire.png"/>
         </div>
         <div class="ImgCont" v-for="(movie , j) in item.movielist">
-            <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=https://www.0855y.com/v/14155/'`" /> -->
-            <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?httpurl=https://www.0855y.com/x/14155-1-1.html'`" /> -->
             <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`" />
             <div class="prdName">{{movie.title}}</div>
             <div class="prdRemark">{{movie.description}}</div>

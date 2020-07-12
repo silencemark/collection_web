@@ -32,7 +32,7 @@
           <span class="renz" v-cloak v-if="myCenterData.isrealname==2">已认证</span> 
           <span class="renz" v-cloak v-if="myCenterData.isrealname==3">认证失败</span> 
       </div>
-      <div class="btn qiand" @click="签到">签到</div>
+      <div class="btn qiand" @click="qiand">签到</div>
       <div class="clear"></div>
   </div>
 
@@ -80,11 +80,16 @@
         <span>XGO币</span>
         <span class="money" v-cloak>{{myCenterData.xgocoin?myCenterData.xgocoin:0}}</span>
         <div class="userXGOBut" onclick="window.location.href='user/xgoInfo.html'">明细</div>
-        <div class="userXGOBut"  onclick="window.location.href='user/xgoGive.html'"style="margin-right:30px;">转赠</div>
+        <div class="userXGOBut"  @click="giveXgo" style="margin-right:30px;">转赠</div>
     </div>
     <div class="operationEl" onclick="window.location.href='user/systemVip.html'">
       <img src="img/vipSystem-ic.png"/>
       <span>会员等级</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl" onclick="window.location.href='user/setUser.html'">
+      <img src="img/edit-ic.png"/>
+      <span>账号设置</span>
       <img src="img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl" onclick="window.location.href='user/moneyInfo.html'">
@@ -94,28 +99,33 @@
     </div>
     <div class="operationEl" onclick="window.location.href='user/userTeam.html'">
       <img src="img/handPor-ic.png"/>
-      <span>我的团队</span>
+      <span>我的好友</span>
       <img src="img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
       <img src="img/invitation-ic.png"/>
-      <span>我的邀请码</span>
-      <img src="img/to-right.png" style="right:5%;"/>
-    </div>
-    <div class="operationEl" onclick="window.location.href='user/setUser.html'">
-      <img src="img/edit-ic.png"/>
-      <span>账号设置</span>
+      <span>邀请码</span>
       <img src="img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
       <img src="img/custService-ic.png"/>
-      <span>服务中心</span>
-      <img src="img/to-right.png" style="right:5%;"/>
+      <span>问题与建议</span>
+      <img src="img/to-right.png" style="right:5%;" onclick="window.location.href='user/problem.html'"/>
     </div>
     <div class="operationEl" style="border: 0;" onclick="loginOut();">
       <img src="img/set-ic.png"/>
       <span>退出登录</span></a>
       <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    
+    <div class="qiandWin" v-if="qdFlg"  v-cloak></div>
+    <div class="qiandContDiv" v-if="qdFlg"  v-cloak>
+      <div class="qdsucTitle">签到成功</div>
+      <div class="qdsuccont" v-cloak>{{qdMessage}}</div>
+      <div style="text-align:center;"><img src="img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
+      <div style="text-align:center;margin-top:-10px;">
+          <div class="btn" @click="qdFlg = false">知 道 了</div>
+      </div>
     </div>
 </section>
 
@@ -164,6 +174,8 @@ $(function(){
       data: function() {
         return {
           reqPath : reqPath,
+          qdFlg:false,
+          qdMessage:'',
           wdmsgCount:0,
           myCenterData:{
             headimage:'img/defaulttx.png'
@@ -174,6 +186,30 @@ $(function(){
           this.getMyCenterData();
       },
       methods:{
+        qiand(){
+          if(localStorage.getItem("qd")){
+            //jqtoast("您今日已经签过到了！");
+            // return;
+          }
+          localStorage.setItem("qd","1");
+          var vThis = this;
+          jAjax("/appUserCenter/signIn",{},function(data){
+            if(data.status==0){
+              vThis.qdFlg = true;
+              vThis.qdMessage = data.remark;
+            }else{
+              jqtoast(data.message);
+            }
+          });
+        },
+        //转
+        giveXgo(){
+          if(!this.myCenterData.xgocoin || this.myCenterData.xgocoin<10){
+            jqtoast("您的XGO低于10无法转赠！");
+            return;
+          }
+          window.location.href="user/xgoGive.html?num="+(this.myCenterData.xgocoin-10)
+        },
         getMyCenterData(){
           var vueThis = this;
           jAjax("/appUserCenter/myCenter",{},function(data){
