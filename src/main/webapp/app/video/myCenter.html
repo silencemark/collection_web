@@ -121,10 +121,10 @@
     <div class="qiandWin" v-if="qdFlg"  v-cloak></div>
     <div class="qiandContDiv" v-if="qdFlg"  v-cloak>
       <div class="qdsucTitle">签到成功</div>
-      <div class="qdsuccont" v-cloak>{{qdMessage}}</div>
-      <div style="text-align:center;"><img src="img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
+      <div class="qdsuccont" v-cloak style="height: 70px;">{{qdMessage}}</div>
+      <div style="text-align:center;margin-top:-35px;"><img src="img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
       <div style="text-align:center;margin-top:-10px;">
-          <div class="btn" @click="qdFlg = false">知 道 了</div>
+          <div class="btn" @click="qdSuccess">知 道 了</div>
       </div>
     </div>
 </section>
@@ -186,15 +186,15 @@ $(function(){
           this.getMyCenterData();
       },
       methods:{
+        //签到成功
+        qdSuccess(){
+            this.qdFlg = false;
+            window.location.reload();
+        },
         qiand(){
-          if(localStorage.getItem("qd")){
-            //jqtoast("您今日已经签过到了！");
-            // return;
-          }
-          localStorage.setItem("qd","1");
           var vThis = this;
           jAjax("/appUserCenter/signIn",{},function(data){
-            if(data.status==0){
+            if(data.status=='0'){
               vThis.qdFlg = true;
               vThis.qdMessage = data.remark;
             }else{
