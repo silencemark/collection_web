@@ -11,6 +11,7 @@ import com.collection.util.Constants;
 import com.collection.util.Md5Util;
 
 public class BaseController {
+	
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(BaseController.class);
 	
@@ -51,6 +52,9 @@ public class BaseController {
 		//判断3秒内的请求可取
 		if(signcode.equals(sign) && s < 500){
 			flag = true;
+		}
+		if (flag) {
+			LOGGER.info("此次请求参数为："+map.toString());
 		}
 		return flag;
 	}

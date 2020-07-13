@@ -623,6 +623,56 @@ public class ManageBackstageController {
 		this.manageBackstageService.updateMemberCard(map);
 		return "redirect:/managebackstage/getMemberCardList";
 	}
+	
+	/**
+	 * 获取会员卡视频管理列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getMemberMovieList")
+	public String getMemberMovieList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getMemberMovieListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getMemberMovieList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/membermovie_list";
+	}
+	
+	/**
+	 * 新增/修改首页免费电影信息
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/insertOrupdateMemberMovie")
+	public String insertOrupdateMemberMovie(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		if(map!=null && map.get("movieid")!=null && !"".equals(map.get("movieid").toString())){
+			//有主键id 修改信息
+			Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+			map.put("updateid", userInfo.get("userid"));
+			map.put("updatetime",new Date());
+			this.manageBackstageService.updateMemberMovie(map);
+		} else {
+			//新增信息
+			Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+			map.put("createid", userInfo.get("userid"));
+			map.put("createtime",new Date());
+			this.manageBackstageService.insertMemberMovie(map);
+		}
+		return "redirect:/managebackstage/getMemberMovieList?cardid="+map.get("cardid");
+	}
+	
+	
 	/**-----------------------------------------会员卡管理页面end-------------------------------------------------------**/
 	
 	/**-----------------------------------------会员等级管理start-------------------------------------------------------**/
@@ -802,4 +852,92 @@ public class ManageBackstageController {
 	/**-----------------------------------------兑换记录管理end-------------------------------------------------------**/
 	
 	
+	/**-----------------------------------------系统通知消息start-------------------------------------------------------**/
+	/**
+	 * 获取系统发送的消息列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getSysNoticeList")
+	public String getSysNoticeList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getSysNoticeListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getSysNoticeList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/notice_list";
+	}
+	
+	/**
+	 * 发送系统通知消息
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/sendSysNotice")
+	public String sendSysNotice(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		this.manageBackstageService.sendSysNotice(map);
+		return "redirect:/managebackstage/getSysNoticeList";
+	}
+	/**-----------------------------------------系统通知消息end-------------------------------------------------------**/
+	
+	
+	/**-----------------------------------------抢购概率管理start-------------------------------------------------------**/
+	/**
+	 * 获取抢购概率信息列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getRateList")
+	public String getRateList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getRateListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getRateList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/rate_list";
+	}
+	
+	/**
+	 * 新增或者修改抢购概率
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/insertOrUpdateRate")
+	public String insertOrUpdateRate(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		if(map!=null && map.get("rateid")!=null && !"".equals(map.get("rateid").toString())){
+			//有主键id 修改信息
+			Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+			map.put("updateid", userInfo.get("userid"));
+			map.put("updatetime",new Date());
+			this.manageBackstageService.updateRate(map);
+		} else {
+			//新增信息
+			Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+			map.put("createid", userInfo.get("userid"));
+			map.put("createtime",new Date());
+			this.manageBackstageService.insertRate(map);
+		}
+		return "redirect:/managebackstage/getRateList";
+	}
+	/**-----------------------------------------抢购概率管理end-------------------------------------------------------**/
 }

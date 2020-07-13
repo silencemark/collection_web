@@ -24,7 +24,7 @@ import com.collection.util.Md5Util;
 
 
 /**
- * 
+ * 登录相关
  * @author silence
  *
  */
@@ -117,9 +117,8 @@ public class AppLoginController extends BaseController{
 				//密码加密
 				map.put("password", Md5Util.getMD5(map.get("password").toString()));
 				//注册入库
-				appLoginService.insertUserInfo(map);
-				data.put("status", 0);
-				data.put("message", "注册成功");
+				return appLoginService.insertUserInfo(map);
+				
 			}
 		} else {
 			data.put("status", 1);
@@ -247,11 +246,13 @@ public class AppLoginController extends BaseController{
 				data.put("status", 1);
 				data.put("message", "您好，您的账号已被禁用 ！");
 				return data;
-			} else if ("2".equals(userInfo.get("status").toString())){
+			}
+			/* 冻结的可以登录  不能出售和抢购
+			 * else if ("2".equals(userInfo.get("status").toString())){
 				data.put("status", 1);
 				data.put("message", "您好，您的账号已被冻结！");
 				return data;
-			}
+			}*/
 			data.put("status", 0);
 			data.put("userInfo", userInfo);
 			data.put("message", "登录成功");

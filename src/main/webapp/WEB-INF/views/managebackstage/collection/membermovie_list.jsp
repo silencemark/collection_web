@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>首页免费电影管理-管理方后台</title>
+<title>首页会员卡电影管理-管理方后台</title>
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
@@ -53,8 +53,8 @@
 });
 	
 $(document).ready(function(){
-	$('#indexmovielist').parent().parent().find("span").attr("class","bg_hidden");
-	$('#indexmovielist').attr('class','active li_active');
+	$('#membercard').parent().parent().find("span").attr("class","bg_hidden");
+	$('#membercard').attr('class','active li_active');
 })
 
 
@@ -71,13 +71,13 @@ function checkHide(num){
 		$("#title").val(title);
 		$("#description").val("");
 		$("#httpurl").val("");
-		$("#type").val("");
 		$("#status").val("");
+		$("#cardid123").val("");
 	}
 }
 
 //显示隐藏窗口
-function updatemovie(movieid, coverimg, title, description, httpurl, type, status){
+function updatemovie(movieid, coverimg, title, description, httpurl, status, cardid){
 	$("#moviediv").show();	
 	$(".div_mask").css("display","block");
 	$("#movieid").val(movieid);
@@ -86,8 +86,8 @@ function updatemovie(movieid, coverimg, title, description, httpurl, type, statu
 	$("#title").val(title);
 	$("#description").val(description);
 	$("#httpurl").val(httpurl);
-	$("#type").val(type);
 	$("#status").val(status);
+	$("#cardid123").val(cardid);
 }
 
 //显示隐藏支付凭证
@@ -103,16 +103,17 @@ function checkImageShowHide(rum,imagesrc){
 }
 </script>
 </head>
-
 <body>
+
 <jsp:include page="../top.jsp" ></jsp:include>
 <div class="main_page">
 	<jsp:include page="../left.jsp" ></jsp:include>
-	<div class="page_nav"><p><a href="#">首页免费电影管理</a><i>/</i><span>首页电影列表</span></p></div>        
+	<div class="page_nav"><p><a href="<%=request.getContextPath() %>/managebackstage/getMemberCardList">VIP会员卡管理</a><i>/</i><span>会员卡视频管理</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">首页免费电影管理列表</span><a href="#" onclick="updatemovie('','','','','','','')">添加</a></div>
+        <div class="tab_name"><span class="gray1">会员卡视频管理列表</span><a href="#" onclick="updatemovie('','','','','','','')">添加</a></div>
         <div class="sel_box">
-        	<form action="<%=request.getContextPath()%>/managebackstage/getIndexMovieList" method="post">
+        	<form action="<%=request.getContextPath()%>/managebackstage/getMemberMovieList" method="post">
+        		<input type="hidden" class="text"  name="cardid" value="${map.cardid}"/>
         		<input type="text" class="text" placeholder="请输入电影名称" name="title" value="${map.title}"/>
 	            <input type="text" class="text" placeholder="请输入电影描述" name="description" value="${map.description }"/>
 	            <select class="sel" name="status">
@@ -128,11 +129,11 @@ function checkImageShowHide(rum,imagesrc){
         <div class="tab_list">
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td">
+            		<td>会员卡名称</td>
                 	<td>电影名称</td>
                     <td>电影描述</td>
                     <td>电影封面</td>
                     <td>电影链接</td>
-                    <td>电影类别</td>
                     <td>状态</td>
                     <td>创建时间</td>
                     <td>修改时间</td>
@@ -140,28 +141,15 @@ function checkImageShowHide(rum,imagesrc){
                 </tr>
                 <c:forEach items="${list }" var="li">
                 	<tr>
+                		<td>${li.typename }</td>
 	                	<td>${li.title }</td>
 	                    <td>${li.description }</td>
 	                    <td onclick="checkImageShowHide(0,'${li.coverimg }');"><img src="${li.coverimg }" alt="" width="48px" height="48px" /></td>
 	                    <td>${li.httpurl }</td>
-	                    <td><c:choose>
-	                    	<c:when test="${li.type == 1 }">
-	                    		<i class="red">会员专享</i>
-	                    	</c:when>
-	                    	<c:when test="${li.type == 2 }">
-	                    		<i class="red">珍藏电影</i>
-	                    	</c:when>
-	                    	<c:when test="${li.type == 3 }">
-	                    		<i class="red">推荐动漫</i>
-	                    	</c:when>
-	                    	<c:when test="${li.type == 4 }">
-	                    		<i class="red">电视剧</i>
-	                    	</c:when>
-	                    </c:choose></td>
 	                    <td>${li.status ==1?'有效':'无效' }</td>
 	                    <td>${li.createtime }</td>
 	                    <td>${li.updatetime }</td>
-	                    <td><a href="javascript:void(0)" onclick="updatemovie('${li.movieid}','${li.coverimg}','${li.title}','${li.description}','${li.httpurl}','${li.type}','${li.status}')" class="blue">修改</a></td>
+	                    <td><a href="javascript:void(0)" onclick="updatemovie('${li.movieid}','${li.coverimg}','${li.title}','${li.description}','${li.httpurl}','${li.status}','${li.cardid}')" class="blue">修改</a></td>
 	                </tr>
                 </c:forEach>
             </table>
@@ -173,9 +161,10 @@ function checkImageShowHide(rum,imagesrc){
 <div class="div_mask" style="display:none;"></div>
 
 <div class="tc_changetext"  id="moviediv"  style="display:none;top: 40%;left: 40%; width: 650px;">
-	<div class="tc_title"><span>新增/修改免费电影信息</span><a href="#" onclick="checkHide(0)">×</a></div>
-    <form action="<%=request.getContextPath() %>/managebackstage/insertOrupdateIndexMovie" id="movieform" method="post">
-    <input type="hidden" name="movieid"  id="movieid"/>
+	<div class="tc_title"><span>新增/修改会员卡视频信息</span><a href="#" onclick="checkHide(0)">×</a></div>
+    <form action="<%=request.getContextPath() %>/managebackstage/insertOrupdateMemberMovie" id="movieform" method="post">
+    <input type="hidden" name="movieid"  id="movieid" />
+    <input type="hidden" name="cardid"  id="cardid123" />
     <div class="box">
     	<span>封面图</span>
     	<input type="hidden" name="coverimg" id="coverimg" />
@@ -189,13 +178,6 @@ function checkImageShowHide(rum,imagesrc){
         <div class="clear"></div>
         <span>电影链接</span>
         <input type="text" class="text2" placeholder="请输入电影链接" name="httpurl" id="httpurl"/> 
-        <div class="clear"></div>
-        <span>电影类型</span>
-        <select class="sel" name="type" id="type">
-           	<option value="2">珍藏电影</option>
-           	<option value="3">推荐动漫</option>
-           	<option value="4">电视剧</option>
-         </select>
         <div class="clear"></div>
         <span>是否有效</span>
         <select class="sel" name="status" name="status">

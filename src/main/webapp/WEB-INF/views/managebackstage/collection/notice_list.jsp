@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>会员实名认证管理-管理方后台</title>
+<title>发送系统通知管理页面-管理方后台</title>
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
@@ -53,8 +53,8 @@
 });
 	
 $(document).ready(function(){
-	$('#certificationlist').parent().parent().find("span").attr("class","bg_hidden");
-	$('#certificationlist').attr('class','active li_active');
+	$('#notice').parent().parent().find("span").attr("class","bg_hidden");
+	$('#notice').attr('class','active li_active');
 })
 
 
@@ -65,16 +65,13 @@ function checkHide(num){
 	}else {
 		$("#updatediv").hide();	
 		$(".div_mask").css("display","none");
-		$("#certificationid").val("");
-		$("#message").val("");
 	}
 }
 
 //显示隐藏窗口
-function update(certificationid){
+function updatemovie(){
 	$("#updatediv").show();	
 	$(".div_mask").css("display","block");
-	$("#certificationid").val(certificationid);
 }
 
 </script>
@@ -84,61 +81,31 @@ function update(certificationid){
 <jsp:include page="../top.jsp" ></jsp:include>
 <div class="main_page">
 	<jsp:include page="../left.jsp" ></jsp:include>
-	<div class="page_nav"><p><a href="#">会员实名认证管理</a><i>/</i><span>会员实名认证列表</span></p></div>        
+	<div class="page_nav"><p><a href="#">首页</a><i>/</i><span>发送系统通知管理列表</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">会员实名认证管理列表</span></div>
+        <div class="tab_name"><span class="gray1">发送系统通知管理列表</span><a href="#" onclick="updatemovie()">发布通知</a></div>
         <div class="sel_box">
-        	<form action="<%=request.getContextPath()%>/managebackstage/getCertificationList" method="post">
-        		<input type="text" class="text" placeholder="请输入会员昵称" name="nickname" value="${map.nickname}"/>
-        		<input type="text" class="text" placeholder="请输入会员实名姓名" name="realname" value="${map.realname}"/>
-        		<input type="text" class="text" placeholder="请输入会员身份证" name="idcard" value="${map.idcard}"/>
+        	<form action="<%=request.getContextPath()%>/managebackstage/getSysNoticeList" method="post">
+        		<input type="text" class="text" placeholder="请输入标题" name="title" value="${map.title}"/>
+        		<input type="text" class="text" placeholder="请输入内容" name="message" value="${map.message}"/>
+        		<input type="text" class="text" placeholder="请输入录入日期"  name="createtime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" value="${map.createtime}"/>
 	            <input type="submit" value="搜索" class="find_btn"  />
-            </form>
+            </fo
+            rm>
             <div class="clear"></div>
         </div>
         <div class="tab_list">
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td">
-                	<td>用户昵称</td>
-                    <td>国籍</td>
-                    <td>真实姓名</td>
-                    <td>身份证号</td>
-                    <td>审核原因</td>
-                    <td>状态</td>
-                    <td>修改时间</td>
-                    <td>操作</td>
+                	<td>标题</td>
+                    <td>内容</td>
+                    <td>发送时间</td>
                 </tr>
                 <c:forEach items="${list }" var="li">
                 	<tr>
-	                	<td>${li.nickname }</td>
-	                    <td>${li.nationality }</td>
-	                    <td>${li.realname }</td>
-	                    <td>${li.idcard }</td>
+	                	<td>${li.title }</td>
 	                    <td>${li.message }</td>
-	                    <c:choose>
-	                    	<c:when test="${li.status == 1 || li.status == 0 }">
-	                    		<td><i class="gray">待审核 </i></td>
-	                    	</c:when>
-	                    	<c:when test="${li.status == 2 }">
-	                    		<td><i class="green">审核通过 </i></td>
-	                    	</c:when>
-	                    	<c:when test="${li.status == 3 }">
-	                    		<td><i class="red">审核失败</i></td>
-	                    	</c:when>
-	                    	<c:otherwise>
-	                    		<td><i class="red">未审核</i></td>
-	                    	</c:otherwise>
-	                    </c:choose>
-	                    <td>${li.updatetime }</td>
-	                    <td>
-	                    <c:choose>
-	                    	<c:when test="${li.status == 1 }">
-	                    		<a href="javascript:void(0)" onclick="update('${li.certificationid}')" class="blue">审核</a>
-	                    	</c:when>
-	                    	<c:otherwise>
-	                    		--
-	                    	</c:otherwise>
-	                    </c:choose></td>
+	                    <td>${li.createtime }</td>
 	                </tr>
                 </c:forEach>
             </table>
@@ -150,18 +117,14 @@ function update(certificationid){
 <div class="div_mask" style="display:none;"></div>
 
 <div class="tc_changetext"  id="updatediv"  style="display:none;top: 40%;left: 40%; width: 650px;">
-	<div class="tc_title"><span>审核实名认证</span><a href="#" onclick="checkHide(0)">×</a></div>
-    <form action="<%=request.getContextPath() %>/managebackstage/updateCertification" id="updateform" method="post">
-    <input type="hidden" name="certificationid"  id="certificationid"/>
+	<div class="tc_title"><span>发送系统通知</span><a href="#" onclick="checkHide(0)">×</a></div>
+    <form action="<%=request.getContextPath() %>/managebackstage/sendSysNotice" id="updateform" method="post">
     <div class="box">
-        <span>审核：</span>
-        <select class="sel" name="status" name="status">
-           	<option value="2">审核通过</option>
-           	<option value="3">审核拒绝</option>
-         </select>
+        <span>标题</span>
+        <input type="text" class="text2"  placeholder="请输入标题"  name="title" />
         <div class="clear"></div>
-        <span>拒绝原因</span>
-        <textarea placeholder="请输入拒绝原因" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" name="message" id="message"></textarea>
+        <span>通知内容</span>
+        <textarea placeholder="请输入通知内容，最多允许输入800字符" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="5" name="message"></textarea>
         <div class="clear"></div>
     </div>
     </form>

@@ -174,7 +174,7 @@ function checkPayOrderShowHide(rum,payorder){
 	            	<option value="4" <c:if test="${map.status == '4' }">selected="selected"</c:if>>已到期(可出售)</option>
 	            	<option value="5" <c:if test="${map.status == '5' }">selected="selected"</c:if>>已过期(无法出售)</option>
 	            </select>
-	            <input type="text" class="text" placeholder="请输入订单日期"  name="ordertime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" value="${map.ordertime}"/></td>
+	            <input type="text" class="text" placeholder="请输入订单日期"  name="ordertime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" value="${map.ordertime}"/>
 	            <input type="submit" value="搜索" class="find_btn"  />
             </form>
             <div class="clear"></div>
