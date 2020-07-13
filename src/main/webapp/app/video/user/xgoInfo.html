@@ -18,21 +18,18 @@
          <img src="../img/to-left.png" onclick="history.back(-1)"/>
         XGO明细
     </div>
-    <div class="xgoInfo">
-        好友赠送
-        <br>2020-10-32
-        <div  class="xgoAddNum">+32</div>
+
+    <div class="xgoInfo" v-for="(item,i) in infoList" style="margin-top: 10px;">
+        <img src="../img/mmoney.png" style="width:30px;height:30px;left:10px;margin-top:3px;"/>
+        {{item.remark}}
+        <br>{{item.createtime}}
+        <div  class="xgoAddNum">
+            <font v-if="item.type==1">+</font>
+            <font v-if="item.type==2">-</font>
+                {{item.xgorecordid}}
+        </div>
     </div>
-    <div class="xgoInfo">
-        每日签到领取XGO现金
-        <br>2020-10-32
-        <div class="xgoAddNum">+32</div>
-    </div>
-    <div class="xgoInfo">
-        好友赠送
-        <br>2020-10-32
-        <div class="xgoAddNum">+32</div>
-    </div>
+    
 
 <br/><br/><br/><br/><br/>
 </section>
@@ -61,13 +58,19 @@
       el: '#app',
       data: function() {
         return {
-            
+            infoList:[],
         }
       },
       created() {
+        this.getXgoRecord();
       },
       methods:{
-        
+        getXgoRecord(){
+            var vueThis = this;
+            jAjax("/appUserCenter/getXgoRecord",{},function(data){
+                vueThis.infoList = data.resultlist;
+            });
+        }
       }
     })
   </script>

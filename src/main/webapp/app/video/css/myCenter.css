@@ -1,3 +1,52 @@
+.maeeageTx{
+    position: fixed;
+    height: 25px;
+    width: auto;
+    right: -40px;
+    border-radius: 17px;
+    background-image: linear-gradient(90deg,#60a2e8,#74c7ff);
+    font-size: 0.85rem;
+    line-height: 25px;
+    padding: 5px 50px 5px 10px;
+    top: 70px;
+    color: #f6f6f6;
+    opacity: 0.9;
+    z-index: 3;
+}
+.centerHead{
+    width: 100%;
+    height: 260px;
+    background-color: #3584df;
+}
+.cenHeadBut{
+    margin-right: 30px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    color: #555;
+    text-align: center;
+    font-size: 0.8rem;
+}
+.cenHeadBut img{
+    width: 25px;
+    height:25px;
+}
+.centerVipCont{
+    width: 90%;
+    height: 50px;
+    margin-left: 5%;
+    margin-top: 10px;
+    color: #555;
+    padding-left: 20px;
+    font-size: 0.95rem;
+    text-align: left;
+    box-sizing: border-box;
+    line-height: 50px;
+    background-image: linear-gradient(90deg,#7cb4f3,#d0e4fa);
+}
+
+
+
 .userInfo{
     width: 90%;
     height: auto;
@@ -30,7 +79,7 @@
     height: 17px;
 }
 .userInfo .userName .renz{
-    font-size: 0.8rem;font-weight:500;color:#777;margin-top:5px;
+    font-size: 0.8rem;font-weight:500;color: #555;;margin-top:5px;
 }
 
 .vipInfo{
@@ -126,12 +175,14 @@
 .active-but{
     width: 96%;
     margin-left: 2%;
-    height: 35px;
-    font-size: 0.9rem;
+    height: 30px;
+    font-size: 0.85rem;
     border-radius: 5px;
+    line-height: 30px;
     color: #fff;
     border: 1px solid #dfdfdf;
     margin: 1px 2% 0 2%;
+    opacity: 0.85;
 }
 .gabTitle{
     width: 100%;
@@ -216,7 +267,6 @@
     width: 94%;
     margin-left: 3%;
     padding-bottom: 10px;
-    border-bottom: 1px solid #f3f2f2;
 }
 .payVoucher img{
     width: 100%;
@@ -229,7 +279,6 @@
     height: 55px;
     line-height: 55px;
     color: #555;
-    /* border-bottom: 1px solid #f2f1f1; */
     background: #fff;
     z-index: 2;
     top:45px;
@@ -249,6 +298,7 @@
     position: absolute;
     z-index: 1;
     margin-top: 45px;
+    overflow: auto;
 }
 .commentWinCont{
     width: 100%;
@@ -369,4 +419,40 @@
     height: 35px;
     left: 20px;
     margin-top: 3px;
+}
+.qiandWin{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    background-color: #000;
+    opacity: 0.3;
+    z-index: 6;
+}
+.qiandContDiv{
+    width: 80%;
+    height: 310px;
+    position: fixed;
+    top: 110px;
+    border-radius: 15px;
+    z-index: 7;
+    background: #fff;
+    margin-left: 10%;
+}
+.qdsucTitle{
+    text-align: center;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+}
+.qdsuccont{
+    text-align: center;
+    width: 100%;
+    color: #555;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 10px 0 10px;
+    box-sizing: border-box;
 }

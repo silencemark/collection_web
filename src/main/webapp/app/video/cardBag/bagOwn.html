@@ -32,12 +32,12 @@
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
-      即日起购买{{item.typename}} {{item.commentstartdays}} 天后且您再观影好评{{item.commentcount+item.remaincount}} 次可转让您的任务卡！领取{{item.yield}}%任务奖励。
+      领取{{item.typename}} {{item.commentstartdays}} 天后且再观影好评{{item.commentcount}} 次可转让您的任务卡！领取{{item.yield}}%任务奖励。
         <div class="v-numver" style="width: 90%;margin-top:45px;">
             <div>购买时间：{{item.buytime.substr(0,10)}}</div>
             <div>任务有效期：{{item.duetime.substr(0,10)}}</div>
             <div>购买价格：{{item.cardprice}}</div>
-            <div>任务完成率：{{item.commentcount}}/{{item.commentcount+item.remaincount}}</div>
+            <div>任务完成率：{{item.alreadycount?item.alreadycount:'0'}}/{{item.commentcount}}</div>
             <span class="clear">
       </div>
       <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
@@ -48,21 +48,21 @@
             :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
     </div>
     <div v-else>
-        <input type="button" value="查 看 任 务" :class="`active-but  v${item.forder}-bg`" style="float:left;width:47%;margin:1px 0 0 2%;"
+        <input type="button" value="查 看 任 务" :class="`active-but  v${item.forder}-bg`" style="float:left;width:48%;margin:1px 0px 0px 2%;"
             :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
 
-        <input type="button" value="立 即 出 售" :class="`active-but  v${item.forder}-bg`"  style="float:left;width:47%;margin:1px 0 0 2%;"
+        <input type="button" value="立 即 出 售" :class="`active-but  v${item.forder}-bg`"  style="float:left;width:48%;margin:1px 0 0 0%;"
             :onclick="`window.location.href='bagSelling.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
     </div>
-
+    <div class="clear"></div>
 
 
     
 </div>
-<div v-if="myCardList.length==0" class="notList">您还没有拥有VIP会员卡</div>
+<div v-if="myCardList.length==0" class="notList">您还没有拥有任务卡</div>
 </section>
 
-
+<br/><br/><br/>
 
  <!--footer-->
  <footer id="footer">
@@ -91,7 +91,7 @@ new Vue({
     data: function() {
     return {
         myCardList : [],
-    }
+        }
     },
     created() {
         this.getWaitPayCard();
@@ -101,7 +101,6 @@ new Vue({
     getWaitPayCard(){
         var vueThis = this;
         jAjax("/appVipCard/getMyCardList",{},function(data){
-            // data.resultlist[0].commentcount = 3;
             vueThis.myCardList = data.resultlist;  
         });
     }

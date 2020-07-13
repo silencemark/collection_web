@@ -15,12 +15,12 @@
 
 	<section class="main"  id="app">
 	    <div class="title" style="position: fixed;z-index:3;">
-	         <img src="../img/to-left.png" onclick="history.back(-1)"/>
+	         <img src="../img/to-left.png" :onclick="`window.location.href='bagOwn.html?orderid=${comment.orderid}'`"/>
 	        观影好评
 	    </div>
 
 	<div class="comment">
-		<div v-if="orderid">
+		<div v-if="comment.orderid">
 			<span style="font-weight:600;margin-left:20px;">全部好评</span>
 			<span style="float: right;margin-right:55px;" v-if="wMin<=1" @click="goComment">
 				参与评论
@@ -43,9 +43,8 @@
 <div id="contMsg">
 
 </div>
-<iframe :src="httpurl"  scrolling="no"  class="videoFrame">
+<iframe :src="httpurl"  scrolling="no"  class="videoFrame" id="scrollWrap">
 </iframe>
-
 
 	 <footer id="footer">
 	    <ul id="footer_list" style="z-index: 2;">
@@ -71,13 +70,13 @@
 	    <div class="commentWinCont">
 	        <div class="xinCont">
 	            为影片打分：
-	            <img :src="comment.xNum>0?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=1" class="xin"/>
-	            <img :src="comment.xNum>1?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=2" class="xin" style="margin-left: 30px;"/>
-	            <img :src="comment.xNum>2?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=3" class="xin" style="margin-left: 60px;"/>
-	            <img :src="comment.xNum>3?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=4" class="xin" style="margin-left: 90px;"/>
-	            <img :src="comment.xNum>4?'../img/sXin.png':'../img/eXin.png'" @click="comment.xNum=5" class="xin" style="margin-left: 120px;"/>
+	            <img :src="comment.stars>0?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=1" class="xin"/>
+	            <img :src="comment.stars>1?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=2" class="xin" style="margin-left: 30px;"/>
+	            <img :src="comment.stars>2?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=3" class="xin" style="margin-left: 60px;"/>
+	            <img :src="comment.stars>3?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=4" class="xin" style="margin-left: 90px;"/>
+	            <img :src="comment.stars>4?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=5" class="xin" style="margin-left: 120px;"/>
 	            &nbsp;&nbsp;&nbsp;&nbsp;
-	            <span style="margin-left:130px;">{{comment.xNum}}星</span>
+	            <span style="margin-left:130px;">{{comment.stars}}星</span>
 	        </div>
 	        <div style="width: 80%;margin-top: 30px;">
 	            不想打字？嫌打字太麻烦？那么试试好评标签吧。一键您输入评论信息！
@@ -108,7 +107,7 @@
 	document.write('<iframe seamless sandbox security="restricted" id="url_mainframe" frameborder="0" scrolling="yes" name="main" src="http://www.wanmeikk.me/project/2067.html" style="height:1000px; visibility: inherit; width: 100%; z-index: 1;overflow: visible;"></iframe>');
 </script> -->
 
-	<script  type="text/javascript">
+<script  type="text/javascript">
 	    $(function(){
 	        $(".commentLabe").click(function(){
 	            $(".commentLabe").removeClass("commentLabeActiv");
@@ -122,39 +121,37 @@
 	      data: function() {
 	        return {
 	            httpurl:'',
-				orderid:'',
 				comment:{
-	                xNum:3,
-	                commentText:'',
+	                stars:3,
+					comment:'',
+					movieid:'',
+					orderid:'',
 	            },
 	            wMin:10,
-	            bigInfo:{
-	                vipGrade:1,
-	                vipGradeName:'青铜VIP卡'
-	            },
 	            errMsg:'',
 	        }
 	      },
 	      created() {
-			  this.httpurl = this.GetQueryString("httpurl");
-			  this.orderid = this.GetQueryString("orderid");
+			  this.httpurl = this.GetQueryString("mv");
+			  this.comment.orderid = this.GetQueryString("orderid");
+			  this.comment.movieid = this.GetQueryString("movieid");
 	          this.scvTime();
 	      },
 	      methods:{
 	          //提交评论
 	          subComment(){
-	            this.comment.commentText = this.$refs.commentText.value;
-	            if(!this.comment.commentText){
+	            this.comment.comment = this.$refs.commentText.value;
+	            if(!this.comment.comment){
 	                this.errMsg = "您还没有输入评论哟！";
 	                return;
 	            }
 	            let sel = this;
-	            if(this.comment.xNum<5){
+	            if(this.comment.stars<5){
 	                $("#commentWindow").hide();
 	                jqalert({
 	                    title:'提示',
 	                    prompt:'太难拉，考虑一下给个5星好不好',
-	                    yestext:'考虑一下',
+	                    yestext:'设施一个5星',
 	                    notext:'就是不给',
 	                    yesfn:function () {
 	                        $("#jq-alert").remove();
@@ -170,10 +167,16 @@
 	          },
 	          //确认提交评论
 	          confirmSubComment(){
-	                jqtoast('评论成功');
-	                $("#commentWindow").hide();
-	                //$("#willesPlay").removeClass("mtop1000");
-	                this.scvTime();
+				var vueThis = this;
+					jAjax("/appVipCard/commentMovie",this.comment,function(data){
+						$("#commentWindow").hide();
+						vueThis.scvTime();
+						if(data.status==0){
+							jqtoast('评论成功');
+						}else{
+							jqtoast(data.message);
+						}
+					});
 	          },
 	          scvTime(){
 	            var timer = setInterval(()=>{
@@ -186,8 +189,7 @@
 	        //打开评论窗口
 	        goComment(){
 	            $("#commentWindow").show();
-	            //$("#willesPlay").addClass("mtop1000");
-	            this.comment.commentText='';
+	            this.comment.comment='';
 	            this.wMin = 10;
 	        },
 			//获取URL参数
@@ -197,7 +199,69 @@
 				if(r!=null)return  unescape(r[2]); return null;
 			}
 	      }
-	    })
+		})
+//滚动条是否在顶部
+var isScroll_top = true;
+//滚动条是否在底部
+var isScrill_bottom = false;
+function restoreEvent(event) {
+	switch(event.type){
+		case "touchstart" :
+			$startY = event.touches[0].clientY;
+			break;
+		case "touchmove" :
+			$moveY = event.touches[0].clientY;
+			//滑动距离
+			touchesY = $startY - $moveY;
+			//滚动条顶部
+			if(isScroll_top) {
+				if(touchesY < 0) {
+					event.preventDefault();
+				}else{
+					var scrollWrap = document.getElementById("scrollWrap");
+					if(scrollWrap.scrollHeight == scrollWrap.clientHeight) {
+						event.preventDefault();
+					}else {
+						event.stopPropagation();
+					}
+				}
+			//滚动条底部
+			}else if(isScrill_bottom){
+				if(touchesY	> 0) {
+					event.preventDefault();
+				}else{
+					event.stopPropagation();
+				}
+			}
+			break;
+		case "touchend" :
+			break;
+	}
+}
+/*监听容器的 touch 触发事件处理逻辑*/
+document.getElementById("scrollWrap").addEventListener("touchstart",restoreEvent);
+document.getElementById("scrollWrap").addEventListener("touchmove",restoreEvent);
+document.getElementById("scrollWrap").addEventListener("touchend",restoreEvent);
+/*监听容器 scroll 滚动事件处理逻辑*/
+document.getElementById("scrollWrap").addEventListener("scroll",function() {
+    var tabView = document.getElementById("scrollWrap");
+    var contentHeight = tabView.scrollHeight, //内容高度
+    scrollTop = tabView.scrollTop; //滚动高度
+    viewHeight = tabView.clientHeight;
+
+	if(scrollTop == 0) {
+		isScroll_top = true;
+	}else{
+		isScroll_top = false;
+	}
+    if ((scrollTop / (contentHeight - viewHeight)) == 1 ) {
+        isScrill_bottom = true;
+    }else {
+    	isScrill_bottom = false;
+    }
+});
+
+
 	  </script>
 
 	</html>
