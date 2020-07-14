@@ -1,4 +1,4 @@
-<%@page import="com.collection.util.Constants"%>
+如果成长值达到下一个值改变会员等级<%@page import="com.collection.util.Constants"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -157,34 +157,5 @@ function update(levelid, levelname, levelenum, mingrowthvalue, maxgrowthvalue, i
     </form>
     <div class="tc_btnbox"><a href="#" class="bg_gay2" onclick="checkHide(0)">取消</a><a href="#"  class="bg_yellow" onclick="checkHide(1)">确认</a></div>
 </div>
-
-<input type="file" name="myfiles" style="display: none" id="fileName" T="file_headimg" onchange="ajaxFileUpload('img')"/>
-<script type="text/javascript">
-function ajaxFileUpload(id,Fileid,noimg){
-	if(!Fileid){
-		Fileid = "fileName";
-	}
-	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/manageheadimg",Fileid,function(data){
-			if(data.imgkey){
-				$("#coverimgurl").attr("src",data.imgkey);
-				$("input[name=coverimg]").val(data.imgkey);
-			}else{
-				swal({
-					title : "",
-					text : "图片上传失败",
-					type : "error",
-					showCancelButton : false,
-					confirmButtonColor : "#ff7922",
-					confirmButtonText : "确认",
-					cancelButtonText : "取消",
-					closeOnConfirm : true
-				}, function(){
-				})
-				return;
-			}
-		
-	});
-}
-</script>
 </body>
 </html>

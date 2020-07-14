@@ -146,7 +146,7 @@ function alipayImageShowHide(rum,imagesrc){
 </div>
 
 <div class="tc_changetext"  id="alipayimgdiv"  style="display:none;width: 560px;top:40%;">
-	<div class="tc_title"><span>展示支付宝收款</span><a href="#" onclick="alipayImageShowHide(0,'')">×</a></div>
+	<div class="tc_title"><span>展示支付宝收款</span><a href="#" onclick="alipayImageShowHide(1,'')">×</a></div>
     <div class="box">
     	<span>支付宝收款码</span>
         <img id="alipayimagesrc" width="400px" height="500px"></i>

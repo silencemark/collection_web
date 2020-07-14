@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.dubbo.common.logger.Logger;
 import com.base.controller.BaseController;
 import com.collection.service.IAppLoginService;
 import com.collection.service.IAppVipCardService;
@@ -471,9 +470,6 @@ public class AppVipCardController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		this.appVipCardService.commitSellCard(map);
-		data.put("status", 0);
-		data.put("message", "出售成功");
-		return data;
+		return this.appVipCardService.commitSellCard(map);
 	}
 }

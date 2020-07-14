@@ -32,8 +32,6 @@ public class AppUserCenterController extends BaseController{
 	
 	@Resource private IAppUserCenterService appUserCenterService;
 	
-	//private Logger logger = Logger.getLogger(getClass());
-
 	/**
 	 * 进入我的个人中心
 	 * 传入参数{"userid":132010}
@@ -82,10 +80,7 @@ public class AppUserCenterController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		this.appUserCenterService.signIn(map);
-		data.put("status", 0);
-		data.put("message", "签到成功");
-		return data;	
+		return this.appUserCenterService.signIn(map);
 	}
 	
 	/**
@@ -577,4 +572,135 @@ public class AppUserCenterController extends BaseController{
 		data.put("message", "提交成功");
 		return data;
 	}
+	
+	/**
+	 * 获取用户的通知信息列表
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getUserNotice")
+	@ResponseBody
+	public Map<String, Object> getUserNotice(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data.put("resultlist", this.appUserCenterService.getUserNotice(map));
+		return data;
+	}
+	
+	/**
+	 * 获取用户的未读消息数量
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getNoticeUnreadNum")
+	@ResponseBody
+	public Map<String, Object> getNoticeUnreadNum(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		return this.appUserCenterService.getNoticeUnreadNum(map);
+	}
+	
+	/**
+	 * 改变用户通知消息 的未读/已读状态
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/updateNoticeStatus")
+	@ResponseBody
+	public Map<String, Object> updateNoticeStatus(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appUserCenterService.updateNoticeStatus(map);
+		data.put("status", 0);
+		data.put("message", "操作成功");
+		return data;
+	}
+	
+	/**
+	 * 获取xgo明细记录列表信息
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getXgoRecord")
+	@ResponseBody
+	public Map<String, Object> getXgoRecord(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data.put("resultlist", this.appUserCenterService.getXgoRecord(map));
+		return data;
+	}
+	
+	/**
+	 * 转赠xgo给对方账户
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/giveXgoToOther")
+	@ResponseBody
+	public Map<String, Object> giveXgoToOther(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		return this.appUserCenterService.giveXgoToOther(map);
+	}
+	
 }

@@ -170,7 +170,9 @@ function update(cardid,typename,cardicon,cardimg,minprice,maxprice,xgocoin,start
 	                    <td>${li.yield}%</td>
 	                    <td>${li.updatetime }</td>
 	                    <td>${li.status ==1?'有效':'无效' }</td>
-	                    <td><a href="javascript:void(0)" onclick="update('${li.cardid}','${li.typename}','${li.cardicon}','${li.cardimg}','${li.minprice}','${li.maxprice}','${li.xgocoin}','${li.starttime}','${li.endtime}','${li.commentstartdays}','${li.watchdays}','${li.commentcount}','${li.yield}','${li.introduction}','${li.description}','${li.status}')" class="blue">修改</a></td>
+	                    <td><a href="javascript:void(0)" onclick="update('${li.cardid}','${li.typename}','${li.cardicon}','${li.cardimg}','${li.minprice}','${li.maxprice}','${li.xgocoin}','${li.starttime}','${li.endtime}','${li.commentstartdays}','${li.watchdays}','${li.commentcount}','${li.yield}','${li.introduction}','${li.description}','${li.status}')" class="blue">修改</a>
+	                    	<a href="<%=request.getContextPath()%>/managebackstage/getMemberMovieList?cardid=${li.cardid}" class="blue">编辑会员视频</a>
+	                    </td>
 	                </tr>
                 </c:forEach>
             </table>
