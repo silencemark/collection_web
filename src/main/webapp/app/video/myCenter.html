@@ -16,7 +16,7 @@
 
 <section class="main"  id="app">
   <!--msg-->
-  <div class="maeeageTx" id="lookMsg">
+  <div class="maeeageTx" id="lookMsg" v-cloak>
     <span v-if="wdmsgCount && wdmsgCount>0" >您有 {{wdmsgCount}} 条未读消息</span>
   </div>
   
@@ -123,7 +123,7 @@
       <div class="qdsucTitle">签到成功</div>
       <div class="qdsuccont" v-cloak style="height: 70px;">{{qdMessage}}</div>
       <div style="text-align:center;margin-top:-35px;"><img src="img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
-      <div style="text-align:center;margin-top:-10px;">
+      <div style="text-align:center;margin-top:-20px;">
           <div class="btn" @click="qdSuccess">知 道 了</div>
       </div>
     </div>

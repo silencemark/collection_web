@@ -76,6 +76,21 @@
      :class="`active-but  v${item.forder}-bg`"/>
 </div>
 <div v-if="rushToBuyList.length==0 && waitPayCardList.length==0" class="notList">没有抢购中的记录</div>
+
+
+
+
+<div class="qiandWin" v-if="qdFlg"  v-cloak></div>
+<div class="qiandContDiv" v-if="qdFlg"  v-cloak>
+  <div class="qdsucTitle">领取成功</div>
+  <div class="qdsuccont" v-cloak style="height: 70px;">恭喜您成功领取了一个任务，请您立即支付！</div>
+  <div style="text-align:center;margin-top:-35px;"><img src="../img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
+  <div style="text-align:center;margin-top:-20px;">
+      <div class="btn" :onclick="`window.location.href='bagPay.html?orderid=${payorderid}'`">立即支付</div>
+  </div>
+</div>
+
+
 </section>
 
 
@@ -107,7 +122,9 @@ new Vue({
     return {
         rushToBuyList : [],
         waitPayCardList : [],
-        timer : undefined
+        payorderid:'',
+        timer : undefined,
+        qdFlg:false,
     }
     },
     created() {
@@ -123,6 +140,10 @@ new Vue({
                     setInterval(()=>{
                         for(var k=0;k<vueThis.rushToBuyList.length;k++){
                             vueThis.rushToBuyList[k].secondbuy += 1;
+                            var s = vueThis.rushToBuyList[k].secondbuy;
+                            if(s==180 || s==420 || s==600){
+                                window.location.reload();
+                            }
                         }
                     },1000);
                 }
@@ -130,6 +151,13 @@ new Vue({
             jAjax("/appVipCard/getWaitPayCard",{},function(data){
                 vueThis.waitPayCardList = data.resultlist;
                 if(vueThis.waitPayCardList && vueThis.waitPayCardList.length>0){
+                    for(var k=0;k<vueThis.waitPayCardList.length;k++){
+                        if(vueThis.waitPayCardList[k].status==1){
+                            vueThis.qdFlg = true;
+                            vueThis.payorderid =  vueThis.waitPayCardList[k].orderid;
+                        }
+                        break;
+                    }
                     setInterval(()=>{
                         for(var k=0;k<vueThis.waitPayCardList.length;k++){
                             if(vueThis.waitPayCardList[k].remaintime>=0){

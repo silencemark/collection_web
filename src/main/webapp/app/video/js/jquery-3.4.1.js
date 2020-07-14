@@ -10885,6 +10885,7 @@ function jAjax(url,resData,sucCbk,errCbk){
 	var isWhite = chkUrlISWhite(url);
 	if(!isWhite){
 		if(!getCptToken()){
+			$("body").find("div[id='loadingWindow']").remove();
 			jqalert({
 				title:'提示',
 				prompt:'您还没有登录，请您去登录！',

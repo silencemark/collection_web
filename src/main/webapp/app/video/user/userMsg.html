@@ -66,7 +66,7 @@
 
 <section class="main"  id="app">
     <div class="title">
-         <img src="../img/to-left.png" onclick="history.back(-1)"/>
+         <img src="../img/to-left.png" onclick="window.location.href='../myCenter.html'"/>
          消息中心
     </div>
     <div class="userSetMsg"@click="setReadAll" style="margin-top:7px;z-index: 2;">全部已读</div>
@@ -145,10 +145,10 @@ new Vue({
         },
         //查看消息详情
         showInfo(msg){
-            msg.status =1;
             this.seMsg = msg;
             this.msgInfoFlg = true
             if(msg.status==0){
+              msg.status =1;
               jAjax("/appUserCenter/updateNoticeStatus",{noticeid:msg.noticeid,status:1},function(data){});
             }
         },
