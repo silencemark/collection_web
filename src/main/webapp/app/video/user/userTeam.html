@@ -55,17 +55,31 @@
         我的好友
     </div>
     <div class="xgoInfo" style="background:none;margin-top: 0px;font-size: 0.85rem !important;color: #777;">
-        <span>我的好友总人数 : 5</span>
-        <span style="float:right;margin-right:20px;">邀请好友</span>
+        <span>我的好友总人数 : <font  v-cloak>{{udata.alllowernum}}</font> </span>
+        <span style="float:right;margin-right:20px;"  onclick="window.location.href='../share.html'">邀请好友</span>
         <span class="clear"></span>
     </div>
-    <div class="xgoInfo h50" v-for="(user,i) in userList" :style="`${i==0?'margin-top:0':''}`">
-        <img src="../img/defaulttx.png"/>
-        <span class="xgoInfoUname">{{user.nickname}}</span>
-        <span class="xgoInfoUname createTime" v-if="i<2">我的好友</span>
-        <span class="xgoInfoUname createTime" v-else>可能认识的人</span>
-        <div class="xgoAddNum">￥32</div>
+    <div v-if="!userList || userList.length<1"   v-cloak style="text-align: center;font-size: 0.9rem;color:#777;padding: 20px;margin-top:20px;">
+        您还没有好友!
     </div>
+    <div v-for="(user,i) in userList" v-cloak  >
+        <div class="xgoInfo h50" :style="`${i==0?'margin-top:0':''}`">
+            <img src="../img/defaulttx.png" v-if="!user.headimage"/>
+            <img :src="reqPath+user.headimage" v-else/>
+            <span class="xgoInfoUname" v-cloak>{{user.nickname}}</span>
+            <span class="xgoInfoUname createTime">我的好友</span>
+            <div class="xgoAddNum"  v-cloak>￥{{user.sumprofit}}</div>
+        </div>
+        <!--ss-->
+        <div class="xgoInfo h50" v-for="(euser,j) in user.grandsonlist" style="padding-left:30px;" v-cloak >
+            <img src="../img/defaulttx.png" v-if="!euser.headimage"/>
+            <img :src="reqPath+user.headimage" v-else/>
+            <span class="xgoInfoUname" v-cloak>{{euser.nickname}}</span>
+            <span class="xgoInfoUname createTime">可能认识的人</span>
+            <div class="xgoAddNum"  v-cloak>￥{{euser.sumprofit}}</div>
+        </div>
+    </div>
+
     
     <!-- <div class="xgoInfo h50 usertwo">
         <img src="../img/defaulttx.png"/>
@@ -100,7 +114,9 @@
       el: '#app',
       data: function() {
         return {
-            userList:[]
+            reqPath : reqPath,
+            userList:[],
+            udata:{},
         }
       },
       created() {
@@ -111,6 +127,7 @@
         getMyTeam(){
           var vThis = this;
           jAjax("/appUserCenter/myTeam",{},function(data){
+            vThis.udata = data;
             vThis.userList = data.sonlist;
           });
         }

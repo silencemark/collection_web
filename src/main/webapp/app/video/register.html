@@ -19,17 +19,17 @@
     <div class="inputCont" style="margin-top:30px;">
         <!-- <div>请输入手机号码</div> -->
         <input type="tel" v-model="user.phone" maxlength="11" placeholder="输入注册手机号码" onkeyup="value=value.replace(/[^\d]/g,'')" >
-        <span class="errMsgCont">{{phoneErrMsg}}</span>
+        <span class="errMsgCont" v-cloak >{{phoneErrMsg}}</span>
     </div>
     <div class="inputCont">
         <!-- <div>请设置登录密码</div> -->
         <input type="password"  v-model="user.password" placeholder="设置6-16位密码" maxlength="16"/>
-        <span class="errMsgCont">{{passwordErrMsg}}</span>
+        <span class="errMsgCont" v-cloak >{{passwordErrMsg}}</span>
     </div>
     <div class="inputCont">
         <!-- <div>确认登录密码</div> -->
         <input type="password"  v-model="user.confirmPassword" placeholder="确认登录密码" maxlength="16"/>
-        <span class="errMsgCont">{{confirmPwdErrMsg}}</span>
+        <span class="errMsgCont"  v-cloak >{{confirmPwdErrMsg}}</span>
     </div>
     <div class="inputCont">
         <!-- <div>您的邀请码</div> -->
@@ -38,8 +38,8 @@
     <div class="inputCont">
         <!-- <div>请输入验证码</div> -->
         <input type="tel" v-model="user.checkcode" placeholder="输入4位数验证码" maxlength="4" style="width:65%;" />
-        <div class="btn sendYzm" @click="sendYzm" >{{sendYzmMsg}}</div>
-        <span class="errMsgCont">{{yzmErrMsg}}</span>
+        <div class="btn sendYzm" @click="sendYzm"  v-cloak >{{sendYzmMsg}}</div>
+        <span class="errMsgCont" v-cloak >{{yzmErrMsg}}</span>
     </div>
     <div class="but-cont" style="margin-top: -20px;">
         <div class="btn btn-200" @click="regSubmit">立 即 注 册</div>
