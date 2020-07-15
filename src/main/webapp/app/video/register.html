@@ -33,7 +33,7 @@
     </div>
     <div class="inputCont">
         <!-- <div>您的邀请码</div> -->
-        <input :value="user.invitecode" readonly  placeholder="您的邀请码" maxlength="16"/>
+        <input v-model="user.invitecode"   placeholder="您的邀请码" maxlength="10"/>
     </div>
     <div class="inputCont">
         <!-- <div>请输入验证码</div> -->
@@ -41,12 +41,12 @@
         <div class="btn sendYzm" @click="sendYzm" >{{sendYzmMsg}}</div>
         <span class="errMsgCont">{{yzmErrMsg}}</span>
     </div>
-    <div class="but-cont">
+    <div class="but-cont" style="margin-top: -20px;">
         <div class="btn btn-200" @click="regSubmit">立 即 注 册</div>
     </div>
-    <!-- <div style="width: 84%;text-align:left;margin:-36px 8% 20px;font-size: 0.9rem;color:#777">
+    <div style="font-size: 0.85rem;color: rgb(146, 145, 145);position:fixed;bottom:10px;right:5px;">
         <span onclick="window.location.href='login.html'">已有账号,立即登录</span>&nbsp;&nbsp;
-    </div> -->
+    </div>
 </section>
 </body>
 
@@ -153,22 +153,3 @@
   </script>
 
 </html>
-
-
-<!-- 
-加载窗口
- /*
-            jqalert({
-                title:'提示',
-                prompt:'您的信息有误确定要提交嘛？',
-                yestext:'提交',
-                notext:'取消',
-                yesfn:function () {
-                    jqtoast('提交成功');
-                },
-                nofn:function () {
-                    jqtoast('取消了');
-                }
-            }) 
-            */
--->

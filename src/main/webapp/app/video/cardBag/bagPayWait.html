@@ -142,7 +142,7 @@ new Vue({
                             vueThis.rushToBuyList[k].secondbuy += 1;
                             var s = vueThis.rushToBuyList[k].secondbuy;
                             if(s==180 || s==420 || s==600){
-                                window.location.reload();
+                                vueThis.getWaitPayCard();
                             }
                         }
                     },1000);
