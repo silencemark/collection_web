@@ -274,6 +274,7 @@ header .searchCont input::-webkit-input-placeholder{
     height:auto;
     border-radius: 4px;
     overflow: hidden;
+    opacity: 0.9;
 }
 .jq-alert .alert .title{
     position: relative;

@@ -68,8 +68,8 @@
     <div class="title">
          <img src="../img/to-left.png" onclick="window.location.href='../myCenter.html'"/>
          消息中心
+         <div class="userSetMsg"@click="setReadAll" style="z-index:2;top:12px;color:#555;">全部已读</div>
     </div>
-    <div class="userSetMsg"@click="setReadAll" style="margin-top:7px;z-index: 2;">全部已读</div>
     <!--消息列表-->
     <div id="msgList" style="margin-top: 25px;">
       <div class="operationEl" v-for="(msg,i) in msgList" @click="showInfo(msg)"  v-cloak >

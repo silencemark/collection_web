@@ -14,6 +14,15 @@
          .xgoInfo{
             font-size: 0.95rem !important;
             line-height: 35px;
+            background: #fff;
+            margin-top: 5px;
+            padding: 8px 0 0 10px;
+            border-radius: 3px;
+         }
+         .xgoInfo img{
+            width: 45px;
+            height: 45px;
+            border-radius: 45px;
          }
          .xgoInfo .xgoAddNum{
             margin-top: 5px !important;
@@ -22,7 +31,7 @@
             position: absolute;
             margin-left: 55px;
             font-size: 0.85rem;
-            margin-top: 8px;
+            margin-top: -5px;
          }
          .usertwo img{
             margin-left: 60px !important;
@@ -31,40 +40,38 @@
          .usertwo .xgoInfoUname{
             margin-left: 120px !important;
          }
+         .createTime{
+            margin-top: 18px;
+            font-size: 0.8rem;
+            color: #999;
+         }
      </style>
  </head>
- <body>
+ <body style="background:#f6f6f6">
 
 <section class="main"  id="app">
-    <div class="title">
+    <div class="title" style="background: #fff;">
          <img src="../img/to-left.png" onclick="history.back(-1)"/>
-        我的团队
+        我的好友
     </div>
-    <div class="xgoInfo">
-        <span>好友总人数 : 5</span>
-        <span style="float:right;margin-right:20px;">直属好友人数 : 5</span>
+    <div class="xgoInfo" style="background:none;margin-top: 0px;font-size: 0.85rem !important;color: #777;">
+        <span>我的好友总人数 : 5</span>
+        <span style="float:right;margin-right:20px;">邀请好友</span>
         <span class="clear"></span>
     </div>
-    <div class="xgoInfo h50">
+    <div class="xgoInfo h50" v-for="(user,i) in userList" :style="`${i==0?'margin-top:0':''}`">
+        <img src="../img/defaulttx.png"/>
+        <span class="xgoInfoUname">{{user.nickname}}</span>
+        <span class="xgoInfoUname createTime" v-if="i<2">我的好友</span>
+        <span class="xgoInfoUname createTime" v-else>可能认识的人</span>
+        <div class="xgoAddNum">￥32</div>
+    </div>
+    
+    <!-- <div class="xgoInfo h50 usertwo">
         <img src="../img/defaulttx.png"/>
         <span class="xgoInfoUname">艾瑞斯</span>
         <div class="xgoAddNum">+32</div>
-    </div>
-    <div class="xgoInfo h50 usertwo">
-        <img src="../img/defaulttx.png"/>
-        <span class="xgoInfoUname">艾瑞斯</span>
-        <div class="xgoAddNum">+32</div>
-    </div>
-    <div class="xgoInfo h50 usertwo">
-        <img src="../img/defaulttx.png"/>
-        <span class="xgoInfoUname">艾瑞斯</span>
-        <div class="xgoAddNum">+32</div>
-    </div>
-    <div class="xgoInfo h50">
-        <img src="../img/defaulttx.png"/>
-        <span class="xgoInfoUname">艾瑞斯</span>
-        <div class="xgoAddNum">+32</div>
-    </div>
+    </div> -->
 
 <br/><br/><br/><br/><br/>
 </section>
@@ -93,13 +100,21 @@
       el: '#app',
       data: function() {
         return {
-            
+            userList:[]
         }
       },
       created() {
+          this.getMyTeam();
       },
       methods:{
-        
+        //查找好友
+        getMyTeam(){
+          var vThis = this;
+          jAjax("/appUserCenter/myTeam",{},function(data){
+            vThis.userList = data.sonlist;
+          });
+        }
+
       }
     })
   </script>

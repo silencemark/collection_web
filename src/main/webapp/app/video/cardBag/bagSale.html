@@ -56,7 +56,7 @@
       <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
     </div>
     <div class="clear"></div>
-    <input type="button" v-if="item.status==0" value="查看买家" :onclick="`window.location.href='../user/userInfo.html?uid=${item.selluserid}'`" :class="`active-but  v${item.forder}-bg`"/>
+    <input type="button" v-if="item.status==1" value="查看买家" :onclick="`window.location.href='../user/userInfo.html?uid=${item.selluserid}'`" :class="`active-but  v${item.forder}-bg`"/>
     
      <input type="button" v-if="item.status==2" value="立即审核" :class="`active-but  v${item.forder}-bg`" @click="chkOrder(item.orderid)"/>
 

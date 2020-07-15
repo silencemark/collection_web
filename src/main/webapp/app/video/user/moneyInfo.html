@@ -15,8 +15,8 @@
             font-size: 0.95rem !important;
             line-height: 35px;
             height: auto;
-            padding-bottom: 5px;
-            margin-top: 5px;
+            padding-bottom: 7px;
+            margin-top: 10px;
             margin-left: 0;
             padding-left: 20px;
          }
@@ -24,7 +24,7 @@
             margin-top: -4px !important;
             left: 10px;
             margin-top: -2px;
-            margin-left: 260px;
+            margin-left: 130px;
          }
          .xgoInfo img{
              width: 25px;
@@ -47,9 +47,14 @@
             font-size: 0.8rem;
             line-height: 14px;
          }
-         .xgoInfo .xgoAddNum{
-            margin-top: 5px !important;
-            left: 40px;
+         .tx{
+            position: absolute;
+            margin-top: 0px;
+            right: 35px;
+            width: 80px;
+            height: 27px;
+            line-height: 27px;
+            opacity: 0.9;
          }
      </style>
  </head>
@@ -63,28 +68,28 @@
     <div class="xgoInfo">
         <img src="../img/money-ic.png"/>
         <span class="xgoInfoUname">累计流水</span>
-        <div class="xgoAddNum">+32</div>
-        <div class="moneyText">累计总资产表示您的账户所有流水资产总和</div >
+        <div class="xgoAddNum"  v-cloak>￥{{assets.allorder}}</div>
+        <div class="moneyText">累计流水是您领取到的所有任务卡的总金额</div >
     </div>
     <div class="xgoInfo">
         <img src="../img/money-ic.png"/>
-        <span class="xgoInfoUname">累计总收益</span>
-        <div class="xgoAddNum">+32</div>
-        <div class="moneyText">累计总收益表示您历史总观影收益 + 您全部的好友推荐收益</div >
+        <span class="xgoInfoUname">累计任务奖励</span>
+        <div class="xgoAddNum" v-cloak>￥{{assets.sumassets}}</div>
+        <div class="moneyText">累计任务奖励是您完成的所有任务后获得的总奖励</div >
     </div>
     <div class="xgoInfo">
         <img src="../img/money-ic.png"/>
-        <span class="xgoInfoUname">锁定资产</span>
-        <div class="xgoAddNum">+32</div>
-        <div class="moneyText">锁定资产即是您的账号现拥有的VIP会员卡总金额</div >
+        <span class="xgoInfoUname">进行中任务</span>
+        <div class="xgoAddNum" v-cloak>￥{{assets.buyorder}}</div>
+        <div class="moneyText">前处于拥有状态任务卡的总金额即您正在进行中的任务</div >
     </div>
     <div class="xgoInfo">
         <img src="../img/money-ic.png"/>
-        <span class="xgoInfoUname">可兑换资产</span>
-        <div class="xgoAddNum">+32</div>
+        <span class="xgoInfoUname">可兑换奖励</span>
+        <div class="xgoAddNum" v-cloak>￥{{assets.sumprofit}}</div>
+        <div class="btn tx">立即提现</div>
         <div class="moneyText">
-            可兑换资产 = 好友推荐收益 + 会员卡溢出的观影收益，
-            邀请好友后您可以获得一级好友观影收益的5%，二级好友观影收益的2%
+            可兑换奖励即您还没提现的奖励金，来源渠道有1.活动赠送奖励，2.好友推荐奖励，3.任务卡剩余任务奖励
         </div >
     </div>
 <br/><br/><br/><br/><br/>
@@ -114,13 +119,21 @@
       el: '#app',
       data: function() {
         return {
-            
+            assets:{}
         }
       },
       created() {
+          this.getMyAssets();
       },
       methods:{
-        
+        //查找资产
+        getMyAssets(){
+          var vThis = this;
+          jAjax("/appUserCenter/myAssets",{},function(data){
+            vThis.assets = data;
+          });
+        }
+
       }
     })
   </script>

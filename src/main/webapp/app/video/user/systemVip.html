@@ -135,7 +135,7 @@
         myGrowthValue(){
           var vueThis = this;
           jAjax("/appUserCenter/myGrowthValue",{},function(data){
-            data.levelenum = 0;
+            if(isNaN(data.levelenum)) data.levelenum = 0;
             vueThis.growthValueData = data;
             vueThis.memberGrowList = data.memberGrowList;
           });

@@ -21,7 +21,7 @@ var commentList = [
 		zan:1, nzhan:0
 	},{
 		tx:'http://img2.imgtn.bdimg.com/it/u=903791629,504409189&fm=11&gp=0.jpg',
-		name:'小飞同学',commTime:'2020/01/02',xin:3,version:'5.2.0.111',
+		name:'狼也',commTime:'2020/01/02',xin:3,version:'5.2.0.111',
 		contentTxt:'我就想知道主页里广告的那个女猪脚是谁，三分钟之内我要她的去全部信息，否则锤死在做的各位，egm',
 		zan:12, nzhan:0
 	}

@@ -106,6 +106,7 @@
 
 <section class="main"  id="app">
     <div class="title">
+        <div class="userSetMsg" @click="addMyQuestion" style="z-index:2;color:#555;margin-top:0;">提交问题</div>
          <img src="../img/to-left.png" onclick="history.back(-1)"/>
          问题与建议
     </div>
@@ -121,7 +122,7 @@
         <span class="userSetMsg" style="right:20px;">{{msg.createtime}}</span>
       </div>
 
-        <div class="btn addwe" @click="addMyQuestion">提交问题</div>
+        <!-- <div class="btn addwe" @click="addMyQuestion">提交问题</div> -->
     </div>
     <!--end xiaox lIST-->
     

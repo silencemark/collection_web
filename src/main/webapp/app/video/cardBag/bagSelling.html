@@ -111,12 +111,16 @@
             }
             jAjax("/appVipCard/commitSellCard",this.sellInfo,function(data){
                 if(data.status=='0'){
-                    jqtoast('出售成功');
-                    window.location.href="bagSale.html"
+                    jqalert({
+                        prompt:'<div style="text-align:center">任务卡出售已完成！</div>',
+                        yestext:'查看出售进度',
+                        yesfn:function () {
+                            window.location.href="bagSale.html"
+                        }
+                    })
                 }else{
-                    jqtoast(data.msg);
+                    jqtoast(data.message);
                 }
-                vueThis.orderInfo = data;  
             });
            
         },
