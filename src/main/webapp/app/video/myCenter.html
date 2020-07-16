@@ -206,11 +206,11 @@ $(function(){
         },
         //转
         giveXgo(){
-          if(!this.myCenterData.xgocoin || this.myCenterData.xgocoin<10){
-            jqtoast("您的XGO低于10无法转赠！");
+          if(!this.myCenterData.xgocoin || this.myCenterData.xgocoin<1){
+            jqtoast("您的XGO不足！");
             return;
           }
-          window.location.href="user/xgoGive.html?num="+(this.myCenterData.xgocoin-10)
+          window.location.href="user/xgoGive.html?num="+this.myCenterData.xgocoin
         },
         getMyCenterData(){
           var vueThis = this;

@@ -205,12 +205,22 @@ function share(tp){
     }else if(tp==2){
         alert('唤起QQ失败，未检测到您打开QQ应用程序！');
     }else{
-        alert('保存图片失败！');
+        downloadImg();
     }
 }
+
+function downloadImg(){
+    var a = document.createElement('a');          // 创建一个a节点插入的document
+    var event = new MouseEvent('click')           // 模拟鼠标click点击事件
+    a.download = 'xgo'                          // 设置a节点的download属性值
+    a.href = shareUrl;                           // 将图片的src赋值给a节点的href
+    a.dispatchEvent(event)                        // 触发鼠标点击事件
+ }
+var shareUrl = "";
 $(function(){
     //
     jAjax("/appUserCenter/myInviteCode",{},function(data){ 
+        //shareUrl = data.url;
         $("#incd").attr("src",data.invitecodeqrcode).show().width(160);
     });
 });

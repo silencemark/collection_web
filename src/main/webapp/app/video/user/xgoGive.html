@@ -26,7 +26,7 @@
     </div>
     <div class="operationEl operationElFirst">
         <img src="../img/integral-ic.png"/>
-        <span style="font-size: 0.85rem;">当前可转赠XGO：{{num}}</span>
+        <span style="font-size: 0.85rem;">您当前拥有XGO：{{num}}</span>
         <div style="font-size:0.75rem;margin-top:-20px;">温馨提示 ：交易一旦完成不可回退，请谨慎操作！</div>
     </div>
 
@@ -108,6 +108,10 @@ new Vue({
                 jqtoast("您的XGO不足！");
                 return;
             }
+            if(parseInt(this.giveInfo.xgocoin)>this.num-10){
+                jqtoast("系统赠送的XGO无法转赠！");
+                return;
+            }
             if(!this.giveInfo.paypassword){
                 jqtoast("请输入支付密码！");
                 return;
@@ -122,6 +126,8 @@ new Vue({
                 if(data.status==0){
                     jqtoast("转赠成功！");
                     vueThis.num = parseInt(vueThis.num) - parseInt(vueThis.giveInfo.xgocoin);
+                    vueThis.phone = '';
+                    vueThis.paypassword = '';
                 }else{
                     jqtoast(data.message);
                 }

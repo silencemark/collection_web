@@ -15,7 +15,8 @@
 
 	<section class="main"  id="app">
 	    <div class="title" style="position: fixed;z-index:3;">
-	         <img src="../img/to-left.png" :onclick="`window.location.href='bagOwn.html?orderid=${comment.orderid}'`"/>
+	         <img src="../img/to-left.png" v-if="comment.orderid" :onclick="`window.location.href='bagOwnInfo.html?orderid=${comment.orderid}'`"/>
+	         <img src="../img/to-left.png" v-else onclick="history.back(-1)"/>
 	        观影好评
 	    </div>
 

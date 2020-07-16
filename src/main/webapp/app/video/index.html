@@ -40,6 +40,9 @@
             <li class="list_li queryVideo cart" onclick="queryVideo(this,3)">
                 <span>动漫</span>
             </li>
+            <li class="list_li queryVideo cart" onclick="queryVideo(this,1)">
+                <span>会员专享</span>
+            </li>
             <li class="clear"></li>
         </ul>
      </header>
@@ -50,12 +53,12 @@
             <!--图片低于5张出问题直接轮播两组-->
             <li><a href="#"><img src="https://puui.qpic.cn/tv/0/928089421_1080607/0"></a></li>
             <li v-for="(item,i) in bannerList" v-cloak>
-                <a :href="`'cardBag/bagComment.html?mv=${item.httpurl}'`" ><img :src="reqPath+item.imgurl"></a>
-                <div>精彩好礼送不停</div>
+                <a :href="`cardBag/bagComment.html?mv=${item.httpurl}`" ><img :src="reqPath+item.imgurl"></a>
+                <div>{{item.description}}</div>
             </li>
             <li v-for="(item,i) in bannerList">
-                <a :href="`'cardBag/bagComment.html?mv=${item.httpurl}'`"><img :src="reqPath+item.imgurl"></a>
-                <div>精彩好礼送不停</div>
+                <a :href="`cardBag/bagComment.html?mv=${item.httpurl}`"><img :src="reqPath+item.imgurl"></a>
+                <div>{{item.description}}</div>
             </li>
         </ul>
         <ul class="swipe-btn-list" id="swipe-btn-list">
@@ -69,7 +72,7 @@
 <section class="main">
 
     <div class="prdClassCont" v-for="(item , i) in homePageMovie" v-cloak >
-        <div style="height:245px;" v-if="i==2"></div>
+        <!-- <div style="height:245px;" v-if="i==2"></div> -->
         <div class="prd-title">
             <span>{{item.typename}}</span>
             <span class="clear"></span>
@@ -95,9 +98,8 @@
            <img style="width: 100%;" src="img/activMp41Title.jpg"/>
         </div>
         <!-- 广告图片-->
-        <div v-if="i==1">
-            <img src="img/activi1.jpg"  class="activity-img" />
-            <!-- <img :src="reqPath+advertisement.imgurl"  class="activity-img" /> -->
+        <div v-if="i>0">
+            <img v-if="advertisement[i]" :src="reqPath+advertisement[i].imgurl"  class="activity-img" />
         </div>
         <!--end广告图片 -->
     </div>
@@ -151,14 +153,13 @@ function scrollHandle () {
 
 
 $(function(){
-  
   //type : 0：全部 1 会员专享 2、珍藏电影、3、动漫、4、电视剧
   vm = new Vue({
     el:'#app',
     data:{
         reqPath : reqPath,
         bannerList : [],//轮播图
-        advertisement:{},//广告图
+        advertisement:[],//广告图
         homePageMovie:[],//首页电影列表
     }
   });
@@ -166,7 +167,10 @@ $(function(){
   //获取轮播图片
   jAjax("/appIndex/getBanner",{type:1},function(data){ vm.bannerList = data; });
   //获取广告图片
-//   jAjax("/appIndex/getAdvertisement",{},function(data){ vm.advertisement = data[0];  });
+  jAjax("/appIndex/getAdvertisement",{},function(data){ 
+      vm.advertisement = data;  
+      vm.advertisement.unshift(vm.advertisement[0]);
+  });
   //获取首页图片
   queryVideo(null,0);
 });

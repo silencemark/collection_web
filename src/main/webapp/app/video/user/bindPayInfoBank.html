@@ -9,6 +9,8 @@
      <script src="../js/jquery-3.4.1.js"></script>
      <script src="../js/vue.js"></script>
      <script src="../js/jq-alert.js"></script>
+     <script src="../js/jq-alert.js"></script>
+     <script src="../js/bank.js"></script>
      <style>
        .userSetMsg{
         float: right;
@@ -24,13 +26,13 @@
         收款账户管理
     </div>
     <div class="operationEl operationElFirst">
-        <img src="../img/wx-ic.png"/>
+        <img src="../img/bank-ic.png"/>
         <span>银行卡收款</span>
         <div style="font-size:0.75rem;margin-top:-20px;">提示 ：为避免您的经济损失，请仔细核对收款账号信息</div>
     </div>
 
     <div class="operationEl">
-        <span style="margin-left:0;">姓名：</span>
+        <span style="margin-left:0;">持卡人姓名：</span>
         <div style="margin-top:-20px;">
             <input v-model="userInfo.bankrealname" placeholder="请输入收款人真实姓名" style="width:90%;height:30px;border:0;color:#555;"/>
         </div>
@@ -38,7 +40,7 @@
     <div class="operationEl">
         <span style="margin-left:0;">银行卡号：</span>
         <div style="margin-top:-20px;">
-            <input v-model="userInfo.banknum" placeholder="请输入银行卡号" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+            <input v-model="userInfo.banknum" v-on:input="inputBank" maxlength="20" placeholder="请输入银行卡号" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
         </div>
     </div>
     <div class="operationEl">
@@ -95,14 +97,22 @@ new Vue({
                 vueThis.userInfo = data;
             });
         },
+        inputBank(){
+            var bo = bankCardAttribution(this.userInfo.banknum);
+            if(bo=='error'){
+
+            }else{
+                this.userInfo.bank=bo.bankName;
+            }
+        },
         //保存支付方式
         savePayment(){
             if(!this.userInfo.bankrealname){
                 jqtoast("请输入收款人真实姓名！");
                 return;
             }
-            if(!this.userInfo.banknum){
-                jqtoast("请输入银行卡号！");
+            if(!this.userInfo.banknum || this.userInfo.banknum.length<9){
+                jqtoast("请输入正确银行卡号！");
                 return;
             }
             if(!this.userInfo.bank){
