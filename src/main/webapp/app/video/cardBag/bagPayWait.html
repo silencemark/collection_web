@@ -128,26 +128,32 @@ new Vue({
     }
     },
     created() {
+        this.getRushToBuyList();
         this.getWaitPayCard();
     },
     methods:{
-        //查询抢购中 以及 待支付列表
-        getWaitPayCard(){
+        //查询抢购中 以及
+        getRushToBuyList(){
             var vueThis = this;
             jAjax("/appVipCard/getRushToBuyList",{},function(data){
                 vueThis.rushToBuyList = data.resultlist;
                 if(vueThis.rushToBuyList && vueThis.rushToBuyList.length>0){
-                    setInterval(()=>{
+                    var timer = setInterval(()=>{
                         for(var k=0;k<vueThis.rushToBuyList.length;k++){
                             vueThis.rushToBuyList[k].secondbuy += 1;
                             var s = vueThis.rushToBuyList[k].secondbuy;
                             if(s==180 || s==420 || s==600){
-                                vueThis.getWaitPayCard();
+                                clearInterval(timer);
+                                vueThis.getRushToBuyList();
                             }
                         }
                     },1000);
                 }
             });
+        },
+        // 待支付列表
+        getWaitPayCard(){
+            var vueThis = this;
             jAjax("/appVipCard/getWaitPayCard",{},function(data){
                 vueThis.waitPayCardList = data.resultlist;
                 if(vueThis.waitPayCardList && vueThis.waitPayCardList.length>0){
