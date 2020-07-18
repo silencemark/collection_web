@@ -1,5 +1,6 @@
 package com.collection.controller.app;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.base.controller.BaseController;
 import com.collection.redis.RedisUtil;
+import com.collection.service.IAppLoginService;
 import com.collection.service.IAppUserCenterService;
 import com.collection.util.Constants;
 import com.collection.util.Md5Util;
 import com.collection.util.QRcode;
+import com.collection.util.SharePictureBiz;
 
 /**
  * 
@@ -31,6 +34,8 @@ import com.collection.util.QRcode;
 public class AppUserCenterController extends BaseController{
 	
 	@Resource private IAppUserCenterService appUserCenterService;
+	
+	@Resource private IAppLoginService appLoginService;
 	
 	/**
 	 * 进入我的个人中心
@@ -97,7 +102,7 @@ public class AppUserCenterController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> myGrowthValue(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> data = this.appUserCenterService.myGrowthValue(map);
+		Map<String, Object> data = new HashMap<String, Object>();
 		//校验登录token签名是否正确
 		boolean signflag = checkToeknSign(map);
 		if (!signflag){
@@ -105,6 +110,7 @@ public class AppUserCenterController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
+		data = this.appUserCenterService.myGrowthValue(map);
 		return data;	
 	}
 	
@@ -286,11 +292,12 @@ public class AppUserCenterController extends BaseController{
 	 * @param request
 	 * @return
 	 * @author silence
+	 * @throws IOException 
 	 */
 	@RequestMapping("/myInviteCode")
 	@ResponseBody
 	public Map<String, Object> myInviteCode(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException {
 		//获取我的邀请码和 qr二维码地址
 		Map<String, Object> codeMap = this.appUserCenterService.myInviteCode(map);
 		//校验登录token签名是否正确
@@ -300,15 +307,20 @@ public class AppUserCenterController extends BaseController{
 			codeMap.put("message", "签名校验失败");
 			return codeMap;
 		}
+		String codeContent = Constants.PROJECT_PATH + codeMap.get("invitecodehttpurl");
+		codeMap.put("invitecodehttpurl", codeContent);
 		//如果没有qr二维码就生成一个入库
 		if(codeMap.get("invitecodeqrcode") == null) {
 			//用注册地址带参 生成二维码
 			String organizeid = UUID.randomUUID().toString().replaceAll("-", "");
-			String codeContent = Constants.PROJECT_PATH + codeMap.get("invitecodehttpurl");
 			QRcode qr = new QRcode();
 			@SuppressWarnings("static-access")
 			String qrcode=qr.getQRcode(codeContent , request, organizeid);
-			codeMap.put("invitecodehttpurl", qrcode);
+			String f = request.getSession().getServletContext().getRealPath("upload/qrcodes/");
+			String newImg = "/"+System.currentTimeMillis()/1000l + "_invitecode.jpg";
+			SharePictureBiz share = new SharePictureBiz();
+			share.retrievePicture(f + newImg, request.getSession().getServletContext().getRealPath("/") + qrcode);
+			codeMap.put("invitecodeqrcode", "/upload/qrcodes/"+newImg);
 			this.appUserCenterService.updateQrcode(codeMap);
 		}
 		return codeMap;	
@@ -700,7 +712,20 @@ public class AppUserCenterController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		return this.appUserCenterService.giveXgoToOther(map);
+		//获取用户信息
+		Map<String, Object> userInfo = new HashMap<String, Object>();
+		userInfo.put("userid", map.get("userid"));
+		userInfo = this.appLoginService.getUserInfo(userInfo);
+		//加密支付密码
+		String paypassword = Md5Util.getMD5(map.get("paypassword").toString());
+		if (paypassword.equals(userInfo.get("paypassword"))){
+			//校验正确支付密码
+			data = this.appUserCenterService.giveXgoToOther(map);
+		} else {
+			data.put("status", 1);
+			data.put("message", "支付密码错误");
+		}
+		return data;
 	}
 	
 }

@@ -468,6 +468,118 @@ public class ManageBackstageController {
 	
 	/**-----------------------------------------banner管理end-----------------------------------------------------**/
 	
+	/**-----------------------------------------首页广告管理start-----------------------------------------------------**/
+	
+	/**
+	 * 获取广告管理列表
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/getAdvertList")
+	public String getAdvertList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		
+		try {
+			PageHelper page = new PageHelper(request);
+			int count = this.manageBackstageService.getAdvertListCount(map);
+			page.setTotalCount(count);
+			page.initPage(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getAdvertList(map);
+			request.setAttribute("list", list);
+			request.setAttribute("map", map);
+			request.setAttribute("pager", page.cateringPage().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/managebackstage/collection/advert_list";
+	}
+	
+	/**
+	 * 初始化添加/修改广告
+	 * @param map
+	 * @param model
+	 * @param response
+	 * @param request
+	 * @author silence
+	 * @return
+	 */
+	@RequestMapping("/initAddOrUpdateAdvert")
+	public String initAddOrUpdateAdvert(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
+		if(map!= null && map.containsKey("advertid")){
+			Map<String, Object> advertInfo=this.manageBackstageService.getAdvertInfo(map);
+			model.addAttribute("advertInfo", advertInfo);
+		}
+		return "/managebackstage/collection/advert_edit";
+	}
+
+	/**
+	 * 修改广告图
+	 * @param map
+	 * @param model
+	 * @param response
+	 * @param request
+	 * @author silence
+	 * @return
+	 */
+	@RequestMapping("/updateAdvert")
+	@ResponseBody
+	public Map<String, Object> updateAdvert(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
+		Map<String, Object> data=new HashMap<String, Object>();
+		try {
+			this.manageBackstageService.updateAdvert(map);
+			data.put("status", 0);
+			data.put("message", "修改成功");
+		} catch (Exception e) {
+			data.put("status", 1);
+			data.put("message", "修改失败");
+		}
+		return data;
+	}
+	
+	/**
+	 * 新增广告图
+	 * @param map
+	 * @param model
+	 * @param response
+	 * @param request
+	 * @author silence
+	 * @return
+	 */
+	@RequestMapping("/insertAdvert")
+	@ResponseBody
+	public Map<String, Object> insertAdvert(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
+		Map<String, Object> userInfo=UserUtil.getSystemUser(request);
+		Map<String, Object> data=new HashMap<String, Object>();
+		try {
+			map.put("createid", userInfo.get("userid"));
+			map.put("createtime",new Date());
+			this.manageBackstageService.insertAdvert(map);
+			data.put("status", 0);
+			data.put("message", "添加成功");
+		} catch (Exception e) {
+			data.put("status", 1);
+			data.put("message", "添加失败");
+		}
+		return data;
+	}
+	
+	/**
+	 * 删除广告图
+	 * @param map
+	 * @param model
+	 * @param response
+	 * @param request
+	 * @author silence
+	 * @return
+	 */
+	@RequestMapping("/deleteAdvert")
+	public String deleteAdvert(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
+		this.manageBackstageService.deleteAdvert(map);
+		return "redirect:/managebackstage/getAdvertList";
+	}
+	
+	/**-----------------------------------------广告管理end-----------------------------------------------------**/
+	
 	
 	/**-----------------------------------------订单管理start-------------------------------------------------------**/
 	/**
