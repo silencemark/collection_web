@@ -39,13 +39,13 @@
         <!-- <div>请输入验证码</div> -->
         <input type="tel" v-model="user.checkcode" placeholder="输入4位数验证码" maxlength="4" style="width:65%;" />
         <div class="btn sendYzm" @click="sendYzm"  v-cloak >{{sendYzmMsg}}</div>
+        <span style="font-size: 0.85rem;color:rgb(146,145,145);position:absolute;margin-top:50px;width:200px;left:5%;" 
+            onclick="window.location.href='login.html'">已有账号,立即登录</span>&nbsp;&nbsp;
+
         <span class="errMsgCont" v-cloak >{{yzmErrMsg}}</span>
     </div>
-    <div class="but-cont" style="margin-top: -20px;">
+    <div class="but-cont" >
         <div class="btn btn-200" @click="regSubmit">立 即 注 册</div>
-    </div>
-    <div style="font-size: 0.85rem;color: rgb(146, 145, 145);position:fixed;bottom:10px;right:5px;">
-        <span onclick="window.location.href='login.html'">已有账号,立即登录</span>&nbsp;&nbsp;
     </div>
 </section>
 </body>
@@ -112,11 +112,16 @@
                 jAjax("/appLogin/register",this.user,function(data){
                     if(data.status==0){
                         jqalert({
-                            prompt:'注册成功,请前往浏览器下载APP！',
+                            prompt:'【享购影视】恭喜您注册成功',
+                            yestext:'立即登录',
+                            notext:'下载APP',
                             yesfn:function () {
                                 window.location.href='login.html';
+                            },
+                            nofn:function () {
+                                window.location.href='dwn.html';
                             }
-                        })
+                        }) 
                     }else{
                         jqtoast(data.message);
                     }

@@ -10973,5 +10973,13 @@ function checkWeChatBrowser() {
 　　　　return false;
 　　}
 }
+function is_weixn(){
+	var ua = navigator.userAgent.toLowerCase();
+	if(ua.match(/MicroMessenger/i)=="micromessenger") {
+	  return true;
+	} else {
+	  return false;
+	}
+}
 ;
 /**end 工具方法调用 */

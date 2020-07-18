@@ -26,7 +26,40 @@ var commentList = [
 		zan:12, nzhan:0
 	}
 ];
+function getQueryVariable(name) {
+	if (name == null || name == 'undefined') {return null; }
+	var searchStr = decodeURI(location.search);
+	var infoIndex = searchStr.indexOf(name + "=");
+	if (infoIndex == -1) { return null; }
+	var searchInfo = searchStr.substring(infoIndex + name.length + 1);
+	var tagIndex = searchInfo.indexOf("&");
+	if (tagIndex!= -1) { searchInfo = searchInfo.substring(0, tagIndex); }
+	return searchInfo;
+};
+function dn(){
+	var invitecode = getQueryVariable("invitecode");
+	if(invitecode && invitecode!="null"){
+		jqalert({
+			prompt:'<div style="text-align:center">您还注册账号！请前往注册</div>',
+			yestext:'立即注册',
+			yesfn:function () {
+				window.location.href='register.html?invitecode='+invitecode;
+			}
+		})
+	}else{
+		if(is_weixn()){
+			$(".apremak").hide();
+			$(".wbOpen").show();
+		}else{
+			jqtoast('正在下载中....');
+		}
+	}
+}
 $(function(){
+	$(".wbOpen").click(function(){
+		$(".apremak").show();
+		$(".wbOpen").hide();
+	})
 	$(".dwOptionEl").click(function(){
 		$(".dwOptionEl").removeClass("dwOptionActive");
 		$(this).addClass("dwOptionActive");

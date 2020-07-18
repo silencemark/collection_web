@@ -66,11 +66,11 @@
               <div id="son" :class="`v${myCenterData.levelenum}-bg`" 
               :style="`width:${(myCenterData.growthvalue - myCenterData.mingrowthvalue)*100/(myCenterData.maxgrowthvalue-myCenterData.mingrowthvalue)}%;`"></div>
           </div>
-          <span style="float:left;">V{{myCenterData.levelenum}}</span>
-          <span style="float:right;">V{{myCenterData.levelenum+1}}</span>
+          <span style="float:left;" v-cloak>V{{myCenterData.levelenum}}</span>
+          <span style="float:right;" v-cloak>V{{myCenterData.levelenum+1}}</span>
           <span class="clear"></span>
       </div>
-      <img v-if="myCenterData.levelenum!=0" :src="`img/V${myCenterData.levelenum}_IC.png`" class="v-img"/>
+      <img v-if="myCenterData.levelenum!=0" v-cloak :src="`img/V${myCenterData.levelenum}_IC.png`" class="v-img"/>
     </div>
     <div class="clear"></div>
 
@@ -104,7 +104,7 @@
       <span>我的好友</span>
       <img src="img/to-right.png" style="right:5%;"/>
     </div>
-    <div class="operationEl" onclick="window.location.href='share.html'">
+    <div class="operationEl" onclick="window.location.href='invite.html'">
       <img src="img/invitation-ic.png"/>
       <span>邀请好友</span>
       <img src="img/to-right.png" style="right:5%;"/>
@@ -179,9 +179,7 @@ $(function(){
           qdFlg:false,
           qdMessage:'',
           wdmsgCount:0,
-          myCenterData:{
-            headimage:'img/defaulttx.png'
-          },
+          myCenterData:{},
         }
       },
       created() {
@@ -215,9 +213,12 @@ $(function(){
         getMyCenterData(){
           var vueThis = this;
           jAjax("/appUserCenter/myCenter",{},function(data){
-            if(data.headimage)
-              data.headimage = vueThis.reqPath+data.headimage;
-              vueThis.myCenterData = data;
+            vueThis.myCenterData = data;
+            if(!data.headimage){
+              data.headimage = "img/defaulttx.png";
+            }else{
+              data.headimage = this.reqPath+data.headimage;
+            }
               vueThis.getMsg();
           });
         },

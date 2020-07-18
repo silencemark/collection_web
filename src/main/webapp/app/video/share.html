@@ -2,13 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>邀请好友</title>
+        <title>分享好友</title>
         <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
         <meta content="yes" name="apple-mobile-web-app-capable"/>
         <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
         <meta content="telephone=no" name="format-detection"/>
         <link href="css/share.css" rel="stylesheet" type="text/css"/>
-
     </head>
     <body>
         <section class="jq22-flexView">
@@ -17,7 +16,7 @@
                     <i class="icon icon-return"></i>
                 </a>
                 <div class="jq22-center">
-                    <span class="jq22-center-title">邀请好友</span>
+                    <span class="jq22-center-title">分享好友</span>
                 </div>
                 <a href="javascript:;" class="jq22-navBar-item" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
                     <i class="icon icon-share"></i>
@@ -26,7 +25,7 @@
             <section class="jq22-scrollView">
                 <div class="jq22-head-invite">
                     <img src="img/head.png" alt="">
-                    <div class="jq22-rule" id="ClickMe">活动规则</div>
+                    <!-- <div class="jq22-rule" id="ClickMe">活动规则</div> -->
                 </div>
                 
                 
@@ -34,11 +33,11 @@
                    <img src="" id="incd" style="height:160px;width:0;"/>
                 </div>
 				<div class="jq22-invite-button">
-                    <button data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">邀请好友</button>
+                    <button data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">分享好友</button>
                 </div>
             </section>
         </section>
-
+        <a id="cpLink" href="" style="color:#0252cf"></a>
         <div class="m-actionsheet" id="actionSheet">
             <div class="jq22-show-box">
                 <div class="jq22-show-box-title jq22-footer-flex">
@@ -54,6 +53,12 @@
                                 <img src="img/icon-qq.png" alt="">
                             </div>
                             <div class="jq22-coll-share-text">QQ</div>
+                        </a>
+                        <a href="javascript:void(0);" class="jq22-coll-share-item">
+                            <div class="jq22-coll-share-img" >
+                                <img src="img/copLine.png" id="cp" data-clipboard-action="copy" data-clipboard-target="#cpLink"/>
+                            </div>
+                            <div class="jq22-coll-share-text">分享链接</div>
                         </a>
                         <a href="javascript:;" onclick="share(3)" class="jq22-coll-share-item">
                             <div class="jq22-coll-share-img">
@@ -83,6 +88,10 @@
                 <p></p>
             </div>
         </div>
+        <script src="js/clipboard.min.js"></script>
+        <script>
+            var clipboard = new Clipboard('#cp');
+        </script>
         <script src="js/jquery-3.4.1.js"></script>
         <script src="js/jq-alert.js"></script>
         <script type="text/javascript" src="js/share.js"></script>

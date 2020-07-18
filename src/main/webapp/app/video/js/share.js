@@ -210,17 +210,32 @@ function share(tp){
 }
 
 function downloadImg(){
-    var a = document.createElement('a');          // 创建一个a节点插入的document
-    var event = new MouseEvent('click')           // 模拟鼠标click点击事件
-    a.download = 'xgo'                          // 设置a节点的download属性值
-    a.href = shareUrl;                           // 将图片的src赋值给a节点的href
-    a.dispatchEvent(event)                        // 触发鼠标点击事件
+    let image = new Image();
+    image.setAttribute("crossOrigin", "anonymous");
+    image.onload = function() {
+      let canvas = document.createElement("canvas");
+      canvas.width = image.width;
+      canvas.height = image.height;
+      let context = canvas.getContext("2d");
+      context.drawImage(image, 0, 0, image.width, image.height);
+      let url = canvas.toDataURL("image/png"); 
+      let a = document.createElement("a");
+      let event = new MouseEvent("click"); 
+      a.download = name || "xgoInv"; 
+      a.href = url; 
+      a.dispatchEvent(event);
+    };
+    image.src = shareUrl;
  }
 var shareUrl = "";
 $(function(){
-    //
     jAjax("/appUserCenter/myInviteCode",{},function(data){ 
-        //shareUrl = data.url;
-        $("#incd").attr("src",data.invitecodeqrcode).show().width(160);
+        shareUrl = reqPath+data.invitecodeqrcode;
+        clipboard = new Clipboard('#cp');
+        $("#cpLink").html(data.invitecodehttpurl);
+        $("#incd").attr("src",reqPath+data.qrcode).show().width(160);
+    });
+    $("#cp").click(function(){
+        alert("邀请链接已复制成功！");
     });
 });

@@ -122,12 +122,11 @@ new Vue({
                 return false;
             }
             var vueThis = this;
-            jAjax("/appUserCenter/giveXgoToOther",{},function(data){
+            jAjax("/appUserCenter/giveXgoToOther",this.giveInfo,function(data){
                 if(data.status==0){
                     jqtoast("转赠成功！");
                     vueThis.num = parseInt(vueThis.num) - parseInt(vueThis.giveInfo.xgocoin);
-                    vueThis.phone = '';
-                    vueThis.paypassword = '';
+                    //history.back(-1);
                 }else{
                     jqtoast(data.message);
                 }

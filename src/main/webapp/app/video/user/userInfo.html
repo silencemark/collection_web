@@ -42,7 +42,7 @@
       <br><br>
       <div>对方姓名：<font v-cloak>{{userInfo.realname}}</font></div>
       <div>手机号码：
-          <a  v-cloak id="uPhone" :href="`tel:${userInfo.phone}`">{{userInfo.phone}}  <span style="font-size:0.8rem;">拨号</span></a>
+          <a  v-cloak id="uPhone" :href="`tel:${userInfo.phone}`">{{userInfo.phone}}</a>  <span style="font-size:0.8rem;">拨号</span>
           <img src="../img/cp.jpg" id="cp" data-clipboard-action="copy" data-clipboard-target="#uPhone" @click="cp"  style="width:17px;height:17px;"/>
       </div>
       <div>微信号：<font v-cloak>{{userInfo.weixinnum}}</font v-cloak></div>
