@@ -138,13 +138,12 @@ new Vue({
             jAjax("/appVipCard/getRushToBuyList",{},function(data){
                 vueThis.rushToBuyList = data.resultlist;
                 if(vueThis.rushToBuyList && vueThis.rushToBuyList.length>0){
-                    var timer = setInterval(()=>{
+                    setInterval(()=>{
                         for(var k=0;k<vueThis.rushToBuyList.length;k++){
                             vueThis.rushToBuyList[k].secondbuy += 1;
                             var s = vueThis.rushToBuyList[k].secondbuy;
                             if(s==180 || s==420 || s==600){
-                                clearInterval(timer);
-                                vueThis.getRushToBuyList();
+                                window.location.reload();
                             }
                         }
                     },1000);
