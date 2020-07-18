@@ -70,7 +70,7 @@
           <span style="float:right;" v-cloak>V{{myCenterData.levelenum+1}}</span>
           <span class="clear"></span>
       </div>
-      <img v-if="myCenterData.levelenum!=0" v-cloak :src="`img/V${myCenterData.levelenum}_IC.png`" class="v-img"/>
+      <img v-if="myCenterData.levelenum && myCenterData.levelenum!=0" v-cloak :src="`img/V${myCenterData.levelenum}_IC.png`" class="v-img"/>
     </div>
     <div class="clear"></div>
 
