@@ -134,7 +134,7 @@
 window.addEventListener('scroll', this.scrollHandle, true);
 document.getElementsByTagName('body')[0].scrollTop = 0;    
 window.onscroll=function(){
-    scrollHandle();
+    // scrollHandle();
 }
 function scrollHandle () {
     if(checkWeChatBrowser()) return;
@@ -145,9 +145,9 @@ function scrollHandle () {
     const offsetHeight = offset.height;
     // 进入可视区域
     if (offsetTop <= window.innerHeight && offsetBottom >= 0) {
-        videoEle.play();
+        // videoEle.play();
     } else {
-        videoEle.pause();
+        // videoEle.pause();
     }
 }
 
