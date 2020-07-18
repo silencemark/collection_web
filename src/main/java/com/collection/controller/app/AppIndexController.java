@@ -80,4 +80,20 @@ public class AppIndexController extends BaseController{
 			HttpServletResponse response) {
 		return this.appindexService.getHomePageMovie(map);
 	}
+	
+	/**
+	 * 首页模糊查询影片接口
+	 * 传入参数{"type":1， "userid":"45651"}
+	 * 传出参数
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getHomePageVideoDesc")
+	@ResponseBody
+	public List<Map<String, Object>> getHomePageVideoDesc(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		return this.appindexService.getHomePageVideoDesc(map);
+	}
 }
