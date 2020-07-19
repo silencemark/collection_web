@@ -108,14 +108,14 @@
     <br/><br/><br/><br/><br/>
 
     <!--搜索-->
-    <div class="searchWin" v-if="searchFlg">
+    <div class="searchWin" v-if="searchFlg" v-cloak>
         <div class="stitle">
             <img src="img/search.png">
             <input placeholder="您想要看什么" v-model="searchValue" v-on:input="searchMv" maxlength="10"/>
             <span @click="searchFlg=false">取消搜索</span>
         </div>
         <br/><br/><br/>
-        <div class="mvo" v-for="(so,i) in searchList">
+        <div class="mvo" v-for="(so,i) in searchList" v-cloak>
             <div class="vLeft" v-if="i==0" style="background-color: #ec3315;">{{i+1}}</div>
             <div class="vLeft" v-else-if="i==1" style="background-color: #ff5e00;">{{i+1}}</div>
             <div class="vLeft" v-else-if="i==2" style="background-color: #ff8d00;">{{i+1}}</div>

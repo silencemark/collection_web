@@ -28,8 +28,8 @@
         <div @click="ckActiv(4)"></div>
     </div>
     <div class="clear"></div>
-    <div class="maeeageTx" id="lookMsg" style="height: auto;" onclick="window.location.href='introduce.html'">
-        <span>操作教程</span>
+    <div class="maeeageTx" style="background-image:linear-gradient(90deg,#bd510b,#f37d38);" id="lookMsg" style="height: auto;" onclick="window.location.href='introduce.html'">
+        <span>操作引导</span>
     </div>
 
 
@@ -54,7 +54,7 @@
         </div>
         <div v-else>
             <div v-if="item.havebuy==1 || item.havebuy==2">
-                <input type="button" v-if="item.havebuy==1" value="任 务 抢 购 中" :class="`active-but  v${item.forder}-bg`"/>
+                <input type="button" v-if="item.havebuy==1" value="任務分派中" :class="`active-but  v${item.forder}-bg`"/>
                 <input type="button" v-if="item.havebuy==2" value="今日任务已领取" :class="`active-but  v${item.forder}-bg`" 
                     onclick="window.location.href='cardBag/bagPayWait.html'"/>
             </div>
@@ -137,15 +137,22 @@ new Vue({
             if(data.status==0){
                 window.location.href='cardBag/bagPayWait.html';
             }else{
-                jqalert({
-                    prompt:data.message+'  立即前往账户设置？',
-                    yestext:'立即前往',
-                    notext:'取消',
-                    yesfn:function () {
-                        window.location.href='user/setUser.html';
-                    },
-                    nofn:function () {}
-                });
+                if(data.status==2){
+                    jqalert({
+                        prompt:data.message+'  立即前往账户设置？',
+                        yestext:'立即前往',
+                        notext:'取消',
+                        yesfn:function () {
+                            window.location.href='user/setUser.html';
+                        },
+                        nofn:function () {}
+                    });
+                }else{
+                    jqalert({
+                        prompt:data.message,
+                        yesfn:function () {}
+                    });
+                }
             }
         });
     },

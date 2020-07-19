@@ -45,7 +45,7 @@
 <div class="operationEl payOption">
     <img src="../img/XGO-ic.png"/>
     <span>XGO币</span>
-    <span class="money"><span style="color:#555;font-weight:500;font-size:0.9em;">余额：</span>{{orderInfo.xgocoin}}</span>
+    <span class="money"><span style="color:#555;font-weight:500;font-size:0.9em;"> </span>{{orderInfo.xgocoin}}</span>
 </div>
 <div class="operationEl payOption" @click="selectPayType(1)">
     <img src="../img/wx-ic.png"/>
@@ -87,6 +87,9 @@
     <div class="colRigth">
         <img v-if="payType==1" :src="reqPath+orderInfo.weixinqrcode" style="width: 100%;height:100%;">
         <img v-if="payType==2" :src="reqPath+orderInfo.alipayqrcode" style="width: 100%;height:100%;">
+
+        <div v-if="payType==1" class="showbigImg" @click="showbigImgWin(reqPath+orderInfo.weixinqrcode)">+点击查看大图</div>
+        <div v-if="payType==2" class="showbigImg" @click="showbigImgWin(reqPath+orderInfo.alipayqrcode)">+点击查看大图</div>
     </div>
     <div class="clear"></div>
 </div>
@@ -121,6 +124,15 @@
 </div>
 <!--end 确认支付窗口-->
 
+<!--查看大图-->
+<div class="showBIGiMGwiND" v-if="showBigFlg">
+    <img :src="bigImgSrc"/>
+    <img src="../img/close.png" style="width: 35px;margin-top: 10px;" @click="showBigFlg = false"/>
+</div>
+<!--查看大图-->
+
+
+
 </section>
 
  <footer id="footer">
@@ -151,12 +163,14 @@ new Vue({
     el: '#app',
     data: function() {
         return {
+            showBigFlg:false,
             reqPath : reqPath,
             orderid:'',
             payType:2,
             orderInfo:{},
             payConfirmContStatus:false,
             paypassword:'',
+            bigImgSrc:""
         }
     },
     created() {
@@ -164,6 +178,10 @@ new Vue({
         this.getPayVipCardInfo(this.orderid);
     },
     methods:{
+        showbigImgWin(bsrc){
+            this.bigImgSrc = bsrc;
+            this.showBigFlg = true;
+        },
         //查询
         getPayVipCardInfo(orderid){
             var vueThis = this;

@@ -471,3 +471,31 @@
     float: left;
     margin-left: 4.8%;
 }
+.showbigImg{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background: #000;
+    margin-top: -102%;
+    color: #fff;
+    position: relative;
+    line-height: 150px;
+    z-index: 2;
+    opacity: 0.5;
+}
+  
+.showBIGiMGwiND{
+    width: 100%;
+    height: 92%;
+    top: 0;
+    z-index: 5;
+    text-align: center;
+    position: fixed;
+}
+.showBIGiMGwiND img{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 50px;
+    max-height: 80%;
+    margin-right: 5%;
+}

@@ -126,7 +126,7 @@ new Vue({
                 if(data.status==0){
                     jqtoast("转赠成功！");
                     vueThis.num = parseInt(vueThis.num) - parseInt(vueThis.giveInfo.xgocoin);
-                    //history.back(-1);
+                    history.back(-1);
                 }else{
                     jqtoast(data.message);
                 }
