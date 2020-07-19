@@ -125,6 +125,7 @@
 <!--end 确认支付窗口-->
 
 <!--查看大图-->
+<div class="bigImgbg" v-if="showBigFlg"></div>
 <div class="showBIGiMGwiND" v-if="showBigFlg">
     <img :src="bigImgSrc"/>
     <img src="../img/close.png" style="width: 35px;margin-top: 10px;" @click="showBigFlg = false"/>

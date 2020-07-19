@@ -26,12 +26,19 @@
       <input id="cf" onchange="chagntx(this,'tx');" class="imgFileInput" type="file" accept="image/*" multiple="" style="width:50px;height:50px;margin-left:5%;margin-top:0px;">
       <div class="userName">
           <span style="margin-top:3px;" v-cloak>{{myCenterData.nickname}}</span>
-          <img src="img/duopSuc.png" v-if="myCenterData.isrealname==2" style="margin-top:5px;"/>
-          <img src="img/duop.png"  v-else style="margin-top:5px;"/>
-          <span class="renz" v-cloak v-if="myCenterData.isrealname==0">未认证</span> 
-          <span class="renz" v-cloak v-if="myCenterData.isrealname==1">审核中</span> 
-          <span class="renz" v-cloak v-if="myCenterData.isrealname==2">已认证</span> 
-          <span class="renz" v-cloak v-if="myCenterData.isrealname==3">认证失败</span> 
+          <img src="img/duopErr.png" v-if="myCenterData.status==2" style="margin-top:5px;"/>
+          <img src="img/duopSuc.png" v-if="myCenterData.isrealname==2 && myCenterData.status!=2" style="margin-top:5px;"/>
+          <img src="img/duop.png"  v-if="myCenterData.isrealname!=2 && myCenterData.status!=2" style="margin-top:5px;"/>
+          
+          <div v-if="myCenterData.status==2">
+            <span class="renz">&nbsp;账号已冻结</span> 
+          </div>
+          <div v-else>
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==0"> &nbsp;未认证</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==1"> &nbsp;审核中</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==2"> &nbsp;已认证</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==3"> &nbsp;认证失败</span> 
+          </div>
       </div>
       <div class="btn qiand" @click="qiand" v-if="!myCenterData.isSign">签到</div>
       <div class="btn qiand" v-else>已签到</div>

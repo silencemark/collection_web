@@ -10938,6 +10938,11 @@ function chkUrlISWhite(url){
 	return false;
 }
 
+$(function(){
+	$("#footer_list .list_li").click(function(){
+		window.location.href = $(this).find("a").attr("href");
+	});
+});
 /**begin user Sesssion */
 function setCptToken(data){
 	localStorage.setItem("cptToken",data);
