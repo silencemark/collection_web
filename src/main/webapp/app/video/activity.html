@@ -21,11 +21,16 @@
     </div>
     <img src="img/activT.png" style="width: 100%;"/>
     <img src="img/activ1.png" style="width: 100%;"/>
+    <div class="activBut">
+        <div @click="ckActiv(1)"style="margin-left: 0;"></div>
+        <div @click="ckActiv(2)"></div>
+        <div @click="ckActiv(3)"></div>
+        <div @click="ckActiv(4)"></div>
+    </div>
+    <div class="clear"></div>
     <div class="maeeageTx" id="lookMsg" style="height: auto;" onclick="window.location.href='introduce.html'">
         <span>操作教程</span>
     </div>
-
-
 
 
 <!--vipInfo-->
@@ -63,7 +68,21 @@
     <div class="payWaitLoad" v-if="item.havebuy==2"></div>
 
 </div>
+
+
+
+<div class="qiandWin" v-if="qdFlg"  v-cloak></div>
+    <div class="qiandContDiv" v-if="qdFlg"  v-cloak>
+      <div class="qdsucTitle">签到成功</div>
+      <div class="qdsuccont" v-cloak style="height: 70px;">{{qdMessage}}</div>
+      <div style="text-align:center;margin-top:-35px;"><img src="img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
+      <div style="text-align:center;margin-top:-20px;">
+          <div class="btn" @click="qdFlg = false">知 道 了</div>
+      </div>
+    </div>
+
 </section>
+
 
 
  <!--footer-->
@@ -93,6 +112,8 @@ new Vue({
     data: function() {
     return {
         reqPath : reqPath,
+        qdMessage:'',
+        qdFlg:false,
         vipCardList : [],
         timer:undefined,//定时函数
     }
@@ -149,6 +170,30 @@ new Vue({
                 }
             },1000);
         }
+    },ckActiv(tp){
+        if(tp==1){
+            this.qiand();
+        }else if(tp==2){
+            jqalert({
+                prompt:'请在页面下方选择您想要领取的任务卡！',
+                yestext:'好 的',
+                yesfn:function () {
+                }
+            });
+        }else{
+            window.location.href='invite.html';
+        }
+    },
+    qiand(){
+        var vThis = this;
+        jAjax("/appUserCenter/signIn",{},function(data){
+        if(data.status=='0'){
+            vThis.qdFlg = true;
+            vThis.qdMessage = data.remark;
+        }else{
+            jqtoast(data.message);
+        }
+        });
     }
 
   }

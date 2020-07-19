@@ -30,6 +30,7 @@ ol,ul{
     width: 100%;
     max-width: 750px;
     min-width: 320px;
+    max-height: 260px;
     margin: 0 auto;
     position: relative;
 }

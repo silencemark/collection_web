@@ -24,23 +24,23 @@
             <img  src="img/logo.png"/>
          </section>
         <section class="searchCont">
-            <input placeholder="您想要看什么"/>
-            <img src="img/search.png">
+            <input placeholder="您想要看什么" @click="showSearchWin"/>
+            <img src="img/search.png" @click="showSearchWin"/>
         </section>
         <ul id="class_list">
-            <li class="list_li home queryVideo active" onclick="queryVideo(this,0)">
+            <li class="list_li home queryVideo active" @click="queryVideo(0)">
                 <span>所有影片</span>
             </li>
-            <li class="list_li queryVideo profile" onclick="queryVideo(this,4)">
+            <li class="list_li queryVideo profile" @click="queryVideo(4)">
                 <span>电视剧</span>
             </li>
-            <li class="list_li queryVideo follow"  onclick="queryVideo(this,2)">
+            <li class="list_li queryVideo follow"  @click="queryVideo(2)">
                 <span>珍藏电影</span>
             </li>
-            <li class="list_li queryVideo cart" onclick="queryVideo(this,3)">
+            <li class="list_li queryVideo cart" @click="queryVideo(3)">
                 <span>动漫</span>
             </li>
-            <li class="list_li queryVideo cart" onclick="queryVideo(this,1)">
+            <li class="list_li queryVideo cart" @click="queryVideo(1)">
                 <span>会员专享</span>
             </li>
             <li class="clear"></li>
@@ -72,23 +72,25 @@
 <section class="main">
 
     <div class="prdClassCont" v-for="(item , i) in homePageMovie" v-cloak >
-        <!-- <div style="height:245px;" v-if="i==2"></div> -->
         <div class="prd-title">
             <span>{{item.typename}}</span>
             <span class="clear"></span>
-            <font v-if="i==0" style="font-size:0.85rem;">邀请好友领取更多观影收益&nbsp;&nbsp;</font>
+            <font v-if="i==0" style="font-size:0.85rem;" onclick="window.location.href='invite.html'">邀请好友领取更多观影收益&nbsp;&nbsp;</font>
             <img v-if="i==0" src="img/fire.png"/>
         </div>
-        <div class="ImgCont" v-for="(movie , j) in item.movielist">
-            <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`" />
-            <div class="prdName">{{movie.title}}</div>
-            <div class="prdRemark">{{movie.description}}</div>
+        <div v-for="(movie , j) in item.movielist">
+            <div class="ImgCont" v-if="j<6">
+                <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`" />
+                <div class="prdName">{{movie.title}}</div>
+                <div class="prdRemark">{{movie.description}}</div>
+            </div>
         </div>
+
 
         <div class="clear"></div>
         <div class="refresh-cont" v-if="item.movielist.length>1">
-            <img src="img/ref.png"/>&nbsp;
-            <span>换一批</span>
+            <img @click="refMv(item.type)" src="img/ref.png"/>&nbsp;
+            <span @click="refMv(item.type)">换一批</span>
         </div>
         <!--广告-->
         <div v-if="i==0">
@@ -103,8 +105,29 @@
         </div>
         <!--end广告图片 -->
     </div>
-
     <br/><br/><br/><br/><br/>
+
+    <!--搜索-->
+    <div class="searchWin" v-if="searchFlg">
+        <div class="stitle">
+            <img src="img/search.png">
+            <input placeholder="您想要看什么" v-model="searchValue" v-on:input="searchMv" maxlength="10"/>
+            <span @click="searchFlg=false">取消搜索</span>
+        </div>
+        <br/><br/><br/>
+        <div class="mvo" v-for="(so,i) in searchList">
+            <div class="vLeft" v-if="i==0" style="background-color: #ec3315;">{{i+1}}</div>
+            <div class="vLeft" v-else-if="i==1" style="background-color: #ff5e00;">{{i+1}}</div>
+            <div class="vLeft" v-else-if="i==2" style="background-color: #ff8d00;">{{i+1}}</div>
+            <div class="vLeft" v-else>{{i+1}}</div>
+            <div class="vrigth" :onclick="`window.location.href='cardBag/bagComment.html?mv=${so.httpurl}'`" >{{so.title}}</div>
+        </div>
+        <div v-if="searchList.length==0" style="text-align:center;margin-top: 40px;color: #777;">
+            很抱歉，没有找到相关资源
+        </div>
+    </div>
+</div>
+
 </section>
       <!--footer-->
       <footer id="footer">
@@ -124,6 +147,7 @@
        </ul>
       </footer>
         <!-- end footer-->
+
 </div>
 
 </body>
@@ -131,62 +155,138 @@
 
 
 <script>
-window.addEventListener('scroll', this.scrollHandle, true);
-document.getElementsByTagName('body')[0].scrollTop = 0;    
-window.onscroll=function(){
-    // scrollHandle();
-}
-function scrollHandle () {
-    if(checkWeChatBrowser()) return;
-    var videoEle = document.getElementById("videoId");
-    const offset = videoEle.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
-    const offsetTop = offset.top;
-    const offsetBottom = offset.bottom;
-    const offsetHeight = offset.height;
-    // 进入可视区域
-    if (offsetTop <= window.innerHeight && offsetBottom >= 0) {
-        // videoEle.play();
-    } else {
-        // videoEle.pause();
-    }
-}
-
-
+// window.addEventListener('scroll', this.scrollHandle, true);
+// document.getElementsByTagName('body')[0].scrollTop = 0;    
+// window.onscroll=function(){
+//     // scrollHandle();
+// }
+// function scrollHandle () {
+//     if(checkWeChatBrowser()) return;
+//     var videoEle = document.getElementById("videoId");
+//     const offset = videoEle.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
+//     const offsetTop = offset.top;
+//     const offsetBottom = offset.bottom;
+//     const offsetHeight = offset.height;
+//     // 进入可视区域
+//     if (offsetTop <= window.innerHeight && offsetBottom >= 0) {
+//         // videoEle.play();
+//     } else {
+//         // videoEle.pause();
+//     }
+// }
 $(function(){
-  //type : 0：全部 1 会员专享 2、珍藏电影、3、动漫、4、电视剧
-  vm = new Vue({
-    el:'#app',
-    data:{
-        reqPath : reqPath,
-        bannerList : [],//轮播图
-        advertisement:[],//广告图
-        homePageMovie:[],//首页电影列表
-    }
-  });
-
-  //获取轮播图片
-  jAjax("/appIndex/getBanner",{type:1},function(data){ vm.bannerList = data; });
-  //获取广告图片
-  jAjax("/appIndex/getAdvertisement",{},function(data){ 
-      vm.advertisement = data;  
-      vm.advertisement.unshift(vm.advertisement[0]);
-  });
-  //获取首页图片
-  queryVideo(null,0);
-});
-
-//查询影片
-function queryVideo(obj,type){
-    if(obj){
+    $(".queryVideo").click(function(){
         $(".queryVideo").removeClass("active");
-        $(obj).addClass("active");
-    }
-    //获取首页电影
-    jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
-      vm.homePageMovie = data;  
+        $(this).addClass("active");
     });
-}
+})
+new Vue({
+    el: '#app',
+    data: function() {
+        return {
+            reqPath : reqPath,
+            searchFlg:false,
+            bannerList : [],//轮播图
+            advertisement:[],//广告图
+            searchList:[],
+            homePageMovie:[],//首页电影列表
+            randomNumLogs : "",
+            searchValue : ""
+        }
+    },
+    created() {
+        this.getBanner();
+        this.queryVideo(0);
+        this.getAdvertisement();
+    },
+    methods:{
+        getBanner(){
+            var vm = this;
+            jAjax("/appIndex/getBanner",{type:1},function(data){ vm.bannerList = data; });
+        },
+        getAdvertisement(){
+            var vm = this;
+            jAjax("/appIndex/getAdvertisement",{},function(data){ 
+                vm.advertisement = data;  
+                vm.advertisement.unshift(vm.advertisement[0]);
+            });
+        },
+        //获取影片
+        queryVideo(type){
+            var vm = this;
+            jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
+                vm.homePageMovie = data;
+            });
+        },
+        //默认搜索数据
+        defaultSearch(){
+            this.searchList = [];
+            for(var i=0;i<this.homePageMovie.length;i++){
+                this.searchList = this.searchList.concat(this.homePageMovie[i].movielist);
+            }
+        },
+        //搜索电影查询
+        searchMv(){
+            if(!this.searchValue){
+                this.defaultSearch();
+            }else{
+                var v = this;
+                jAjax("/appIndex/getHomePageVideoDesc",{videodesc:this.searchValue},function(data){
+                   v.searchList = data;
+                });
+                
+            }
+        },
+        //弹出搜索框
+        showSearchWin(){
+            this.defaultSearch();
+            this.searchValue = "";
+            this.searchFlg = true;
+        },
+        //换一批
+        refMv(type){
+           for(var j=0;j<this.homePageMovie.length;j++){
+               var tyel = this.homePageMovie[j];
+               if(tyel.type==type && tyel.movielist.length>6){
+                    var size = tyel.movielist.length
+                    var oldTmp = JSON.parse(JSON.stringify(tyel.movielist));
+                    for(var i = 0; i < size; i++) {
+                        var randomPos = this.randomNum(0,size-1);
+                        this.homePageMovie[j].movielist[i] = oldTmp[randomPos];
+                    }
+                    this.randomNumLogs = "";
+                    this.$forceUpdate();
+               }
+           }
+        },
+        //生成从minNum到maxNum的随机数
+        randomNum(minNum,maxNum){ 
+            var n ;
+            switch(arguments.length){ 
+                case 1: 
+                    n = parseInt(Math.random()*minNum+1,10); 
+                break; 
+                case 2: 
+                    n = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+                break; 
+                    default: 
+                        n =  0; 
+                    break; 
+            }
+            // console.log(this.randomNumLogs);
+            if(this.randomNumLogs.indexOf(n)>=0){
+                return this.randomNum(minNum,maxNum);
+            }else{
+                this.randomNumLogs += n;
+                if((this.randomNumLogs+"").length==maxNum+1){
+                    this.randomNumLogs = "";
+                }
+                return n;
+            }
+        } 
 
+    }
+})
 
 </script>
 </html>
