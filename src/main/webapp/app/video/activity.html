@@ -6,48 +6,25 @@
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="css/public.css"/>
      <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
-     <!--轮播CSS-->
-     <link rel="stylesheet" type="text/css" href="css/slideshow.css">
      <script src="js/jquery-3.4.1.js"></script>
      <script src="js/jq-alert.js"></script>
      <script src="js/vue.js"></script>
      <script src="js/base.js"></script>
-     <script src="js/slideshow.js"></script>
  </head>
  <body>
- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div>
+ <div class="loading" id="loadingWindow" style="display:block;background:#f3f1f1;opacity: 0.9;"><img src="img/timg.gif"/></div>
 
 <section class="main"  id="app">
     <div class="title">
         <img src="img/to-left.png" onclick="history.back(-1)"/>
         活动中心
     </div>
-    <!-- <img src="img/tkg.png" style="width: 100%;"/> -->
-
-
-
-<!--轮播-->
-<div class="layout">
-    <div class="banner">
-        <ul class="swipe" id="swipe">
-            <!--图片低于5张出问题直接轮播两组-->
-            <li><a href="#"><img src="https://puui.qpic.cn/tv/0/928089421_1080607/0"></a></li>
-            <li v-for="(item,i) in bannerList" v-cloak>
-                <a :href="`cardBag/bagComment.html?mv=${item.httpurl}`" ><img :src="reqPath+item.imgurl"></a>
-                <div v-cloak>{{item.description}}</div v-cloak>
-            </li>
-            <li v-for="(item,i) in bannerList">
-                <a :href="`cardBag/bagComment.html?mv=${item.httpurl}`"><img :src="reqPath+item.imgurl"></a>
-                <div  v-cloak>{{item.description}}</div>
-            </li>
-        </ul>
-        <ul class="swipe-btn-list" id="swipe-btn-list">
-            <li v-for="(item,i) in bannerList"></li>
-            <li></li><li></li><li></li>
-        </ul>
+    <img src="img/activT.png" style="width: 100%;"/>
+    <img src="img/activ1.png" style="width: 100%;"/>
+    <div class="maeeageTx" id="lookMsg" style="height: auto;" onclick="window.location.href='introduce.html'">
+        <span>操作教程</span>
     </div>
-</div>
-<!--end 轮播-->
+
 
 
 
@@ -117,27 +94,13 @@ new Vue({
     return {
         reqPath : reqPath,
         vipCardList : [],
-        bannerList : [],//轮播图
         timer:undefined,//定时函数
     }
     },
     created() {
         this.getVipCardList();
-        this.getBanner();
     },
     methods:{
-    //获取轮播图片
-    getBanner(){
-        var vm = this;
-        jAjax("/appIndex/getBanner",{type:2},function(data){
-            if(data && data.length<3){
-                data[1] = data[0];
-                data[2] = data[0];
-                data[3] = data[0];
-            }
-            vm.bannerList = data;
-        });
-    },
     //获取活动
     getVipCardList(){
         var vueThis = this;

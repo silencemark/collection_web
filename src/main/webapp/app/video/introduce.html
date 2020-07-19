@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>操作教程</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <script src="js/jquery-3.4.1.js"></script>
+     <script src="js/jq-alert.js"></script>
+ </head>
+ <body style="background:#2d82f9">
+ <!-- <div class="loading" id="loadingWindow" style="display:block;background:#f3f1f1;opacity: 0.9;"><img src="img/timg.gif"/></div> -->
+
+<section class="main"  id="app">
+    <div class="title">
+        <img src="img/to-left.png" onclick="history.back(-1)"/>
+        操作教程
+    </div>
+    <img src="img/xgojs0.png" style="width: 100%;"/>
+    <img src="img/xgojs1.png" style="width: 100%;"/>
+    <br/><br/>
+    
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a href="index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="activity.html" class="text">活动中心</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="cardBag/bagOwn.html" class="text">卡包</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        reqPath : reqPath,
+        }
+    },
+    created() {
+    },
+    methods:{
+
+  }
+})
+</script>
+
+</html>
