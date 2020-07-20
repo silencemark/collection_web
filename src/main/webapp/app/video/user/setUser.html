@@ -31,10 +31,10 @@
       <span class="userSetMsg" onclick="$('#cf').click()">修改头像</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
-    <div class="operationEl">
+    <div class="operationEl" :onclick="`window.location.href='serUserName.html?nickname=${userInfo.nickname}'`">
       <img src="../img/edit-ic.png"/>
       <span>修改昵称</span>
-      <span class="userSetMsg"  v-cloak  :onclick="`window.location.href='serUserName.html?nickname=${userInfo.nickname}'`">{{userInfo.nickname}}</span>
+      <span class="userSetMsg"  v-cloak>{{userInfo.nickname}}</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl">
@@ -42,16 +42,16 @@
       <span>手机号码</span>
       <span class="userSetMsg"  v-cloak>{{userInfo.phone}}</span>
     </div>
-    <div class="operationEl">
+    <div class="operationEl" :onclick="`window.location.href='setPayPsd.html?phone=${userInfo.phone}'`">
       <img src="../img/set-ic.png"/>
       <span>修改支付密码</span>
-      <span class="userSetMsg" v-cloak :onclick="`window.location.href='setPayPsd.html?phone=${userInfo.phone}'`">
+      <span class="userSetMsg" v-cloak >
           <font v-if="userInfo.ispaypass==0">未设置</font>
           <font v-if="userInfo.ispaypass==1">已设置</font>
       </span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
-    <div class="operationEl">
+    <div class="operationEl" :onclick="`window.location.href='${userInfo.isrealname==0?'certification':'certificationInfo'}.html'`">
       <img src="../img/handPor-ic.png"/>
       <span>身份认证</span>
       <span class="userSetMsg" v-if="userInfo.isrealname==0" onclick="window.location.href='certification.html'" v-cloak>未认证</span>
@@ -60,11 +60,11 @@
       <span class="userSetMsg" v-if="userInfo.isrealname==3" onclick="window.location.href='certificationInfo.html'" v-cloak>认证失败</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
-    <div class="operationEl">
+    <div class="operationEl" onclick="window.location.href='bindPayType.html'">
       <img src="../img/bank-ic.png"/>
       <span>收款方式管理</span>
-      <span class="userSetMsg" onclick="window.location.href='bindPayType.html'" v-if="userInfo.ispaymentmethod==0"  v-cloak>未设置</span>
-      <span class="userSetMsg" onclick="window.location.href='bindPayType.html'"  v-if="userInfo.ispaymentmethod==1"  v-cloak>已设置</span>
+      <span class="userSetMsg"  v-if="userInfo.ispaymentmethod==0"  v-cloak>未设置</span>
+      <span class="userSetMsg"  v-if="userInfo.ispaymentmethod==1"  v-cloak>已设置</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
     <div class="operationEl"  onclick="window.location.href='changePasswrod.html'">

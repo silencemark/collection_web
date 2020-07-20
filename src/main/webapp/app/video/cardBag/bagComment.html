@@ -16,7 +16,7 @@
 	<section class="main"  id="app">
 	    <div class="title" style="position: fixed;z-index:3;">
 	         <img src="../img/to-left.png" v-if="comment.orderid" :onclick="`window.location.href='bagOwnInfo.html?orderid=${comment.orderid}'`"/>
-	         <img src="../img/to-left.png" v-else onclick="history.back(-1)"/>
+	         <img src="../img/to-left.png" v-else onclick="window.location.href='../index.html'"/>
 	        观影好评
 	    </div>
 
@@ -151,8 +151,8 @@
 	                $("#commentWindow").hide();
 	                jqalert({
 	                    title:'提示',
-	                    prompt:'太难拉，考虑一下给个5星好不好',
-	                    yestext:'设施一个5星',
+	                    prompt:'太难啦，给个五星好不好？',
+	                    yestext:'给个5星吧',
 	                    notext:'就是不给',
 	                    yesfn:function () {
 	                        $("#jq-alert").remove();

@@ -100,6 +100,22 @@
           padding: 10px;
           box-sizing: border-box;
         }
+        .pbSelect{
+          width: 90%;
+          margin-left: 5%;
+          height: 35px;
+          font-size: 0.9rem;
+          padding-left: 10px;
+          background-color: #fff;
+          margin-top: 0px;
+          color: #777;
+          border-top: 0;
+          border: 1px solid #e5e5e5;
+        }
+        .pbSelect option{
+          width: auto;
+          border:none
+        }
      </style>
  </head>
  <body>
@@ -162,7 +178,13 @@
     </div>
     <textarea v-model="questioncontent" class="wtextarea" placeholder="让你遇见困惑，我们非常难过，希望您告诉我们您再哪里遇到了问题，以便我们为您服务">
     </textarea>
-
+    <select class="pbSelect"  v-model="qType">
+      <option value="0">选择问题类型</option>
+      <option value="0">App使用问题</option>
+      <option value="1">影片问题</option>
+      <option value="2">交易问题</option>
+      <option value="3">其他问题</option>
+    </select>
 
     <div style="width: 100%;text-align: center;margin-top: 20px;">
         <div class="btn btn-200" @click="subQues">立 即 提 交</div>
@@ -203,6 +225,7 @@ new Vue({
     return {
         reqPath : reqPath,
         seMsg:{},
+        qType:0,
         msgInfoFlg:false,
         addMsgFlg:false,
         questioncontent:'',
@@ -225,7 +248,7 @@ new Vue({
             return;
           }
           var vThis = this;
-          jAjax("/appUserCenter/addMyQuestion",{questioncontent:this.questioncontent},function(data){
+          jAjax("/appUserCenter/addMyQuestion",{questioncontent:this.questioncontent,qtype:this.qType},function(data){
             if(data.status==0){
               var dates = new Date();
               var years = dates.getFullYear();

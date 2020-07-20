@@ -80,7 +80,8 @@
         </div>
         <div v-for="(movie , j) in item.movielist">
             <div class="ImgCont" v-if="j<6">
-                <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`" />
+                <div class="vioImgEL" :style="`background-image:url('${reqPath+movie.coverimg}');`" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`"></div>
+                <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`" /> -->
                 <div class="prdName">{{movie.title}}</div>
                 <div class="prdRemark">{{movie.description}}</div>
             </div>
@@ -245,45 +246,42 @@ new Vue({
         },
         //换一批
         refMv(type){
+           this.randomNumLogs = "";
            for(var j=0;j<this.homePageMovie.length;j++){
                var tyel = this.homePageMovie[j];
                if(tyel.type==type && tyel.movielist.length>6){
-                    var size = tyel.movielist.length
-                    var oldTmp = JSON.parse(JSON.stringify(tyel.movielist));
-                    for(var i = 0; i < size; i++) {
-                        var randomPos = this.randomNum(0,size-1);
-                        this.homePageMovie[j].movielist[i] = oldTmp[randomPos];
-                    }
-                    this.randomNumLogs = "";
+                    // var size = tyel.movielist.length
+                    // console.log("电影总长度:"+size);
+                    // for(var i = 0; i < size; i++) {
+                    //     var randomPos = this.randomNum(0,size-1);
+                    //     this.homePageMovie[j].movielist[i] = oldTmp[randomPos];
+                    // }
+                    // this.randomilize(this.homePageMovie[j].movielist)
+
+                    var arr = JSON.parse(JSON.stringify(tyel.movielist));
+                    var length=tyel.movielist.length;
+                    var arr1=new Array(); 
+                    for(var i=0;i<length;i++){
+                        arr1[i]=i;
+                    }   //建立数组下标数组
+                    var arr2=new Array();
+                    for(var i=0;i<length;i++){
+                        arr2[i]=arr1.splice(Math.floor(Math.random()*arr1.length),1);
+                    }  
+                    //将数组下标随机打乱
+                    var arr3=new Array();
+                    for(var i=0;i<length;i++){
+                        arr3[i]=arr[arr2[i]];
+                    }  //将数组按打乱后的下标输出
+                    this.homePageMovie[j].movielist = arr3;
                     this.$forceUpdate();
                }
            }
         },
-        //生成从minNum到maxNum的随机数
-        randomNum(minNum,maxNum){ 
-            var n ;
-            switch(arguments.length){ 
-                case 1: 
-                    n = parseInt(Math.random()*minNum+1,10); 
-                break; 
-                case 2: 
-                    n = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
-                break; 
-                    default: 
-                        n =  0; 
-                    break; 
-            }
-            // console.log(this.randomNumLogs);
-            if(this.randomNumLogs.indexOf(n)>=0){
-                return this.randomNum(minNum,maxNum);
-            }else{
-                this.randomNumLogs += n;
-                if((this.randomNumLogs+"").length==maxNum+1){
-                    this.randomNumLogs = "";
-                }
-                return n;
-            }
+        randomilize(arr){
+            
         } 
+
 
     }
 })
