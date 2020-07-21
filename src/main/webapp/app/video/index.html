@@ -90,8 +90,8 @@
 
         <div class="clear"></div>
         <div class="refresh-cont" v-if="item.movielist.length>1">
-            <img @click="refMv(item.type)" src="img/ref.png"/>&nbsp;
-            <span @click="refMv(item.type)">换一批</span>
+            <img @click="refMv(item.type)" src="img/ref.png" style="margin-top:3px"/>&nbsp;
+            <span @click="refMv(item.type)" class="hyh">换一批</span>
         </div>
         <!--广告-->
         <div v-if="i==0">
@@ -179,6 +179,13 @@ $(function(){
     $(".queryVideo").click(function(){
         $(".queryVideo").removeClass("active");
         $(this).addClass("active");
+    });
+    $(".hyh").click(function(){
+        var obj = $(this);
+        $(obj).prev().addClass("refreshactive");
+        setTimeout(() => {
+            $(obj).prev().removeClass("refreshactive");
+        }, 500);
     });
 })
 new Vue({

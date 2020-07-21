@@ -101,6 +101,11 @@
         -webkit-transform: rotateZ(360deg);
         -moz-transform: rotateZ(360deg);
     }
+    .refreshactive{
+        transform: rotateZ(360deg);
+        -webkit-transform: rotateZ(360deg);
+        -moz-transform: rotateZ(360deg);
+    }
     .searchWin{
         width: 100%;
         height: 100%;
