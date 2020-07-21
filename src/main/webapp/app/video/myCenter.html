@@ -64,7 +64,7 @@
   </div>
    -->
     <!--vipInfo-->
-    <div :class="`vipInfo v${myCenterData.levelenum}-c`" v-cloak :style="`background-image: url('img/V${myCenterData.levelenum}_BG.png`">
+    <div v-show="defaultnone" :class="`vipInfo v${myCenterData.levelenum}-c `" v-cloak :style="`background-image: url('img/V${myCenterData.levelenum}_BG.png`">
       <span style="margin-bottom:5px;">{{myCenterData.levelname}}</span>
         当前成长值 : {{myCenterData.growthvalue}}
         <div class="v-numver">
@@ -131,7 +131,7 @@
     <div class="qiandContDiv" v-if="qdFlg"  v-cloak>
       <div class="qdsucTitle">签到成功</div>
       <div class="qdsuccont" v-cloak style="height: 70px;">{{qdMessage}}</div>
-      <div style="text-align:center;margin-top:-35px;"><img src="img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
+      <div style="text-align:center;margin-top:-35px;"><img src="img/qiandaos.png" style="width:200px;height:200px;"  v-cloak/></div>
       <div style="text-align:center;margin-top:-20px;">
           <div class="btn" @click="qdSuccess">知 道 了</div>
       </div>
@@ -182,6 +182,7 @@ $(function(){
       el: '#app',
       data: function() {
         return {
+          defaultnone:false,
           reqPath : reqPath,
           qdFlg:false,
           qdMessage:'',
@@ -220,6 +221,7 @@ $(function(){
         getMyCenterData(){
           var vueThis = this;
           jAjax("/appUserCenter/myCenter",{},function(data){
+            vueThis.defaultnone = true;
             vueThis.myCenterData = data;
             if(!data.headimage){
               data.headimage = "img/defaulttx.png";

@@ -112,8 +112,9 @@
 <br/><br/><br/><br/><br/>
 
 <!--确认支付窗口-->
-<div class="payConfirmCont" v-show="payConfirmContStatus">
-    <span style="position:absolute;right:15px;margin-top:5px;font-size:0.8rem;color:#999;" @click="payConfirmContStatus = false">关闭</span>
+<div class="monmc" v-cloak  @click="payConfirmContStatus = false" v-if="payConfirmContStatus"></div>
+<div class="payConfirmCont" v-cloak  v-show="payConfirmContStatus">
+    <span style="position:absolute;right:15px;margin-top:15px;font-size:0.8rem;color:#999;" @click="payConfirmContStatus = false">关闭</span>
     <div class="inputCont">
         <div style="font-size:1rem;font-weight:600;color:#555;margin-top:20px;margin-bottom:10px;">支付密码：</div>
         <input type="password"  v-model="paypassword" placeholder="请输入您的支付密码" maxlength="16"/>

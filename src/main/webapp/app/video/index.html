@@ -24,8 +24,8 @@
             <img  src="img/logo.png"/>
          </section>
         <section class="searchCont">
-            <input placeholder="您想要看什么" @click="showSearchWin"/>
-            <img src="img/search.png" @click="showSearchWin"/>
+            <input placeholder="您想要看什么" @click="showSearchWin" class="searchBut"/>
+            <img src="img/search.png" @click="showSearchWin"  class="searchBut"/>
         </section>
         <ul id="class_list">
             <li class="list_li home queryVideo active" @click="queryVideo(0)">
@@ -112,7 +112,7 @@
     <div class="searchWin" v-if="searchFlg" v-cloak>
         <div class="stitle">
             <img src="img/search.png">
-            <input placeholder="您想要看什么" v-model="searchValue" v-on:input="searchMv" maxlength="10"/>
+            <input placeholder="您想要看什么" id="searchInput" v-model="searchValue" v-on:input="searchMv" maxlength="10"/>
             <span @click="searchFlg=false">取消搜索</span>
         </div>
         <br/><br/><br/>
@@ -187,6 +187,9 @@ $(function(){
             $(obj).prev().removeClass("refreshactive");
         }, 500);
     });
+    $(".searchBut").click(function(){
+        $("#searchInput").focus();
+    })
 })
 new Vue({
     el: '#app',
