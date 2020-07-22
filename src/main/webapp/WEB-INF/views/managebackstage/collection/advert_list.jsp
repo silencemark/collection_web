@@ -97,7 +97,7 @@ function deleteAdvert(advertid){
                 </tr>
                 <c:forEach items="${list }" var="li">
                 	<tr>
-	                	<td width ="20%"><img src="${li.imgurl}" alt=""/></td>
+	                	<td width ="20%"><img src="${li.imgurl}" alt="" width="480" height="270"/></td>
 	                    <td width ="20%">${li.httpurl }</td>
 	                    <td width ="20%">${li.advertcontent }</td>
 	                    <td width ="20%">${li.createtime }</td>

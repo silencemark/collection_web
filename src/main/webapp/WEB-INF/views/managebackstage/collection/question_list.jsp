@@ -92,6 +92,13 @@ function update(questionid, questioncontent, replycontent){
         <div class="sel_box">
         	<form action="<%=request.getContextPath()%>/managebackstage/getQuestionList" method="post">
         		<input type="text" class="text" placeholder="请输入会员昵称" name="nickname" value="${map.nickname}"/>
+        		<select class="sel" name="qtype">
+	            	<option>全部问题类型 </option>
+	            	<option value="0" <c:if test="${map.qtype == '0' }">selected="selected"</c:if>>App使用问题</option>
+	            	<option value="1" <c:if test="${map.qtype == '1' }">selected="selected"</c:if>>影片问题</option>
+	            	<option value="2" <c:if test="${map.qtype == '2' }">selected="selected"</c:if>>交易问题</option>
+	            	<option value="3" <c:if test="${map.qtype == '3' }">selected="selected"</c:if>>其他问题</option>
+	            </select>
 	            <input type="submit" value="搜索" class="find_btn"  />
             </form>
             <div class="clear"></div>
@@ -100,15 +107,30 @@ function update(questionid, questioncontent, replycontent){
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td">
                 	<td>用户昵称</td>
-                    <td>提问内容</td>
+                	<td>问题类型</td>
+                    <td width="20%">提问内容</td>
                     <td>提问时间</td>
-                    <td>回复内容</td>
+                    <td width="20%">回复内容</td>
                     <td>回复时间</td>
                     <td>操作</td>
                 </tr>
                 <c:forEach items="${list }" var="li">
                 	<tr>
 	                	<td>${li.nickname }</td>
+	                	<td><c:choose>
+	                    	<c:when test="${li.qtype == 0 }">
+	                    		App使用问题
+	                    	</c:when>
+	                    	<c:when test="${li.qtype == 1 }">
+	                    		影片问题
+	                    	</c:when>
+	                    	<c:when test="${li.qtype == 2 }">
+	                    		交易问题
+	                    	</c:when>
+	                    	<c:when test="${li.qtype == 3 }">
+	                    		其他问题
+	                    	</c:when>
+	                    </c:choose></td>
 	                    <td>${li.questioncontent }</td>
 	                    <td>${li.createtime }</td>
 	                    <td>${li.replycontent }</td>

@@ -101,7 +101,7 @@ function deleteBanner(bannerid){
                 	<td>图片</td>
                     <td>链接地址</td>
                     <td>所属页面</td>
-                    <td>描述</td>
+                    <td width="20%">描述</td>
                     <td>修改时间</td>
                     <td>创建时间 </td>
                     <td>状态</td>
@@ -109,7 +109,7 @@ function deleteBanner(bannerid){
                 </tr>
                 <c:forEach items="${list }" var="li">
                 	<tr>
-	                	<td><img src="${li.imgurl}" alt="" /></td>
+	                	<td><img src="${li.imgurl}" alt="" width="480" height="270" /></td>
 	                    <td>${li.httpurl }</td>
 	                    <td><c:choose>
 	                    	<c:when test="${li.type == 1 }">
@@ -128,7 +128,7 @@ function deleteBanner(bannerid){
 	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="location.href='<%=request.getContextPath() %>/managebackstage/initAddOrUpdateBanner?bannerid=${li.bannerid }'" class="blue">修改</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="deleteBanner('${li.bannerid}')" class="blue">删除</a></td>
 	                    	</c:when>
 	                    	<c:otherwise>
-	                    		<td><i class="greed">删除</i></td>
+	                    		<td></td>
 	                    		<td></td>
 	                    	</c:otherwise>
 	                    </c:choose>

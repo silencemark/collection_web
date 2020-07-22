@@ -73,6 +73,47 @@ function examineOrder(orderid, status){
 	})
 }
 
+
+
+function returnOrder(orderid, status){
+	swal({
+		title : "",
+		text : "确认将任务卡所在订单从买家扣除，退还给卖家用户？",
+		type : "error",
+		showCancelButton : true,
+		confirmButtonColor : "#ff7922",
+		confirmButtonText : "确认",
+		cancelButtonText : "取消",
+		closeOnConfirm : true
+	}, function(){
+		$.ajax({
+			type:"post",
+			dataType:"json",
+			url:"<%=request.getContextPath()%>/managebackstage/returnOrder",
+			data:{"orderid":orderid},
+			success:function(data){
+				var message = "success";
+				if(data.status == 1){
+					var message = "error";
+				}
+				swal({
+					title : "",
+					text : data.message,
+					type : message,
+					showCancelButton : false,
+					confirmButtonColor : "#ff7922",
+					confirmButtonText : "确认",
+					cancelButtonText : "取消",
+					closeOnConfirm : true
+				}, function(){
+					location.reload();
+				})
+			}
+		})
+	})
+	
+}
+
 function frozenOrder(orderid, status){
 	swal({
 		title : "",
@@ -222,7 +263,7 @@ function checkPayOrderShowHide(rum,payorder){
 	                    	</c:when>
 	                    	<c:when test="${li.status == 3 }">
 	                    		<td><i class="red">已审核通过</i></td>
-	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="frozenOrder('${li.orderid}',-2)" class="blue">冻结买/卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
+	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="frozenOrder('${li.orderid}',-2)" class="blue">冻结买/卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="returnOrder('${li.orderid}')" class="blue">订单退还卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
 	                    	</c:when>
 	                    	<c:when test="${li.status == 4 }">
 	                    		<td><i class="red">已到期</i></td>

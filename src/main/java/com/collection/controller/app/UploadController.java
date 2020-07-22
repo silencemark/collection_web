@@ -86,7 +86,7 @@ public class UploadController {
 			    	file.createNewFile();
 			    }
 			    String path = request.getSession().getServletContext().getRealPath("upload/images")+"/"+newImg+".jpg"; 
-			    Thumbnails.of(file).size(400,200).toFile(path);
+			    Thumbnails.of(file).size(480,270).toFile(path);
 			    //renameFile(file.toString(), path);
 			    map.put("imgurl", path);
 			    map.put("imgkey", "/upload/images/"+newImg+".jpg");
@@ -95,6 +95,50 @@ public class UploadController {
 		return map;
 	}
 
+	/**
+	 * 管理方--上传banner图片
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/managebannerimg",method=RequestMethod.POST)    
+	@ResponseBody 
+	public Map<String, Object> managebannerimg(HttpServletRequest request,
+			HttpServletResponse response)  throws Exception{
+		String filename = null;
+		if(request.getParameter("filename") != null && !request.getParameter("filename").equals("")){
+			filename = String.valueOf(request.getParameter("filename"));
+		}else{
+			filename = "myfiles";  
+		}
+		  
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request; // 获得文件：
+		List<MultipartFile> myfiles = multipartRequest.getFiles(filename);
+		LOGGER.debug(myfiles.get(0).getContentType()); 
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		for (MultipartFile myfile : myfiles) {
+			if (myfile.isEmpty()) {
+				map.put("error", "请选择文件后上传");
+				return map;
+			}else{
+				CommonsMultipartFile cf= (CommonsMultipartFile)myfile; 
+				DiskFileItem fi = (DiskFileItem)cf.getFileItem();
+				File file= fi.getStoreLocation();
+				String newImg = System.currentTimeMillis()/1000l+"_managebanner";
+				
+			    if(!file.exists()){
+			    	file.createNewFile();
+			    }
+			    String path = request.getSession().getServletContext().getRealPath("upload/banner")+"/"+newImg+".jpg"; 
+			    Thumbnails.of(file).size(1080,470).toFile(path);
+			    map.put("imgurl", path);
+			    map.put("imgkey", "/upload/banner/"+newImg+".jpg");
+			}
+		}
+		return map;
+	}
+	
 	/**
 	 * 上传图片 客户端
 	 * @param request
