@@ -26,7 +26,7 @@
 			<span style="float: right;margin-right:55px;" v-if="wMin<=1" @click="goComment">
 				参与评论
 			</span>
-			<span style="float: right;margin-right:55px;" v-if="wMin>1">
+			<span style="float: right;margin-right:55px;" v-if="wMin>1"  v-cloak>
 				再观看{{wMin}}秒可评论
 			</span>
 			<img src="../img/edit-ic.png"/>
@@ -69,6 +69,7 @@
 	<div id="commentWindow" style="display: none;">
 	    <div class="loading commentLoadCont" style="background-color:#fff;opacity: 0.9 !important;"></div>
 	    <div class="commentWinCont">
+			<span style="font-weight:500;position:absolute;top:15px;" @click="colseCommentWind"> < 返回观影</span>
 	        <div class="xinCont">
 	            为影片打分：
 	            <img :src="comment.stars>0?'../img/sXin.png':'../img/eXin.png'" @click="comment.stars=1" class="xin"/>
@@ -171,18 +172,21 @@ function bodyScroll(event){
 	          confirmSubComment(){
 				var vueThis = this;
 					jAjax("/appVipCard/commentMovie",this.comment,function(data){
-						$("#commentWindow").hide();
-						vueThis.scvTime();
 						if(data.status==0){
 							jqtoast('评论成功');
-							document.body.removeEventListener('touchmove',bodyScroll,false); 
-							$("body").css({"position":"initial","height":"auto"});     
-							document.scrollingElement.scrollTop = 0;
+							vueThis.colseCommentWind();
 						}else{
 							jqtoast(data.message);
 						}
 					});
 	          },
+			  colseCommentWind(){
+				this.scvTime();
+				$("#commentWindow").hide();
+				document.body.removeEventListener('touchmove',bodyScroll,false); 
+				$("body").css({"position":"initial","height":"auto"});     
+				document.scrollingElement.scrollTop = 0;
+			  },
 	          scvTime(){
 	            var timer = setInterval(()=>{
 	                this.wMin -= 1;
