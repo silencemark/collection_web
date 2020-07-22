@@ -281,7 +281,7 @@
     line-height: 55px;
     color: #555;
     background: #fff;
-    z-index: 2;
+    z-index: 3;
     top:45px;
     position: fixed;
 }

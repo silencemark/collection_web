@@ -11,9 +11,9 @@
 	     <script src="../js/vue.js"></script>
 	     <script src="../js/jq-alert.js"></script>
 	 </head>
-	 <body>
+	 <body >
 
-	<section class="main"  id="app">
+	<section class="main"  id="app" class="app">
 	    <div class="title" style="position: fixed;z-index:3;">
 	         <img src="../img/to-left.png" v-if="comment.orderid" :onclick="`window.location.href='bagOwnInfo.html?orderid=${comment.orderid}'`"/>
 	         <img src="../img/to-left.png" v-else onclick="window.location.href='../index.html'"/>
@@ -101,15 +101,40 @@
 	    </div>
 	</div>
 	<!--end评论窗口-->
-
 	</section>
+	<div id="btt" style="width: 96%;
+    position: fixed;
+    left: 2%;
+    top: 457px;
+    height: 50px;
+    z-index: 2;
+	border: 1px solid #e2e2e2;
+	border-radius: 5px;
+	background-color: #fff;">
+</div>
 </body>
 
 <script  type="text/javascript">
-
-function bodyScroll(event){ 
-	event.preventDefault(); 
+window.addEventListener('scroll', this.scrollHandle, true);
+document.getElementsByTagName('body')[0].scrollTop = 0;    
+window.onscroll=function(){
+    scrollHandle();
 }
+function scrollHandle () {
+    var videoEle = document.getElementById("app");
+    const offset = videoEle.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
+    const offsetTop = offset.top;
+    const offsetBottom = offset.bottom;
+    const offsetHeight = offset.height;
+	var h = 457 + offsetTop;
+    $(document.getElementById("btt")).css({"top":h+"px"});
+}
+
+
+
+		function bodyScroll(event){ 
+			event.preventDefault(); 
+		}
 	    $(function(){
 	        $(".commentLabe").click(function(){
 	            $(".commentLabe").removeClass("commentLabeActiv");
