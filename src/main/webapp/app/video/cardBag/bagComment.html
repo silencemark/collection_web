@@ -102,13 +102,13 @@
 	<!--end评论窗口-->
 
 	</section>
-	</body>
-
-<!-- <script type="text/javascript" charset="utf-8">
-	document.write('<iframe seamless sandbox security="restricted" id="url_mainframe" frameborder="0" scrolling="yes" name="main" src="http://www.wanmeikk.me/project/2067.html" style="height:1000px; visibility: inherit; width: 100%; z-index: 1;overflow: visible;"></iframe>');
-</script> -->
+</body>
 
 <script  type="text/javascript">
+
+function bodyScroll(event){ 
+	event.preventDefault(); 
+}
 	    $(function(){
 	        $(".commentLabe").click(function(){
 	            $(".commentLabe").removeClass("commentLabeActiv");
@@ -129,6 +129,7 @@
 					orderid:'',
 	            },
 	            wMin:10,
+				defaultMin:10,
 	            errMsg:'',
 	        }
 	      },
@@ -174,6 +175,9 @@
 						vueThis.scvTime();
 						if(data.status==0){
 							jqtoast('评论成功');
+							document.body.removeEventListener('touchmove',bodyScroll,false); 
+							$("body").css({"position":"initial","height":"auto"});     
+							document.scrollingElement.scrollTop = 0;
 						}else{
 							jqtoast(data.message);
 						}
@@ -189,9 +193,13 @@
 	        },
 	        //打开评论窗口
 	        goComment(){
+				window.scrollTo(0, 5000)
 	            $("#commentWindow").show();
 	            this.comment.comment='';
-	            this.wMin = 10;
+	            this.wMin = this.defaultMin;
+				$('body').css({'position':'fixed','top':'-500px',"width":"100%"});
+				document.body.addEventListener('touchmove',bodyScroll,false); 
+
 	        },
 			//获取URL参数
 			GetQueryString(name){
@@ -201,67 +209,6 @@
 			}
 	      }
 		})
-//滚动条是否在顶部
-var isScroll_top = true;
-//滚动条是否在底部
-var isScrill_bottom = false;
-function restoreEvent(event) {
-	switch(event.type){
-		case "touchstart" :
-			$startY = event.touches[0].clientY;
-			break;
-		case "touchmove" :
-			$moveY = event.touches[0].clientY;
-			//滑动距离
-			touchesY = $startY - $moveY;
-			//滚动条顶部
-			if(isScroll_top) {
-				if(touchesY < 0) {
-					event.preventDefault();
-				}else{
-					var scrollWrap = document.getElementById("scrollWrap");
-					if(scrollWrap.scrollHeight == scrollWrap.clientHeight) {
-						event.preventDefault();
-					}else {
-						event.stopPropagation();
-					}
-				}
-			//滚动条底部
-			}else if(isScrill_bottom){
-				if(touchesY	> 0) {
-					event.preventDefault();
-				}else{
-					event.stopPropagation();
-				}
-			}
-			break;
-		case "touchend" :
-			break;
-	}
-}
-/*监听容器的 touch 触发事件处理逻辑*/
-document.getElementById("scrollWrap").addEventListener("touchstart",restoreEvent);
-document.getElementById("scrollWrap").addEventListener("touchmove",restoreEvent);
-document.getElementById("scrollWrap").addEventListener("touchend",restoreEvent);
-/*监听容器 scroll 滚动事件处理逻辑*/
-document.getElementById("scrollWrap").addEventListener("scroll",function() {
-    var tabView = document.getElementById("scrollWrap");
-    var contentHeight = tabView.scrollHeight, //内容高度
-    scrollTop = tabView.scrollTop; //滚动高度
-    viewHeight = tabView.clientHeight;
-
-	if(scrollTop == 0) {
-		isScroll_top = true;
-	}else{
-		isScroll_top = false;
-	}
-    if ((scrollTop / (contentHeight - viewHeight)) == 1 ) {
-        isScrill_bottom = true;
-    }else {
-    	isScrill_bottom = false;
-    }
-});
-
 
 	  </script>
 
