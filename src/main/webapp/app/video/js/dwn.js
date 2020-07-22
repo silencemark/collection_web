@@ -37,23 +37,43 @@ function getQueryVariable(name) {
 	return searchInfo;
 };
 function dn(){
-	var invitecode = getQueryVariable("invitecode");
-	if(invitecode && invitecode!="null"){
-		jqalert({
-			prompt:'<div style="text-align:center">您还注册账号！请前往注册</div>',
-			yestext:'立即注册',
-			yesfn:function () {
-				window.location.href='register.html?invitecode='+invitecode;
-			}
-		})
+	// var invitecode = getQueryVariable("invitecode");
+	if(is_weixn()){
+		$(".apremak").hide();
+		$(".wbOpen").show();
 	}else{
-		if(is_weixn()){
-			$(".apremak").hide();
-			$(".wbOpen").show();
+		var u = navigator.userAgent;
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		if(isiOS){
+			jqalert({
+				prompt:'<div style="text-align:center">'+
+				'非常抱歉：由于相关政策及公司内部原因暂时取消对IOS系统兼容。因此对广大IOS用户带来的不便，我们深表歉意。'+
+				'您可收藏应用官网地址使用本应用 www.xgomv.com/app/video/index.html </div>',
+				yestext:'前往应用',
+				yesfn:function () {
+					window.location.href='login.html';
+				}
+			})
 		}else{
-			jqtoast('正在下载中....');
+			downloadUrlFile('http://www.xgomv.com/download/xgomv.apk','xgoMv.apk');
 		}
 	}
+}
+function downloadUrlFile(url, fileName) {
+	// const url2 = url.replace(/\\/g, '/');
+    // const xhr = new XMLHttpRequest();
+    // xhr.open('GET', url2, true);
+    // xhr.responseType = 'blob';
+    // //xhr.setRequestHeader(‘Authorization‘, ‘Basic a2VybWl0Omtlcm1pdA==‘);
+    // // 为了避免大文件影响用户体验，建议加loading
+    // xhr.onload = () => {
+		//     if (xhr.status === 200) {
+			window.location.href=url;
+			//         // 获取文件blob数据并保存
+    //         saveAs(xhr.response, fileName);
+    //     }
+    // };
+    // xhr.send();
 }
 $(function(){
 	$(".wbOpen").click(function(){

@@ -102,13 +102,11 @@
 	</div>
 	<!--end评论窗口-->
 	</section>
-	<div id="btt" style="width: 96%;
+	<div id="btt" style="width: 100%;
     position: fixed;
-    left: 2%;
-    top: 457px;
-    height: 50px;
+    top: 418px;
+    height: 80px;
     z-index: 2;
-	border: 1px solid #e2e2e2;
 	border-radius: 5px;
 	background-color: #fff;">
 </div>
@@ -126,7 +124,7 @@ function scrollHandle () {
     const offsetTop = offset.top;
     const offsetBottom = offset.bottom;
     const offsetHeight = offset.height;
-	var h = 457 + offsetTop;
+	var h = 418 + offsetTop;
     $(document.getElementById("btt")).css({"top":h+"px"});
 }
 

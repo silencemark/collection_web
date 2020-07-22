@@ -206,6 +206,10 @@ new Vue({
         }
     },
     created() {
+        var invitecode = this.GetQueryString("invitecode");
+        if(invitecode){
+            localStorage.setItem("invitecode",invitecode);
+        }
         this.getBanner();
         this.queryVideo(0);
         this.getAdvertisement();
@@ -288,9 +292,12 @@ new Vue({
                }
            }
         },
-        randomilize(arr){
-            
-        } 
+        //获取URL参数
+        GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
 
 
     }

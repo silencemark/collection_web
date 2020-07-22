@@ -10886,14 +10886,27 @@ function jAjax(url,resData,sucCbk,errCbk){
 	if(!isWhite){
 		if(!getCptToken()){
 			$("body").find("div[id='loadingWindow']").remove();
-			jqalert({
-				title:'提示',
-				prompt:'您还没有登录，请您去登录！',
-				yestext:'立即登录',
-				yesfn:function () {
-					window.location.href= LOCURL+"login.html";
-				}
-			});
+			//判断是否存在邀请码
+			if(localStorage.getItem("invitecode")){
+				jqalert({
+					title:'提示',
+					prompt:'您还没有注册，请前往账号注册！',
+					yestext:'立即注册',
+					yesfn:function () {
+						window.location.href= LOCURL+"register.html";
+					}
+				});
+			}else{
+				jqalert({
+					title:'提示',
+					prompt:'您还没有登录，请您去登录！',
+					yestext:'立即登录',
+					yesfn:function () {
+						window.location.href= LOCURL+"login.html";
+					}
+				});
+			}
+			
 			return;
 		}
 		//set token
