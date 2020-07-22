@@ -112,7 +112,7 @@ public class AppLoginController extends BaseController{
 			//如果存在 提示
 			if (phoneflag) {
 				data.put("status", 1);
-				data.put("message", "手机号已存在, 请找回密码");
+				data.put("message", "手机号已注册，请重新输入");
 			} else {
 				//密码加密
 				map.put("password", Md5Util.getMD5(map.get("password").toString()));

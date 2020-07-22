@@ -298,8 +298,7 @@ public class AppUserCenterController extends BaseController{
 	@ResponseBody
 	public Map<String, Object> myInviteCode(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		//获取我的邀请码和 qr二维码地址
-		Map<String, Object> codeMap = this.appUserCenterService.myInviteCode(map);
+		Map<String, Object> codeMap = new HashMap<String, Object>();
 		//校验登录token签名是否正确
 		boolean signflag = checkToeknSign(map);
 		if (!signflag){
@@ -307,6 +306,9 @@ public class AppUserCenterController extends BaseController{
 			codeMap.put("message", "签名校验失败");
 			return codeMap;
 		}
+		//获取我的邀请码和 qr二维码地址
+		codeMap = this.appUserCenterService.myInviteCode(map);
+		
 		String codeContent = Constants.PROJECT_PATH + codeMap.get("invitecodehttpurl");
 		codeMap.put("invitecodehttpurl", codeContent);
 		//如果没有qr二维码就生成一个入库
@@ -316,11 +318,13 @@ public class AppUserCenterController extends BaseController{
 			QRcode qr = new QRcode();
 			@SuppressWarnings("static-access")
 			String qrcode=qr.getQRcode(codeContent , request, organizeid);
+			
 			String f = request.getSession().getServletContext().getRealPath("upload/qrcodes/");
 			String newImg = "/"+System.currentTimeMillis()/1000l + "_invitecode.jpg";
 			SharePictureBiz share = new SharePictureBiz();
 			share.retrievePicture(f + newImg, request.getSession().getServletContext().getRealPath("/") + qrcode);
 			codeMap.put("invitecodeqrcode", "/upload/qrcodes/"+newImg);
+			codeMap.put("qrcode", qrcode);
 			this.appUserCenterService.updateQrcode(codeMap);
 		}
 		return codeMap;	

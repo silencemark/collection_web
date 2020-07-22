@@ -472,4 +472,31 @@ public class AppVipCardController extends BaseController{
 		}
 		return this.appVipCardService.commitSellCard(map);
 	}
+	
+	/**
+	 * 浏览电影热度加1  type  1 普通电影  2 会员电影
+	 * 传入参数{"price":"123456"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/addMovieHot")
+	@ResponseBody
+	public Map<String, Object> addMovieHot(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appVipCardService.commitSellCard(map);
+		data.put("status", 0);
+		data.put("message", "浏览成功");
+		return data;
+	}
 }

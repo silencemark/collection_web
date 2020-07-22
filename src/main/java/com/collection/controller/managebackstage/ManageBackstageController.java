@@ -357,7 +357,9 @@ public class ManageBackstageController {
 	 */
 	@RequestMapping(value="/getBannerList")
 	public String getBannerList(@RequestParam Map<String,Object> map , HttpServletRequest request){
-		
+		if(!map.containsKey("status")) {
+			map.put("status", "1");
+		}
 		try {
 			PageHelper page = new PageHelper(request);
 			int count = this.manageBackstageService.getBannerListCount(map);
@@ -641,6 +643,28 @@ public class ManageBackstageController {
 		}
 		return data;
 	}
+	
+	/**
+	 * 冻结双方用户
+	 * @param map
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/returnOrder")
+	@ResponseBody
+	public Map<String, Object> returnOrder(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
+		Map<String, Object> data=new HashMap<String, Object>();
+		try {
+			this.manageBackstageService.returnOrder(map);
+			data.put("status", 0);
+			data.put("message", "退还成功");
+		} catch (Exception e) {
+			data.put("status", 1);
+			data.put("message", "退还失败");
+		}
+		return data;
+	}
+	
 	
 	/**-----------------------------------------订单管理end-------------------------------------------------------**/
 	

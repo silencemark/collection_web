@@ -77,7 +77,7 @@ function checkHide(num){
 }
 
 //显示隐藏窗口
-function updatemovie(movieid, coverimg, title, description, httpurl, status, cardid){
+function updatemovie(movieid, coverimg, title, description, httpurl, hotforder,status, cardid){
 	$("#moviediv").show();	
 	$(".div_mask").css("display","block");
 	$("#movieid").val(movieid);
@@ -86,6 +86,7 @@ function updatemovie(movieid, coverimg, title, description, httpurl, status, car
 	$("#title").val(title);
 	$("#description").val(description);
 	$("#httpurl").val(httpurl);
+	$("#hotforder").val(hotforder);
 	$("#status").val(status);
 	$("#cardid123").val(cardid);
 }
@@ -110,7 +111,7 @@ function checkImageShowHide(rum,imagesrc){
 	<jsp:include page="../left.jsp" ></jsp:include>
 	<div class="page_nav"><p><a href="<%=request.getContextPath() %>/managebackstage/getMemberCardList">VIP会员卡管理</a><i>/</i><span>会员卡视频管理</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">会员卡视频管理列表</span><a href="#" onclick="updatemovie('','','','','','','')">添加</a></div>
+        <div class="tab_name"><span class="gray1">会员卡视频管理列表</span><a href="#" onclick="updatemovie('','','','','','','${map.cardid}')">添加</a></div>
         <div class="sel_box">
         	<form action="<%=request.getContextPath()%>/managebackstage/getMemberMovieList" method="post">
         		<input type="hidden" class="text"  name="cardid" value="${map.cardid}"/>
@@ -131,9 +132,10 @@ function checkImageShowHide(rum,imagesrc){
             	<tr class="head_td">
             		<td>会员卡名称</td>
                 	<td>电影名称</td>
-                    <td>电影描述</td>
+                    <td width="20%">电影描述</td>
                     <td>电影封面</td>
                     <td>电影链接</td>
+                    <td>热度排序值</td>
                     <td>状态</td>
                     <td>创建时间</td>
                     <td>修改时间</td>
@@ -146,10 +148,11 @@ function checkImageShowHide(rum,imagesrc){
 	                    <td>${li.description }</td>
 	                    <td onclick="checkImageShowHide(0,'${li.coverimg }');"><img src="${li.coverimg }" alt="" width="48px" height="48px" /></td>
 	                    <td>${li.httpurl }</td>
+	                    <td>${li.hotforder }</td>
 	                    <td>${li.status ==1?'有效':'无效' }</td>
 	                    <td>${li.createtime }</td>
 	                    <td>${li.updatetime }</td>
-	                    <td><a href="javascript:void(0)" onclick="updatemovie('${li.movieid}','${li.coverimg}','${li.title}','${li.description}','${li.httpurl}','${li.status}','${li.cardid}')" class="blue">修改</a></td>
+	                    <td><a href="javascript:void(0)" onclick="updatemovie('${li.movieid}','${li.coverimg}','${li.title}','${li.description}','${li.httpurl}', '${li.hotforder }','${li.status}','${li.cardid}')" class="blue">修改</a></td>
 	                </tr>
                 </c:forEach>
             </table>
@@ -178,6 +181,9 @@ function checkImageShowHide(rum,imagesrc){
         <div class="clear"></div>
         <span>电影链接</span>
         <input type="text" class="text2" placeholder="请输入电影链接" name="httpurl" id="httpurl"/> 
+        <div class="clear"></div>
+        <span>热度排序值</span>
+        <input type="number" class="number" placeholder="请输入排序值" name="hotforder" id="hotforder"/> 
         <div class="clear"></div>
         <span>是否有效</span>
         <select class="sel" name="status" name="status">
