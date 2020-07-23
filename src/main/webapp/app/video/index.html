@@ -28,19 +28,19 @@
             <img src="img/search.png" @click="showSearchWin"  class="searchBut"/>
         </section>
         <ul id="class_list">
-            <li class="list_li home queryVideo active" @click="queryVideo(0)">
+            <li class="list_li home queryVideo active" @click="queryByType(0)">
                 <span>所有影片</span>
             </li>
-            <li class="list_li queryVideo profile" @click="queryVideo(4)">
+            <li class="list_li queryVideo profile" @click="queryByType(4)">
                 <span>电视剧</span>
             </li>
-            <li class="list_li queryVideo follow"  @click="queryVideo(2)">
+            <li class="list_li queryVideo follow"  @click="queryByType(2)">
                 <span>珍藏电影</span>
             </li>
-            <li class="list_li queryVideo cart" @click="queryVideo(3)">
+            <li class="list_li queryVideo cart" @click="queryByType(3)">
                 <span>动漫</span>
             </li>
-            <li class="list_li queryVideo cart" @click="queryVideo(1)">
+            <li class="list_li queryVideo cart" @click="queryByType(1)">
                 <span>会员专享</span>
             </li>
             <li class="clear"></li>
@@ -79,7 +79,7 @@
             <img v-if="i==0" src="img/fire.png"/>
         </div>
         <div v-for="(movie , j) in item.movielist">
-            <div class="ImgCont" v-if="j<6">
+            <div class="ImgCont">
                 <div class="vioImgEL" :style="`background-image:url('${reqPath+movie.coverimg}');`" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`"></div>
                 <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`" /> -->
                 <div class="prdName">{{movie.title}}</div>
@@ -89,9 +89,9 @@
 
 
         <div class="clear"></div>
-        <div class="refresh-cont" v-if="item.movielist.length>1">
-            <img @click="refMv(item.type)" src="img/ref.png" style="margin-top:3px"/>&nbsp;
-            <span @click="refMv(item.type)" class="hyh">换一批</span>
+        <div class="refresh-cont">
+            <img @click="ref(item)" src="img/ref.png" style="margin-top:3px"/>&nbsp;
+            <span @click="ref(item)" class="hyh">换一批</span>
         </div>
         <!--广告-->
         <div v-if="i==0">
@@ -200,9 +200,11 @@ new Vue({
             bannerList : [],//轮播图
             advertisement:[],//广告图
             searchList:[],
-            homePageMovie:[],//首页电影列表
+            homePageMovie:[],//默认展示首页电影列表
+            defaultPageMovie:[],//默认首页电影列表备份
             randomNumLogs : "",
-            searchValue : ""
+            searchValue : "",
+            pageSize:6,
         }
     },
     created() {
@@ -231,7 +233,58 @@ new Vue({
             var vm = this;
             jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
                 vm.homePageMovie = data;
+                vm.defaultPageMovie = JSON.parse(JSON.stringify(data));
             });
+        },
+        //跟换电影类型
+        queryByType(type){
+            var vm = this;
+            if(type==0){
+                console.log("重回首页。。。。。。。。。。。。")
+                this.homePageMovie = this.defaultPageMovie;
+                this.pageSize = 6;
+                return;
+            }else{
+                this.pageSize = 12;
+                var reqBo = {
+                    type : type,
+                    startnum : 0,
+                    rownum: this.pageSize
+                }
+                jAjax("/appIndex/getHomePageMovie",reqBo,function(data){
+                    vm.homePageMovie = data;
+                    vm.$forceUpdate();
+                });
+            }
+            
+        },
+        //换一批
+        ref(item,pageSize){
+            if(!pageSize) pageSize = this.pageSize;
+            console.log(pageSize+"============");
+            if(item.movienum<=pageSize) return;
+            pageNo = !item.pageNo?1:item.pageNo;
+            item.pageNo = pageNo+1;
+            var total = Math.ceil(item.movienum/pageSize);
+            if(item.pageNo>total){
+                item.pageNo = 1;
+            }
+            var reqBo = {
+                type : item.type,
+                startnum : (item.pageNo-1)*pageSize,
+                rownum: pageSize
+            }
+            var vm = this;
+            jAjax("/appIndex/getHomePageMovie",reqBo,function(data){
+                var typeData = data[0];
+                for(var i=0;i<vm.homePageMovie.length;i++){
+                    if(vm.homePageMovie[i].type==item.type){
+                        vm.homePageMovie[i] = typeData;
+                        vm.homePageMovie[i].pageNo = item.pageNo;
+                    }
+                }
+            });
+            this.$forceUpdate();
         },
         //默认搜索数据
         defaultSearch(){
