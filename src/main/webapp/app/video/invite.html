@@ -90,12 +90,12 @@
  <body>
 
 <section class="main"  id="app">
-    <div class="title">
-        <img src="img/to-left.png" onclick="history.back(-1)"/>
+    <div class="title" style="background-color:#fecc69;color:#fff;">
+        <img src="img/to-leftffff.png" onclick="history.back(-1)"/>
         邀请好友
    </div>
 
-    <img src="img/tkg.png" style="width: 100%;"/>
+    <img src="img/tkg.png" style="width: 100%;margin-top:-1px;"/>
     <div class="inviteContw">
     <div class="inviteCont">
         <br/>
@@ -122,39 +122,21 @@
     <div class="ph">
         <div style="text-align: center;">
             <div style="color: #333;">排行榜</div>
-            <div style="color:#999;font-size:0.8rem;margin-top:5px;">更新与2020年7月30号</div>
+            <div style="color:#999;font-size:0.8rem;margin-top:5px;"  v-cloak>更新与{{nT}}</div>
         </div>
         <br>
-        <div class="phAt">
-            <img src="img/top1.png" class="tpph"/>
-            <img src="img/V5_BG.png" class="tptx"/>
-            <span style="margin-left:80px;">AG超牛</span>
-            <span class="pmoney">奖励 <span style="color:#ff5e00;font-weight:bold;">3275</span> 元</span>
+        <div class="phAt" v-for="(ph,i) in pList" v-if="i<10"  v-cloak>
+            <img :src="`img/top${i+1}.png`" class="tpph" v-if="i<3"/>
+            <span class="num" v-else>{{i+1}}</span>
+
+            <img :src="reqPath+ph.headimage" class="tptx" v-if="ph.headimage"/>
+            <img src="img/defaulttx.png" class="tptx" v-else/>
+
+            <span style="margin-left:80px;">{{ph.nickname}}</span>
+            <span class="pmoney">奖励 <span style="color:#ff5e00;font-weight:bold;">{{ph.sumassets}}</span> 元</span>
         </div>
-        <div class="phAt">
-            <img src="img/top2.png" class="tpph"/>
-            <img src="img/V5_BG.png" class="tptx"/>
-            <span style="margin-left:80px;">是的</span>
-            <span class="pmoney">奖励 <span style="color:#ff5e00;font-weight:bold;">753</span> 元</span>
-        </div>
-        <div class="phAt">
-            <img src="img/top3.png" class="tpph"/>
-            <img src="img/V5_BG.png" class="tptx"/>
-            <span style="margin-left:80px;">卡飞机</span>
-            <span class="pmoney">奖励 <span style="color:#ff5e00;font-weight:bold;">567</span> 元</span>
-        </div>
-        <div class="phAt">
-            <span class="num">4</span>
-            <img src="img/V5_BG.png" class="tptx"/>
-            <span style="margin-left:80px;">我的GIAO</span>
-            <span class="pmoney">奖励 <span style="color:#ff5e00;font-weight:bold;">456</span> 元</span>
-        </div>
-        <div class="phAt">  
-            <span class="num">5</span>
-            <img src="img/V5_BG.png" class="tptx"/>
-            <span style="margin-left:80px;">小白兔</span>
-            <span class="pmoney">奖励 <span style="color:#ff5e00;font-weight:bold;">34</span> 元</span>
-        </div>
+
+
     </div>
     <br/>
     <div class="but-cont">
@@ -195,62 +177,24 @@ new Vue({
     el: '#app',
     data: function() {
     return {
-        vipCardList : [],
-        timer:undefined,//定时函数
+        reqPath : reqPath,
+        pList : [],
+        nT:'',
     }
     },
     created() {
-        this.getVipCardList();
+        this.getRank();
+        var day1 = new Date();
+        day1.setTime(day1.getTime()-24*60*60*1000);
+        this.nT = day1.getFullYear()+"年" + (day1.getMonth()+1) + "月" + day1.getDate()+"日";
     },
     methods:{
-    //获取活动
-    getVipCardList(){
+    //数据
+    getRank(){
         var vueThis = this;
-        jAjax("/appVipCard/getVipCardList",{},function(data){
-            vueThis.vipCardList = data.resultlist;  
+        jAjax("/appUserCenter/getRank",{},function(data){
+            vueThis.pList = data.resultlist;
         });
-    },
-    //立即抢购
-    rushToBuyCard(cardid,cardIndex){
-        var vueThis = this;
-        var reqData = {cardid:cardid};
-        jAjax("/appVipCard/rushToBuyCard",reqData,function(data){
-            if(data.status==0){
-                window.location.href='cardBag/bagPayWait.html';
-            }else{
-                jqalert({
-                    prompt:data.message+'  立即前往账户设置？',
-                    yestext:'立即前往',
-                    notext:'取消',
-                    yesfn:function () {
-                        window.location.href='user/setUser.html';
-                    },
-                    nofn:function () {}
-                });
-            }
-        });
-    },
-    //格式化 秒 时间显示
-    fmtTimeSecond(second,item){
-        this.setInterFun(item)
-        if(second<60){
-            return '倒计时'+second+'秒';
-        }else{
-            return '倒计时'+parseInt(second/60)+'分'+(second%60)+'秒';
-        }
-    },
-    //定时函数
-    setInterFun(item){
-        var vueThis = this;
-        if(!vueThis.timer){
-            vueThis.timer = setInterval(()=>{
-                item.secondbuy -= 1;
-                if(item.secondbuy<=0){
-                    item.isbuy = 1;
-                    clearInterval(vueThis.timer);
-                }
-            },1000);
-        }
     }
 
   }
