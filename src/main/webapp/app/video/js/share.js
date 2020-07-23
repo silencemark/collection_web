@@ -205,7 +205,7 @@ function share(tp){
     }else if(tp==2){
         alert('唤起QQ失败，未检测到您打开QQ应用程序！');
     }else{
-        downloadImg();
+        window.location.href=shareUrl;
     }
 }
 
@@ -233,7 +233,7 @@ $(function(){
         shareUrl = reqPath+data.invitecodeqrcode;
         clipboard = new Clipboard('#cp');
         $("#cpLink").html(data.invitecodehttpurl);
-        $("#incd").attr("src",reqPath+data.qrcode).show().width(160);
+        $("#incd").attr("src",shareUrl);
     });
     $("#cp").click(function(){
         alert("邀请链接已复制成功！");

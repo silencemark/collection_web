@@ -8,36 +8,20 @@
         <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
         <meta content="telephone=no" name="format-detection"/>
         <link href="css/share.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="css/public.css"/>
     </head>
     <body>
-        <section class="jq22-flexView">
-            <header class="jq22-navBar jq22-navBar-fixed">
-                <a href="javascript:;"  onclick="history.back(-1)" class="jq22-navBar-item">
-                    <i class="icon icon-return"></i>
-                </a>
-                <div class="jq22-center">
-                    <span class="jq22-center-title">分享好友</span>
-                </div>
-                <a href="javascript:;" class="jq22-navBar-item" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
-                    <i class="icon icon-share"></i>
-                </a>
-            </header>
-            <section class="jq22-scrollView">
-                <div class="jq22-head-invite">
-                    <img src="img/headfx.png" alt="">
-                    <!-- <div class="jq22-rule" id="ClickMe">活动规则</div> -->
-                </div>
-                
-                
-                <div style="text-align:center;margin-bottom:10px;">
-                   <img src="" id="incd" style="height:160px;width:0;"/>
-                </div>
-				<div class="jq22-invite-button">
-                    <button data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">分享好友</button>
-                </div>
-            </section>
-        </section>
-        <a id="cpLink" href="" style="color:#0252cf"></a>
+        <div class="title" style="color:#fff;position: absolute;background: none;">
+            <img src="img/to-leftffff.png" onclick="history.back(-1)"/>
+            分享好友
+            <a href="javascript:;" class="jq22-navBar-item" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
+                <img src="img/fx.png" class="fxbut"/>
+            </a>
+        </div>
+
+        <img id="incd" style="width: 100%;height: 100%;">
+
+        <a id="cpLink" href="" style="position: absolute;top:-50px;"></a>
         <div class="m-actionsheet" id="actionSheet">
             <div class="jq22-show-box">
                 <div class="jq22-show-box-title jq22-footer-flex">
@@ -69,23 +53,6 @@
                         
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="" id="goodcover"></div>
-        <div class="" id="code">
-            <div class="close1"><a href="javascript:void(0)" id="closebt"></a></div>
-            <div class="jq22-code-text">
-                <p>【活动细则】</p>
-                <p>一、活动</p>
-                <p>活动期间：邀请好友立得10元，邀请满5位好友即可提现，要求至少有两位好友激活账号。
-                    活动时间为2020年9月1日 至2020年10月1日 
-                </p>
-                <p>二、邀请好友可获更多奖励内容</p>
-                <p>好友在活动期间注册您可获得10元奖励金</p>
-                <p>邀请好友获得成长值提升会员等级</p>
-                <p>好友完成任务后可获得奖励提成</p>
-                <p></p>
             </div>
         </div>
         <script src="js/clipboard.min.js"></script>
