@@ -31,7 +31,7 @@
       <span class="userSetMsg" onclick="$('#cf').click()">修改头像</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
-    <div class="operationEl" :onclick="`window.location.href='serUserName.html?nickname=${userInfo.nickname}'`">
+    <div class="operationEl" @click="setUserName">
       <img src="../img/edit-ic.png"/>
       <span>修改昵称</span>
       <span class="userSetMsg"  v-cloak>{{userInfo.nickname}}</span>
@@ -111,6 +111,9 @@ new Vue({
         this.getMyUserInfo();
     },
     methods:{
+        setUserName(name){
+          window.location.href='serUserName.html?nickname='+encodeURI(name);
+        },
         //查询用户信息
         getMyUserInfo(){
             var vueThis = this;

@@ -74,8 +74,8 @@ new Vue({
     created() {
         var nickname = this.GetQueryString("nickname");
         if(nickname){
-            this.userInfo.nickname = nickname;
-            this.oldName = nickname;
+            this.userInfo.nickname = decodeURI(nickname);
+            this.oldName = decodeURI(nickname);
         }
     },
     methods:{

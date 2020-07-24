@@ -107,7 +107,7 @@ new Vue({
                 return;
             }
             var pzBase64 = this.$refs.pzBase64.value;
-            if(!pzBase64){
+            if(!pzBase64 && !this.userInfo.alipayqrcode){
                 jqtoast('请上传收款码！');
                 return;
             }
