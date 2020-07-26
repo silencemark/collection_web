@@ -2049,7 +2049,7 @@
         'referenced during render. Make sure that this property is reactive, ' +
         'either in the data option, or for class-based components, by ' +
         'initializing the property. ' +
-        'See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.',
+        'See: https://vuejs.org/v2/guide/recommunity.html#Declaring-Reactive-Properties.',
         target
       );
     };

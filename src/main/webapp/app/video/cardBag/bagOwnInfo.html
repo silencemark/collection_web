@@ -15,7 +15,7 @@
  <body>
 
 <section class="main"  id="app">
-    <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div>
+    <!-- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div> -->
 
     <div class="title">
          <img src="../img/to-left.png" onclick="history.back(-1)"/>
@@ -29,7 +29,7 @@
       <span style="margin-bottom:5px;">{{bigInfo.typename}}任务列表</span>
       任务详情：在以下影片列表中观看且好评任意一部影片即视为完成一次任务。您的此任务卡需要完成 {{bigInfo.commentcount}} 次即可领取 {{bigInfo.yield}}% 任务奖励。
         <div class="v-numver" style="width: 90%;margin-top:45px;"  v-cloak>
-            <div style="width:50%;">任务有效期：{{bigInfo.duetime.substr(0,10)}}</div>
+            <div style="width:50%;">任务有效期：{{bigInfo.duetime?bigInfo.duetime.substr(0,10):''}}</div>
             <div style="width:50%;">完成率：{{bigInfo.alreadycount}}/{{bigInfo.commentcount}}</div>
             <span class="clear">
       </div>
@@ -62,7 +62,7 @@
            <a href="../index.html" class="text">首页</a>
        </li>
        <li class="list_li follow" >
-           <a  href="../activity.html" class="text">活动中心</a>
+           <a  href="../community.html" class="text">享社区</a>
        </li>
        <li class="list_li cart">
            <a  href="../cardBag/bagOwn.html" class="text">卡包</a>

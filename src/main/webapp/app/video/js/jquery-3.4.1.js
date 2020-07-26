@@ -10921,7 +10921,7 @@ function jAjax(url,resData,sucCbk,errCbk){
 		dataType:'json',
 		url : reqPath + url,
 		data : resData,
-		async:false, 
+		// async:false, 
 		success : function(data) {
 			console.log(data);
 			$("body").find("div[id='loadingWindow']").remove();
