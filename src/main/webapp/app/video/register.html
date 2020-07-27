@@ -83,28 +83,25 @@
                 return false;
             }
             //发送短信
-            var sendSuc = false;
+            var vThis = this;
             jAjax("/appLogin/getVerificationCode",this.user,function(data){
                 if(data.status==0){
-                    sendSuc = true;
                     jqtoast('验证码已发送至您的手机！');
+                    vThis.sendYzmSleep = 120;
+                    vThis.sendYzmMsg = '倒计时'+vThis.sendYzmSleep+'S';
+                    var timer = setInterval(()=>{
+                        vThis.sendYzmSleep -= 1;
+                        vThis.sendYzmMsg = '倒计时'+vThis.sendYzmSleep+'S';
+                        if(vThis.sendYzmSleep<=0){
+                            clearInterval(timer);
+                            vThis.sendYzmMsg = '获取验证码';
+                            vThis.sendYzmSleep = 0;
+                        }
+                    },1000);
                 }else{
                     jqtoast(data.message);
                 }
             });
-            if(sendSuc){
-                this.sendYzmSleep = 60;
-                this.sendYzmMsg = '倒计时'+this.sendYzmSleep+'S';
-                var timer = setInterval(()=>{
-                    this.sendYzmSleep -= 1;
-                    this.sendYzmMsg = '倒计时'+this.sendYzmSleep+'S';
-                    if(this.sendYzmSleep<=0){
-                        clearInterval(timer);
-                        this.sendYzmMsg = '获取验证码';
-                        this.sendYzmSleep = 0;
-                    }
-                },1000);
-            }
           },
           //提交注册
            regSubmit(){

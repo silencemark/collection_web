@@ -148,6 +148,10 @@ jAjax("/appIndex/getCommunityDetail",{communityid:communityid},function(data){
 	$("#nickname").html(item.nickname);//
 	$("#commCont").html(item.content);//
 	$("#zhanNum").html(item.likesnum);//
+	if(item.likestatus=='1'){
+		$("#zhan").attr("src","img/notzanyrr.png").attr("isenable","1");;
+		$("#zhanNum").css({"color":"#f64595"});
+	}
 	//all animation effect
 	var islider1 = new iSlider({
 		data: picList,
@@ -166,15 +170,19 @@ jAjax("/appIndex/getCommunityDetail",{communityid:communityid},function(data){
 //zhan
 $(function(){
 	$("#zhan").click(function(){
+		var status = 0;
 		if($(this).attr("isenable")=='0'){
 			$(this).attr("src","img/notzanyrr.png");
 			$(this).attr("isenable","1");
 			$(this).prev().html(parseInt($(this).prev().html())+1).css({"color":"#f64595"});
+			status = 1;
 		}else{
 			$(this).attr("src","img/notzanyff.png");
 			$(this).attr("isenable","0");
 			$(this).prev().html(parseInt($(this).prev().html())-1).css({"color":"#fff"});
 		}
+		jAjax("/appIndex/likeCommunity",{communityid:item.communityid,status:status},function(data){
+   		 },null,true);
 	});
 })
 

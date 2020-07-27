@@ -25,7 +25,8 @@
         账号设置
     </div>
     <div class="operationEl" style="margin-top:5px;height: 50px;">
-      <img :src="userInfo.headimage" id="tx" style="width:45px;height:45px;margin-top:5px; border-radius:22.5px;" />
+      <img v-if="userInfo.headimage" :src="userInfo.headimage" id="tx" style="width:45px;height:45px;margin-top:5px; border-radius:22.5px;" />
+      <img v-else src="../img/defaulttx.png" id="tx" style="width:45px;height:45px;margin-top:5px; border-radius:22.5px;" />
       <!-- <span>修改头像</span> -->
       <input id="cf" onchange="chagntx(this,'tx');" class="imgFileInput" type="file" accept="image/*" multiple="" style="width:45px;height:45px;margin-left:2%;margin-top:0px;">
       <span class="userSetMsg" onclick="$('#cf').click()">修改头像</span>

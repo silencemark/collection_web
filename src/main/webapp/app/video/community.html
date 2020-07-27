@@ -19,20 +19,27 @@
  <body style="background-color:#f6f6f6;">
 
 <section class="main"  id="app">
+<div style="position: fixed;
+top: 0px;
+width: 100%;
+background: #fff;
+z-index: 2;">
     <div class="title" >
-         <img src="img/to-left.png" onclick="history.back(-1)"/>
-        享社区
-    </div>
-<div class="sqTitle">
-    <div :class="showType==0?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(0)">社区活跃</div>
-    <div :class="showType==1?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(1)">我的贴子</div>
-    <div class="clear"></div>
+        <img src="img/to-left.png" onclick="history.back(-1)"/>
+       享社区
+   </div>
+   <div class="sqTitle">
+       <div :class="showType==0?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(0)">社区活跃</div>
+       <div :class="showType==1?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(1)">我的贴子</div>
+       <div class="clear"></div>
+   </div>
+   
 </div>
 <div class="sqAddButCont">
     <div class="sqAddBut" @click="addCommentWinFlg=true">+</div>
 </div>
 
-<div class="commsq">
+<div class="commsq" style="margin-top:80px;">
     <div class="commsqLeft">
         <div class="commsqEl" v-for="(sqel , i) in commList" v-if="i%2==0">
             <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
@@ -43,7 +50,8 @@
                 <span class="uname">{{sqel.nickname}}</span>
 
                 <span class="znum">{{sqel.likesnum}}</span>
-                <img class="zanimg" src="img/notzany.png" isenable="0" :onclick="`sqZan(this,${sqel.communityid})`"/>
+                <img class="zanimg" v-if="sqel.likestatus==1"  src="img/zanys.png" isenable="1" :onclick="`sqZan(this,${sqel.communityid})`"/>
+                <img class="zanimg" v-else src="img/notzany.png" isenable="0" :onclick="`sqZan(this,${sqel.communityid})`"/>
             </div>
         </div>
     </div>
@@ -57,7 +65,8 @@
                 <span class="uname">{{sqel.nickname}}</span>
 
                 <span class="znum">{{sqel.likesnum}}</span>
-                <img class="zanimg" src="img/notzany.png" isenable="0" :onclick="`sqZan(this,${sqel.communityid})`"/>
+                <img class="zanimg" v-if="sqel.likestatus==1"  src="img/zanys.png" isenable="1" :onclick="`sqZan(this,${sqel.communityid})`"/>
+                <img class="zanimg" v-else src="img/notzany.png" isenable="0" :onclick="`sqZan(this,${sqel.communityid})`"/>
             </div>
         </div>
 
@@ -153,15 +162,19 @@ function confirmAdd(){
 }
 //zan
 function sqZan(obj,communityid){
+    var status = 0;
     if($(obj).attr("isenable")=='0'){
         $(obj).attr("src","img/zanys.png");
         $(obj).attr("isenable","1");
         $(obj).prev().html(parseInt($(obj).prev().html())+1);
+        status = 1;
     }else{
         $(obj).attr("src","img/notzany.png");
         $(obj).attr("isenable","0");
         $(obj).prev().html(parseInt($(obj).prev().html())-1);
     }
+    jAjax("/appIndex/likeCommunity",{communityid:communityid,status:status},function(data){
+    },null,true);
 }
 //文档高度
 function getDocumentTop() {
@@ -244,7 +257,6 @@ function getDocumentTop() {
                     vueThis.addCommentWinFlg = false;
                     vueThis.getCommunityList({});
                 }
-
             });
         },
         xlref(){

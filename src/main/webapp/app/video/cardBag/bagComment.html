@@ -111,9 +111,21 @@
 	border-radius: 5px;
 	background-color: #fff;">
 </div>
+
+
+<div style="z-index: 13;
+position: fixed;
+bottom: 33px;
+text-align: center;
+width: 100%;">
+	<img src="../img/ontop.png" style="width: 45px;z-index:99;" onclick="toTop()"/>
+</div>
 </body>
 
 <script  type="text/javascript">
+function toTop(){
+	window.scrollTo(0, 0);
+}
 window.addEventListener('scroll', this.scrollHandle, true);
 document.getElementsByTagName('body')[0].scrollTop = 0;    
 window.onscroll=function(){

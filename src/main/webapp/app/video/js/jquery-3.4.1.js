@@ -10879,9 +10879,12 @@ LOCURL = LOCURL.split("\/video")[0]+"/video/"
  * @param {*} resData  请求入参
  * @param {*} sucCbk  成功回调方法
  * @param {*} errCbk  失败回调方法
+ * @param {*} notLoad  不需要需要笼罩[默认需要]
  */
-function jAjax(url,resData,sucCbk,errCbk){
-	$("body").append('<div class="loading" id="loadingWindow"><img src="'+LOCURL+'img/timg.gif" /></div> ');
+function jAjax(url,resData,sucCbk,errCbk,notLoad){
+	if(!notLoad){
+		$("body").append('<div class="loading" id="loadingWindow"><img src="'+LOCURL+'img/timg.gif" /></div> ');
+	}
 	var isWhite = chkUrlISWhite(url);
 	if(!isWhite){
 		if(!getCptToken()){
