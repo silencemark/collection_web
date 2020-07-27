@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享玩游戏</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
+     <script src="js/jquery-3.4.1.js"></script>
+     <script src="js/jq-alert.js"></script>
+     <script src="js/vue.js"></script>
+     <script src="js/base.js"></script>
+     <style>
+         .gameEl{
+             width: 100%;
+             margin:10px 0 10px 0;
+             background-color: #fff;
+             padding: 5px 15px 5px 15px;
+         }
+         .gameEl img{
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            float: left;
+         }
+         .gameEl .gameName{
+            margin-top: 5px;
+            float: left;
+            margin-left: 10px;
+            display: block;
+            width: 80%;
+            font-size: 0.9rem;
+            color: #333;
+         }
+         .gameEl .gameInfo{
+            font-size: 0.8rem !important;
+            color: #777;
+         }
+     </style>
+ </head>
+ <body style="background:#f2f2f2">
+
+<section class="main"  id="app">
+    <div class="title" style="background-color:rgb(117, 174, 253);color:#fff;border:none;">
+        <img src="img/to-leftffff.png" onclick="history.back(-1)"/>
+        享玩游戏
+    </div>
+    <div class="gameEl">
+        <img src="game/game-xhmlog.png"/>
+        <span class="gameName">小红帽冒险记</span>
+        <span class="gameName gameInfo">快和愤怒的小红帽一起闯关冒险吧！</span>
+        <div class="clear"></div>
+        <div class="btn" style="position:absolute;margin-top:-42px;right:5px;" onclick="window.location.href='game/xiaohm/index.html'">开始游戏</div>
+    </div>
+    <div class="gameEl">
+        <img src="game/game-jblogo.png"/>
+        <span class="gameName">夺宝大战</span>
+        <span class="gameName gameInfo">规定时间内再地图中寻找到金币！</span>
+        <div class="clear"></div>
+        <div class="btn" style="position:absolute;margin-top:-42px;right:5px;" onclick="window.location.href='game/sjgame2/index.html'">开始游戏</div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a href="index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="community.html" class="text">享社区</a>
+       </li>
+       <li class="list_li cart">
+           <a  href="gameList.html" class="text">享玩游戏</a>
+       </li>
+       <li class="list_li profile">
+           <a  href="myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+<!-- end footer-->
+</body>
+
+<script>
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        reqPath : reqPath,
+    }
+    },
+    created() {
+        
+    },
+    methods:{
+
+  }
+})
+</script>
+
+</html>
