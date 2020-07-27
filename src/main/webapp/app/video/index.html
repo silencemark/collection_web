@@ -128,7 +128,6 @@
         </div>
     </div>
 </div>
-
 </section>
       <!--footer-->
       <footer id="footer">
@@ -148,9 +147,12 @@
        </ul>
       </footer>
         <!-- end footer-->
-
 </div>
 
+<div style="position:fixed;z-index:10;width:100%;bottom:-5px;display: none;" id="hintAdd">
+    <div style="width:50px;height:35px;position: absolute;right:5%;" onclick="$('#hintAdd').hide();"></div>
+    <img src="img/addzp0.png" style="width:90%;margin-left:5%;"/>
+</div>
 </body>
 
 
@@ -190,6 +192,12 @@ $(function(){
     $(".searchBut").click(function(){
         $("#searchInput").focus();
     })
+
+    //
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if(isiOS && isSafari()){
+        $("#hintAdd").show();
+    }
 })
 new Vue({
     el: '#app',
@@ -240,7 +248,6 @@ new Vue({
         queryByType(type){
             var vm = this;
             if(type==0){
-                console.log("重回首页。。。。。。。。。。。。")
                 this.homePageMovie = this.defaultPageMovie;
                 this.pageSize = 6;
                 return;
@@ -261,7 +268,6 @@ new Vue({
         //换一批
         ref(item,pageSize){
             if(!pageSize) pageSize = this.pageSize;
-            console.log(pageSize+"============");
             if(item.movienum<=pageSize) return;
             pageNo = !item.pageNo?1:item.pageNo;
             item.pageNo = pageNo+1;

@@ -202,9 +202,10 @@ $(function() {
 function share(tp){
     if(tp==1){
         // alert('唤起微信失败，未检测到您打开微信应用程序！');
-        window.location.href="weixin://dl/https://www.baidu.com";
+        window.location.href="weixin://";
     }else if(tp==2){
-        alert('唤起QQ失败，未检测到您打开QQ应用程序！');
+        window.location.href="tencent://message/?uin=1014167202&Site=在线QQ&Menu=yes";
+        // alert('唤起QQ失败，未检测到您打开QQ应用程序！');
     }else{
         // window.location.href=shareUrl;
         downloadIamge(shareUrl,'xgo.png');
@@ -235,7 +236,7 @@ $(function(){
     jAjax("/appUserCenter/myInviteCode",{},function(data){ 
         shareUrl = reqPath+data.invitecodeqrcode;
         clipboard = new Clipboard('#cp');
-        $("#cpLink").html(data.invitecodehttpurl);
+        $("#cpLink").html("秋水一色共长天每天赚个早餐钱，看视频玩游戏都能领现金！\n"+data.invitecodehttpurl);
         $("#incd").attr("src",shareUrl);
     });
     $("#cp").click(function(){
