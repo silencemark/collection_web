@@ -167,28 +167,28 @@ header .searchCont input::-webkit-input-placeholder{
   }
  
   #footer_list .list_li:nth-child(2){
-      background: url(../img/hd-ic.png) no-repeat;
+      background: url(../img/xsq.png) no-repeat;
       background-size: 26px 26px;
       background-position: top;
       z-index: 2;
   }
   
   #footer_list .list_li:nth-child(2):active{
-     background: url(../img/hd-ic.png) no-repeat;
+     background: url(../img/xsq.png) no-repeat;
      background-size: 26px 26px;
      background-position: top;
      z-index: 2;
  }
  
  #footer_list .list_li:nth-child(3){
-     background: url(../img/pag-ic.png) no-repeat;
+     background: url(../img/xgame.png) no-repeat;
      background-size: 26px 26px;
      background-position: top;
      z-index: 2;
  }
  
  #footer_list .list_li:nth-child(3):active{
-     background: url(../img/pag-ic.png) no-repeat;
+     background: url(../img/xgame.png) no-repeat;
      background-size: 26px 26px;
      background-position: top;
      z-index: 2;
