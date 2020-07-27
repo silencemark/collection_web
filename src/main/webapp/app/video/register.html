@@ -37,7 +37,7 @@
     </div>
     <div class="inputCont">
         <!-- <div>请输入验证码</div> -->
-        <input type="tel" v-model="user.checkcode" placeholder="输入4位数验证码" maxlength="4" style="width:65%;" />
+        <input type="tel" v-model="user.checkcode" placeholder="输入6位数验证码" maxlength="6" style="width:65%;" />
         <div class="btn sendYzm" @click="sendYzm"  v-cloak >{{sendYzmMsg}}</div>
         <span style="font-size: 0.85rem;color:rgb(146,145,145);position:absolute;margin-top:50px;width:200px;left:5%;" 
             onclick="window.location.href='login.html'">已有账号,立即登录</span>&nbsp;&nbsp;
@@ -154,7 +154,7 @@
             if(this.user.confirmPassword != this.user.password) {
                 this.confirmPwdErrMsg = '两次密码不一致';  flg = false
             }else this.confirmPwdErrMsg = '';
-            if(this.user.checkcode.length!=4) {
+            if(this.user.checkcode.length!=6) {
                 this.yzmErrMsg = '验证码有误'; flg = false;
             }else this.yzmErrMsg = '';
             return flg;
