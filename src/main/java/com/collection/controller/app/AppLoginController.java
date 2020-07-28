@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.base.controller.BaseController;
 import com.collection.redis.RedisUtil;
 import com.collection.service.IAppLoginService;
-import com.collection.sms.sendSms;
-import com.collection.util.Constants;
 import com.collection.util.DateUtil;
 import com.collection.util.Md5Util;
 import com.collection.util.SendTemplateSMS;
