@@ -32,7 +32,7 @@
       <span class="userSetMsg" onclick="$('#cf').click()">修改头像</span>
       <img src="../img/to-right.png" style="right:5%;"/>
     </div>
-    <div class="operationEl" @click="setUserName">
+    <div class="operationEl" @click="setUserName(userInfo.nickname)">
       <img src="../img/edit-ic.png"/>
       <span>修改昵称</span>
       <span class="userSetMsg"  v-cloak>{{userInfo.nickname}}</span>
@@ -87,7 +87,7 @@
          <a  href="../community.html" class="text">享社区</a>
      </li>
      <li class="list_li cart">
-         <a  href="../cardBag/bagOwn.html" class="text">享玩游戏</a>
+         <a  href="../gameList.html" class="text">享玩游戏</a>
      </li>
      <li class="list_li profile">
          <a  href="../myCenter.html" class="text">我的</a>
@@ -113,7 +113,7 @@ new Vue({
     },
     methods:{
         setUserName(name){
-          window.location.href='serUserName.html?nickname='+encodeURI(name);
+          window.location.href='serUserName.html?nickname='+name;
         },
         //查询用户信息
         getMyUserInfo(){

@@ -96,7 +96,7 @@
            <a  href="community.html" class="text">享社区</a>
        </li>
        <li class="list_li cart">
-           <a  href="cardBag/bagOwn.html" class="text">享玩游戏</a>
+           <a  href="gameList.html" class="text">享玩游戏</a>
        </li>
        <li class="list_li profile">
            <a  href="myCenter.html" class="text">我的</a>
@@ -182,11 +182,13 @@ new Vue({
             this.qiand();
         }else if(tp==2){
             jqalert({
-                prompt:'请在页面下方选择您想要领取的任务卡！',
+                prompt:'请关注任务卡开启时间及时领去！',
                 yestext:'好 的',
                 yesfn:function () {
                 }
             });
+        }else if(tp==3){
+            window.location.href='cardBag/bagOwn.html';
         }else{
             window.location.href='invite.html';
         }

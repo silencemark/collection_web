@@ -6,6 +6,18 @@
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="css/index.css"/>
      <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <meta name="application-name" content="享GO影视">
+     <!-- 自定义图标 -->
+     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/bitbug_favicon.ico">
+
+
+   <!-- 网站开启对 web app 程序的支持 具体表现为去除浏览器地址栏和底部导航栏 -->
+   2    <meta name="apple-mobile-web-app-capable" content="yes">
+   3    <!-- 用来定义顶部状态栏的形式默认是default为白色 black为黑色 black-translucent为灰色半透明（会占据屏幕的约20px，不同的设备可能会有差异）-->
+   4    <!-- 在定义了apple-mobile-web-app-capable的前提下，设置状态栏的属性值apple-mobile-web-app-status-bar-style才有效； -->
+   5    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
      <script src="js/jquery-3.4.1.js"></script>
      <script src="js/vue.js"></script>
      <script src="js/jq-alert.js"></script>
@@ -150,8 +162,16 @@
 </div>
 
 <div style="position:fixed;z-index:10;width:100%;bottom:-5px;display: none;" id="hintAdd">
-    <div style="width:50px;height:35px;position: absolute;right:5%;" onclick="$('#hintAdd').hide();"></div>
-    <img src="img/addzp0.png" style="width:90%;margin-left:5%;"/>
+    <div style="position: absolute;
+    color: #fff;
+    margin-left:24%;
+    font-size:0.7rem;
+    opacity:0.8;
+    margin-top:5px;" onclick="isAddZP()">
+        已添加，不再提醒！
+    </div>
+    <div style="width:50px;height:35px;position: absolute;right:20%;" onclick="$('#hintAdd').hide();"></div>
+    <img src="img/addzp0.png" style="width:60%;margin-left:20%;"/>
 </div>
 </body>
 
@@ -177,6 +197,11 @@
 //         // videoEle.pause();
 //     }
 // }
+//已添加不再提醒
+function isAddZP(){
+    localStorage.setItem("iosaddzp","1");
+    $('#hintAdd').hide();
+}
 $(function(){
     $(".queryVideo").click(function(){
         $(".queryVideo").removeClass("active");
@@ -195,7 +220,7 @@ $(function(){
 
     //
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-    if(isiOS && isSafari()){
+    if(isiOS && isSafari() && !localStorage.getItem("iosaddzp")){
         $("#hintAdd").show();
     }
 })
