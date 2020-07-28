@@ -12,10 +12,10 @@
 
 
    <!-- 网站开启对 web app 程序的支持 具体表现为去除浏览器地址栏和底部导航栏 -->
-   2    <meta name="apple-mobile-web-app-capable" content="yes">
-   3    <!-- 用来定义顶部状态栏的形式默认是default为白色 black为黑色 black-translucent为灰色半透明（会占据屏幕的约20px，不同的设备可能会有差异）-->
-   4    <!-- 在定义了apple-mobile-web-app-capable的前提下，设置状态栏的属性值apple-mobile-web-app-status-bar-style才有效； -->
-   5    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+       <meta name="apple-mobile-web-app-capable" content="yes">
+       <!-- 用来定义顶部状态栏的形式默认是default为白色 black为黑色 black-translucent为灰色半透明（会占据屏幕的约20px，不同的设备可能会有差异）-->
+       <!-- 在定义了apple-mobile-web-app-capable的前提下，设置状态栏的属性值apple-mobile-web-app-status-bar-style才有效； -->
+       <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 
      <script src="js/jquery-3.4.1.js"></script>
@@ -103,7 +103,7 @@
         <div class="clear"></div>
         <div class="refresh-cont">
             <img @click="ref(item)" src="img/ref.png" style="margin-top:3px"/>&nbsp;
-            <span @click="ref(item)" class="hyh">换一批</span>
+            <span @click="ref(item)" class="hyh" onclick="huanyih(this)">换一批</span>
         </div>
         <!--广告-->
         <div v-if="i==0">
@@ -202,17 +202,17 @@ function isAddZP(){
     localStorage.setItem("iosaddzp","1");
     $('#hintAdd').hide();
 }
+function huanyih(obj){
+    var obj = $(obj);
+    $(obj).prev().addClass("refreshactive");
+    setTimeout(() => {
+        $(obj).prev().removeClass("refreshactive");
+    }, 500);
+}
 $(function(){
     $(".queryVideo").click(function(){
         $(".queryVideo").removeClass("active");
         $(this).addClass("active");
-    });
-    $(".hyh").click(function(){
-        var obj = $(this);
-        $(obj).prev().addClass("refreshactive");
-        setTimeout(() => {
-            $(obj).prev().removeClass("refreshactive");
-        }, 500);
     });
     $(".searchBut").click(function(){
         $("#searchInput").focus();
@@ -258,8 +258,8 @@ new Vue({
 
             }
         }
-        this.getBanner();
         this.queryVideo(0);
+        this.getBanner();
         this.getAdvertisement();
     },
     methods:{
@@ -327,8 +327,8 @@ new Vue({
                         vm.homePageMovie[i].pageNo = item.pageNo;
                     }
                 }
+                vm.$forceUpdate();
             });
-            this.$forceUpdate();
         },
         //默认搜索数据
         defaultSearch(){
@@ -361,14 +361,6 @@ new Vue({
            for(var j=0;j<this.homePageMovie.length;j++){
                var tyel = this.homePageMovie[j];
                if(tyel.type==type && tyel.movielist.length>6){
-                    // var size = tyel.movielist.length
-                    // console.log("电影总长度:"+size);
-                    // for(var i = 0; i < size; i++) {
-                    //     var randomPos = this.randomNum(0,size-1);
-                    //     this.homePageMovie[j].movielist[i] = oldTmp[randomPos];
-                    // }
-                    // this.randomilize(this.homePageMovie[j].movielist)
-
                     var arr = JSON.parse(JSON.stringify(tyel.movielist));
                     var length=tyel.movielist.length;
                     var arr1=new Array(); 
