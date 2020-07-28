@@ -54,7 +54,7 @@
         </div>
         <div v-else>
             <div v-if="item.havebuy==1 || item.havebuy==2">
-                <input type="button" v-if="item.havebuy==1" value="任務分派中" :class="`active-but  v${item.forder}-bg`"/>
+                <input type="button" v-if="item.havebuy==1" value="任务分派中" :class="`active-but  v${item.forder}-bg`"/>
                 <input type="button" v-if="item.havebuy==2" value="今日任务已领取" :class="`active-but  v${item.forder}-bg`" 
                     onclick="window.location.href='cardBag/bagPayWait.html'"/>
             </div>
