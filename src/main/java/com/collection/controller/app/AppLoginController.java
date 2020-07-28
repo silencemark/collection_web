@@ -24,6 +24,7 @@ import com.collection.sms.sendSms;
 import com.collection.util.Constants;
 import com.collection.util.DateUtil;
 import com.collection.util.Md5Util;
+import com.collection.util.SendTemplateSMS;
 
 
 /**
@@ -67,7 +68,8 @@ public class AppLoginController extends BaseController{
 		try {
 			Random r = new Random();
 			code = r.nextInt(10) + "" + r.nextInt(10) + "" + r.nextInt(10) + "" + r.nextInt(10)+ "" + r.nextInt(10)+ "" + r.nextInt(10);
-			sendSms.sendSms(phone, Constants.smsTranslateCode.replace("code", code));
+			SendTemplateSMS.sendSms(phone, code, "5");
+			//sendSms.sendSms(phone, Constants.smsTranslateCode.replace("code", code));
 		} catch (Exception e) {
 			data.put("status", 1);
 			data.put("message", "发送验证码错误");
