@@ -2,7 +2,7 @@
  <html lang="en">
  <head>
      <meta charset="UTF-8">
-     <title>享社区</title>
+     <title>享互动</title>
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
 	 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -144,7 +144,7 @@ jAjax("/appIndex/getCommunityDetail",{communityid:communityid},function(data){
 		picList.push({content:reqPath+item.imglist[i].imgurl});
 	}
 	//tx
-	$("#headImg").attr("src",reqPath+item.headimage);//
+	$("#headImg").attr("src",item.headimage?reqPath+item.headimage:'img/defaulttx.png');//
 	$("#nickname").html(item.nickname);//
 	$("#commCont").html(item.content);//
 	$("#zhanNum").html(item.likesnum);//

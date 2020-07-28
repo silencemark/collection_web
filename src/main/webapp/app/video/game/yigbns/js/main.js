@@ -2716,6 +2716,24 @@ var link, jsGame; (function() {
 							dex: 272,
 							dey: 0,
 							deColor: "#000"
+						}).create({
+							id: "退出游戏",
+							value: "退出游戏",
+							x: i - 272 >> 1,
+							y: u + 160 + 120+300,
+							width: 272,
+							height: 80,
+							font: "36px 微软雅黑",
+							imageId: "btns1",
+							sx: 0,
+							sy: 0,
+							color: "#FFF",
+							hx: 272,
+							hy: 0,
+							hColor: "#FFF",
+							dex: 272,
+							dey: 0,
+							deColor: "#000"
 						}).base().gameFlow.menu()
 					};
 					f();

@@ -12,6 +12,7 @@
 	     <script src="../js/jq-alert.js"></script>
 	 </head>
 	 <body >
+		<div id="btt" style="opacity: 0;width:100%;position: fixed;top: 435px;height:50px;z-index: 4;border-radius: 5px;background-color: #fff;"></div>
 
 	<section class="main"  id="app" class="app">
 	    <div class="title" style="position: fixed;z-index:3;background-color:#fff;">
@@ -53,7 +54,7 @@
 	           <a href="../index.html" class="text">首页</a>
 	       </li>
 	       <li class="list_li follow" >
-	           <a  href="../community.html" class="text">享社区</a>
+	           <a  href="../community.html" class="text">享互动</a>
 	       </li>
 	       <li class="list_li cart">
 	           <a  href="../gameList.html" class="text">享玩游戏</a>
@@ -102,15 +103,9 @@
 	</div>
 	<!--end评论窗口-->
 	</section>
-	<div id="btt" style="width: 100%;
-    position: fixed;
-    top: 418px;
-    height: 80px;
-    z-index: 2;
-	display: none;
-	border-radius: 5px;
-	background-color: #fff;">
-</div>
+
+
+
 
 
 <div style="z-index: 13;
@@ -123,6 +118,8 @@ width: 100%;">
 </body>
 
 <script  type="text/javascript">
+	var gTop = 435;
+	$("#btt").css({"top":gTop})
 function toTop(){
 	window.scrollTo(0, 0);
 }
@@ -137,7 +134,7 @@ function scrollHandle () {
     const offsetTop = offset.top;
     const offsetBottom = offset.bottom;
     const offsetHeight = offset.height;
-	var h = 418 + offsetTop;
+	var h = gTop + offsetTop;
     $(document.getElementById("btt")).css({"top":h+"px"});
 }
 
