@@ -8,10 +8,10 @@
 .index_top .user_num span { display:block;height:36px; line-height:36px; overflow:hidden;}
 .index_top .user_num i { display:block; float:left;}
 .index_top .user_num em { display:block; float:left; width:75px; font-size:18px; margin-left:10px;}
-.index_top .cp_num { background:url(../images/page/ico_cop.png) no-repeat left; height:72px; padding:6px 0px;  padding-left:95px; width:170px;  margin:0px auto;}
+.index_top .cp_num { background:url(../images/page/ico_cop.png) no-repeat left; height:72px; padding:6px 0px;  padding-left:95px; width:350px;  margin:0px auto;}
 .index_top .cp_num span { display:block;height:36px; line-height:36px; overflow:hidden;}
 .index_top .cp_num i { display:block; float:left;}
-.index_top .cp_num em { display:block; float:left; font-size:18px; margin-left:10px;}
+.index_top .cp_num em { display:block; float:left; font-size:18px; margin-left:10px;margin-right:10px;}
 
 .page_tab { margin:16px 16px 0px 16px; background:#fff; padding:0px 30px 10px 30px; min-height:400px;}
 .page_tab .tab_name { border-bottom:2px solid #eee; height:55px; line-height:55px;}

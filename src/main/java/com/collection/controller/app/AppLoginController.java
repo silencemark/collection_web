@@ -2,6 +2,7 @@ package com.collection.controller.app;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.base.controller.BaseController;
 import com.collection.redis.RedisUtil;
 import com.collection.service.IAppLoginService;
+import com.collection.sms.sendSms;
+import com.collection.util.Constants;
 import com.collection.util.DateUtil;
 import com.collection.util.Md5Util;
 
@@ -51,31 +54,30 @@ public class AppLoginController extends BaseController{
 	public Map<String, Object> getVerificationCode(@RequestParam Map<String, Object> map, HttpServletRequest request) {
 		Map<String, Object> data=new HashMap<String, Object>();
 		String phone=map.get("phone")+"";
-		String code = "6666";
+		String code = "666666";
 		//先判断是否过期
 		Map<String, Object> timeMap = RedisUtil.getObject(map.get("phone")+"time");
 		if(timeMap != null && timeMap.size() > 0) {
 			//60秒内不可重发
 			data.put("status", 1);
-			data.put("message", "请勿重复获取，60秒后再试");
+			data.put("message", "请勿重复获取，120秒后再试");
 			return data;
 		}
 		// 发送验证码
-		/*try {
+		try {
 			Random r = new Random();
 			code = r.nextInt(10) + "" + r.nextInt(10) + "" + r.nextInt(10) + "" + r.nextInt(10)+ "" + r.nextInt(10)+ "" + r.nextInt(10);
-			SDKTestSendTemplateSMS.sendRegisterVerificationCodeMessage(phone, code,"30");
+			sendSms.sendSms(phone, Constants.smsTranslateCode.replace("code", code));
 		} catch (Exception e) {
 			data.put("status", 1);
 			data.put("message", "发送验证码错误");
 			return data;
-		}*/
+		}
 		log.info("code=" + code + "------------------------"+phone+"-------------");
 		Map<String, Object> codemap=new HashMap<String, Object>();
 		codemap.put("code", code);
 		RedisUtil.setObject(phone,codemap, 1);
-		RedisUtil.setSecondObject(phone+"time", codemap, 60);
-		//request.getSession().setAttribute(phone, code);
+		RedisUtil.setSecondObject(phone+"time", codemap, 120);
 		data.put("status", 0);
 		data.put("message", "获取成功");
 		return data;

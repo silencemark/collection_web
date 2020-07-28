@@ -8,7 +8,7 @@
             <li><span class="bg_hidden" id="bannerlist"><a href="<%=request.getContextPath() %>/managebackstage/getBannerList" class="bg_02">banner图管理</a></span><div class="line"></div></li>
             <li><span class="bg_hidden" id="advertlist"><a href="<%=request.getContextPath() %>/managebackstage/getAdvertList" class="bg_08">首页广告图管理</a></span><div class="line"></div></li>
             <li><span class="bg_hidden" id="indexmovielist"><a href="<%=request.getContextPath() %>/managebackstage/getIndexMovieList" class="bg_01">首页电影管理</a></span><div class="line"></div></li>
-            <li><span class="bg_hidden" id="membercard"><a href="<%=request.getContextPath() %>/managebackstage/getMemberCardList" class="bg_05">VIP会员卡管理</a></span><div class="line"></div></li>
+            <li><span class="bg_hidden" id="membercard"><a href="<%=request.getContextPath() %>/managebackstage/getMemberCardList" class="bg_05">VIP任务卡管理</a></span><div class="line"></div></li>
             <li><span class="bg_hidden" id="levellist"><a href="<%=request.getContextPath() %>/managebackstage/getLevelList" class="bg_04">用户会员等级管理</a></span><div class="line"></div></li>
             <li><span class="bg_hidden" id="paymentlist"><a href="<%=request.getContextPath() %>/managebackstage/getPaymentMethodList" class="bg_02">收款方式管理</a></span><div class="line"></div></li>
             <li><span class="bg_hidden" id="certificationlist"><a href="<%=request.getContextPath() %>/managebackstage/getCertificationList" class="bg_03">实名认证管理</a></span><div class="line"></div></li>

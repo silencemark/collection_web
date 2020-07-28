@@ -111,7 +111,7 @@ function checkImageShowHide(rum,imagesrc){
 	<jsp:include page="../left.jsp" ></jsp:include>
 	<div class="page_nav"><p><a href="#">首页免费电影管理</a><i>/</i><span>首页电影列表</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">首页免费电影管理列表</span><a href="#" onclick="updatemovie('','','','','','','')">添加</a></div>
+        <div class="tab_name"><span class="gray1">首页免费电影管理列表</span><a href="#" onclick="updatemovie('','','','','','','','')">添加</a></div>
         <div class="sel_box">
         	<form action="<%=request.getContextPath()%>/managebackstage/getIndexMovieList" method="post">
         		<input type="text" class="text" placeholder="请输入电影名称" name="title" value="${map.title}"/>

@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>VIP会员卡信息管理-管理方后台</title>
+<title>VIP任务卡信息管理-管理方后台</title>
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
@@ -126,12 +126,12 @@ function update(cardid,typename,cardicon,cardimg,minprice,maxprice,xgocoin,start
 <jsp:include page="../top.jsp" ></jsp:include>
 <div class="main_page">
 	<jsp:include page="../left.jsp" ></jsp:include>
-	<div class="page_nav"><p><a href="#">VIP会员卡信息管理</a><i>/</i><span>VIP会员卡信息列表</span></p></div>        
+	<div class="page_nav"><p><a href="#">VIP任务卡信息管理</a><i>/</i><span>VIP任务卡信息列表</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">VIP会员卡信息管理列表</span></div>
+        <div class="tab_name"><span class="gray1">VIP任务卡信息管理列表</span></div>
         <div class="sel_box">
         	<form action="<%=request.getContextPath()%>/managebackstage/getMemberCardList" method="post">
-        		<input type="text" class="text" placeholder="请输入会员卡名称" name="typename" value="${map.typename}"/>
+        		<input type="text" class="text" placeholder="请输入任务卡名称" name="typename" value="${map.typename}"/>
 	            <select class="sel" name="status">
 	            	<option>全部</option>
 	            	<option value="1" <c:if test="${map.status == '1' }">selected="selected"</c:if>>有效</option>
@@ -144,9 +144,9 @@ function update(cardid,typename,cardicon,cardimg,minprice,maxprice,xgocoin,start
         <div class="tab_list">
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td">
-                	<td>会员卡名称</td>
-                    <td>会员卡图标</td>
-                    <td>会员卡价格范围</td>
+                	<td>任务卡名称</td>
+                    <td>任务卡图标</td>
+                    <td>任务卡价格范围</td>
                     <td>购买需xgo币</td>
                     <td>购买开始结束时分</td>
                     <td>需要几天能出售</td>
@@ -184,18 +184,18 @@ function update(cardid,typename,cardicon,cardimg,minprice,maxprice,xgocoin,start
 <div class="div_mask" style="display:none;"></div>
 
 <div class="tc_changetext"  id="updatediv"  style="display:none;top: 40%;left: 40%; width: 650px;">
-	<div class="tc_title"><span>修改会员卡VIP信息</span><a href="#" onclick="checkHide(0)">×</a></div>
+	<div class="tc_title"><span>修改任务卡VIP信息</span><a href="#" onclick="checkHide(0)">×</a></div>
     <form action="<%=request.getContextPath() %>/managebackstage/updateMemberCard" id="memberform" method="post">
     <input type="hidden" name="cardid" id="cardid" />
     <div class="box">
-    	<span>会员卡名称</span>
+    	<span>任务卡名称</span>
         <input type="text" class="text2"  placeholder="请输入会员VIP名称"  name="typename" id="typename"/>
         <div class="clear"></div>
-    	<span>会员卡图标</span>
+    	<span>任务卡图标</span>
     	<input type="hidden" name="cardicon" id="cardicon" />
         <div class="img3"><img src="" onclick="$('#fileName').click();" width="150px" height="80px" id="cardiconurl"/></div>
         <div class="clear"></div>
-        <span>会员卡大图</span>
+        <span>任务卡大图</span>
     	<input type="hidden" name="cardimg" id="cardimg"/>
         <div class="img3"><img src="" onclick="$('#fileName1').click();" width="150px" height="80px" id="cardimgurl"/></div>
         <div class="clear"></div>
@@ -206,10 +206,10 @@ function update(cardid,typename,cardicon,cardimg,minprice,maxprice,xgocoin,start
         <textarea placeholder="请输入详细描述，最多允许输入800字符" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" name="description" id="description"></textarea>
         <div class="clear"></div>
         <span>最小价格</span>
-        <input type="text" class="text2"  placeholder="请输入会员卡最小价格"  name="minprice" id="minprice"/>
+        <input type="text" class="text2"  placeholder="请输入任务卡最小价格"  name="minprice" id="minprice"/>
         <div class="clear"></div>
         <span>最大价格</span>
-        <input type="text" class="text2"  placeholder="请输入会员卡最大价格"  name="maxprice"  id="maxprice"/>
+        <input type="text" class="text2"  placeholder="请输入任务卡最大价格"  name="maxprice"  id="maxprice"/>
         <div class="clear"></div>
         <span>所需XGO币</span>
         <input type="text" class="text2"  placeholder="请输入所需XGO币"  name="xgocoin"  id="xgocoin" />
@@ -251,7 +251,7 @@ function ajaxFileUpload(id,Fileid,noimg){
 	if(!Fileid){
 		Fileid = "fileName";
 	}
-	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/manageheadimg",Fileid,function(data){
+	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/managebannerimg",Fileid,function(data){
 			if(data.imgkey){
 				$("#cardiconurl").attr("src",data.imgkey);
 				$("input[name=cardicon]").val(data.imgkey);
@@ -277,7 +277,7 @@ function ajaxFileUpload1(id,Fileid,noimg){
 	if(!Fileid){
 		Fileid = "fileName1";
 	}
-	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/manageheadimg",Fileid,function(data){
+	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/managebannerimg",Fileid,function(data){
 			if(data.imgkey){
 				$("#cardimgurl").attr("src",data.imgkey);
 				$("input[name=cardimg]").val(data.imgkey);

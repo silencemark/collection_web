@@ -198,7 +198,7 @@ function checkPayOrderShowHide(rum,payorder){
         		<input type="text" class="text" placeholder="请输入交易订单号" name="ordernum" value="${map.ordernum}"/>
 	            <input type="text" class="text" placeholder="请输入买家用户昵称" name="buynickname" value="${map.buynickname }"/>
 	            <input type="text" class="text" placeholder="请输入卖家用户昵称" name="sellnickname" value="${map.sellnickname }"/>
-	            <input type="text" class="text" placeholder="请输入会员卡名称" name="typename" value="${map.typename }"/>
+	            <input type="text" class="text" placeholder="请输入任务卡名称" name="typename" value="${map.typename }"/>
 	            <select class="sel" name="type">
 	            	<option>全部订单</option>
 	            	<option value="1" <c:if test="${map.type == '1' }">selected="selected"</c:if>>是</option>
@@ -226,8 +226,8 @@ function checkPayOrderShowHide(rum,payorder){
                 	<td>交易订单号</td>
                     <td>买家昵称</td>
                     <td>卖家昵称</td>
-                    <td>会员卡名称</td>
-                    <td>会员卡价格</td>
+                    <td>任务卡名称</td>
+                    <td>任务卡价格</td>
                     <td>订单类型</td>
                     <td>是否系统订单</td>
                     <td>支付凭证</td>
