@@ -8099,6 +8099,9 @@ __extends = this.__extends || function(c, e) {
                 this._downEventFired != d && (d && e.UIEvent.dispatchUIEvent(this, e.UIEvent.BUTTON_DOWN), this._downEventFired = d, this.checkAutoRepeatTimerConditions(d))
             };
             a.prototype.addHandlers = function() {
+                console.log("c.TouchEvent.TOUCH_ROLL_OVER")
+                console.log(c.TouchEvent.TOUCH_ROLL_OVER)
+                console.log(this.mouseEventHandler)
                 this.addEventListener(c.TouchEvent.TOUCH_ROLL_OVER, this.mouseEventHandler, this);
                 this.addEventListener(c.TouchEvent.TOUCH_ROLL_OUT, this.mouseEventHandler, this);
                 this.addEventListener(c.TouchEvent.TOUCH_BEGIN, this.mouseEventHandler, this);
@@ -16018,7 +16021,9 @@ __extends = this.__extends || function(c, e) {
             };
             a.prototype.__12_i = function() {
                 var a = new egret.gui.UIAsset;
+                console.log("__12_i")
                 this.__s(a, ["source", "x", "y"], ["over_jpg", 0, 0]);
+                console.log(a)
                 return a
             };
             a.prototype.__13_i = function() {
@@ -16102,6 +16107,7 @@ __extends = this.__extends || function(c, e) {
                 var a = new egret.gui.Group;
                 this.gameoverGroup = a;
                 this.__s(a, ["bottom", "left", "right", "top", "visible"], [0, 0, 0, 0, !1]);
+                console.log(" a.prototype.gameoverGroup_i = function() {")
                 a.elementsContent = [this.__12_i(), this.shareToFacebookBtn_i(), this.restartBtn2_i(),
                     this.gameoverScoreGroup_i(), this.gameoverHighScoreGroup_i()
                 ];
