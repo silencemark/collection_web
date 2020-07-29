@@ -9,13 +9,10 @@
      <meta name="application-name" content="享GO影视">
      <!-- 自定义图标 -->
      <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/bitbug_favicon.ico">
-
-
-   <!-- 网站开启对 web app 程序的支持 具体表现为去除浏览器地址栏和底部导航栏 -->
-       <meta name="apple-mobile-web-app-capable" content="yes">
-       <!-- 用来定义顶部状态栏的形式默认是default为白色 black为黑色 black-translucent为灰色半透明（会占据屏幕的约20px，不同的设备可能会有差异）-->
-       <!-- 在定义了apple-mobile-web-app-capable的前提下，设置状态栏的属性值apple-mobile-web-app-status-bar-style才有效； -->
-       <meta name="apple-mobile-web-app-status-bar-style" content="default">
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
 
      <script src="js/jquery-3.4.1.js"></script>
@@ -27,12 +24,20 @@
      <script src="js/base.js"></script>
     <script src="js/slideshow.js"></script>
     <style>
-        /* .isoHint{display:none;} */
-    </style>
+        .wbOpen{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        z-index: 7;
+        opacity: 0.95;
+    }
+        </style>
  </head>
  <body>
     <!-- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div> -->
-    
+    <img src="img/bitbug_favicon.ico" style="display: none;">
     <div id="app">
      <header>
          <section class="logo">
@@ -145,29 +150,39 @@
 
 
 
-    <div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;background-color:#000;opacity:0.2;z-index:6;position: fixed;top:0;"></div>
-<div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;z-index:7;overflow-y:auto;position:fixed;top:0;padding-top:10px;">
+    <div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;background-color:#000;opacity:0.6;z-index:6;position: fixed;top:0;"></div>
+<div v-if="iosHintShow" class="isoHint"  style="width:100%;height:100%;z-index:7;overflow-y:auto;position:fixed;top:0;padding-top:10px;display:none;">
     <div style="color:#525252;font-size:0.8rem;width:90%;margin-left:5%;padding:10px;background:#f2f2f2;">
         为了您能更方便的使用本应用，建议您先将应用添加到主屏。如何添加到主屏请参考下方实例
         <div style="margin-top:15px;color:#000;">
         <label for="isAddNotHint">
             <input type="checkbox" id="isAddNotHint" style="-webkit-appearance:checkbox;width:17px; height:17px;position:absolute;"/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我已添加，不再提醒！
+            <div v-if="iosHintShow" class="isoHint" onclick="closeIosHint()" style="right: 6%;
+            width: 80px;
+            font-size: 0.85rem;
+            float: right;
+            margin-top: -10px;
+            text-align: center;
+            border: 1px solid rgb(168, 168, 168);
+            border-radius: 15px;
+            height: 30px;
+            line-height: 30px;
+            background: rgb(252, 252, 252);">
+                关闭窗口
+            </div>
         </label>
         </div>
     </div>
     <img src="img/addzhup1.png" style="width:90%;margin-left:5%;">
-    <img src="img/addzhup2.png" style="width:90%;margin-left:5%;">
+    <img src="img/addzhup2.png" style="width:90%;margin-left:5%;margin-top:-30px;">
     <br/><br/><br/><br/>
 </div>
-<div v-if="iosHintShow" class="isoHint" onclick="closeIosHint()" style="z-index: 11;top: 57px;right: 6%;width: 80px;font-size: 0.85rem;position: fixed;text-align: center;border: 1px solid #a8a8a8;border-radius:15px;height:30px;line-height:30px;background: #fcfcfc;">
-    关闭窗口
-</div>
-<img v-if="iosHintShow" class="isoHint" src="img/addzp0.png" style="width:60%;margin-left:20%;position:fixed;z-index:8;bottom:0;">
+<img v-if="iosHintShow" class="isoHint" src="img/addzp0.png" style="width:60%;margin-left:20%;position:fixed;z-index:8;bottom:0;opacity:0.9;display:none;">
 
 
 
-
+<img src="img/open2Safari.png" class="wbOpen" v-if="isOpenSafariFlag" />
 
 </div>
 </section>
@@ -175,39 +190,44 @@
       <footer id="footer">
         <ul id="footer_list">
            <li class="list_li home active">
-               <a href="index.html" class="text">首页</a>
+               <a  href="javascript:void(0);" shref="index.html" class="text">首页</a>
            </li>
            <li class="list_li follow" >
-               <a  href="community.html" class="text">享互动</a>
+               <a  href="javascript:void(0);" shref="community.html" class="text">享互动</a>
            </li>
            <li class="list_li cart">
-               <a  href="gameList.html" class="text">享玩游戏</a>
+               <a   href="javascript:void(0);" shref="gameList.html" class="text">享玩游戏</a>
            </li>
            <li class="list_li profile">
-               <a  href="myCenter.html" class="text">我的</a>
+               <a   href="javascript:void(0);" shref="myCenter.html" class="text">我的</a>
            </li>
        </ul>
       </footer>
         <!-- end footer-->
 </div>
 
-<!-- <div style="position:fixed;z-index:10;width:100%;bottom:-5px;display: none;" id="hintAdd">
-    <div style="position: absolute;
-    color: #fff;
-    margin-left:24%;
-    font-size:0.7rem;
-    opacity:0.8;
-    margin-top:5px;" onclick="isAddZP()">
-        已添加，不再提醒！
-    </div>
-    <div style="width:50px;height:35px;position: absolute;right:20%;" onclick="$('#hintAdd').hide();"></div>
-    <img src="img/addzp0.png" style="width:60%;margin-left:20%;"/>
-</div> -->
-
 </body>
+
+<script>
+if(('standalone' in window.navigator)&&window.navigator.standalone){
+        var noddy,remotes=false;
+        document.addEventListener('click',function(event){
+                noddy=event.target;
+                while(noddy.nodeName!=='A'&&noddy.nodeName!=='HTML') noddy=noddy.parentNode;
+                if('href' in noddy&&noddy.href.indexOf('http')!==-1&&(noddy.href.indexOf(document.location.host)!==-1||remotes)){
+                        event.preventDefault();
+                        document.location.href=noddy.href;
+                }
+        },false);
+}
+</script>
 
 
 <script>
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    var isSafari = isSafari();
+    var cptToken = getCptToken();
+
 //关闭IoS提醒
 function closeIosHint(){
     $('.isoHint').hide();
@@ -230,12 +250,6 @@ $(function(){
     $(".searchBut").click(function(){
         $("#searchInput").focus();
     })
-
-    //
-    // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-    // if(isiOS && isSafari() && !localStorage.getItem("iosaddzp")){
-    //     $(".isoHint").show();
-    // }
 })
 new Vue({
     el: '#app',
@@ -252,35 +266,60 @@ new Vue({
             searchValue : "",
             pageSize:6,
             iosHintShow:false,
+            isOpenSafariFlag:false,
         }
     },
     created() {
-       var isAdLog = true;
         var invitecode = this.GetQueryString("invitecode");
-        if(invitecode){
-            localStorage.setItem("invitecode",invitecode);
-            if(!getCptToken()){
-                isAdLog = false;
-                jqalert({
-                    prompt:'【享购影视】欢迎您，请问是否要前往注册？',
-                    yestext:'立即注册',
-                    notext:'等一会儿',
-                    yesfn:function () {
-                        window.location.href='register.html';
-                    },
-                    nofn:function () {
-                    }
-                })
 
+        if(isiOS){
+            //首次必须在safari中打开
+            // if(!isSafari && invitecode && !cptToken){
+            if(!isSafari){
+                //再isSafari浏览器打开
+                this.isOpenSafariFlag = true;
+                $(".wbOpen").show();
+            }else{
+                if(!localStorage.getItem("iosaddzp")){
+                    this.iosHintShow = true;
+                    $(".isoHint").show();
+                }else{
+                    if(invitecode){
+                        localStorage.setItem("invitecode",invitecode);
+                        if(!cptToken){
+                            jqalert({
+                                prompt:'【享购影视】欢迎您，请问是否要前往注册？',
+                                yestext:'立即注册',
+                                notext:'等一会儿',
+                                yesfn:function () {
+                                    window.location.href='register.html';
+                                },
+                                nofn:function () {
+                                }
+                            })
+
+                        }
+                    }
+                }
+            }
+        }else{
+            if(invitecode){
+                localStorage.setItem("invitecode",invitecode);
+                if(!cptToken){
+                    jqalert({
+                        prompt:'【享购影视】欢迎您，请问是否要前往注册？',
+                        yestext:'立即注册',
+                        notext:'等一会儿',
+                        yesfn:function () {
+                            window.location.href='register.html';
+                        },
+                        nofn:function () {
+                        }
+                    })
+
+                }
             }
         }
-
-        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        if(isAdLog && isiOS && isSafari() && !localStorage.getItem("iosaddzp")){
-            this.iosHintShow = true;
-        }
-
-
         this.queryVideo(0);
         this.getBanner();
         this.getAdvertisement();

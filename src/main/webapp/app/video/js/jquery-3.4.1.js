@@ -10956,7 +10956,7 @@ function chkUrlISWhite(url){
 
 $(function(){
 	$("#footer_list .list_li").click(function(){
-		window.location.href = $(this).find("a").attr("href");
+		window.location.href = $(this).find("a").attr("shref");
 	});
 });
 /**begin user Sesssion */
