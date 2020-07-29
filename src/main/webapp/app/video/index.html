@@ -274,8 +274,7 @@ new Vue({
 
         if(isiOS){
             //首次必须在safari中打开
-            // if(!isSafari && invitecode && !cptToken){
-            if(!isSafari){
+            if(!isSafari && invitecode && !cptToken){
                 //再isSafari浏览器打开
                 this.isOpenSafariFlag = true;
                 $(".wbOpen").show();
