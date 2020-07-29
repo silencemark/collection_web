@@ -1,5 +1,6 @@
 package com.collection.controller.app;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,4 +97,173 @@ public class AppIndexController extends BaseController{
 			HttpServletResponse response) {
 		return this.appindexService.getHomePageVideoDesc(map);
 	}
+	
+	/**
+	 * 上传朋友圈图片集合
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/addCommunity")
+	@ResponseBody
+	public Map<String, Object> addCommunity(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		return this.appindexService.addCommunity(map);
+	}
+	
+	/**
+	 * 查询朋友圈社区分享（传用户uid表示查自己的）
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getCommunityList")
+	@ResponseBody
+	public Map<String, Object> getCommunityList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		return this.appindexService.getCommunityList(map);
+	}
+	
+	/**
+	 * 查询朋友圈社区分享详情（传分享ID）
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getCommunityDetail")
+	@ResponseBody
+	public Map<String, Object> getCommunityDetail(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		return this.appindexService.getCommunityDetail(map);
+	}
+	
+	/**
+	 * 点赞记录表点赞接口加一
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/likeCommunity")
+	@ResponseBody
+	public Map<String, Object> likeCommunity(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appindexService.likeCommunity(map);
+		data.put("status", 0);
+		if("1".equals(map.get("status").toString())) {
+			data.put("message", "点赞成功");
+		} else {
+			data.put("message", "取消点赞成功");
+		}
+		return data;
+	}
+	
+	/**
+	 * 查询朋友圈社区的评论
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getCommunityComment")
+	@ResponseBody
+	public Map<String, Object> getCommunityComment(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data.put("resultlist", this.appindexService.getCommunityComment(map));
+		return data;
+	}
+	
+	/**
+	 * 朋友圈社区新增评论
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/addCommunityComment")
+	@ResponseBody
+	public Map<String, Object> addCommunityComment(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appindexService.addCommunityComment(map);
+		data.put("status", 0);
+		data.put("message", "评论成功");
+		return data;
+	}
+	
+	/**
+	 * 朋友圈社区新增回复
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/addCommunityReply")
+	@ResponseBody
+	public Map<String, Object> addCommunityReply(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appindexService.addCommunityReply(map);
+		data.put("status", 0);
+		data.put("message", "回复成功");
+		return data;
+	}
+	
 }

@@ -732,4 +732,30 @@ public class AppUserCenterController extends BaseController{
 		return data;
 	}
 	
+	/**
+	 * 获取收益排行榜
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getRank")
+	@ResponseBody
+	public Map<String, Object> getRank(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data.put("resultlist", this.appUserCenterService.getRank(map));
+		return data;
+	}
+	
 }
