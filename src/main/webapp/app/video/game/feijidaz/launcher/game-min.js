@@ -15247,7 +15247,7 @@ var __extends = this.__extends || function(c, e) {
         };
         e.prototype.onTouchTapShare = function(c) {
 			
-			// play68_submitScore(window.score);
+			//play68_submitScore(history.back(-1));
             
         };
         e.prototype.onTouchTapPauseBtn = function(c) {
@@ -16160,12 +16160,14 @@ __extends = this.__extends || function(c, e) {
                 return a
             };
             a.prototype.reStartBtn_i = function() {
+                console.log("再来一次.....")
                 var a = new egret.gui.UIAsset;
                 this.reStartBtn = a;
                 this.__s(a, ["source", "x", "y"], ["restart_png", 58, 101]);
                 return a
             };
             a.prototype.restartBtn2_i = function() {
+                console.log("再来一次.....2222")
                 var a = new egret.gui.UIAsset;
                 this.restartBtn2 = a;
                 this.__s(a, ["horizontalCenter", "source", "width", "y"], [94, "restart_png", 190, 610]);
@@ -16180,6 +16182,7 @@ __extends = this.__extends || function(c, e) {
                 return a
             };
             a.prototype.shareToFacebookBtn_i = function() {
+                console.log("炫耀依稀。。.......")
                 var a = new egret.gui.UIAsset;
                 this.shareToFacebookBtn = a;
                 this.__s(a, ["height", "horizontalCenter", "source", "width", "y"], [62, -93, "facebooklogo_png", 190, 610]);

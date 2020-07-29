@@ -26,6 +26,9 @@
      <link rel="stylesheet" type="text/css" href="css/slideshow.css">
      <script src="js/base.js"></script>
     <script src="js/slideshow.js"></script>
+    <style>
+        /* .isoHint{display:none;} */
+    </style>
  </head>
  <body>
     <!-- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="img/timg.gif"/></div> -->
@@ -139,6 +142,33 @@
             很抱歉，没有找到相关资源
         </div>
     </div>
+
+
+
+    <div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;background-color:#000;opacity:0.2;z-index:6;position: fixed;top:0;"></div>
+<div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;z-index:7;overflow-y:auto;position:fixed;top:0;padding-top:10px;">
+    <div style="color:#525252;font-size:0.85rem;width:90%;margin-left:5%;padding:5px;background:#f2f2f2;">
+        为了您能更方便的使用本应用，建议您先将应用添加到主屏。如何添加到主屏请参考下方实例
+        <div style="margin-top:15px;color:#000;">
+        <label for="isAddNotHint">
+            <input type="checkbox" id="isAddNotHint" style="-webkit-appearance:checkbox;width:17px; height:17px;position:absolute;"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我已添加，不再提醒！
+        </label>
+        </div>
+    </div>
+    <img src="img/addzhup1.png" style="width:90%;margin-left:5%;">
+    <img src="img/addzhup2.png" style="width:90%;margin-left:5%;">
+    <br/><br/><br/><br/>
+</div>
+<div v-if="iosHintShow" class="isoHint" onclick="closeIosHint()" style="z-index: 11;top: 57px;right: 6%;width: 80px;font-size: 0.85rem;position: fixed;text-align: center;border: 1px solid #a8a8a8;border-radius:15px;height:30px;line-height:30px;background: #fcfcfc;">
+    关闭窗口
+</div>
+<img v-if="iosHintShow" class="isoHint" src="img/addzp0.png" style="width:60%;margin-left:20%;position:fixed;z-index:8;bottom:0;">
+
+
+
+
+
 </div>
 </section>
       <!--footer-->
@@ -161,7 +191,7 @@
         <!-- end footer-->
 </div>
 
-<div style="position:fixed;z-index:10;width:100%;bottom:-5px;display: none;" id="hintAdd">
+<!-- <div style="position:fixed;z-index:10;width:100%;bottom:-5px;display: none;" id="hintAdd">
     <div style="position: absolute;
     color: #fff;
     margin-left:24%;
@@ -172,35 +202,18 @@
     </div>
     <div style="width:50px;height:35px;position: absolute;right:20%;" onclick="$('#hintAdd').hide();"></div>
     <img src="img/addzp0.png" style="width:60%;margin-left:20%;"/>
-</div>
+</div> -->
+
 </body>
 
 
-
 <script>
-// window.addEventListener('scroll', this.scrollHandle, true);
-// document.getElementsByTagName('body')[0].scrollTop = 0;    
-// window.onscroll=function(){
-//     // scrollHandle();
-// }
-// function scrollHandle () {
-//     if(checkWeChatBrowser()) return;
-//     var videoEle = document.getElementById("videoId");
-//     const offset = videoEle.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
-//     const offsetTop = offset.top;
-//     const offsetBottom = offset.bottom;
-//     const offsetHeight = offset.height;
-//     // 进入可视区域
-//     if (offsetTop <= window.innerHeight && offsetBottom >= 0) {
-//         // videoEle.play();
-//     } else {
-//         // videoEle.pause();
-//     }
-// }
-//已添加不再提醒
-function isAddZP(){
-    localStorage.setItem("iosaddzp","1");
-    $('#hintAdd').hide();
+//关闭IoS提醒
+function closeIosHint(){
+    $('.isoHint').hide();
+    if(document.getElementById('isAddNotHint').checked){
+        localStorage.setItem("iosaddzp","1");
+    }
 }
 function huanyih(obj){
     var obj = $(obj);
@@ -219,10 +232,10 @@ $(function(){
     })
 
     //
-    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-    if(isiOS && isSafari() && !localStorage.getItem("iosaddzp")){
-        $("#hintAdd").show();
-    }
+    // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    // if(isiOS && isSafari() && !localStorage.getItem("iosaddzp")){
+    //     $(".isoHint").show();
+    // }
 })
 new Vue({
     el: '#app',
@@ -238,13 +251,16 @@ new Vue({
             randomNumLogs : "",
             searchValue : "",
             pageSize:6,
+            iosHintShow:false,
         }
     },
     created() {
+       var isAdLog = true;
         var invitecode = this.GetQueryString("invitecode");
         if(invitecode){
             localStorage.setItem("invitecode",invitecode);
             if(!getCptToken()){
+                isAdLog = false;
                 jqalert({
                     prompt:'【享购影视】欢迎您，请问是否要前往注册？',
                     yestext:'立即注册',
@@ -258,6 +274,13 @@ new Vue({
 
             }
         }
+
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if(isAdLog && isiOS && isSafari() && !localStorage.getItem("iosaddzp")){
+            this.iosHintShow = true;
+        }
+
+
         this.queryVideo(0);
         this.getBanner();
         this.getAdvertisement();
