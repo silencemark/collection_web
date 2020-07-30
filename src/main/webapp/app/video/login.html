@@ -76,7 +76,7 @@
           //验证注册参数
           chkRegForm(){
             var flg = true;
-            var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+            var myreg = /^[1][3,4,5,6,7,8][0-9]{9}$/;
             if (!myreg.test(this.user.phone)) {
                 this.phoneErrMsg = '请输入正确登录手机';  flg = false;
             }else this.phoneErrMsg = '';

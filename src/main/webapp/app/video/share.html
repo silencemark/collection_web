@@ -9,6 +9,7 @@
         <meta content="telephone=no" name="format-detection"/>
         <link href="css/share.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="css/public.css"/>
+        <script src="js/jq-alert.js"></script>
     </head>
     <body style="background-color:#007bdb">
         <div class="title" style="color:#fff;position: absolute;background: none;">
@@ -26,15 +27,15 @@
             <div class="jq22-show-box">
                 <div class="jq22-show-box-title jq22-footer-flex">
                     <div class="b-line jq22-coll-share-box">
-                        <a href="javascript:;" onclick="share(1)"class="jq22-coll-share-item">
+                        <a href="javascript:;" class="jq22-coll-share-item">
                             <div class="jq22-coll-share-img">
-                                <img src="img/icon-wx.png" alt="">
+                                <img src="img/icon-wx.png"  id="cp0" data-clipboard-action="copy" data-clipboard-target="#cpLink">
                             </div>
                             <div class="jq22-coll-share-text">微信好友</div>
                         </a>
-                        <a href="javascript:;" onclick="share(2)" class="jq22-coll-share-item">
+                        <a href="javascript:;"  class="jq22-coll-share-item">
                             <div class="jq22-coll-share-img">
-                                <img src="img/icon-qq.png" alt="">
+                                <img src="img/icon-qq.png"  id="cp1" data-clipboard-action="copy" data-clipboard-target="#cpLink">
                             </div>
                             <div class="jq22-coll-share-text">QQ</div>
                         </a>
@@ -57,6 +58,8 @@
         </div>
         <script src="js/clipboard.min.js"></script>
         <script>
+            var clipboard = new Clipboard('#cp0');
+            var clipboard = new Clipboard('#cp1');
             var clipboard = new Clipboard('#cp');
         </script>
         <script src="js/jquery-3.4.1.js"></script>

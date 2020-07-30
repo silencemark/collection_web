@@ -207,7 +207,13 @@ function share(tp){
         window.location.href="tencent://message/?uin=1014167202&Site=在线QQ&Menu=yes";
         // alert('唤起QQ失败，未检测到您打开QQ应用程序！');
     }else{
-        // window.location.href=shareUrl;
+        $(".mask-black").click();
+        jqalert({
+            prompt:'【享GO影视】如果您下载个人海报失败，您还可以截图分享给您的好友',
+            yestext:'知道了',
+            yesfn:function () {
+            }
+        })
         downloadIamge(shareUrl,'xgo.png');
     }
 }
@@ -240,6 +246,37 @@ $(function(){
         $("#incd").attr("src",shareUrl);
     });
     $("#cp").click(function(){
-        alert("邀请链接已复制成功！");
+        $(".mask-black").click();
+        jqalert({
+            prompt:'【享GO影视】邀请链接已经复制成功，是否打开微信去粘贴!',
+            yestext:'前往微信粘贴',
+            notext:'不用了',
+            yesfn:function () {
+                window.location.href="weixin://";
+            },
+            nofn:function () {
+            }
+        })
     });
+    $("#cp0").click(function(){
+        $(".mask-black").click();
+        // $("#actionSheet").hide();
+        jqalert({
+            prompt:'【享GO影视】邀请链接已复制，前往微信分享给您的好友吧！',
+            yestext:'前往微信粘贴给好友',
+            yesfn:function () {
+                window.location.href="weixin://";
+            }
+        })
+    });
+    $("#cp1").click(function(){
+        $(".mask-black").click();
+        jqalert({
+            prompt:'【享GO影视】检测到您没有打开QQ，请手动打开QQ粘贴邀请链接给好友!',
+            yestext:'知道了',
+            yesfn:function () {
+            }
+        })
+    });
+
 });

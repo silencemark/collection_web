@@ -26,7 +26,9 @@ background: #fff;
 z-index: 2;">
     <div class="title" >
         <img src="img/to-left.png" onclick="history.back(-1)"/>
-       享互动
+        享互动
+        <img src="img/msg2.png" style="width:20px;height:auto;right:20px;left:auto;top:12px;" 
+        onclick="window.location.href='user/userMsg.html'"/>
    </div>
    <div class="sqTitle">
        <div :class="showType==0?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(0)">社区活跃</div>
@@ -41,7 +43,7 @@ z-index: 2;">
 
 <div class="commsq" style="margin-top:80px;">
     <div class="commsqLeft">
-        <div class="commsqEl" v-for="(sqel , i) in commList" v-if="i%2==0">
+        <div class="commsqEl" v-for="(sqel , i) in commList" v-if="i%2==0"  v-cloak>
             <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
             <span class="sqTime">{{sqel.createtime?sqel.createtime.substr(0,10):''}}</span>
             <span style="display:block;padding:10px;">{{sqel.content}}</span>
@@ -56,7 +58,7 @@ z-index: 2;">
         </div>
     </div>
     <div class="commsqRight">
-        <div class="commsqEl" v-for="(sqel , i) in commList" v-if="i%2!=0">
+        <div class="commsqEl" v-for="(sqel , i) in commList" v-if="i%2!=0"  v-cloak>
             <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
             <span class="sqTime">{{sqel.createtime?sqel.createtime.substr(0,10):''}}</span>
             <span style="display:block;padding:10px;">{{sqel.content}}</span>
@@ -73,7 +75,7 @@ z-index: 2;">
     </div>
     <div class="clear"></div>
 </div>
-<div style="text-align:center;margin-top: 4px;font-size:0.9rem;color:#999;">{{refTxt}}</div>
+<div style="text-align:center;margin-top: 4px;font-size:0.9rem;color:#999;"  v-cloak>{{refTxt}}</div>
     
 <!--发帖窗口-->
 <div class="monmc" v-cloak  @click="addCommentWinFlg = false" v-if="addCommentWinFlg"></div>
@@ -256,6 +258,8 @@ function getDocumentTop() {
                     jqtoast('发帖成功！');
                     vueThis.addCommentWinFlg = false;
                     vueThis.getCommunityList({});
+                }else{
+                    jqtoast(data.message);
                 }
             });
         },

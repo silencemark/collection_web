@@ -82,6 +82,8 @@
         </span>
         <span class="msgcont">{{msg.message}}</span>
       </div>
+
+      <div v-if="!msgList || msgList.length==0" style="text-align: center;font-size: 0.9rem;margin-top: 50px;color: #555;">暂无消息</div>
     </div>
 
     

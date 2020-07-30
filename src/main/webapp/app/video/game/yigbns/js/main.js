@@ -2632,7 +2632,8 @@ var link, jsGame; (function() {
 					}).zone(function() {
 						e.canvas.fillStyle("#90EE90").fillScreen().fillStyle("#FFF").drawString(l.moduleName, 0, u + 110, e.graphics.VCENTER, !1, null, null, "50px 微软雅黑").drawImage("btns1", 0, 106, 480, 7, i - 480 >> 1, u + 140, 480, 7).drawImage("btns1", 0, 106, 480, 7, i - 480 >> 1, u + 555, 480, 7).fillStyle("#000").drawString(a(l.time, "秒"), 0, u + 340, e.graphics.VCENTER, !1, null, null, "60px 微软雅黑").fillStyle("#000").drawString("最佳:" + a(l.bestTime, "秒"), 0, u + 400, e.graphics.VCENTER, !1, null, null, "30px 微软雅黑"),
 						l.time > l.bestTime && e.canvas.fillStyle("#FF0").drawString("新纪录", 0, u + 240, e.graphics.VCENTER, !1, null, null, "50px 微软雅黑"),
-							e.buttonLayout.released("return") ? f() : e.buttonLayout.released("restart") && dp_share2(l.time)
+							e.buttonLayout.released("return") ? f() : e.buttonLayout.released("restart") && dp_share2(l.time);
+							console.log(l.moduleName+"-----------"+l.time)
 					}).events.mouseDown(function(e, t, n) {
 							if (l.died) return ! 1;
 							for (var r = 0,
@@ -2703,24 +2704,6 @@ var link, jsGame; (function() {
 							value: "炼狱模式",
 							x: i - 272 >> 1,
 							y: u + 160 + 120+200,
-							width: 272,
-							height: 80,
-							font: "36px 微软雅黑",
-							imageId: "btns1",
-							sx: 0,
-							sy: 0,
-							color: "#FFF",
-							hx: 272,
-							hy: 0,
-							hColor: "#FFF",
-							dex: 272,
-							dey: 0,
-							deColor: "#000"
-						}).create({
-							id: "退出游戏",
-							value: "退出游戏",
-							x: i - 272 >> 1,
-							y: u + 160 + 120+300,
 							width: 272,
 							height: 80,
 							font: "36px 微软雅黑",

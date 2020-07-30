@@ -99,7 +99,7 @@
 		<div style="overflow-y:auto;height:400px;">
 
 			<div class="sqCommetuseEl" v-for="(cm,i) in plContList">
-				<img :src="reqPath+cm.headimage"/>
+				<img :src="headimage?reqPath+cm.headimage:'img/defaulttx.png'"/>
 				<span>{{cm.nickname}}</span>
 				<span style="float:right;margin-right:10px;">{{cm.createtime}}</span>
 				<div class="clear"></div>
