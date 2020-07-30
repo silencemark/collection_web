@@ -151,11 +151,11 @@
 
 
     <div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;background-color:#000;opacity:0.6;z-index:6;position: fixed;top:0;"></div>
-<div v-if="iosHintShow" class="isoHint"  style="width:100%;height:100%;z-index:7;overflow-y:auto;position:fixed;top:0;padding-top:10px;display:none;">
-    <div style="color:#525252;font-size:0.8rem;width:90%;margin-left:5%;padding:10px;background:#f2f2f2;">
-        为了您能更方便的使用本应用，建议您先将应用添加到主屏。如何添加到主屏请参考下方实例
+<div v-if="iosHintShow" class="isoHint"  style="opacity: 0.9;width:100%;height:100%;z-index:7;overflow-y:auto;position:fixed;top:0;padding-top:110px;display:none;">
+    <div style="border-top-left-radius: 10px;border-top-right-radius: 10px;color:#777;font-size:0.8rem;width:90%;margin-left:5%;padding:10px;background:#f2f2f2;">
+        为了您能更方便的使用本应用，建议您先将应用添加到主屏。如何<b style="color:#000">添加到主屏</b>请参考下方实例
         <div style="margin-top:15px;color:#000;">
-        <label for="isAddNotHint">
+        <label for="isAddNotHint" style="color: #777;">
             <input type="checkbox" id="isAddNotHint" style="-webkit-appearance:checkbox;width:17px; height:17px;position:absolute;"/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我已添加，不再提醒！
             <div v-if="iosHintShow" class="isoHint" onclick="closeIosHint()" style="right: 6%;
@@ -164,10 +164,11 @@
             float: right;
             margin-top: -10px;
             text-align: center;
+            color: #777;
             border: 1px solid rgb(168, 168, 168);
             border-radius: 15px;
             height: 30px;
-            line-height: 30px;
+            line-height: 27px;
             background: rgb(252, 252, 252);">
                 关闭窗口
             </div>
@@ -175,10 +176,10 @@
         </div>
     </div>
     <img src="img/addzhup1.png" style="width:90%;margin-left:5%;">
-    <img src="img/addzhup2.png" style="width:90%;margin-left:5%;margin-top:-30px;">
+    <img src="img/addzhup2.png" style="width:90%;margin-left:5%;margin-top:-5px;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
     <br/><br/><br/><br/>
 </div>
-<img v-if="iosHintShow" class="isoHint" src="img/addzp0.png" style="width:60%;margin-left:20%;position:fixed;z-index:8;bottom:0;opacity:0.9;display:none;">
+<img v-if="iosHintShow" class="isoHint" src="img/addzp0.png" style="width:70%;margin-left:15%;position:fixed;z-index:8;bottom:0;opacity:0.9;display:none;">
 
 
 

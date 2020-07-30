@@ -526,6 +526,7 @@
     text-align: center;
     font-size: 0.9rem;
     padding: 10px;
+    box-sizing: border-box;
     color: #333;
 }
 .sqTitleElActiv{

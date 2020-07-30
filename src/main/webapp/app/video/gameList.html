@@ -37,6 +37,55 @@
             font-size: 0.8rem !important;
             color: #777;
          }
+         .ph{
+            color: #333;
+            width: 100%;
+            min-height: 300px;
+            background: #fff;
+            border-radius: 10px;
+        }
+        .phAt{
+            height: 40px;
+            line-height: 40px;
+            color: #555;
+            padding: 2px 0 2px 0;
+            font-size: 0.85rem;
+        }
+        .phAt .tpph{
+            width: 35px;
+            margin-top: 7px;
+            margin-left: 5px;
+            position: absolute;
+        }
+        .phAt .tptx{
+            width: 24px;
+            margin-top: 8px;
+            height: 24px;
+            margin-left:42px;
+            border-radius: 12px;
+            position: absolute;
+        }
+        .phAt .num{
+            font-size: 1rem;
+            color: #555;
+            margin-left: 15px;
+            position: absolute;
+        }
+        .phAt .pmoney{
+            position: absolute;
+            right: 4%;
+            font-size: 0.8rem;
+            color: #bebebe;
+        }
+        .phGameel{
+                font-size: 0.8rem;
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+            color: #777;
+            border-bottom: 1px solid #dfdfdf;
+        }
+        .phGameelactiv{color: #000;}
      </style>
  </head>
  <body style="background:#f2f2f2">
@@ -49,6 +98,13 @@
         onclick="window.location.href='user/userMsg.html'"/>
     </div>
     <img src="img/activT.png" style="width: 100%; margin-top: -1px;" onclick="window.location.href='activity.html'">
+    <div class="sqTitle">
+        <div :class="showType==0?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(0)">游戏列表</div>
+        <div :class="showType==1?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(1)">排行榜</div>
+        <div class="clear"></div>
+    </div>
+<!--游戏类别-->
+<div v-if="showType==0">
     <div class="gameEl">
         <img src="game/game-xhmlog.png"/>
         <span class="gameName">小红帽冒险记</span>
@@ -105,8 +161,34 @@
         <div class="clear"></div>
         <div class="btn" style="position:absolute;margin-top:-40px;right:5px;" onclick="window.location.href='game/tafsheji/index.html'">立即挑战</div>
     </div> -->
-
-
+</div>
+   
+<div class="ph" v-if="showType==1">
+    <div style="width:100%;height:auto;">
+        <div style="width:25%;height: 100%;float: left;background-color:#f5f5f5;min-height: 500px;">
+            <div :class="phGamename=='xiaohm'?'phGameel phGameelactiv':'phGameel'" @click="changeGMph('xiaohm')">
+                小红帽冒险计
+            </div>
+            <div :class="phGamename=='quandybh'?'phGameel phGameelactiv':'phGameel'" @click="changeGMph('quandybh')">
+               全都要保护
+            </div>
+        </div>
+        <div style="width:75%;height: 100%;float: left;">
+            <div class="phAt" v-for="(ph,i) in pList" v-if="i<10"  v-cloak>
+                <img :src="`img/top${i+1}.png`" class="tpph" v-if="i<3"/>
+                <span class="num" v-else>{{i+1}}</span>
+        
+                <img :src="reqPath+ph.headimage" class="tptx" v-if="ph.headimage"/>
+                <img src="img/defaulttx.png" class="tptx" v-else/>
+        
+                <span style="margin-left:70px;">{{ph.nickname}}</span>
+                <span class="pmoney"><span style="color:#ff5e00;font-weight:bold;">598</span></span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+</div>
 
 
 
@@ -145,16 +227,39 @@
 new Vue({
     el: '#app',
     data: function() {
-    return {
-        reqPath : reqPath,
-    }
+        return {
+            reqPath : reqPath,
+            showType:0,
+            pList : [],
+            phGamename:'xiaohm',
+            nT:'',
+        }
     },
     created() {
-        
+        this.getRank();
+        var day1 = new Date();
+        day1.setTime(day1.getTime()-24*60*60*1000);
+        this.nT = day1.getFullYear()+"年" + (day1.getMonth()+1) + "月" + day1.getDate()+"日";
     },
     methods:{
-
-  }
+        //数据
+        getRank(){
+            var vueThis = this;
+            jAjax("/appUserCenter/getRank",{},function(data){
+                vueThis.pList = data.resultlist;
+            });
+        },
+        //切换游戏排行
+        changeGMph(gameName){
+            this.phGamename = gameName;
+        },
+        
+        //切换列表
+        changStype(type){
+            this.showType = type;
+            // this.getCommunityList();
+        }
+    }
 })
 </script>
 
