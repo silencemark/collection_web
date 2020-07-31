@@ -80,7 +80,7 @@
 
 
 
-<div class="qiandWin" v-if="qdFlg"  v-cloak></div>
+<div class="qiandWin" v-if="qdFlg" style="opacity:0.7;"  v-cloak></div>
 <div class="qiandContDiv" v-if="qdFlg"  v-cloak>
   <div class="qdsucTitle">领取成功</div>
   <div class="qdsuccont" v-cloak style="height: 70px;">恭喜您成功领取了一个任务，请您立即支付！</div>
@@ -90,6 +90,20 @@
   </div>
 </div>
 
+
+
+<!--抢购中-->
+<div class="qiandWin" v-if="qging"  v-cloak></div>
+<div class="qiandContDiv" v-if="qging" style="background:none;width:100%;margin-left:0;top:150px;"  v-cloak>
+  <img  src="../img/qging.gif" class="qianggingimg"/>
+  <div class="qianggouing">
+    亲您的任务卡正在领取中,您可以先去看会儿电影玩玩游戏，领取成功后会短信通知您哟<br/><br/>
+    <div class="btn qinggbuleft" @click="qging = false">在此等待</div>
+    <div class="btn qinggourigth" onclick="window.location.href='../gameList.html'">先去逛逛</div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!--end抢购中-->
 
 </section>
 
@@ -126,6 +140,7 @@ new Vue({
         timer : undefined,
         qdFlg:false,
         payTimer:null,
+        qging:false
     }
     },
     created() {
@@ -139,6 +154,7 @@ new Vue({
             jAjax("/appVipCard/getRushToBuyList",{},function(data){
                 vueThis.rushToBuyList = data.resultlist;
                 if(vueThis.rushToBuyList && vueThis.rushToBuyList.length>0){
+                    vueThis.qging = true;
                     var t = setInterval(()=>{
                         for(var k=0;k<vueThis.rushToBuyList.length;k++){
                             vueThis.rushToBuyList[k].secondbuy += 1;
@@ -163,6 +179,7 @@ new Vue({
                     for(var k=0;k<vueThis.waitPayCardList.length;k++){
                         if(vueThis.waitPayCardList[k].status==1){
                             vueThis.qdFlg = true;
+                            vueThis.qging = false;
                             vueThis.payorderid =  vueThis.waitPayCardList[k].orderid;
                             return;
                         }
