@@ -38,10 +38,10 @@ function dn(){
 			jqalert({
 				prompt:'<div style="text-align:center">'+
 				'非常抱歉：由于相关政策及公司内部原因暂时取消对IOS系统兼容。因此对广大IOS用户带来的不便，我们深表歉意。'+
-				'您可在iso中Safari浏览器中点击"添加到主屏"以方便您的使用</div>',
+				'您可在iso-Safari浏览器中点击"<b>添加到主屏</b>"以方便您的使用</div>',
 				yestext:'前往应用',
 				yesfn:function () {
-					window.location.href='login.html';
+					window.location.href='index.html';
 				}
 			})
 		}else{
