@@ -176,7 +176,7 @@
       <img src="../img/custService-ic.png">
       <span style="margin-left:40px;">请提交您的问题，我们将尽快为您处理!</span>
     </div>
-    <textarea v-model="questioncontent" class="wtextarea" placeholder="让你遇见困惑，我们非常难过，希望您告诉我们您再哪里遇到了问题，以便我们为您服务">
+    <textarea v-model="questioncontent" maxlength="100" class="wtextarea" placeholder="让你遇见困惑，我们非常难过，希望您告诉我们您再哪里遇到了问题，以便我们为您服务">
     </textarea>
     <select class="pbSelect"  v-model="qType">
       <option value="0">选择问题类型</option>

@@ -37,8 +37,8 @@ function dn(){
 		if(isiOS){
 			jqalert({
 				prompt:'<div style="text-align:center">'+
-				'非常抱歉：由于相关政策及公司内部原因暂时取消对IOS系统兼容。因此对广大IOS用户带来的不便，我们深表歉意。'+
-				'您可在iso-Safari浏览器中点击"<b>添加到主屏</b>"以方便您的使用</div>',
+				'非常抱歉：于相关政策及其他综合因素暂时取消对IOS系统兼容。因此对广大IOS用户带来的不便，我们深表歉意。'+
+				'您可在iso-Safari浏览器中点击"<b>添加到主屏</b>"以方便使用本应用</div>',
 				yestext:'前往应用',
 				yesfn:function () {
 					window.location.href='index.html';
@@ -55,7 +55,6 @@ function downloadUrlFile(url, fileName) {
     // xhr.open('GET', url2, true);
     // xhr.responseType = 'blob';
     // //xhr.setRequestHeader(‘Authorization‘, ‘Basic a2VybWl0Omtlcm1pdA==‘);
-    // // 为了避免大文件影响用户体验，建议加loading
     // xhr.onload = () => {
 		//     if (xhr.status === 200) {
 			window.location.href=url;

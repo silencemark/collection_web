@@ -10639,6 +10639,14 @@ var chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
+
+function compileStr(code){  
+	return code;
+}
+function uncompileStr(code){
+	return code;
+}
+
 function hex_md5(s){ return binl2hex(core_md5(str2binl(s), s.length * chrsz));}
 function b64_md5(s){ return binl2b64(core_md5(str2binl(s), s.length * chrsz));}
 function str_md5(s){ return binl2str(core_md5(str2binl(s), s.length * chrsz));}
@@ -10962,10 +10970,10 @@ $(function(){
 });
 /**begin user Sesssion */
 function setCptToken(data){
-	localStorage.setItem("cptToken",data);
+	localStorage.setItem("cptToken",compileStr(data));
 }
 function getCptToken(){
-	return localStorage.getItem("cptToken");
+	return uncompileStr(localStorage.getItem("cptToken"));
 }
 function loginOut(){
 	localStorage.removeItem("cptToken");
