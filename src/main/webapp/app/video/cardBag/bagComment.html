@@ -235,11 +235,11 @@ function scrollHandle () {
 	        },
 	        //打开评论窗口
 	        goComment(){
-				window.scrollTo(0, 5000)
+				window.scrollTo(0, 100000)
 	            $("#commentWindow").show();
 	            this.comment.comment='';
 	            this.wMin = this.defaultMin;
-				$('body').css({'position':'fixed','top':'-500px',"width":"100%"});
+				$('body').css({'position':'fixed','top':'-10000px',"width":"1%"});
 				document.body.addEventListener('touchmove',bodyScroll,false); 
 
 	        },

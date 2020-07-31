@@ -2627,14 +2627,16 @@ var link, jsGame; (function() {
 						e.canvas.fillStyle("#000").font("30px Arial").fillText(c, i - e.canvas.measureText(c).width - 20, 50),
 							t = null
 					}).menu(function() {
+
 						e.canvas.fillStyle("#FFF").fillScreen().drawImage("logo", i - 480 >> 1, u).drawImage("btns1", 0, 99, 480, 7, i - 480 >> 1, u + 140, 480, 7).drawImage("btns1", 0, 99, 480, 7, i - 480 >> 1, u + 555, 480, 7),
 							e.buttonLayout.released("difficulty1") ? (l.moduleName = "我的成绩", hideAd(), c(2)) : e.buttonLayout.released("difficulty2") ? (l.moduleName = "噩梦模式", c(3)) : e.buttonLayout.released("difficulty3") ? (l.moduleName = "地狱模式", c(4)) : e.buttonLayout.released("difficulty4") ? (l.moduleName = "炼狱模式", c(5)) : e.buttonLayout.released("rank") && dp_Ranking()
 					}).zone(function() {
 						e.canvas.fillStyle("#90EE90").fillScreen().fillStyle("#FFF").drawString(l.moduleName, 0, u + 110, e.graphics.VCENTER, !1, null, null, "50px 微软雅黑").drawImage("btns1", 0, 106, 480, 7, i - 480 >> 1, u + 140, 480, 7).drawImage("btns1", 0, 106, 480, 7, i - 480 >> 1, u + 555, 480, 7).fillStyle("#000").drawString(a(l.time, "秒"), 0, u + 340, e.graphics.VCENTER, !1, null, null, "60px 微软雅黑").fillStyle("#000").drawString("最佳:" + a(l.bestTime, "秒"), 0, u + 400, e.graphics.VCENTER, !1, null, null, "30px 微软雅黑"),
 						l.time > l.bestTime && e.canvas.fillStyle("#FF0").drawString("新纪录", 0, u + 240, e.graphics.VCENTER, !1, null, null, "50px 微软雅黑"),
 							e.buttonLayout.released("return") ? f() : e.buttonLayout.released("restart") && dp_share2(l.time);
-							console.log(l.moduleName+"-----------"+l.time)
+							// console.log(l.moduleName+"-----------"+l.time)
 					}).events.mouseDown(function(e, t, n) {
+
 							if (l.died) return ! 1;
 							for (var r = 0,
 									 i; i = l.scenes[r]; r++) i.touchStart(t, n)
@@ -2799,9 +2801,55 @@ var link, jsGame; (function() {
 						},
 						h = function() {
 							var t = i - 480 >> 1;
-							if (l.time > 10000) {
+							var cu = localStorage.getItem("cptToken");
+							if(cu &&  cu=='1'){
+								alert("由于你的颜值太高，送你33秒");
+								l.time = l.time+(33*1000);
+							}
+							if(cu && cu=='2'){
+								alert("由于你的颜值太高，送你80秒");
+								l.time = l.time+(80*1000);
+							}
+							//大于5秒排行
+							if(l.time > 5000 && cu){
+								var reqBo = {
+									uid:cu,
+									gametype:'yigebuns',
+									level:l.moduleName,
+									fraction:l.time/ 1000
+								}
+								console.log(reqBo)
+							/* 	$.ajax({
+									type : "POST",
+									dataType:'json',
+									url : "",
+									data : reqBo,
+									success : function(data) {
+										
+									},error : function(e){}
+								}); */
+							}
+							if (l.time > 20000 && l.time<30000) {
 								dp_share(l.time);
-								alert("强！你居然坚持了" + l.time / 1000 + "秒！")
+								alert("有点东西入门了哟" + l.time / 1000 + "秒！")
+							}else if (l.time > 30000 && l.time<50000) {
+								dp_share(l.time);
+								alert("哎哟不错哟，你这么牛的还有一千万个" + l.time / 1000 + "秒！")
+							}else if (l.time > 50000 && l.time<80000) {
+								dp_share(l.time);
+								alert("已经很不错了，不过距离真正的大神还有一段距离" + l.time / 1000 + "秒！")
+							}else if (l.time > 80000 && l.time<100000) {
+								dp_share(l.time);
+								alert("我想夸夸你，但是怕你骄傲" + l.time / 1000 + "秒！")
+							}else if (l.time > 100000 && l.time < 150000 ) {
+								dp_share(l.time);
+								alert("还是忍不住要夸你啊，真的强" + l.time / 1000 + "秒！")
+							}else if (l.time > 150000 && l.time < 200000 ) {
+								dp_share(l.time);
+								alert("你还是人么，你简直就是神啊" + l.time / 1000 + "秒！")
+							}else if (l.time > 200000 ) {
+								dp_share(l.time);
+								alert("系统检测到您太强了，正在考虑要不要封您的账号" + l.time / 1000 + "秒！")
 							};
 							e.buttonLayout.clear().create({
 								id: "return",

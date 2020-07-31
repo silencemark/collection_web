@@ -147,14 +147,14 @@
         <div class="clear"></div>
         <div class="btn" style="position:absolute;margin-top:-40px;right:5px;" onclick="window.location.href='game/caiyuntiaog/index.html'">立即挑战</div>
     </div>
-    <!-- <div class="gameEl">
+     <div class="gameEl">
         <img src="game/game-scard.png"/>
         <span class="gameName">赛车闯关</span>
         <span class="gameName gameInfo">赛车闯关，看看你能跑到第几关</span>
         <div class="clear"></div>
         <div class="btn" style="position:absolute;margin-top:-40px;right:5px;" onclick="window.location.href='game/shaichecg/index.html'">立即闯关</div>
     </div>
-    <div class="gameEl">
+   <!-- <div class="gameEl">
         <img src="game/game-tafsheji.png"/>
         <span class="gameName">塔防射击</span>
         <span class="gameName gameInfo">塔防射击！</span>
@@ -241,6 +241,7 @@ new Vue({
         day1.setTime(day1.getTime()-24*60*60*1000);
         this.nT = day1.getFullYear()+"年" + (day1.getMonth()+1) + "月" + day1.getDate()+"日";
     },
+    
     methods:{
         //数据
         getRank(){
@@ -253,11 +254,16 @@ new Vue({
         changeGMph(gameName){
             this.phGamename = gameName;
         },
-        
         //切换列表
         changStype(type){
             this.showType = type;
             // this.getCommunityList();
+        },
+        //获取URL参数
+        GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
         }
     }
 })

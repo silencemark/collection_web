@@ -125,11 +125,12 @@ new Vue({
         payorderid:'',
         timer : undefined,
         qdFlg:false,
+        payTimer:null,
     }
     },
     created() {
-        this.getRushToBuyList();
         this.getWaitPayCard();
+        this.getRushToBuyList();
     },
     methods:{
         //查询抢购中 以及
@@ -138,12 +139,15 @@ new Vue({
             jAjax("/appVipCard/getRushToBuyList",{},function(data){
                 vueThis.rushToBuyList = data.resultlist;
                 if(vueThis.rushToBuyList && vueThis.rushToBuyList.length>0){
-                    setInterval(()=>{
+                    var t = setInterval(()=>{
                         for(var k=0;k<vueThis.rushToBuyList.length;k++){
                             vueThis.rushToBuyList[k].secondbuy += 1;
                             var s = vueThis.rushToBuyList[k].secondbuy;
-                            if(s>180 && s%10==5){
-                                window.location.reload();
+                            if(s>180 && s%20==0){
+                                clearInterval(t);
+                                clearInterval(vueThis.payTimer);
+                                vueThis.getWaitPayCard();
+                                vueThis.getRushToBuyList();
                             }
                         }
                     },1000);
@@ -160,10 +164,10 @@ new Vue({
                         if(vueThis.waitPayCardList[k].status==1){
                             vueThis.qdFlg = true;
                             vueThis.payorderid =  vueThis.waitPayCardList[k].orderid;
+                            return;
                         }
-                        break;
                     }
-                    setInterval(()=>{
+                    vueThis.payTimer = setInterval(()=>{
                         for(var k=0;k<vueThis.waitPayCardList.length;k++){
                             if(vueThis.waitPayCardList[k].remaintime>=0){
                                 vueThis.waitPayCardList[k].remaintime -= 1;

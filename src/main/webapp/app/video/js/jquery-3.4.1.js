@@ -10947,6 +10947,7 @@ function chkUrlISWhite(url){
 		"/appIndex/getBanner",
 		"/appIndex/getAdvertisement",
 		"/appIndex/getHomePageMovie",
+		// "/appUserCenter/getRank",
 	];
 	for(var j=0;j<whiteList.length;j++){
 		if(url==whiteList[j]) return true;

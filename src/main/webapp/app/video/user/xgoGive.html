@@ -124,9 +124,13 @@ new Vue({
             var vueThis = this;
             jAjax("/appUserCenter/giveXgoToOther",this.giveInfo,function(data){
                 if(data.status==0){
-                    jqtoast("转赠成功！");
-                    vueThis.num = parseInt(vueThis.num) - parseInt(vueThis.giveInfo.xgocoin);
-                    history.back(-1);
+                    jqalert({
+                        prompt:'转赠成功',
+                        yestext:'确定',
+                        yesfn:function () {
+                            window.location.href='../myCenter.html';
+                        }
+                    })
                 }else{
                     jqtoast(data.message);
                 }

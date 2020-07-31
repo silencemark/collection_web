@@ -113,15 +113,15 @@
             <img @click="ref(item)" src="img/ref.png" style="margin-top:3px"/>&nbsp;
             <span @click="ref(item)" class="hyh" onclick="huanyih(this)">换一批</span>
         </div>
-        <!--广告-->
-        <div v-if="i==0">
+        <!--广告视频-->
+        <!-- <div v-if="i==0">
             <video id="videoId" muted  poster="img/vioDefault.png" style="width:100%;height:100%;" src="img/activMp41.mp4" controls="controls"  preload >
                 该浏览器不支持该格式视频
             </video>
            <img style="width: 100%;" src="img/activMp41Title.jpg"/>
-        </div>
+        </div> -->
         <!-- 广告图片-->
-        <div v-if="i>0">
+        <div>
             <img v-if="advertisement[i]" :src="reqPath+advertisement[i].imgurl"  class="activity-img" />
         </div>
         <!--end广告图片 -->

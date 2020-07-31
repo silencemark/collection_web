@@ -24,7 +24,7 @@
 <div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
     <div  :class="`vipInfo-active vipInfo  v${orderInfo.forder}-c`" 
     :style="`background-image:url('../img/V${orderInfo.forder}_BG.png')`" v-cloak>
-      <span style="margin-bottom:5px;" >{{orderInfo.typename}}专享任务</span>
+      <span style="margin-bottom:5px;"   v-cloak>{{orderInfo.typename}}专享任务</span>
       领取{{orderInfo.typename}} {{orderInfo.commentstartdays}} 天后且您再完成相应任务要求即可转让您的任务卡！领取{{orderInfo.yield}}%任务奖励。
       邀请好友还可以获取翻倍任务奖励哦
       <img :src="`../img/V${orderInfo.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
@@ -33,19 +33,19 @@
 </div>
 
 <div class="payVipInfoCont">
-    <div style="font-weight: 600;">{{orderInfo.forderName}}专享影视</div>
-    <div>交易单号 ：{{orderInfo.ordernum}}</div>
-    <div>购买日期 ：{{orderInfo.buytime}}</div>
-    <div>任务有效期 ：{{orderInfo.duetime}}</div>
+    <div style="font-weight: 600;"><font v-cloak>{{orderInfo.forderName}}</font>专享影视</div>
+    <div>交易单号 ：<font v-cloak>{{orderInfo.ordernum}}</font></div>
+    <div>购买日期 ：<font v-cloak>{{orderInfo.buytime}}</font></div>
+    <div>任务有效期 ：<font v-cloak>{{orderInfo.duetime}}</font></div>
     <div>交易状态 ：<span style="color:#F36257;font-weight:600;">待支付</span></div>
-    <div>购买价格 ：<span style="color:#F36257;font-weight:600;">{{orderInfo.cardprice}}</span></div>
+    <div>购买价格 ：<span style="color:#F36257;font-weight:600;" v-cloak >{{orderInfo.cardprice}}</span></div>
 </div>
 
 <div style="font-weight:600;font-size: 0.9rem;color:#555;margin-left:4%;margin-top:10px;">请选择支付方式</div>
 <div class="operationEl payOption">
     <img src="../img/XGO-ic.png"/>
     <span>XGO币</span>
-    <span class="money"><span style="color:#555;font-weight:500;font-size:0.9em;"> </span>{{orderInfo.xgocoin}}</span>
+    <span class="money"><span style="color:#555;font-weight:500;font-size:0.9em;"  v-cloak>{{orderInfo.xgocoin}}</span>
 </div>
 <div class="operationEl payOption" @click="selectPayType(1)">
     <img src="../img/wx-ic.png"/>
@@ -66,22 +66,22 @@
     <div class="colLeft">
         <div style="font-weight:600;margin-top:10px;">收款人信息</div>
         <div v-if="payType==1">
-            <div>收款人名称：{{orderInfo.weixinrealname}}</div>
-            <div>微信号：{{orderInfo.weixinnum}}</div>
-            <div>手机号：{{orderInfo.phone}}</div>
+            <div>收款人名称：<font v-cloak>{{orderInfo.weixinrealname}}</font></div>
+            <div>微信号：<font v-cloak>{{orderInfo.weixinnum}}</font></div>
+            <div>手机号：<font v-cloak>{{orderInfo.phone}}</font></div>
             <div>收款码: 见右图</div>
         </div>
         <div v-if="payType==2">
-            <div>收款人名称：{{orderInfo.alipayrealname}}</div>
-            <div>支付宝账号：{{orderInfo.alipaynum}}</div>
-            <div>手机号：{{orderInfo.phone}}</div>
+            <div>收款人名称：<font v-cloak>{{orderInfo.alipayrealname}}</font></div>
+            <div>支付宝账号：<font v-cloak>{{orderInfo.alipaynum}}</font></div>
+            <div>手机号：<font v-cloak>{{orderInfo.phone}}</font></div>
             <div>收款码: 见右图</div>
         </div>
         <div v-if="payType==3">
-            <div>收款人名称：{{orderInfo.bankrealname}}</div>
-            <div>银行名称：{{orderInfo.bank}}</div>
-            <div>银行卡号：{{orderInfo.banknum}}</div>
-            <div>手机号：{{orderInfo.phone}}</div>
+            <div>收款人名称：<font v-cloak>{{orderInfo.bankrealname}}</font></div>
+            <div>银行名称：<font v-cloak>{{orderInfo.bank}}</font></div>
+            <div>银行卡号：<font v-cloak>{{orderInfo.banknum}}</font></div>
+            <div>手机号：<font v-cloak>{{orderInfo.phone}}</font></div>
         </div>
     </div>
     <div class="colRigth">
