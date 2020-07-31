@@ -9,6 +9,16 @@
   
   body{
       background: #fff;
+      max-width: 580px;
+  }
+  footer,header{
+    max-width: 580px;
+  }
+  .sqAddButCont,#iSlider-effect-wrapper,.sqDetailMsgCont,.v-numver{
+    max-width: 580px;
+  }
+  html{
+      max-width: 580px !important;
   }
   
  ul{

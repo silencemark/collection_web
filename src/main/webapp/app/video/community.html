@@ -23,6 +23,7 @@
 top: 0px;
 width: 100%;
 background: #fff;
+max-width: 580px;
 z-index: 2;">
     <div class="title" >
         <img src="img/to-left.png" onclick="history.back(-1)"/>
@@ -49,7 +50,7 @@ z-index: 2;">
             <span style="display:block;padding:10px;">{{sqel.content}}</span>
             <div class="uInfo">
                 <img :src="sqel.headimage?reqPath+sqel.headimage:'img/defaulttx.png'"/>
-                <span class="uname">{{sqel.nickname}}</span>
+                <span class="uname">{{sqel.nickname.length==11?sqel.nickname.substr(0,3)+'****'+sqel.nickname.substr(7,4):sqel.nickname}}</span>
 
                 <span class="znum">{{sqel.likesnum}}</span>
                 <img class="zanimg" v-if="sqel.likestatus==1"  src="img/zanys.png" isenable="1" :onclick="`sqZan(this,${sqel.communityid})`"/>
@@ -64,7 +65,7 @@ z-index: 2;">
             <span style="display:block;padding:10px;">{{sqel.content}}</span>
             <div class="uInfo">
                 <img :src="sqel.headimage?reqPath+sqel.headimage:'img/defaulttx.png'"/>
-                <span class="uname">{{sqel.nickname}}</span>
+                <span class="uname">{{sqel.nickname.length==11?sqel.nickname.substr(0,3)+'****'+sqel.nickname.substr(7,4):sqel.nickname}}</span>
 
                 <span class="znum">{{sqel.likesnum}}</span>
                 <img class="zanimg" v-if="sqel.likestatus==1"  src="img/zanys.png" isenable="1" :onclick="`sqZan(this,${sqel.communityid})`"/>

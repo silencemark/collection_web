@@ -138,7 +138,7 @@
             <img :src="reqPath+ph.headimage" class="tptx" v-if="ph.headimage"/>
             <img src="img/defaulttx.png" class="tptx" v-else/>
 
-            <span style="margin-left:80px;">{{ph.nickname}}</span>
+            <span style="margin-left:80px;">{{ph.nickname.length==11?ph.nickname.substr(0,3)+"****"+ph.nickname.substr(7,4):ph.nickname}}</span>
             <span class="pmoney">收益 <span style="color:#ff5e00;font-weight:bold;">{{ph.sumassets}}</span> 元</span>
         </div>
     </div>
