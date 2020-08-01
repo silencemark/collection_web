@@ -10967,6 +10967,39 @@ $(function(){
 	$("#footer_list .list_li").click(function(){
 		window.location.href = $(this).find("a").attr("shref");
 	});
+	//图片加载
+	$("img").each(function(i){
+		var defSrc = $(this).get(0).src;
+		getImg($(this).get(0));
+		$(this).get(0).onload = function() {
+			if (!localStorage.getItem(defSrc)) {
+				const img = $(this).get(0);
+				var imgCanvas = document.createElement("canvas"),
+				imgContext = imgCanvas.getContext("2d");
+				// 确保canvas尺寸和图片一致
+				imgCanvas.width = img.width;
+				imgCanvas.height = img.height;
+				// 在canvas中绘制图片
+				imgContext.drawImage(img, 0, 0, img.width, img.height);
+				// 将图片保存为Data URI
+				img.setAttribute("crossOrigin",'Anonymous')
+				console.log("shezhihuanc :"+defSrc)
+				// 将JSON保存到本地存储中
+				try {
+					const base64Url = imgCanvas.toDataURL("image/png");
+					localStorage.setItem(defSrc, base64Url);
+				}
+				catch (e) {
+					console.log("Storage failed: " + e);
+				}
+			}else{
+				// console.log("加载完成不需要设置缓存");
+			}
+
+		};
+	});
+
+
 });
 /**begin user Sesssion */
 function setCptToken(data){
@@ -10984,6 +11017,13 @@ function loginOut(){
 
 /**工具方法调用 */
 
+//在本地存储中保存图片
+function getImg(imgObj){
+	const imgUrl = localStorage.getItem(imgObj.src);
+	if (imgUrl) {
+		imgObj.setAttribute("src", imgUrl);
+	}
+}
 //显示文本框输入数字以及1位小数
 ;
 function onlyNonNegative(obj) {
