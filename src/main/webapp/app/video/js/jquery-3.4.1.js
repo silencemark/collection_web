@@ -10967,7 +10967,9 @@ $(function(){
 	$("#footer_list .list_li").click(function(){
 		window.location.href = $(this).find("a").attr("shref");
 	});
+	
 	//图片加载
+	/**
 	$("img").each(function(i){
 		var defSrc = $(this).get(0).src;
 		getImg($(this).get(0));
@@ -10998,7 +11000,7 @@ $(function(){
 
 		};
 	});
-
+ */
 
 });
 /**begin user Sesssion */
