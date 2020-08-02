@@ -3856,19 +3856,10 @@ jQuery.readyException = function( error ) {
 
 // The deferred used on DOM ready
 var readyList = jQuery.Deferred();
-
 jQuery.fn.ready = function( fn ) {
-
-	readyList
-		.then( fn )
-
-		// Wrap jQuery.readyException in a function so that the lookup
-		// happens at the time of error handling instead of callback
-		// registration.
-		.catch( function( error ) {
-			jQuery.readyException( error );
-		} );
-
+	readyList.then(fn).catch( function( error ) {
+			jQuery.readyException(error);
+		});
 	return this;
 };
 
@@ -10867,7 +10858,6 @@ function binl2b64(binarray)
   }
   return str;
 }
-
 //END MD5
 
 var reqPath = "http://www.xgomv.com";
@@ -10920,7 +10910,7 @@ function jAjax(url,resData,sucCbk,errCbk,notLoad){
 	}
 	console.log(resData);
 	$.ajax({
-		type : "POST",
+		type : "get",
 		dataType:'json',
 		url : reqPath + url,
 		data : resData,

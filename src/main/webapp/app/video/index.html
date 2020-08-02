@@ -12,30 +12,36 @@
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
      <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-
-     <script src="js/jquery-3.4.1.js"></script>
-     <script src="js/vue.js"></script>
-     <script src="js/jq-alert.js"></script>
-
-     <!--轮播CSS -->
+     <meta name="apple-mobile-web-app-capable" content="yes">
      <link rel="stylesheet" type="text/css" href="css/slideshow.css">
-     <script src="js/base.js"></script>
-    <script src="js/slideshow.js"></script>
-    <style>
-        .wbOpen{
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        display: none;
-        z-index: 7;
-        opacity: 0.95;
-    }
-        </style>
  </head>
  <body>
+    <div class="loading" id="loadingWindow"><img src="img/timg.gif" /></div> 
+
+    <!--添加到主屏-->
+    <div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;background-color:#000;opacity:0.6;z-index:6;position: fixed;top:0;"></div>
+    <div v-if="iosHintShow" class="isoHint"  style="opacity: 0.9;width:100%;height:100%;z-index:7;overflow-y:auto;position:fixed;top:0;padding-top:110px;display:none;">
+        <div style="border-top-left-radius: 10px;border-top-right-radius: 10px;color:#777;font-size:0.8rem;width:90%;margin-left:5%;padding:10px;background:#f2f2f2;">
+            为了您能更方便的使用本应用，建议您先将应用添加到主屏。如何<b style="color:#000">添加到主屏</b>请参考下方实例
+            <div style="margin-top:15px;color:#000;">
+            <label for="isAddNotHint" style="color: #777;">
+                <input type="checkbox" id="isAddNotHint" style="-webkit-appearance:checkbox;width:17px; height:17px;position:absolute;"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我已添加，不再提醒！
+                <div v-if="iosHintShow" class="isoHint" onclick="closeIosHint()" 
+                style="right:6%;width: 80px;font-size: 0.8rem;float: right;margin-top: -10px;text-align: center;color: #777;
+                border:1px solid rgb(168, 168, 168);border-radius:15px;height:30px;line-height:27px;background: rgb(252, 252, 252);">
+                    关闭窗口
+                </div>
+            </label>
+            </div>
+        </div>
+        <img src="img/addzhup1.png" style="width:90%;margin-left:5%;">
+        <img src="img/addzhup2.png" style="width:90%;margin-left:5%;margin-top:-5px;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+        <br/><br/><br/><br/>
+    </div>
+    <img v-if="iosHintShow" class="isoHint" src="img/addzp0.png" style="width:70%;margin-left:15%;position:fixed;z-index:8;bottom:0;opacity:0.9;display:none;">
+    <!--添加到主屏-->
+
     <img src="img/bitbug_favicon.ico" style="display: none;">
     <div id="app">
      <header>
@@ -47,10 +53,10 @@
             <img src="img/search.png" @click="showSearchWin"  class="searchBut"/>
         </section>
         <ul id="class_list">
-            <li class="list_li home queryVideo active" @click="queryByType(0)">
+            <li class="list_li home queryVideo" @click="queryByType(0)">
                 <span>所有影片</span>
             </li>
-            <li class="list_li queryVideo profile" @click="queryByType(4)">
+            <li class="list_li queryVideo active profile" @click="queryByType(4)">
                 <span>电视剧</span>
             </li>
             <li class="list_li queryVideo follow"  @click="queryByType(2)">
@@ -70,7 +76,7 @@
     <div class="banner">
         <ul class="swipe" id="swipe">
             <!--图片低于5张出问题直接轮播两组-->
-            <li><a href="#"><img src="https://puui.qpic.cn/tv/0/928089421_1080607/0"></a></li>
+            <li><a href="#"><img></a></li>
             <li v-for="(item,i) in bannerList" v-cloak>
                 <a :href="`cardBag/bagComment.html?mv=${item.httpurl}`" ><img :src="reqPath+item.imgurl"></a>
                 <div v-cloak>{{item.description}}</div v-cloak>
@@ -89,7 +95,6 @@
 <!--end 轮播-->
 
 <section class="main">
-
     <div class="prdClassCont" v-for="(item , i) in homePageMovie" v-cloak >
         <div class="prd-title">
             <span>{{item.typename}}</span>
@@ -112,13 +117,6 @@
             <img @click="ref(item)" src="img/ref.png" style="margin-top:3px"/>&nbsp;
             <span @click="ref(item)" class="hyh" onclick="huanyih(this)">换一批</span>
         </div>
-        <!--广告视频-->
-        <!-- <div v-if="i==0">
-            <video id="videoId" muted  poster="img/vioDefault.png" style="width:100%;height:100%;" src="img/activMp41.mp4" controls="controls"  preload >
-                该浏览器不支持该格式视频
-            </video>
-           <img style="width: 100%;" src="img/activMp41Title.jpg"/>
-        </div> -->
         <!-- 广告图片-->
         <div>
             <img v-if="advertisement[i]" :src="reqPath+advertisement[i].imgurl"  class="activity-img" />
@@ -149,41 +147,8 @@
 
 
 
-    <div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;background-color:#000;opacity:0.6;z-index:6;position: fixed;top:0;"></div>
-<div v-if="iosHintShow" class="isoHint"  style="opacity: 0.9;width:100%;height:100%;z-index:7;overflow-y:auto;position:fixed;top:0;padding-top:110px;display:none;">
-    <div style="border-top-left-radius: 10px;border-top-right-radius: 10px;color:#777;font-size:0.8rem;width:90%;margin-left:5%;padding:10px;background:#f2f2f2;">
-        为了您能更方便的使用本应用，建议您先将应用添加到主屏。如何<b style="color:#000">添加到主屏</b>请参考下方实例
-        <div style="margin-top:15px;color:#000;">
-        <label for="isAddNotHint" style="color: #777;">
-            <input type="checkbox" id="isAddNotHint" style="-webkit-appearance:checkbox;width:17px; height:17px;position:absolute;"/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我已添加，不再提醒！
-            <div v-if="iosHintShow" class="isoHint" onclick="closeIosHint()" style="right: 6%;
-            width: 80px;
-            font-size: 0.8rem;
-            float: right;
-            margin-top: -10px;
-            text-align: center;
-            color: #777;
-            border: 1px solid rgb(168, 168, 168);
-            border-radius: 15px;
-            height: 30px;
-            line-height: 27px;
-            background: rgb(252, 252, 252);">
-                关闭窗口
-            </div>
-        </label>
-        </div>
-    </div>
-    <img src="img/addzhup1.png" style="width:90%;margin-left:5%;">
-    <img src="img/addzhup2.png" style="width:90%;margin-left:5%;margin-top:-5px;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
-    <br/><br/><br/><br/>
-</div>
-<img v-if="iosHintShow" class="isoHint" src="img/addzp0.png" style="width:70%;margin-left:15%;position:fixed;z-index:8;bottom:0;opacity:0.9;display:none;">
-
-
 
 <img src="img/open2Safari.png" class="wbOpen" v-if="isOpenSafariFlag" />
-
 </div>
 </section>
       <!--footer-->
@@ -207,26 +172,16 @@
 </div>
 
 </body>
+</html>
+<script src="js//jquery-3.1.1.min.js"></script>
+<script src="js/vue.js"></script>
+<!--轮播CSS -->
+<script src="js/slideshow.js"></script>
 
 <script>
-if(('standalone' in window.navigator)&&window.navigator.standalone){
-        var noddy,remotes=false;
-        document.addEventListener('click',function(event){
-                noddy=event.target;
-                while(noddy.nodeName!=='A'&&noddy.nodeName!=='HTML') noddy=noddy.parentNode;
-                if('href' in noddy&&noddy.href.indexOf('http')!==-1&&(noddy.href.indexOf(document.location.host)!==-1||remotes)){
-                        event.preventDefault();
-                        document.location.href=noddy.href;
-                }
-        },false);
-}
-</script>
-
-
-<script>
-    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-    var isSafari = isSafari();
-    var cptToken = getCptToken();
+var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+var isSafari = isSafari();
+var cptToken = getCptToken();
 
 //关闭IoS提醒
 function closeIosHint(){
@@ -243,7 +198,6 @@ function huanyih(obj){
     }, 500);
 }
 function lokmv(u){
-    // $("body").append('<div class="loading" id="loadingWindow"><img src="img/timg.gif" /></div> ');
     window.location.href=u;
 }
 $(function(){
@@ -254,9 +208,6 @@ $(function(){
     $(".searchBut").click(function(){
         $("#searchInput").focus();
     })
-
-
-    
 })
 new Vue({
     el: '#app',
@@ -271,14 +222,13 @@ new Vue({
             defaultPageMovie:[],//默认首页电影列表备份
             randomNumLogs : "",
             searchValue : "",
-            pageSize:6,
+            pageSize:12,
             iosHintShow:false,
             isOpenSafariFlag:false,
         }
     },
     created() {
         var invitecode = this.GetQueryString("invitecode");
-
         if(isiOS){
             //首次必须在safari中打开
             if(!isSafari && invitecode && !cptToken){
@@ -326,7 +276,7 @@ new Vue({
                 }
             }
         }
-        this.queryVideo(0);
+        this.queryVideo(4);
         this.getBanner();
         this.getAdvertisement();
     },
@@ -354,22 +304,20 @@ new Vue({
         queryByType(type){
             var vm = this;
             if(type==0){
-                this.homePageMovie = this.defaultPageMovie;
+                // this.homePageMovie = this.defaultPageMovie;
                 this.pageSize = 6;
-                return;
             }else{
                 this.pageSize = 12;
-                var reqBo = {
-                    type : type,
-                    startnum : 0,
-                    rownum: this.pageSize
-                }
-                jAjax("/appIndex/getHomePageMovie",reqBo,function(data){
-                    vm.homePageMovie = data;
-                    vm.$forceUpdate();
-                });
             }
-            
+            var reqBo = {
+                type : type,
+                startnum : 0,
+                rownum: this.pageSize
+            }
+            jAjax("/appIndex/getHomePageMovie",reqBo,function(data){
+                vm.homePageMovie = data;
+                vm.$forceUpdate();
+            });
         },
         //换一批
         ref(item,pageSize){
@@ -459,6 +407,4 @@ new Vue({
 
     }
 })
-
 </script>
-</html>

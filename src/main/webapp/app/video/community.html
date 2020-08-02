@@ -10,21 +10,10 @@
      <link rel="stylesheet" type="text/css" href="css/public.css"/>
      <link rel="stylesheet" type="text/css" href="css/money.css"/>
      <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
-     <script src="js/jquery-3.4.1.js"></script>
-     <script src="js/vue.js"></script>
-     <script src="js/jq-alert.js"></script>
-     <script src="js/exif.js"></script>
-
  </head>
  <body style="background-color:#f6f6f6;">
-
 <section class="main"  id="app">
-<div style="position: fixed;
-top: 0px;
-width: 100%;
-background: #fff;
-max-width: 580px;
-z-index: 2;">
+<div style="position: fixed;top: 0px;width: 100%;background: #fff;max-width: 580px;z-index:2;">
     <div class="title" >
         <img src="img/to-left.png" onclick="history.back(-1)"/>
         享互动
@@ -36,8 +25,8 @@ z-index: 2;">
        <div :class="showType==1?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(1)">我的贴子</div>
        <div class="clear"></div>
    </div>
-   
 </div>
+
 <div class="sqAddButCont">
     <div class="sqAddBut" @click="addCommentWinFlg=true"><img src="img/addbut.png"></div>
 </div>
@@ -124,6 +113,11 @@ z-index: 2;">
   </footer>
 <!-- end footer-->
 </body>
+</html>
+
+<script src="js//jquery-3.1.1.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/exif.js"></script>
 <script>
 //add bef
 function addimgBef(obj){
@@ -227,7 +221,6 @@ function getDocumentTop() {
         }
     });
 
-
     new Vue({
       el: '#app',
       data: function() {
@@ -309,10 +302,6 @@ function getDocumentTop() {
         shwoInfo(item){
             window.location.href='communityInfo.html?communityid='+item.communityid
         }
-
-
       }
     })
   </script>
-
-</html>

@@ -1,9 +1,3 @@
- /* .title{
-      background-image:linear-gradient(to bottom,#DAAAAA,#E87373 80%,#DAAAAA);
-        height: 30px;
-         line-height: 30px;
-     } */
-     
      .main{
          width: 100%;
          color:  #333;
@@ -176,4 +170,14 @@
     }
     .vioImgEL{
         width:100%;height:110px;background-size:cover;background-position:center;
+    }
+
+    .wbOpen{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        z-index: 7;
+        opacity: 0.95;
     }

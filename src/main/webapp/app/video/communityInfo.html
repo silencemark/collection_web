@@ -63,11 +63,6 @@
 		display: block;
 	}
 </style>
-<script src="js/islider.js"></script>
-<script src="js/plugins/islider_desktop.js"></script>
-<script src="js/jquery-3.4.1.js"></script>
-<script src="js/vue.js"></script>
-<script src="js/jq-alert.js"></script>
 </head>
 <body><section id="app">
 <img src="img/to-leftffff.png"  onclick="history.back(-1)" style="position:absolute;z-index:999;width:45px;"/>
@@ -131,6 +126,15 @@
 </div>
 <!--end评论-->
 </section>
+
+</body>
+</html>
+
+<script src="js//jquery-3.1.1.min.js"></script>
+<script src="js/islider.js"></script>
+<script src="js/plugins/islider_desktop.js"></script>
+<script src="js/vue.js"></script>
+
 <script>
 var communityid = getQueryVariable("communityid");
 var item = {communityid:communityid};
@@ -162,7 +166,6 @@ jAjax("/appIndex/getCommunityDetail",{communityid:communityid},function(data){
 	});
 	islider1.bindMouse();
 });
-
 
 
 
@@ -279,6 +282,3 @@ new Vue({
       }
     })
 </script>
-
-</body>
-</html>
