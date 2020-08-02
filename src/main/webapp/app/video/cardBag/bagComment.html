@@ -4,13 +4,9 @@
 	     <meta charset="UTF-8">
 	     <title>享GO影视</title>
 	     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
-
 		 <link rel="stylesheet" type="text/css" href="../css/public.css"/>
 	     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
 	     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
-	     <script src="../js//jquery-3.1.1.min.js"></script>
-	     <script src="../js/vue.js"></script>
-	     
 	 </head>
 	 <body >
 		<div id="btt" style="opacity: 0;width:100%;position: fixed;top: 435px;height:50px;z-index: 4;border-radius: 5px;background-color: #fff;"></div>
@@ -36,15 +32,8 @@
 		<div v-else>
 			<span style="font-weight:600;margin-left:20px;" >VIP会员观看更多精彩影视</span>
 		</div>
-	    
-	    
-	    
 	</div>
-
-
-
 <div id="contMsg">
-
 </div>
 <iframe :src="httpurl"  scrolling="no"  class="videoFrame" id="scrollWrap">
 </iframe>
@@ -104,154 +93,137 @@
 	</div>
 	<!--end评论窗口-->
 	</section>
-
-
-
-
-
 <div style="z-index: 13;position:fixed;bottom:33px;text-align:center;width:100%;">
 	<img src="../img/ontop.png" style="width: 45px;z-index:99;" onclick="toTop()"/>
 </div>
 </body>
-
-
-
-
-
-
-
-
-
+</html>
+<script src="../js//jquery-3.1.1.min.js"></script>
+<script src="../js/vue.js"></script>
 <script  type="text/javascript">
-	var gTop = 435;
-	$("#btt").css({"top":gTop})
+var gTop = 435;
+$("#btt").css({"top":gTop})
 function toTop(){
 	window.scrollTo(0, 0);
 }
 window.addEventListener('scroll', this.scrollHandle, true);
 document.getElementsByTagName('body')[0].scrollTop = 0;    
 window.onscroll=function(){
-    scrollHandle();
+	scrollHandle();
 }
 function scrollHandle () {
-    var videoEle = document.getElementById("app");
-    const offset = videoEle.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
-    const offsetTop = offset.top;
-    const offsetBottom = offset.bottom;
-    const offsetHeight = offset.height;
+	var videoEle = document.getElementById("app");
+	const offset = videoEle.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
+	const offsetTop = offset.top;
+	const offsetBottom = offset.bottom;
+	const offsetHeight = offset.height;
 	var h = gTop + offsetTop;
-    $(document.getElementById("btt")).css({"top":h+"px"});
+	$(document.getElementById("btt")).css({"top":h+"px"});
 }
+function bodyScroll(event){ 
+	event.preventDefault(); 
+}
+$(function(){
+	$(".commentLabe").click(function(){
+		$(".commentLabe").removeClass("commentLabeActiv");
+		$(this).addClass("commentLabeActiv");
+		$(".commentText").val($(this).html());
+	})
+})
 
-
-
-		function bodyScroll(event){ 
-			event.preventDefault(); 
+new Vue({
+	el: '#app',
+	data: function() {
+	return {
+		httpurl:'',
+		comment:{
+			stars:3,
+			comment:'',
+			movieid:'',
+			orderid:'',
+		},
+		wMin:10,
+		defaultMin:10,
+		errMsg:'',
+	}
+	},
+	created() {
+		this.httpurl = this.GetQueryString("mv");
+		this.comment.orderid = this.GetQueryString("orderid");
+		this.comment.movieid = this.GetQueryString("movieid");
+		this.scvTime();
+	},
+	methods:{
+		//提交评论
+		subComment(){
+		this.comment.comment = this.$refs.commentText.value;
+		if(!this.comment.comment){
+			this.errMsg = "您还没有输入评论哟！";
+			return;
 		}
-	    $(function(){
-	        $(".commentLabe").click(function(){
-	            $(".commentLabe").removeClass("commentLabeActiv");
-	            $(this).addClass("commentLabeActiv");
-	            $(".commentText").val($(this).html());
-	        })
-	    })
-
-	    new Vue({
-	      el: '#app',
-	      data: function() {
-	        return {
-	            httpurl:'',
-				comment:{
-	                stars:3,
-					comment:'',
-					movieid:'',
-					orderid:'',
-	            },
-	            wMin:10,
-				defaultMin:10,
-	            errMsg:'',
-	        }
-	      },
-	      created() {
-			  this.httpurl = this.GetQueryString("mv");
-			  this.comment.orderid = this.GetQueryString("orderid");
-			  this.comment.movieid = this.GetQueryString("movieid");
-	          this.scvTime();
-	      },
-	      methods:{
-	          //提交评论
-	          subComment(){
-	            this.comment.comment = this.$refs.commentText.value;
-	            if(!this.comment.comment){
-	                this.errMsg = "您还没有输入评论哟！";
-	                return;
-	            }
-	            let sel = this;
-	            if(this.comment.stars<5){
-	                $("#commentWindow").hide();
-	                jqalert({
-	                    title:'提示',
-	                    prompt:'太难啦，给个五星好不好？',
-	                    yestext:'给个5星吧',
-	                    notext:'就是不给',
-	                    yesfn:function () {
-	                        $("#jq-alert").remove();
-	                        $("#commentWindow").show();
-	                    },
-	                    nofn:function () {
-	                        sel.confirmSubComment();
-	                    }
-	                }) 
-	            }else{
-	                sel.confirmSubComment();
-	            }
-	          },
-	          //确认提交评论
-	          confirmSubComment(){
-				var vueThis = this;
-					jAjax("/appVipCard/commentMovie",this.comment,function(data){
-						if(data.status==0){
-							jqtoast('评论成功');
-							vueThis.colseCommentWind();
-						}else{
-							jqtoast(data.message);
-						}
-					});
-	          },
-			  colseCommentWind(){
-				this.scvTime();
-				$("#commentWindow").hide();
-				document.body.removeEventListener('touchmove',bodyScroll,false); 
-				$("body").css({"position":"initial","height":"auto"});     
-				document.scrollingElement.scrollTop = 0;
-			  },
-	          scvTime(){
-	            var timer = setInterval(()=>{
-	                this.wMin -= 1;
-	                if(this.wMin<=1){
-	                    clearInterval(timer);
-	                }
-	            },1000);
-	        },
-	        //打开评论窗口
-	        goComment(){
-				window.scrollTo(0, 100000)
-	            $("#commentWindow").show();
-	            this.comment.comment='';
-	            this.wMin = this.defaultMin;
-				$('body').css({'position':'fixed','top':'-10000px',"width":"1%"});
-				document.body.addEventListener('touchmove',bodyScroll,false); 
-
-	        },
-			//获取URL参数
-			GetQueryString(name){
-				var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-				var r = window.location.search.substr(1).match(reg);
-				if(r!=null)return  unescape(r[2]); return null;
+		let sel = this;
+		if(this.comment.stars<5){
+			$("#commentWindow").hide();
+			jqalert({
+				title:'提示',
+				prompt:'太难啦，给个五星好不好？',
+				yestext:'给个5星吧',
+				notext:'就是不给',
+				yesfn:function () {
+					$("#jq-alert").remove();
+					$("#commentWindow").show();
+				},
+				nofn:function () {
+					sel.confirmSubComment();
+				}
+			}) 
+		}else{
+			sel.confirmSubComment();
+		}
+		},
+		//确认提交评论
+		confirmSubComment(){
+		var vueThis = this;
+			jAjax("/appVipCard/commentMovie",this.comment,function(data){
+				if(data.status==0){
+					jqtoast('评论成功');
+					vueThis.colseCommentWind();
+				}else{
+					jqtoast(data.message);
+				}
+			});
+		},
+		colseCommentWind(){
+		this.scvTime();
+		$("#commentWindow").hide();
+		document.body.removeEventListener('touchmove',bodyScroll,false); 
+		$("body").css({"position":"initial","height":"auto"});     
+		document.scrollingElement.scrollTop = 0;
+		},
+		scvTime(){
+		var timer = setInterval(()=>{
+			this.wMin -= 1;
+			if(this.wMin<=1){
+				clearInterval(timer);
 			}
-	      }
-		})
+		},1000);
+	},
+	//打开评论窗口
+	goComment(){
+		window.scrollTo(0, 100000)
+		$("#commentWindow").show();
+		this.comment.comment='';
+		this.wMin = this.defaultMin;
+		$('body').css({'position':'fixed','top':'-10000px',"width":"1%"});
+		document.body.addEventListener('touchmove',bodyScroll,false); 
 
-	  </script>
-
-	</html>
+	},
+	//获取URL参数
+	GetQueryString(name){
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if(r!=null)return  unescape(r[2]); return null;
+	}
+	}
+})
+</script>
