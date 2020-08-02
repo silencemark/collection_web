@@ -10640,13 +10640,6 @@ var chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
  * They take string arguments and return either hex or base-64 encoded strings
  */
 
-function compileStr(code){  
-	return code;
-}
-function uncompileStr(code){
-	return code;
-}
-
 function hex_md5(s){ return binl2hex(core_md5(str2binl(s), s.length * chrsz));}
 function b64_md5(s){ return binl2b64(core_md5(str2binl(s), s.length * chrsz));}
 function str_md5(s){ return binl2str(core_md5(str2binl(s), s.length * chrsz));}
@@ -10923,7 +10916,6 @@ function jAjax(url,resData,sucCbk,errCbk,notLoad){
 		//set token
 		resData.token = getCptToken();
 		resData.timestamp = new Date().getTime();
-		resData.userid = resData.token;
 		resData.sign = hex_md5(resData.token+resData.timestamp+"255.xgo") ;
 	}
 	console.log(resData);
@@ -10967,48 +10959,13 @@ $(function(){
 	$("#footer_list .list_li").click(function(){
 		window.location.href = $(this).find("a").attr("shref");
 	});
-	
-	//图片加载
-	/**
-	$("img").each(function(i){
-		var defSrc = $(this).get(0).src;
-		getImg($(this).get(0));
-		$(this).get(0).onload = function() {
-			if (!localStorage.getItem(defSrc)) {
-				const img = $(this).get(0);
-				var imgCanvas = document.createElement("canvas"),
-				imgContext = imgCanvas.getContext("2d");
-				// 确保canvas尺寸和图片一致
-				imgCanvas.width = img.width;
-				imgCanvas.height = img.height;
-				// 在canvas中绘制图片
-				imgContext.drawImage(img, 0, 0, img.width, img.height);
-				// 将图片保存为Data URI
-				img.setAttribute("crossOrigin",'Anonymous')
-				console.log("shezhihuanc :"+defSrc)
-				// 将JSON保存到本地存储中
-				try {
-					const base64Url = imgCanvas.toDataURL("image/png");
-					localStorage.setItem(defSrc, base64Url);
-				}
-				catch (e) {
-					console.log("Storage failed: " + e);
-				}
-			}else{
-				// console.log("加载完成不需要设置缓存");
-			}
-
-		};
-	});
- */
-
 });
 /**begin user Sesssion */
 function setCptToken(data){
-	localStorage.setItem("cptToken",compileStr(data));
+	localStorage.setItem("cptToken",data);
 }
 function getCptToken(){
-	return uncompileStr(localStorage.getItem("cptToken"));
+	return localStorage.getItem("cptToken");
 }
 function loginOut(){
 	localStorage.removeItem("cptToken");

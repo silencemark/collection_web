@@ -98,11 +98,11 @@
         onclick="window.location.href='user/userMsg.html'"/>
     </div>
     <img src="img/activT.png" style="width: 100%; margin-top: -1px;" onclick="window.location.href='activity.html'">
-    <div class="sqTitle">
+    <!-- <div class="sqTitle">
         <div :class="showType==0?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(0)">游戏列表</div>
         <div :class="showType==1?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(1)">排行榜</div>
         <div class="clear"></div>
-    </div>
+    </div> -->
 <!--游戏类别-->
 <div v-if="showType==0">
     <div class="gameEl">
@@ -163,7 +163,7 @@
     </div> -->
 </div>
    
-<div class="ph" v-if="showType==1">
+<!-- <div class="ph" v-if="showType==1">
     <div style="width:100%;height:auto;">
         <div style="width:25%;height: 100%;float: left;background-color:#f5f5f5;min-height: 500px;">
             <div :class="phGamename=='xiaohm'?'phGameel phGameelactiv':'phGameel'" @click="changeGMph('xiaohm')">
@@ -188,7 +188,7 @@
         <div class="clear"></div>
     </div>
     
-</div>
+</div> -->
 
 
 
