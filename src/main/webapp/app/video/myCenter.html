@@ -38,25 +38,6 @@
       <div class="btn qiand" v-else>已签到</div>
       <div class="clear"></div>
   </div>
-
-<!--
-    <div class="centerHead">
-    <div style="width: 100%;text-align:center;margin-top:10px;">
-      <div style="width:290px;margin:0 auto;">
-        <div class="cenHeadBut"> <img src="img/vipbk.png"/> 会&nbsp;员</div>
-        <div class="cenHeadBut">
-          <img src="img/zhicfff.png"/> 资&nbsp;产 </div>
-        <div class="cenHeadBut"> <img src="img/kabfff.png"/> 卡&nbsp;券 </div>
-        <div class="cenHeadBut" style="margin:0"> <img src="img/ximsgfff.png"/> 消&nbsp;息 </div>
-        <div class="clear"></div>
-      </div>
-      <div class="centerVipCont">
-        <span v-cloak>{{myCenterData.levelname}}</span>
-        <span v-cloak style="float:right;margin-right:20px;">当前成值：{{myCenterData.growthvalue}}</span>
-      </div>
-    </div>
-  </div>
-   -->
     <!--vipInfo-->
     <div v-show="defaultnone" :class="`vipInfo v${myCenterData.levelenum}-c `" v-cloak :style="`background-image: url('img/V${myCenterData.levelenum}_BG.png`">
       <span style="margin-bottom:5px;">{{myCenterData.levelname}}</span>
@@ -161,7 +142,6 @@
 </html>
 <script src="js//jquery-3.1.1.min.js"></script>
 <script src="js/vue.js"></script>
-
 <script src="js/exif.js"></script>
 <script>
 $(function(){

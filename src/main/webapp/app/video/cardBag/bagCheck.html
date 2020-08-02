@@ -35,7 +35,7 @@
     <div>交易单号 ：{{orderInfo.ordernum}}</div>
     <div>出售日期 ：{{orderInfo.selltime}}</div>
     <div>出售价格 ：<span style="color:#F36257;font-weight:600;">￥{{orderInfo.cardprice}}</span></div>
-    <div>剩余审核时间 ：{{fmtTimeSecond(orderInfo.remaintime,orderInfo,true)}}</div>
+    <div>剩余审核时间 ：<font v-cloak>{{fmtTimeSecond(orderInfo.remaintime,orderInfo,true)}}</font></div>
 </div>
 
 <div style="font-weight:600;margin-top:10px;margin-bottom:5px;width: 94%;margin-left: 3%;font-size: 0.9rem;color: #555;">
@@ -48,7 +48,7 @@
 </div>
 <div class="colUserCont" v-show="showBuy">
     <div class="colLeft">
-        <div>付款时间 : {{orderInfo.selltime.substr(10,10)}}</div>
+        <div>付款时间 : {{orderInfo.selltime}}</div>
         <div>手机号 ：{{orderInfo.phone}}</div>
         <div>买家姓名 : {{orderInfo.realname}} </div>
         <div>付款凭证 : 见右图</div>

@@ -17,7 +17,7 @@
  </head>
  <body>
     <div class="loading" id="loadingWindow"><img src="img/timg.gif" /></div> 
-
+    <div id="app">
     <!--添加到主屏-->
     <div v-if="iosHintShow" class="isoHint" style="width:100%;height:100%;background-color:#000;opacity:0.6;z-index:6;position: fixed;top:0;"></div>
     <div v-if="iosHintShow" class="isoHint"  style="opacity: 0.9;width:100%;height:100%;z-index:7;overflow-y:auto;position:fixed;top:0;padding-top:110px;display:none;">
@@ -43,7 +43,6 @@
     <!--添加到主屏-->
 
     <img src="img/bitbug_favicon.ico" style="display: none;">
-    <div id="app">
      <header>
          <section class="logo">
             <img  src="img/logo.png"/>
@@ -297,7 +296,7 @@ new Vue({
             var vm = this;
             jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
                 vm.homePageMovie = data;
-                vm.defaultPageMovie = JSON.parse(JSON.stringify(data));
+                // vm.defaultPageMovie = JSON.parse(JSON.stringify(data));
             });
         },
         //跟换电影类型

@@ -21,8 +21,10 @@
         onclick="window.location.href='user/userMsg.html'"/>
    </div>
    <div class="sqTitle">
-       <div :class="showType==0?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(0)">社区活跃</div>
-       <div :class="showType==1?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(1)">我的贴子</div>
+       <div class="sqTitleEl sqTitleElActiv" @click="changStype(0)">社区活跃</div>
+       <div class="sqTitleEl" @click="changStype(1)">我的贴子</div>
+       <!-- <div :class="showType==0?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(0)">社区活跃</div>
+       <div :class="showType==1?'sqTitleEl sqTitleElActiv':'sqTitleEl'" @click="changStype(1)">我的贴子</div> -->
        <div class="clear"></div>
    </div>
 </div>
@@ -119,6 +121,12 @@
 <script src="js/vue.js"></script>
 <script src="js/exif.js"></script>
 <script>
+    $(function(){
+        $(".sqTitleEl").click(function(){
+            $(".sqTitleEl").removeClass("sqTitleElActiv");
+            $(this).addClass("sqTitleElActiv");
+        })
+    })
 //add bef
 function addimgBef(obj){
     if($("#addimgList").find(".addimgEl") && $("#addimgList").find(".addimgEl").length>=3){
