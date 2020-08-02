@@ -2801,7 +2801,7 @@ var link, jsGame; (function() {
 						},
 						h = function() {
 							var t = i - 480 >> 1;
-							var cu = localStorage.getItem("cptToken");
+							var cu = localStorage.getItem("imgscpt");
 							if(cu &&  cu=='1'){
 								alert("由于你的颜值太高，送你33秒");
 								l.time = l.time+(33*1000);

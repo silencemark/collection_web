@@ -10962,13 +10962,13 @@ $(function(){
 });
 /**begin user Sesssion */
 function setCptToken(data){
-	localStorage.setItem("cptToken",data);
+	localStorage.setItem("imgscpt",data);
 }
 function getCptToken(){
-	return localStorage.getItem("cptToken");
+	return localStorage.getItem("imgscpt");
 }
 function loginOut(){
-	localStorage.removeItem("cptToken");
+	localStorage.removeItem("imgscpt");
 	window.location.href="login.html";
 };
 /**end user Sesssion */
