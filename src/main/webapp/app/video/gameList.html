@@ -1,9 +1,14 @@
 <!DOCTYPE html>
  <html lang="en">
  <head>
-     <meta charset="UTF-8">
-     <title>享玩游戏</title>
-     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+    <title>享GO影视</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+    <meta name="application-name" content="享GO影视">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/bitbug_favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
      <link rel="stylesheet" type="text/css" href="css/public.css"/>
      <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
  </head>
@@ -130,52 +135,14 @@
   </footer>
 <!-- end footer-->
 </body>
+<img src="img/V0_BG.png" style="display:none;"/>
+<img src="img/V1_BG.png" style="display:none;"/>
+<img src="img/V2_BG.png" style="display:none;"/>
+<img src="img/V3_BG.png" style="display:none;"/>
+<img src="img/V4_BG.png" style="display:none;"/>
+<img src="img/V5_BG.png" style="display:none;"/>
+<img src="img/V6_BG.png" style="display:none;"/>
+<img src="img/V7_BG.png" style="display:none;"/>
+<img src="img/V8_BG.png" style="display:none;"/>
 </html>
-<script src="js//jquery-3.1.1.min.js"></script>
-
-<script src="js/vue.js"></script>
-<script>
-new Vue({
-    el: '#app',
-    data: function() {
-        return {
-            reqPath : reqPath,
-            showType:0,
-            pList : [],
-            phGamename:'xiaohm',
-            nT:'',
-        }
-    },
-    created() {
-        // this.getRank();
-        var day1 = new Date();
-        day1.setTime(day1.getTime()-24*60*60*1000);
-        this.nT = day1.getFullYear()+"年" + (day1.getMonth()+1) + "月" + day1.getDate()+"日";
-    },
-    
-    methods:{
-        //数据
-        getRank(){
-            var vueThis = this;
-            jAjax("/appUserCenter/getRank",{},function(data){
-                vueThis.pList = data.resultlist;
-            });
-        },
-        //切换游戏排行
-        changeGMph(gameName){
-            this.phGamename = gameName;
-        },
-        //切换列表
-        changStype(type){
-            this.showType = type;
-            // this.getCommunityList();
-        },
-        //获取URL参数
-        GetQueryString(name){
-            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]); return null;
-        }
-    }
-})
-</script>
+<script src="js/jquery-3.1.1.min.js"></script>

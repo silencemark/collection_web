@@ -5,7 +5,7 @@
      <title>享购影视</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="css/public.css"/>
-     <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css?v=01"/>
  </head>
  <body>
 
@@ -56,6 +56,7 @@
                     onclick="window.location.href='cardBag/bagPayWait.html'"/>
             </div>
             <div v-else>
+                <img src="img/isqg.gif"  v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)"  class="qggiftx"/>
                 <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)" value="领 取 任 务" :class="`active-but  v${item.forder}-bg`" />
                 <input type="button" v-if="item.isbuy==0" value="暂 未 开 启" :class="`active-but  v${item.forder}-bg`"/>
             </div>
@@ -103,7 +104,7 @@
   <img  src="img/qging.gif" style="display: none;"/>
 <!-- end footer-->
 </body>
-<script src="js//jquery-3.1.1.min.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/vue.js"></script>
 
 <script>
