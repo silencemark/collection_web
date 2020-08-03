@@ -148,6 +148,7 @@ jAjax("/appIndex/getCommunityDetail",{communityid:communityid},function(data){
 	}
 	//tx
 	$("#headImg").attr("src",item.headimage?reqPath+item.headimage:'img/defaulttx.png');//
+	if(!item.nickname) item.nickname="";
 	$("#nickname").html(item.nickname.length==11?item.nickname.substr(0,3)+"****"+item.nickname.substr(7,4):item.nickname);//
 	$("#commCont").html(item.content);//
 	$("#zhanNum").html(item.likesnum);//
@@ -229,6 +230,9 @@ new Vue({
 			var vueThis = this;
 			jAjax("/appIndex/getCommunityComment",{communityid:item.communityid},function(data){
 				vueThis.plContList =  data.resultlist
+				for(const i=0;i<vueThis.plContList.length;i++){
+					if(!vueThis.plContList[i].nickname) vueThis.plContList[i].nickname="";
+				}
 			});
 		},
 		//选中回复

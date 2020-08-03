@@ -40,7 +40,7 @@
             <span class="sqTime">{{sqel.createtime?sqel.createtime.substr(0,10):''}}</span>
             <span style="display:block;padding:10px;">{{sqel.content}}</span>
             <div class="uInfo">
-                <img :src="sqel.headimage?reqPath+sqel.headimage:'img/defaulttx.png'"/>
+                <img :src="sqel.headimage"/>
                 <span class="uname">{{sqel.nickname.length==11?sqel.nickname.substr(0,3)+'****'+sqel.nickname.substr(7,4):sqel.nickname}}</span>
 
                 <span class="znum">{{sqel.likesnum}}</span>
@@ -55,7 +55,7 @@
             <span class="sqTime">{{sqel.createtime?sqel.createtime.substr(0,10):''}}</span>
             <span style="display:block;padding:10px;">{{sqel.content}}</span>
             <div class="uInfo">
-                <img :src="sqel.headimage?reqPath+sqel.headimage:'img/defaulttx.png'"/>
+                <img :src="sqel.headimage"/>
                 <span class="uname">{{sqel.nickname.length==11?sqel.nickname.substr(0,3)+'****'+sqel.nickname.substr(7,4):sqel.nickname}}</span>
 
                 <span class="znum">{{sqel.likesnum}}</span>
@@ -286,6 +286,15 @@ function getDocumentTop() {
             var vThis = this;
             jAjax("/appIndex/getCommunityList",reqBo,function(data){
                 for(var i=0;i<data.communitylist.length;i++){
+                    if(!data.communitylist[i].nickname) data.communitylist[i].nickname="";
+                    var hdimg = data.communitylist[i].headimage;
+                    if(!hdimg){
+                        data.communitylist[i].headimage = "img/defaulttx.png";
+                    }else{
+                        if(hdimg.indexOf("http")<0){
+                            data.communitylist[i].headimage = reqPath + data.communitylist[i].headimage;
+                        }
+                    }
                     vThis.commList.push(data.communitylist[i]);
                 }
                 vThis.sumPageNumber = Math.ceil(data.communitynum/vThis.pageSize);
