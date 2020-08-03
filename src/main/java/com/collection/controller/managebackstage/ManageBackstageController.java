@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.collection.frame.Crontab;
+import com.collection.frame.Scheduler;
 import com.collection.service.IManageBackStageService;
 import com.collection.service.ISystemService;
 import com.collection.util.CookieUtil;
+import com.collection.util.DateUtil;
 import com.collection.util.Md5Util;
 import com.collection.util.PageHelper;
 import com.collection.util.UserUtil;
@@ -756,6 +759,16 @@ public class ManageBackstageController {
 		Map<String, Object> userInfo=UserUtil.getSystemUser(request);
 		map.put("updateid", userInfo.get("userid"));
 		map.put("updatetime",new Date());
+		//判断时刻点是否更改 是否更新到定时任务线程和表
+		Map<String, Object> cardInfo = this.manageBackstageService.getMemberCardInfo(map);
+		if(cardInfo == null || cardInfo.isEmpty()) {
+			//查询获取配置的结算时间和结算次数
+			String crontab = this.manageBackstageService.getCrontabTime(map);
+			//说明需要更新定时任务
+			Crontab corn = new Crontab(crontab, 0);
+			//默认数据库cardid跟taskid一致，因为没有设置关联这个需要注意
+			Scheduler.update(Integer.parseInt(cardInfo.get("cardid").toString()), corn, DateUtil.sysDateTime());
+		}
 		this.manageBackstageService.updateMemberCard(map);
 		return "redirect:/managebackstage/getMemberCardList";
 	}

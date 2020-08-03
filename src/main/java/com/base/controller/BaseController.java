@@ -50,12 +50,13 @@ public class BaseController {
 		boolean flag=false;
 		Long s = (System.currentTimeMillis() - Long.parseLong(timestamp)) / (1000);
 		//判断3秒内的请求可取
-		if(signcode.equals(sign) && s < 500){
+		if(signcode.equals(sign) && s < 3){
 			flag = true;
 		}
 		if (flag) {
 			LOGGER.info("此次请求参数为："+map.toString());
 		}
+		map.put("userid", map.get("token"));
 		return flag;
 	}
 	

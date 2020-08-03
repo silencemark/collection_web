@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.base.controller.BaseController;
 import com.collection.service.IAppIndexService;
+import com.collection.util.FileDeal;
 
 
 /**
@@ -266,4 +267,7 @@ public class AppIndexController extends BaseController{
 		return data;
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(FileDeal.getUUID());
+	}
 }
