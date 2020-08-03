@@ -57,7 +57,7 @@ public class SendTemplateSMS {
 		//*result = restAPI.sendTemplateSMS("13800000000","1" ,new String[]{"6532","5"});																		  *
 		//*则13800000000手机号收到的短信内容是：【云通讯】您使用的是云通讯短信模板，您的验证码是6532，请于5分钟内正确输入     *
 		//*********************************************************************************************************************
-		result = restAPI.sendTemplateSMS(phone,"622967" ,new String[]{code,timenum});
+		result = restAPI.sendTemplateSMS(phone,"623103" ,new String[]{code,timenum});
 		
 		System.out.println("SDKTestGetSubAccounts result=" + result);
 		if("000000".equals(result.get("statusCode"))){
@@ -89,7 +89,7 @@ public class SendTemplateSMS {
 		restAPI.init("app.cloopen.com", "8883");
 		restAPI.setAccount(ACCOUNT_SID, AUTH_TOKEN);
 		restAPI.setAppId(APPID);
-		result = restAPI.sendTemplateSMS(phone,"128948" ,new String[]{vc,mintue});
+		result = restAPI.sendTemplateSMS(phone,"623103" ,new String[]{vc,mintue});
 		
 		System.out.println("SDKTestGetSubAccounts result=" + result);
 		if("000000".equals(result.get("statusCode"))){

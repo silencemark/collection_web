@@ -57,7 +57,7 @@ public class AppLoginController extends BaseController{
 		//先判断是否过期
 		Map<String, Object> timeMap = RedisUtil.getObject(map.get("phone")+"time");
 		if(timeMap != null && timeMap.size() > 0) {
-			//60秒内不可重发
+			//120秒内不可重发
 			data.put("status", 1);
 			data.put("message", "请勿重复获取，120秒后再试");
 			return data;
@@ -66,7 +66,7 @@ public class AppLoginController extends BaseController{
 		try {
 			Random r = new Random();
 			code = r.nextInt(10) + "" + r.nextInt(10) + "" + r.nextInt(10) + "" + r.nextInt(10)+ "" + r.nextInt(10)+ "" + r.nextInt(10);
-			SendTemplateSMS.sendSms(phone, code, "5");
+			SendTemplateSMS.sendSms(phone, code, "5分钟");
 			//sendSms.sendSms(phone, Constants.smsTranslateCode.replace("code", code));
 		} catch (Exception e) {
 			data.put("status", 1);

@@ -145,8 +145,8 @@ public class UploadController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/headimg",method=RequestMethod.POST)    
-	@ResponseBody 
+	//@RequestMapping(value = "/headimg",method=RequestMethod.POST)    
+	//@ResponseBody 
 	public Map<String, Object> headimg(HttpServletRequest request,
 			HttpServletResponse response)  throws Exception{
 		String filename = null;
@@ -213,8 +213,8 @@ public class UploadController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping("/documentUpload")
-	@ResponseBody
+	//@RequestMapping("/documentUpload")
+	//@ResponseBody
 	public Map<String, Object> documentUpload(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -316,13 +316,13 @@ public class UploadController {
 	
 	
 	/**
-	 * 享GO影视上传文件方法
+	 * 上传文件方法
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping("/manageUpload")
-	@ResponseBody
+	//@RequestMapping("/manageUpload")
+	//@ResponseBody
 	public Map<String, Object> manageUpload(HttpServletRequest request,
 			HttpServletResponse response) {
 
