@@ -94,7 +94,7 @@
 		<div style="overflow-y:auto;height:400px;">
 
 			<div class="sqCommetuseEl" v-for="(cm,i) in plContList">
-				<img :src="headimage?reqPath+cm.headimage:'img/defaulttx.png'"/>
+				<img :src="cm.headimage?reqPath+cm.headimage:'img/defaulttx.png'"/>
 				<span>{{cm.nickname.length==11?cm.nickname.substr(0,3)+'****'+cm.nickname.substr(7,4):cm.nickname}}</span>
 				<span style="float:right;margin-right:10px;">{{cm.createtime}}</span>
 				<div class="clear"></div>
@@ -230,9 +230,6 @@ new Vue({
 			var vueThis = this;
 			jAjax("/appIndex/getCommunityComment",{communityid:item.communityid},function(data){
 				vueThis.plContList =  data.resultlist
-				for(const i=0;i<vueThis.plContList.length;i++){
-					if(!vueThis.plContList[i].nickname) vueThis.plContList[i].nickname="";
-				}
 			});
 		},
 		//选中回复

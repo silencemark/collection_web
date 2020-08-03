@@ -5,10 +5,8 @@
      <title>会员体系</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
-     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
      <link rel="stylesheet" type="text/css" href="../css/user.css"/>
-     <script src="../js//jquery-3.1.1.min.js"></script>
-     <script src="../js/vue.js"></script>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
  </head>
  <body style="background-color: #fff">
   <!-- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div> -->
@@ -19,7 +17,7 @@
   </div>
 
     <!--vipInfo-->
-    <div :class="`vipInfo v${growthValueData.levelenum}-c`" :style="`background-image: url('../img/V${growthValueData.levelenum}_BG.png`">
+    <div  v-cloak :class="`vipInfo v${growthValueData.levelenum}-c`" :style="`background-image: url('../img/V${growthValueData.levelenum}_BG.png`">
       <span style="margin-bottom:5px;"  v-cloak>V{{growthValueData.levelenum}}{{growthValueData.levelname}}</span>
         当前成长值 : <font  v-cloak>{{growthValueData.growthvalue}}</font>
         <div class="v-numver">
@@ -40,8 +38,8 @@
 <div style="width:94%;margin-left: 3%;">
   <div class="contentTitle">当前会员等级特权</div>
   <div class="equityLable">
-    <span style="display: block;height:18px;"  v-cloak>{{growthValueData.interesttimes}}倍观</span>
-    <span>观看权益</span>
+    <span style="display: block;height:18px;"  v-cloak>{{growthValueData.interesttimes}}倍</span>
+    <span>任务奖励</span>
   </div>
   <div class="equityLable">
     <span style="display: block;height:18px;">签到领</span>
@@ -60,8 +58,8 @@
       <tr v-for="(bo,i) in memberGrowList"  v-cloak>
           <th>V{{bo.levelenum}}{{bo.levelname}}</th>
           <th>{{bo.mingrowthvalue}}-{{bo.maxgrowthvalue}}</th>
-          <th>{{bo.interesttimes}}倍观看权益</th>
-      </trv-for="(bo,i) in memberGrowList">
+          <th>{{bo.interesttimes}}倍任务奖励</th>
+      </tr>
   </table>
   
   <div class="contentTitle">会员升级攻略</div>
@@ -112,6 +110,11 @@
 <!-- end footer-->
 </body>
 
+
+</html>
+
+<script src="../js//jquery-3.1.1.min.js"></script>
+<script src="../js/vue.js"></script>
 <script>
    //进度条计算
    var Son = document.getElementById("Son");
@@ -124,7 +127,7 @@
       el: '#app',
       data: function() {
         return {
-          growthValueData:{},
+          growthValueData:{levelenum:0},
           memberGrowList:[],
         }
       },
@@ -144,5 +147,3 @@
       }
     })
   </script>
-
-</html>
