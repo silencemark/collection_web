@@ -117,6 +117,7 @@
     <span style="position:absolute;right:15px;margin-top:15px;font-size:0.8rem;color:#999;" @click="payConfirmContStatus = false">关闭</span>
     <div class="inputCont">
         <div style="font-size:1rem;font-weight:600;color:#555;margin-top:20px;margin-bottom:10px;">支付密码：</div>
+        <div style="padding-bottom: 15px;text-align:center;color:#f3742a;">请确保您已付款再提交支付凭证！</div>
         <input type="password"  v-model="paypassword" placeholder="请输入您的支付密码" maxlength="16"/>
         <div class="but-cont" style="margin-top: 20px;">
             <div class="btn btn-200"  @click="submitPay"> 确 认 </div>

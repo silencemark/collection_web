@@ -49,8 +49,10 @@
         <img v-cloak v-if="userInfo.alipayqrcode" :src="reqPath+userInfo.alipayqrcode" id="skmImg" class="defaultSKM"/>
         <input id="pzBase64" ref="pzBase64" type="hidden" />
     </div>
-    <div class="but-cont">
+    <div class="but-cont" style="z-index:10;">
+        <br>
         <div class="btn btn-200" @click="savePayment" >立 即 保 存</div>
+        <br><br>
     </div>
 </section>
 
