@@ -40,8 +40,8 @@
             <span class="renz" v-cloak v-if="myCenterData.isrealname==3"> &nbsp;认证失败</span> 
           </div>
       </div>
-      <div class="btn qiand" @click="qiand" v-if="!myCenterData.isSign">签到</div>
-      <div class="btn qiand" v-else>已签到</div>
+      <div class="btn qiand" v-cloak @click="qiand" v-if="!myCenterData.isSign">签到</div>
+      <div class="btn qiand" v-cloak v-else>已签到</div>
       <div class="clear"></div>
   </div>
     <!--vipInfo-->
