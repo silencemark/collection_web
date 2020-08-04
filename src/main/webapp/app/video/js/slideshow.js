@@ -81,7 +81,9 @@ window.onload = function(){
             points[i].className = " ";
         }
         //给图片对应的点加上样式
-        points[index-1].className = "now";
+        if(points[index-1] && points[index-1].className){
+            points[index-1].className = "now";
+        }
     }
  
     /*
