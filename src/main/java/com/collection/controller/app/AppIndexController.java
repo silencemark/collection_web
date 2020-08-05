@@ -100,7 +100,7 @@ public class AppIndexController extends BaseController{
 	}
 	
 	/**
-	 * 上传朋友圈图片集合
+	 * 上传朋友圈图片集合，发布动态
 	 * @param map
 	 * @param request
 	 * @param response

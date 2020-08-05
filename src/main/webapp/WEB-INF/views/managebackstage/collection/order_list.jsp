@@ -259,7 +259,8 @@ function checkPayOrderShowHide(rum,payorder){
 	                    	</c:when>
 	                    	<c:when test="${li.status == 2 }">
 	                    		<td><i class="red">待审核</i></td>
-	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="examineOrder('${li.orderid}', -1)" class="blue">审核拒绝</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
+	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="frozenOrder('${li.orderid}',-2)" class="blue">冻结买/卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="returnOrder('${li.orderid}')" class="blue">订单退还卖家</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td>
+	                    		<%-- <td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="examineOrder('${li.orderid}', -1)" class="blue">审核拒绝</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="blue" onclick="checkHide(0,'${li.selltime}','${li.rushtime}','${li.buytime}','${li.duetime}');">查看时间</a></td> --%>
 	                    	</c:when>
 	                    	<c:when test="${li.status == 3 }">
 	                    		<td><i class="red">已审核通过</i></td>

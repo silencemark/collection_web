@@ -139,15 +139,15 @@ function updateUser(userid, status, delflag, sta){
 	                    <c:choose>
 	                    	<c:when test="${li.status == 0 }">
 	                    		<td><i class="red">正常 </i></td>
-	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="updateUser(${li.userid},1,0,0)"  class="blue">禁用</a>&nbsp;&nbsp;<a href="javascript:void(0)"  onclick="updateUser(${li.userid},2,0,0)" class="blue">冻结</a>&nbsp;&nbsp;<a href="javascript:void(0)"  onclick="updateUser(${li.userid},'',1,0)" class="blue">删除</a></td>
+	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)" onclick="updateUser('${li.userid}',1,0,0)"  class="blue">禁用</a>&nbsp;&nbsp;<a href="javascript:void(0)"  onclick="updateUser('${li.userid}',2,0,0)" class="blue">冻结</a>&nbsp;&nbsp;<a href="javascript:void(0)"  onclick="updateUser('${li.userid}','',1,0)" class="blue">删除</a></td>
 	                    	</c:when>
 	                    	<c:when test="${li.status == 1 }">
 	                    		<td><i class="red"> 禁用</i></td>
-	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)"  onclick="updateUser(${li.userid},0,0,1)" class="blue">解禁</a></td>
+	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)"  onclick="updateUser('${li.userid}',0,0,1)" class="blue">解禁</a></td>
 	                    	</c:when>
 	                    	<c:otherwise>
 	                    		<td><i class="greed"> 冻结</i></td>
-	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)"  onclick="updateUser(${li.userid},0,0,2)"class="blue">解冻</a></td>
+	                    		<td style="cursor: pointer;" ><a href="javascript:void(0)"  onclick="updateUser('${li.userid}',0,0,2)"class="blue">解冻</a></td>
 	                    	</c:otherwise>
 	                    </c:choose>
 	                </tr>

@@ -40,12 +40,11 @@ public class ManageStatisticsController extends BaseController{
 	 */
 	@RequestMapping("/statisticsIndex")
 	public String statisticsIndex(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
-		
 		return "/managebackstage/statistics/count";
 	}
 	
 	/**
-	 * 每日订单数量统计
+	 * 每日活跃用户统计
 	 * @param map
 	 * @param model
 	 * @param response
@@ -54,9 +53,66 @@ public class ManageStatisticsController extends BaseController{
 	 */
 	@RequestMapping("/getStatisticsToday")
 	public String getStatisticsToday(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
-		return "/managebackstage/statistics/count_daily";
+		if((!map.containsKey("starttime") || "".equals(map.get("starttime"))) && (!map.containsKey("endtime") || "".equals(map.get("endtime")))){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String stoptime = sdf.format(new Date());
+			Calendar cal = Calendar.getInstance();
+			Calendar cal1 = Calendar.getInstance();
+			try {
+				cal.setTime(sdf.parse(stoptime));
+				cal1.setTime(sdf.parse(stoptime));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			cal.add(Calendar.DAY_OF_MONTH, -30);
+			cal1.add(Calendar.DAY_OF_MONTH, 1);
+			map.put("starttime",sdf.format(cal.getTime()));
+			map.put("endtime",sdf.format(cal1.getTime()));
+		}
+		//每日活跃人数
+		List<Map<String, Object>> activityuserlist=this.manageStatisticsService.getActivityStatistics(map);
+		model.addAttribute("activityuserlist", activityuserlist);
+		model.addAttribute("map", map);
+		return "/managebackstage/statistics/activity_statistics";
 	}
 	
+	
+	
+	/**
+	 * 每日新增用户统计
+	 * @param map
+	 * @param model
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/getNewUserStatistics")
+	public String getNewUserStatistics(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
+		if((!map.containsKey("starttime") || "".equals(map.get("starttime"))) && (!map.containsKey("endtime") || "".equals(map.get("endtime")))){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String stoptime = sdf.format(new Date());
+			Calendar cal = Calendar.getInstance();
+			Calendar cal1 = Calendar.getInstance();
+			try {
+				cal.setTime(sdf.parse(stoptime));
+				cal1.setTime(sdf.parse(stoptime));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			cal.add(Calendar.DAY_OF_MONTH, -6);
+			cal1.add(Calendar.DAY_OF_MONTH, 1);
+			map.put("starttime",sdf.format(cal.getTime()));
+			map.put("endtime",sdf.format(cal1.getTime()));
+		}
+		//每日用户总数
+		List<Map<String, Object>> sumuserlist=this.manageStatisticsService.getSumUserStatistics(map);
+		model.addAttribute("sumuserlist", sumuserlist);
+		//每日用户新增人数
+		List<Map<String, Object>> newuserlist=this.manageStatisticsService.getNewUserStatistics(map);
+		model.addAttribute("newuserlist", newuserlist);
+		model.addAttribute("map", map);
+		return "/managebackstage/statistics/user_statistics";
+	}
 	
 	/**
 	 * 红黑榜
