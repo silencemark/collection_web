@@ -88,8 +88,14 @@
         <img v-if="payType==1" :src="reqPath+orderInfo.weixinqrcode" style="width: 100%;height:100%;">
         <img v-if="payType==2" :src="reqPath+orderInfo.alipayqrcode" style="width: 100%;height:100%;">
 
-        <div v-if="payType==1" class="showbigImg" @click="showbigImgWin(reqPath+orderInfo.weixinqrcode)">+点击查看大图</div>
-        <div v-if="payType==2" class="showbigImg" @click="showbigImgWin(reqPath+orderInfo.alipayqrcode)">+点击查看大图</div>
+        
+        <div v-if="payType==1 || payType==2" class="showbigImg"></div>
+        <div v-if="payType==1" style="background:none;opacity: 1;" class="showbigImg" @click="showbigImgWin(reqPath+orderInfo.weixinqrcode)">
+            <span>+点击查看大图</span>
+        </div>
+        <div v-if="payType==2" style="background:none;opacity: 1;"class="showbigImg" @click="showbigImgWin(reqPath+orderInfo.alipayqrcode)">
+            <span>+点击查看大图</span>
+        </div>
     </div>
     <div class="clear"></div>
 </div>

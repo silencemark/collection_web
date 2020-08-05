@@ -194,11 +194,11 @@ new Vue({
 			});
 		},
 		colseCommentWind(){
-		this.scvTime();
-		$("#commentWindow").hide();
-		document.body.removeEventListener('touchmove',bodyScroll,false); 
-		$("body").css({"position":"initial","height":"auto"});     
-		document.scrollingElement.scrollTop = 0;
+			this.scvTime();
+			$("#commentWindow").hide();
+			document.body.removeEventListener('touchmove',bodyScroll,false); 
+			$("body").css({"position":"initial","height":"auto"});     
+			document.scrollingElement.scrollTop = 0;
 		},
 		scvTime(){
 		var timer = setInterval(()=>{
