@@ -18,7 +18,7 @@
     <div onclick="window.location.href='bagPayWait.html'">团购中</div>
     <div onclick="window.location.href='bagOwn.html'" class="active">已拥有</div>
     <div onclick="window.location.href='bagSale.html'">出售中</div>
-    <div onclick="window.location.href='bagHistory.html'">历史产品</div>
+    <div onclick="window.location.href='bagHistory.html'">历史订单</div>
     <b class="clear"></b>
 </div>
 
@@ -28,7 +28,7 @@
     <div class="ownElmsg">
         <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
         <div style="margin-top:10px;">此产品从购买日期{{item.commentstartdays}}天内不得在平台再次交易，且出售价不得高于购买原价{{100+item.yield}}%</div>
-        <div style="position: absolute;bottom:15px;width: 100%;">
+        <div style="position: absolute;bottom:10px;width: 100%;">
             <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
             <div style="float: right;margin-right:20px;margin-top:4px">{{item.buytime}}</div>
             <div class="clear"></div>
@@ -36,10 +36,10 @@
     </div>
     <div class="clear"></div>
     <div v-if="item.remaincount>0 || item.status!=4" style="width:100%;height:35px;margin-top: -10px;">
-        <div class="kongbtn" :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`" style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
+        <div class="kongbtn" :onclick="`window.location.href='../productInfo.html?kitid=${item.kitid}'`" style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
     </div>
     <div v-else  style="width:100%;height:35px;margin-top: -10px;" >
-        <div class="kongbtn" :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`" style="position:absolute;right:120px;margin-top:3px;">查看详情</div>
+        <div class="kongbtn" :onclick="`window.location.href='../productInfo.html?kitid=${item.kitid}'`" style="position:absolute;right:120px;margin-top:3px;">查看详情</div>
         <div class="kongbtn" :onclick="`window.location.href='bagSelling.html?orderid=${item.orderid}&cardid=${item.orderid}'`" style="position:absolute;right:15px;margin-top:3px;">立即出售</div>
     </div v-else>
 </div>
@@ -137,17 +137,20 @@
            <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
        </li>
        <li class="list_li follow" >
-           <a   href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
-       </li>
-       <li class="list_li cart">
-           <a   href="javascript:void(0);" shref="../gameList.html" class="text">享玩游戏</a>
+           <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+        </li>
+        <li class="list_li cart">
+            <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+        </li>
+        <li class="list_li cart">
+           <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
        </li>
        <li class="list_li profile">
            <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
        </li>
    </ul>
   </footer>
-<!-- end footer-->
+ <!-- end footer-->
 </body>
 <script src="../js/jquery-3.1.1.min.js"></script>
 <script src="../js/vue.js"></script>

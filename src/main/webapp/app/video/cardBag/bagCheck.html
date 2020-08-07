@@ -14,13 +14,39 @@
  <body>
     <!-- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div> -->
 <section class="main"  id="app">
-    <div class="title">
-         <img src="../img/to-left.png" onclick="history.back(-1)"/>
-        交易审核
+   <div class="qbtitleGbk">
+        <img src="../img/to-left.png" onclick="history.back(-1)"/>
+   </div>
+
+
+<div>
+    <div style="width:100%;margin-bottom:15px;padding-bottom: 10px;background: #fff;">
+        <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;height: auto !important;" >
+            <img :src="reqPath+orderInfo.coverimg" style="width: 100%;">
+        </div>
+        <div class="clear"></div>
+        <div class="paymenytcy" style="margin-top:-4px;">
+            <div class="lf">
+                成交价格：￥{{orderInfo.cardprice}}
+            </div>
+            <div class="rt">
+                剩余审核时间<br/>
+                {{fmtTimeSecond(orderInfo.remaintime)}}
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="vipInfoCommmsg">
+            <div class="vipimgTItle" style="width:100%;">{{orderInfo.typename}}-{{orderInfo.title}}</div>
+            <div>交易单号：{{orderInfo.ordernum}}</div>
+        </div>
+        <div class="clear"></div>
     </div>
+</div>
+
+
 
 <!--vipInfo-->
-<div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
+<!-- <div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
     <div  :class="`vipInfo-active vipInfo  v${orderInfo.forder}-c`" 
     :style="`background-image:url('../img/V${orderInfo.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{orderInfo.forderName}}专享视频</span>
@@ -36,15 +62,22 @@
     <div>出售日期 ：{{orderInfo.selltime}}</div>
     <div>出售价格 ：<span style="color:#F36257;font-weight:600;">￥{{orderInfo.cardprice}}</span></div>
     <div>剩余审核时间 ：<font v-cloak>{{fmtTimeSecond(orderInfo.remaintime,orderInfo,true)}}</font></div>
+</div> -->
+<div style="width:94%;margin-left: 3%;font-size:0.8rem;color: #777;line-height: 1.2rem;margin-top:-20px;">
+    温馨提示 ：为避免您的经济损失，请确保您已收款再点击审核通过，一旦交易审核通过将不可回退 。 <br/>
+    如您没有收到交易款，请按照如下步骤进行操作<br/>
+    1. 仔细查看您的银行卡，支付宝，微信各种收款方式是否有进账记录。<br/>
+    2. 点击“查看买家信息”，通过微信或电话联系买家确认是否有进行支付，如买家还未支付可提醒买家尽快支付 。<br/> 
+    3. 以上方式都未得到处理，您可以到问题建议中提交您的问题等待系统审查。
 </div>
 
 <div style="font-weight:600;margin-top:10px;margin-bottom:5px;width: 94%;margin-left: 3%;font-size: 0.9rem;color: #555;">
     买家资料信息/交易凭证
-    <span @click="showBuy = !showBuy"
+    <!-- <span @click="showBuy = !showBuy"
     style="border: 1px solid #777;padding: 2px 10px;border-radius: 10px;font-weight: 500;font-size: 0.8rem;margin-left: 20px;">
         <span v-if="!showBuy">点击查看</span>
         <span v-if="showBuy">点击隐藏</span>
-    </span>
+    </span> -->
 </div>
 <div class="colUserCont" v-show="showBuy">
     <div class="colLeft">
@@ -58,18 +91,11 @@
     </div>
     <div class="clear"></div>
 </div>
-<div style="width:94%;margin-left: 3%;font-size:0.8rem;color: #777;line-height: 1.2rem;margin-top:10px;">
-    温馨提示 ：为避免您的经济损失，请确保您已收款再点击审核通过，一旦交易审核通过将不可回退 。 <br/>
-    如您没有收到交易款，请按照如下步骤进行操作<br/>
-    1. 仔细查看您的银行卡，支付宝，微信各种收款方式是否有进账记录。<br/>
-    2. 点击“查看买家信息”，通过微信或电话联系买家确认是否有进行支付，如买家还未支付可提醒买家尽快支付 。<br/> 
-    3. 以上方式都未得到处理，您可以到售后服务中心申请强制冻结此单，此操作将会冻结您买家的账号，等待系统审查。
-</div>
 
 
 <br/>
 <div class="but-cont">
-    <div class="btn btn-200" @click="payConfirmContStatus = true">审 核 通 过</div>
+    <div class="btn btn-200" @click="payConfirmContStatus = true">审核通过/发货</div>
 </div>
 
 <!--确认支付窗口-->
@@ -85,26 +111,29 @@
 </div>
 <!--end 确认支付窗口-->
 
-<br/><br/><br/><br/><br/>
+<br/><br/><br/>
 </section>
 
- <footer id="footer">
+<footer id="footer">
     <ul id="footer_list">
        <li class="list_li home active">
            <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
        </li>
        <li class="list_li follow" >
-           <a   href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
-       </li>
-       <li class="list_li cart">
-           <a   href="javascript:void(0);" shref="../gameList.html" class="text">享玩游戏</a>
+           <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+        </li>
+        <li class="list_li cart">
+            <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+        </li>
+        <li class="list_li cart">
+           <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
        </li>
        <li class="list_li profile">
            <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
        </li>
    </ul>
   </footer>
-<!-- end footer-->
+ <!-- end footer-->
 </body>
 
 <script>
@@ -112,7 +141,7 @@ new Vue({
     el: '#app',
     data: function() {
         return {
-            showBuy:false,
+            showBuy:true,
             reqPath : reqPath,
             orderInfo:{} ,
             payConfirmContStatus:false,
@@ -128,7 +157,10 @@ new Vue({
         initExamine(orderid){
             var vueThis = this;
             jAjax("/appVipCard/initExamine",{orderid:orderid},function(data){
-                vueThis.orderInfo = data;  
+                vueThis.orderInfo = data;
+                var t = setInterval(()=>{
+                    vueThis.orderInfo.remaintime-=1;
+                },1000);
             });
         },
         //立即审核
@@ -161,27 +193,11 @@ new Vue({
             if(r!=null)return  unescape(r[2]); return null;
         },
     //格式化 秒 时间显示
-    fmtTimeSecond(second,item,isCount){
-        if(isCount){
-            this.setInterFun(item)
-        }
+    fmtTimeSecond(second){
         if(second<60){
             return second+'秒';
         }else{
             return parseInt(second/60)+'分'+(second%60)+'秒';
-        }
-    },
-    //定时函数
-    setInterFun(item){
-        var vueThis = this;
-        if(!vueThis.timer){
-            vueThis.timer = setInterval(()=>{
-                item.remaintime -= 1;
-                if(item.remaintime<=0){
-                    item.isbuy = 1;
-                    clearInterval(vueThis.timer);
-                }
-            },1000);
         }
     }
   }

@@ -20,20 +20,20 @@
     </div>
 
 <div class="gabTitle">
-    <div onclick="window.location.href='bagPayWait.html'">抢购中</div>
+    <div onclick="window.location.href='bagPayWait.html'">团购中</div>
     <div onclick="window.location.href='bagOwn.html'">已拥有</div>
     <div onclick="window.location.href='bagSale.html'">出售中</div>
-    <div onclick="window.location.href='bagHistory.html'" class="active">历史任务</div>
+    <div onclick="window.location.href='bagHistory.html'" class="active">历史订单</div>
     <b class="clear"></b>
 </div>
 
 <!--vipInfo-->
 <div class="ownEl"  v-for="(item,i) in historyCardList"  v-cloak >
-    <img src="../img/V2_BG.jpg">
+    <img :src="reqPath+item.iconimg">
     <div class="ownElmsg">
-        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
-        <div style="margin-top:10px;">您的商品已出售，此次的交易单号为：{{item.ordernum}},您收藏此商品获得了{{item.profitprice}}元。</div>
-        <div style="position: absolute;bottom:15px;width: 100%;">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}-{{item.title}}</div>
+        <div style="margin-top:10px;">{{item.typename}}-{{item.title}}已出售，此次的交易单号为：{{item.ordernum}},您收藏此商品获得了{{item.profitprice}}元。</div>
+        <div style="position: absolute;bottom:10px;width: 100%;">
             <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
             <div style="float: right;margin-right:20px;margin-top:4px;">{{item.buytime.substr(0,10)}}</div>
             <div class="clear"></div>
@@ -41,7 +41,7 @@
     </div>
     <div class="clear"></div>
     <div  style="width:100%;height:35px;margin-top: -10px;" >
-        <div class="kongbtn" style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
+        <div class="kongbtn" :onclick="`window.location.href='../productInfo.html?kitid=${item.kitid}'`"  style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
     </div v-else>
 </div>
 <!--end-->
@@ -55,22 +55,25 @@
  <!--footer-->
  <br/><br/><br/>
  <footer id="footer">
-  <ul id="footer_list">
-     <li class="list_li home active">
-         <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
-     </li>
-     <li class="list_li follow" >
-         <a   href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
-     </li>
-     <li class="list_li cart">
-         <a   href="javascript:void(0);" shref="../gameList.html" class="text">享玩游戏</a>
-     </li>
-     <li class="list_li profile">
-         <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
-     </li>
- </ul>
-</footer>
-<!-- end footer-->
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+        </li>
+        <li class="list_li cart">
+            <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+        </li>
+        <li class="list_li cart">
+           <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
+       </li>
+       <li class="list_li profile">
+           <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+ <!-- end footer-->
 </body>
 
 <script>
@@ -79,6 +82,7 @@ new Vue({
     el: '#app',
     data: function() {
     return {
+        reqPath : reqPath,
         historyCardList : [],
     }
     },

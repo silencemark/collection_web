@@ -5,7 +5,7 @@
      <title>我的卡包</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
-     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css?v=12"/>
  </head>
  <body>
 
@@ -19,37 +19,39 @@
     <div onclick="window.location.href='bagPayWait.html'">团购中</div>
     <div onclick="window.location.href='bagOwn.html'">已拥有</div>
     <div onclick="window.location.href='bagSale.html'" class="active">出售中</div>
-    <div onclick="window.location.href='bagHistory.html'">历史产品</div>
+    <div onclick="window.location.href='bagHistory.html'">历史订单</div>
     <b class="clear"></b>
 </div>
 
 <!--vipInfo-->
 <div class="ownEl"  v-for="(item,i) in saleCardList"  v-cloak >
-    <img src="../img/V2_BG.jpg">
+    <img :src="reqPath+item.iconimg">
     <div class="ownElmsg"  v-if="item.status==0">
-        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
-        <div style="margin-top:10px;">您的产品正在等待团购出售，预计出售日期为：{{item.selltime}}</div>
-        <div style="position: absolute;bottom:15px;width: 100%;">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}-{{item.title}}</div>
+        <div style="margin-top:10px;">{{item.title}}正在等待团购出售，预计出售日期为：{{item.selltime}}</div>
+        <div style="position: absolute;bottom:10px;width: 100%;">
             <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
             <div style="float: right;margin-right:20px;margin-top:4px;">待出售</div>
             <div class="clear"></div>
         </div>
     </div>
     <div class="ownElmsg"  v-if="item.status==1">
-        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
-        <div style="margin-top:10px;">您的产品已被其他用户选中，正在等待用户付款。
-           剩余支付时间还有：{{fmtTimeSecond(item.remaintime,saleCardList[i],true)}},交易单号为：{{item.ordernum}}</div>
-        <div style="position: absolute;bottom:15px;width: 100%;">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}-{{item.title}}</div>
+        <div style="margin-top:10px;">
+            {{item.title}}已被其他用户选中，正在等待用户付款，交易单号为：{{item.ordernum}}</div>
+        <div style="margin-top:5px;">剩余支付时间：{{fmtTimeSecond(item.remaintime)}}</div>
+        <div style="position: absolute;bottom:10px;width: 100%;">
             <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
             <div style="float: right;margin-right:20px;margin-top:4px;">待支付</div>
             <div class="clear"></div>
         </div>
     </div>
     <div class="ownElmsg"  v-if="item.status==2">
-        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
-        <div style="margin-top:10px;">您的产品出售成功，买家已付款。确认收款无误后请尽快审核发货。
-            交易单号为：{{item.ordernum}}，剩余审核时间还有：{{fmtTimeSecond(item.remaintime,saleCardList[i],true)}}</div>
-        <div style="position: absolute;bottom:15px;width: 100%;">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}-{{item.title}}</div>
+        <div style="margin-top:10px;">
+            {{item.title}}出售成功，买家已付款。交易单号为：{{item.ordernum}} 确认收款无误后请尽快审核发货</div>
+            <div style="margin-top:5px;">剩余审核时间：{{fmtTimeSecond(item.remaintime)}}</div>
+        <div style="position: absolute;bottom:10px;width: 100%;">
             <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
             <div style="float: right;margin-right:20px;margin-top:4px;">待审核</div>
             <div class="clear"></div>
@@ -57,12 +59,11 @@
     </div>
     <div class="clear"></div>
     <div  style="width:100%;height:35px;margin-top: -10px;" >
-        <div class="kongbtn" v-if="item.status==0" style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
+        <div class="kongbtn" v-if="item.status==0" :onclick="`window.location.href='../productInfo.html?kitid=${item.kitid}'`"  style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
         <div class="kongbtn" v-if="item.status==1" :onclick="`window.location.href='../user/userInfo.html?uid=${item.buyuserid}'`" style="position:absolute;right:15px;margin-top:3px;">查看买家</div>
         <div class="kongbtn" v-if="item.status==2"  @click="chkOrder(item.orderid)" style="position:absolute;right:15px;margin-top:3px;">立即审核</div>
     </div v-else>
 </div>
-
 
 
 
@@ -102,7 +103,7 @@
 
 <div v-if="saleCardList.length==0" class="notList">没有出售中的记录</div>
 </section>
-
+<div class="clear"></div>
 
 
 
@@ -115,17 +116,20 @@
            <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
        </li>
        <li class="list_li follow" >
-           <a   href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
-       </li>
-       <li class="list_li cart">
-           <a   href="javascript:void(0);" shref="../gameList.html" class="text">享玩游戏</a>
+           <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+        </li>
+        <li class="list_li cart">
+            <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+        </li>
+        <li class="list_li cart">
+           <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
        </li>
        <li class="list_li profile">
            <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
        </li>
    </ul>
   </footer>
-<!-- end footer-->
+ <!-- end footer-->
 </body>
 
 <script src="../js/jquery-3.1.1.min.js"></script>
@@ -148,6 +152,13 @@ new Vue({
         var vueThis = this;
         jAjax("/appVipCard/getSaleCardList",{},function(data){
             vueThis.saleCardList = data.resultlist;  
+            if(vueThis.saleCardList.length>0){
+                var t = setInterval(()=>{
+                    for(var k=0;k<vueThis.saleCardList.length;k++){
+                        vueThis.saleCardList[k].remaintime -= 1;
+                    }
+                },1000);
+            }
         });
     },
     //审核
@@ -155,10 +166,7 @@ new Vue({
         window.location.href="bagCheck.html?orderid="+orderid;
     },
     //格式化 秒 时间显示
-    fmtTimeSecond(second,item,isCount){
-        if(isCount){
-            this.setInterFun(item)
-        }
+    fmtTimeSecond(second){
         if(second<60){
             return second+'秒';
         }else{

@@ -31,26 +31,30 @@
 </div>
 
 <div class="commsq" style="margin-top:180px;">
-    <div class="commsqLeft">
-        <div class="commsqEl" v-for="(sqel , i) in commList" v-if="i%2==0"  v-cloak>
+    <div class="commsqLeft" >
+        <div class="commsqEl" v-for="(sqel , i) in dataList" v-if="i%2==0" v-cloak :onclick="`window.location.href='productInfo.html?kitid=${sqel.kitid}'`">
             <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
-            <!-- <span class="sqTime">{{sqel.createtime?sqel.createtime.substr(0,10):''}}</span> -->
-            <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">GSAD橘右京 是贷款的咖啡店</span>
+            <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">{{sqel.title}}</span>
+            <div style="max-height:55px;padding:5px;margin-top:-10px;">
+                {{sqel.description.length>30?sqel.description.substr(0,30)+'...':sqel.description}}
+            </div>
             <div class="uInfo">
-                <span class="uname" style="font-size:1rem;color:rgb(222, 24, 134);">￥155</span>
-                <span class="znum">3545人喜欢</span>
+                <span class="uname" style="font-size:1rem;color:rgb(222, 24, 134);">￥{{sqel.avgprice?sqel.avgprice:0}}</span>
+                <span class="znum">{{!sqel.likenum?0:sqel.likenum}}人喜欢</span>
             </div>
         </div>
     </div>
 
     <div class="commsqRight">
-        <div class="commsqEl" v-for="(sqel , i) in commList" v-if="i%2!=0"  v-cloak>
+        <div class="commsqEl" v-for="(sqel , i) in dataList" v-if="i%2!=0" v-cloak  :onclick="`window.location.href='productInfo.html?kitid=${sqel.kitid}'`">
             <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
-            <!-- <span class="sqTime">{{sqel.createtime?sqel.createtime.substr(0,10):''}}</span> -->
-            <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">GSAD橘右京 是贷款的咖啡店</span>
+            <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">{{sqel.title}}</span>
+            <div style="max-height:55px;padding:5px;margin-top:-10px;">
+                {{sqel.description.length>30?sqel.description.substr(0,30)+'...':sqel.description}}
+            </div>
             <div class="uInfo">
-                <span class="uname" style="font-size:1rem;color:rgb(222, 24, 134);">￥155</span>
-                <span class="znum">3545人喜欢</span>
+                <span class="uname" style="font-size:1rem;color:rgb(222, 24, 134);">￥{{sqel.avgprice?sqel.avgprice:0}}</span>
+                <span class="znum">{{!sqel.likenum?0:sqel.likenum}}人喜欢</span>
             </div>
         </div>
     </div>
@@ -59,26 +63,27 @@
 
 <br/><br/><br/><br/>
 </section>
-
-
-
- <footer id="footer">
-    <ul id="footer_list">
-       <li class="list_li home active">
-           <a  href="javascript:void(0);" shref="index.html" class="text">首页</a>
-       </li>
-       <li class="list_li follow" >
-           <a   href="javascript:void(0);" shref="community.html" class="text">享互动</a>
-       </li>
-       <li class="list_li cart">
-           <a   href="javascript:void(0);" shref="gameList.html" class="text">享玩游戏</a>
-       </li>
-       <li class="list_li profile">
-           <a   href="javascript:void(0);" shref="myCenter.html" class="text">我的</a>
-       </li>
-   </ul>
-  </footer>
-<!-- end footer-->
+      <!--footer-->
+      <footer id="footer">
+        <ul id="footer_list">
+           <li class="list_li home active">
+               <a  href="javascript:void(0);" shref="index.html" class="text">首页</a>
+           </li>
+           <li class="list_li follow" >
+               <a  href="javascript:void(0);" shref="community.html" class="text">享互动</a>
+            </li>
+            <li class="list_li cart">
+                <a   href="javascript:void(0);" shref="activity.html" class="text">享购</a>
+            </li>
+            <li class="list_li cart">
+               <a   href="javascript:void(0);" shref="gameList.html" class="text">游戏</a>
+           </li>
+           <li class="list_li profile">
+               <a   href="javascript:void(0);" shref="myCenter.html" class="text">我的</a>
+           </li>
+       </ul>
+      </footer>
+        <!-- end footer-->
 </body>
 </html>
 
@@ -88,65 +93,11 @@
 <script>
     $(function(){
         $(".sqTitleEl").click(function(){
-            // $(".sqTitleEl").removeClass("sqTitleElActiv");
-            // $(this).addClass("sqTitleElActiv");
-            jqtoast('没有更多商品了！');
+            $(".sqTitleEl").removeClass("sqTitleElActiv");
+            $(this).addClass("sqTitleElActiv");
+            jqtoast('抱歉没有更多商品了！');
         })
     })
-//add bef
-function addimgBef(obj){
-    if($("#addimgList").find(".addimgEl") && $("#addimgList").find(".addimgEl").length>=3){
-        jqtoast('亲，最多只能上传三张哦！');
-        return;
-    }
-    exAddImg(obj,sqAddimg);
-}
-// add ckb
-function sqAddimg(imgUrl,base64){
-    var ht = "<div class='addimgEl'><div class='rm' onclick='rmAddimg(this);'>-</div><img src='"+imgUrl+"'></div>";
-    $("#addimgList").append(ht);
-}
-//remore
-function rmAddimg(obj){
-    $(obj).parent().remove();
-}
-//add sys
-function confirmAdd(){
-    if(!$("#addimgList").find(".addimgEl") || $("#addimgList").find(".addimgEl").length<1){
-        jqtoast('请上传图片！');
-        return;
-    }
-    var commText = $("#sqAddCommentText").val();
-    if(!commText){
-        jqtoast('请填写发帖内容！');
-        return;
-    }
-    var imagelist = [];
-    $("#addimgList").find(".addimgEl").each(function(){
-        imagelist.push({imgurl:$(this).find("img").attr("src").replace(/^data:image\/(png|jpeg);base64,/,"")});
-    });
-    var reqBo = {
-        imagelist:imagelist,
-        content:commText
-    };
-    addIMGSUpload(reqBo);
-}
-//zan
-function sqZan(obj,communityid){
-    var status = 0;
-    if($(obj).attr("isenable")=='0'){
-        $(obj).attr("src","img/zanys.png");
-        $(obj).attr("isenable","1");
-        $(obj).prev().html(parseInt($(obj).prev().html())+1);
-        status = 1;
-    }else{
-        $(obj).attr("src","img/notzany.png");
-        $(obj).attr("isenable","0");
-        $(obj).prev().html(parseInt($(obj).prev().html())-1);
-    }
-    jAjax("/appIndex/likeCommunity",{communityid:communityid,status:status},function(data){
-    },null,true);
-}
 //文档高度
 function getDocumentTop() {
         var scrollTop =  0, bodyScrollTop = 0, documentScrollTop = 0;
@@ -200,37 +151,21 @@ function getDocumentTop() {
       data: function() {
         return {
             reqPath : reqPath,
-            showType:0,
-            addCommentWinFlg:false,
-            commList : [],
+            cardid:'',
+            dataList : [],
             pageNo:1,
             pageSize:10,
             sumPageNumber:1,
-            refTxt:'上拉刷新',
         }
       },
       created() {
-          this.getCommunityList({});
+          this.cardid = this.GetQueryString("cardid");
+          this.getGarageKitList({});
       },
       mounted() {
-        window.addIMGSUpload = this.addIMGSUpload;
         window.xlref = this.xlref;
      },
       methods:{
-        //上传
-        addIMGSUpload(reqBo){
-            var vueThis = this;
-            reqBo.imagelist = JSON.stringify(reqBo.imagelist);
-            jAjax("/appIndex/addCommunity",reqBo,function(data){
-                if(data.status==0){
-                    jqtoast('发帖成功！');
-                    vueThis.addCommentWinFlg = false;
-                    vueThis.getCommunityList({});
-                }else{
-                    jqtoast(data.message);
-                }
-            });
-        },
         xlref(){
             this.pageNo = this.pageNo +1;
             if(this.pageNo>this.sumPageNumber){
@@ -239,53 +174,32 @@ function getDocumentTop() {
             if(this.pageNo = this.sumPageNumber){
                 this.refTxt = "没有更多数据了";
             }
-            this.getCommunityList();
+            this.getGarageKitList();
         },
         //资源查找
-        getCommunityList(reqBo){
+        getGarageKitList(reqBo){
             reqBo = reqBo?reqBo:{};
-            if(this.showType==1){
-                reqBo.uid = getCptToken();
-            }
+            reqBo.cardid = this.cardid;
             reqBo.startnum=(this.pageNo-1)*this.pageSize;
             reqBo.rownum = this.pageSize;
             var vThis = this;
-            jAjax("/appIndex/getCommunityList",reqBo,function(data){
-                for(var i=0;i<data.communitylist.length;i++){
-                    if(!data.communitylist[i].nickname) data.communitylist[i].nickname="";
-                    var hdimg = data.communitylist[i].headimage;
-                    if(!hdimg){
-                        data.communitylist[i].headimage = "img/defaulttx.png";
-                    }else{
-                        if(hdimg.indexOf("http")<0){
-                            data.communitylist[i].headimage = reqPath + data.communitylist[i].headimage;
-                        }
-                    }
-                    vThis.commList.push(data.communitylist[i]);
-                }
-                vThis.sumPageNumber = Math.ceil(data.communitynum/vThis.pageSize);
-                refEnabled = true;
+            jAjax("/appVipCard/getGarageKitList",reqBo,function(data){
+                vThis.dataList = data.kitlist;
+                vThis.sumPageNumber = Math.ceil(data.kitnum/vThis.pageSize);
             });
         },
-        //查看类型
-        changStype(type){
-            return;
-            this.showType = type;
-            this.commList = [];
-            this.pageNo=1,
-            this.pageSize=10,
-            this.communitynum = 1;
-            this.getCommunityList();
+        //详情
+        shwoInfo(iId){
+            
         },
-        //添加窗口
-        addCommentWin(){
-            addCommentBo={};
-            this.addCommentWinFlg = true;
-        },
-        //查看详情
-        shwoInfo(item){
-            window.location.href='productInfo.html?communityid='+item.communityid
+        changStype(){},
+        //获取URL参数
+        GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
         }
       }
+        
     })
   </script>

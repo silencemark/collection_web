@@ -5,15 +5,15 @@
      <title>享购影视</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="css/public.css"/>
-     <link rel="stylesheet" type="text/css" href="css/myCenter.css?v=010142"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css?v=02124"/>
  </head>
  <body style="background:#eeeeee;">
 
 <section class="main"  id="app">
     <div class="title" style="border:none;">
         <img src="img/to-left.png" onclick="history.back(-1)"/>
-        手办专区
-        <img src="img/msg.png" style="width:20px;height:auto;right:20px;left:auto;top:12px;" 
+        享购就购
+        <img src="img/msg2.png" style="width:20px;height:auto;right:20px;left:auto;top:12px;" 
         onclick="window.location.href='user/userMsg.html'"/>
     </div>
     <img src="img/activT.png" style="width: 100%;margin-top:-1px;"/>
@@ -25,7 +25,7 @@
         <div @click="ckActiv(4)"></div>
     </div>
     <div class="clear"></div>
-    <div class="maeeageTx"  style="top:170px" id="lookMsg" style="height: auto;" onclick="window.location.href='introduce.html'">
+    <div class="maeeageTx"  style="top:170px" id="lookMsg" style="height:auto;" onclick="window.location.href='introduce.html'">
         <span>操作引导</span>
     </div>
 
@@ -43,11 +43,11 @@
                     <div>消耗XGO币：{{item.xgocoin}}</div>
                     <span class="clear">
             </div> -->
-            <img :src="`img/V${item.forder}_BG.jpg`" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+            <img :src="`${reqPath+item.cardicon}`" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
         </div>
         <div class="clear"></div>
         <div class="vipInfoCommmsg">
-            <div class="vipimgTItle" style="width:100%;">{{item.typename}}】精美手办物美价廉</div>
+            <div class="vipimgTItle" style="width:100%;">{{item.typename}} 精美手办物美价廉</div>
             <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
             <div>开团时间：{{item.starttime}} - {{item.endtime}}</div>
             <div class="clear"></div>
@@ -58,13 +58,14 @@
         <div v-else>
             <div v-if="item.havebuy==1 || item.havebuy==2">
                 <input type="button" v-if="item.havebuy==1" value="正在参与团购" :class="`active-but  v${item.forder}-bg`"/>
-                <input type="button" v-if="item.havebuy==2" value="已 参 团" :class="`active-but  v${item.forder}-bg`" 
-                    onclick="window.location.href='cardBag/bagPayWait.html'"/>
+                <!-- <input type="button" v-if="item.havebuy==2" value="已 参 团" :class="`active-but  v${item.forder}-bg`" 
+                    onclick="window.location.href='cardBag/bagPayWait.html'"/> -->
+                    <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情 " :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`" :class="`active-but  v${item.forder}-bg`"/>
             </div>
             <div v-else>
-                <img src="img/isqg.gif"  v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)"  class="qggiftx"/>
                 <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)" value="参 与 团 购" :class="`active-but  v${item.forder}-bg`" />
-                <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情" :onclick="`window.location.href='productList.html'`" :class="`active-but  v${item.forder}-bg`"/>
+                <img src="img/isqg.gif"  v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)"  class="qggiftx"/>
+                <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情" :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`" :class="`active-but  v${item.forder}-bg`"/>
             </div>
         </div>
     </div>
@@ -90,26 +91,29 @@
 
 
 
- <!--footer-->
  <br/><br/><br/>
- <footer id="footer">
-    <ul id="footer_list">
-       <li class="list_li home active">
-           <a href="javascript:void(0);" shref="index.html" class="text">首页</a>
-       </li>
-       <li class="list_li follow" >
-           <a   href="javascript:void(0);" shref="community.html" class="text">享互动</a>
-       </li>
-       <li class="list_li cart">
-           <a   href="javascript:void(0);" shref="gameList.html" class="text">享玩游戏</a>
-       </li>
-       <li class="list_li profile">
-           <a   href="javascript:void(0);" shref="myCenter.html" class="text">我的</a>
-       </li>
-   </ul>
-  </footer>
+      <!--footer-->
+      <footer id="footer">
+        <ul id="footer_list">
+           <li class="list_li home active">
+               <a  href="javascript:void(0);" shref="index.html" class="text">首页</a>
+           </li>
+           <li class="list_li follow" >
+               <a  href="javascript:void(0);" shref="community.html" class="text">享互动</a>
+            </li>
+            <li class="list_li cart">
+                <a   href="javascript:void(0);" shref="activity.html" class="text">享购</a>
+            </li>
+            <li class="list_li cart">
+               <a   href="javascript:void(0);" shref="gameList.html" class="text">游戏</a>
+           </li>
+           <li class="list_li profile">
+               <a   href="javascript:void(0);" shref="myCenter.html" class="text">我的</a>
+           </li>
+       </ul>
+      </footer>
+        <!-- end footer-->
   <img  src="img/qging.gif" style="display: none;"/>
-<!-- end footer-->
 </body>
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/vue.js"></script>
