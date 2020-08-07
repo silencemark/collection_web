@@ -15,10 +15,10 @@
  <body style="background:#f2f2f2">
 
 <section class="main"  id="app">
-    <div class="title" style="background-color:rgb(117, 174, 253);color:#fff;border:none;">
-        <img src="img/to-leftffff.png" onclick="history.back(-1)"/>
-        享玩游戏
-        <img src="img/msg3.png" style="width:20px;height:auto;right:20px;left:auto;top:12px;" 
+    <div class="title" style="border:none;">
+        <img src="img/to-left.png" onclick="history.back(-1)"/>
+        手办专区
+        <img src="img/msg.png" style="width:20px;height:auto;right:20px;left:auto;top:12px;" 
         onclick="window.location.href='user/userMsg.html'"/>
     </div>
     <img src="img/activT.png" style="width: 100%; margin-top: -1px;" onclick="window.location.href='activity.html'">
@@ -30,18 +30,18 @@
 <!--游戏类别-->
 <div v-if="showType==0">
     <div class="gameEl">
+        <img src="game/sbzq.png"/>
+        <span class="gameName">手办专区</span>
+        <span class="gameName gameInfo">收藏稀有手办，国内独有</span>
+        <div class="clear"></div>
+        <div class="btn" style="margin-top:-40px;float:right;" onclick="window.location.href='activity.html'">前往查看</div>
+    </div>
+    <div class="gameEl">
         <img src="game/game-xhmlog.png"/>
         <span class="gameName">小红帽冒险记</span>
         <span class="gameName gameInfo">和小红帽一起闯关冒险吧</span>
         <div class="clear"></div>
         <div class="btn" style="margin-top:-40px;float:right;" onclick="window.location.href='game/xiaohm/index.html'">前往冒险</div>
-    </div>
-    <div class="gameEl">
-        <img src="game/renwuka.png"/>
-        <span class="gameName">争抢任务卡</span>
-        <span class="gameName gameInfo">争抢任务卡，每天领现金</span>
-        <div class="clear"></div>
-        <div class="btn" style="margin-top:-40px;float:right;" onclick="window.location.href='activity.html'">领取任务</div>
     </div>
     <div class="gameEl">
         <img src="game/game-wuzhiqii.png"/>

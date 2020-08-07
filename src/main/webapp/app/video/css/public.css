@@ -245,15 +245,15 @@ header .searchCont input::-webkit-input-placeholder{
  .v7-c{color: #ce84fd;}
  .v8-c{color: #dbb3f6;}
 
- .v0-bg{background-color: #555555;}
- .v1-bg{background-color: #805333;}
- .v2-bg{background-color: #707580;}
- .v3-bg{background-color: #806242;}
- .v4-bg{background-color: #457580;}
- .v5-bg{background-color: #405980;}
- .v6-bg{background-color: #674a80;}
- .v7-bg{background-color: #ce84fd;}
- .v8-bg{background-color: #5e128e;}
+ .v0-bg{background-image: linear-gradient(90deg,#7d4532,#c7284c);}
+ .v1-bg{background-image: linear-gradient(90deg,#7d4532,#c7284c);}
+ .v2-bg{background-image: linear-gradient(90deg,#7689c7,#63719e);}
+ .v3-bg{background-image: linear-gradient(90deg,#a01043,#4a0318);}
+ .v4-bg{background-image: linear-gradient(90deg,#5767ae,#020305);}
+ .v5-bg{background-image: linear-gradient(90deg,#501521,#801d2a);}
+ .v6-bg{background-image: linear-gradient(90deg,#be79bc,#e0a04a);}
+ .v7-bg{background-image: linear-gradient(90deg,#97194a,#400d0a);}
+ .v8-bg{background-image: linear-gradient(90deg,#7cd2bc,#1f3c39);}
  .money{
     color:#6daefe;
     font-size: 1rem;
@@ -422,3 +422,17 @@ header .searchCont input::-webkit-input-placeholder{
     margin-top: 10px;
 }
 [v-cloak]{display:none !important;}
+.kongbtn{
+    text-align: center;
+    width: 90px;
+    height: 28px;
+    line-height: 28px;
+    background-color: transparent;
+    border-radius: 0;
+    letter-spacing:1px;
+    border-radius: 50px;
+    font-size: 12px;
+    display: inline-block;
+    color: #63a0f8;
+    border: 1px solid #63a0f8;
+}

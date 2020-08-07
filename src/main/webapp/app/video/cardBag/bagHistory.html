@@ -28,22 +28,25 @@
 </div>
 
 <!--vipInfo-->
-<div v-for="(item,i) in historyCardList" style="margin-bottom:15px;" v-cloak>
-    <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
-    :style="`background-image:url('../img/V${item.forder}_BG.png')`">
-      <span style="margin-bottom:5px;">{{item.typename}}</span>
-      用享购一边看一边赚 邀请好友领取任务卡完成任务后可获得翻倍任务奖励哟！
-        <div class="v-numver" style="width: 90%;margin-top:35px;">
-            <div>交易单号：{{item.ordernum}}</div>
-            <div>出售时间：{{item.buytime.substr(0,10)}}</div>
-            <div>任务奖励：{{item.profitprice}}</div>
-            <div>任务状态：<b>已完成</b></div>
-            <span class="clear">
-      </div>
-      <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+<div class="ownEl"  v-for="(item,i) in historyCardList"  v-cloak >
+    <img src="../img/V2_BG.jpg">
+    <div class="ownElmsg">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
+        <div style="margin-top:10px;">您的商品已出售，此次的交易单号为：{{item.ordernum}},您收藏此商品获得了{{item.profitprice}}元。</div>
+        <div style="position: absolute;bottom:15px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px;">{{item.buytime.substr(0,10)}}</div>
+            <div class="clear"></div>
+        </div>
     </div>
     <div class="clear"></div>
+    <div  style="width:100%;height:35px;margin-top: -10px;" >
+        <div class="kongbtn" style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
+    </div v-else>
 </div>
+<!--end-->
+
+
 <div v-if="historyCardList.length==0" class="notList">没有历史记录</div>
 </section>
 

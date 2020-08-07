@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <title>享GO影视</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <meta name="application-name" content="享GO影视">
+     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/bitbug_favicon.ico">
+     <meta name="apple-mobile-web-app-capable" content="yes">
+
+     <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
+ </head>
+ <body style="background-color:#f6f6f6;">
+<section class="main"  id="app">
+ <img src="img/to-left.png" onclick="history.back(-1)" style="width:50px;position:absolute;z-index:6;"/>
+
+<div class="pfnIMGCONT">
+    <span class="BU"> 1/1 </span> 
+    <img src="img/V8_BG.jpg" style="width:100%;">
+</div>
+<div class="paymenytcy" style="margin-top: -3px;">
+    <div class="lf">
+        团购均价：2154
+    </div>
+    <div class="rt">
+        开团时间<br/>
+        14:00-14:10            
+    </div>
+    <div class="clear"></div>
+</div>
+<span class="pinfmMsg">
+    GSAD橘右京阿斯蒂芬是大富科技爱上的看法家家爱扣水电费了平平手办 是贷款的咖啡店
+</span>
+<div class="pinfAttr">
+    上架日期：&nbsp;&nbsp;2020-10-27
+</div>
+<div class="pinfAttr">
+    详细描述：&nbsp;&nbsp;改水电费是的
+</div>
+<div style="padding:10px;font-size:0.9rem;color: #333;letter-spacing:1px;">团购流程</div>
+<div class="prdXGMgs">
+    <span style="color:#333;">1、</span>用户发布自己的收藏手办，设置自己心仪的价格，发布在平台。平台会根据商品价格自动归纳到不同的商品区域
+    <br/>
+    <span style="color:#333;">2、</span>其他用户在开团时间内，参团购买商品，参团成功后买家直接付款给卖家并且上传交易凭证截图
+    <br/>
+    <span style="color:#333;">3、</span>卖家查看自己的商品状态，如已卖出且买家已付款，卖家需点击"立即审核"查看买家支付真实，确认无误则点击"审核通过"后再发货给买家
+    <br/>
+    <span style="color:#333;">4、</span>买家收到商品点击"完成"按钮表示已收货，且商品会记录在平台"产品库-已拥有"，若需出售此商品无需则再次录入商品信息。
+</div>
+<div style="padding:10px;font-size:0.9rem;color: #333;letter-spacing:1px;">温馨提示</div>
+<div class="prdXGMgs">
+    <span style="color:#333;">温馨提醒：</span>此产品交易属于C2C（客户与客户），为了提高用户安全性和用户身份的可信性，交易的有效性，平台将要求需要在平台购买或出售产品的用户必须完成实名认证。
+    本平台有权采取各种必要的手段对用户身份进行识别，记录并保存您提供的个人身份信息
+</div>
+<br/><br/><br/><br/>
+
+<div class="prdFBottom">
+    <div class="kongbtn" onclick="history.back(-1)" style="position:absolute;right:120px;margin-top:12px;color:#e52d7a;border:1px solid #e52d7a;">返回主页</div>
+    <div class="kongbtn" @click="ctn" style="position:absolute;right:15px;margin-top:12px;color:#fff;background:#e52d7a;;border:1px solid #e52d7a;">立即参团</div>
+</div>
+</section>
+
+</body>
+</html>
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/vue.js"></script>
+<script>
+    $(function(){
+        
+    })
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            reqPath : reqPath,
+            showType:0,
+            addCommentWinFlg:false,
+            commList : [],
+            pageNo:1,
+            pageSize:10,
+            sumPageNumber:1,
+            refTxt:'上拉刷新',
+        }
+      },
+      created() {
+      },
+      mounted() {
+     },
+      methods:{
+        ctn(){
+            jqalert({
+                prompt:'此产品的开团是时间为：14:00-14:10 请留意产品开团时间，在产品主页参与团购谢谢！',
+                yestext:'好 的',
+                yesfn:function () {
+                }
+            });
+        },
+      }
+    })
+  </script>

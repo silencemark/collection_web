@@ -12,19 +12,62 @@
 <section class="main"  id="app">
     <div class="title">
          <img src="../img/to-left.png" onclick="history.back(-1)"/>
-        我的卡包
+         产品库
     </div>
 
 <div class="gabTitle">
-    <div onclick="window.location.href='bagPayWait.html'">抢购中</div>
+    <div onclick="window.location.href='bagPayWait.html'">团购中</div>
     <div onclick="window.location.href='bagOwn.html'">已拥有</div>
     <div onclick="window.location.href='bagSale.html'" class="active">出售中</div>
-    <div onclick="window.location.href='bagHistory.html'">历史任务</div>
+    <div onclick="window.location.href='bagHistory.html'">历史产品</div>
     <b class="clear"></b>
 </div>
 
 <!--vipInfo-->
-<div v-for="(item,i) in saleCardList" style="margin-bottom:15px;" v-cloak>
+<div class="ownEl"  v-for="(item,i) in saleCardList"  v-cloak >
+    <img src="../img/V2_BG.jpg">
+    <div class="ownElmsg"  v-if="item.status==0">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
+        <div style="margin-top:10px;">您的产品正在等待团购出售，预计出售日期为：{{item.selltime}}</div>
+        <div style="position: absolute;bottom:15px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px;">待出售</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="ownElmsg"  v-if="item.status==1">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
+        <div style="margin-top:10px;">您的产品已被其他用户选中，正在等待用户付款。
+           剩余支付时间还有：{{fmtTimeSecond(item.remaintime,saleCardList[i],true)}},交易单号为：{{item.ordernum}}</div>
+        <div style="position: absolute;bottom:15px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px;">待支付</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="ownElmsg"  v-if="item.status==2">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
+        <div style="margin-top:10px;">您的产品出售成功，买家已付款。确认收款无误后请尽快审核发货。
+            交易单号为：{{item.ordernum}}，剩余审核时间还有：{{fmtTimeSecond(item.remaintime,saleCardList[i],true)}}</div>
+        <div style="position: absolute;bottom:15px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px;">待审核</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div  style="width:100%;height:35px;margin-top: -10px;" >
+        <div class="kongbtn" v-if="item.status==0" style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
+        <div class="kongbtn" v-if="item.status==1" :onclick="`window.location.href='../user/userInfo.html?uid=${item.buyuserid}'`" style="position:absolute;right:15px;margin-top:3px;">查看买家</div>
+        <div class="kongbtn" v-if="item.status==2"  @click="chkOrder(item.orderid)" style="position:absolute;right:15px;margin-top:3px;">立即审核</div>
+    </div v-else>
+</div>
+
+
+
+
+
+<!-- <div v-for="(item,i) in saleCardList" style="margin-bottom:15px;" v-cloak>
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
@@ -53,10 +96,10 @@
     </div>
     <div class="clear"></div>
     <input type="button" v-if="item.status==1" value="查看买家" :onclick="`window.location.href='../user/userInfo.html?uid=${item.buyuserid}'`" :class="`active-but  v${item.forder}-bg`"/>
-    
      <input type="button" v-if="item.status==2" value="立即审核" :class="`active-but  v${item.forder}-bg`" @click="chkOrder(item.orderid)"/>
+</div> -->
 
-</div>
+
 <div v-if="saleCardList.length==0" class="notList">没有出售中的记录</div>
 </section>
 

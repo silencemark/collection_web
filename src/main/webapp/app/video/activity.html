@@ -5,15 +5,15 @@
      <title>享购影视</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="css/public.css"/>
-     <link rel="stylesheet" type="text/css" href="css/myCenter.css?v=01"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css?v=010142"/>
  </head>
- <body>
+ <body style="background:#eeeeee;">
 
 <section class="main"  id="app">
-    <div class="title" style="background-color:rgb(117, 174, 253);color:#fff;border:none;">
-        <img src="img/to-leftffff.png" onclick="history.back(-1)"/>
-        活动
-        <img src="img/msg3.png" style="width:20px;height:auto;right:20px;left:auto;top:12px;" 
+    <div class="title" style="border:none;">
+        <img src="img/to-left.png" onclick="history.back(-1)"/>
+        手办专区
+        <img src="img/msg.png" style="width:20px;height:auto;right:20px;left:auto;top:12px;" 
         onclick="window.location.href='user/userMsg.html'"/>
     </div>
     <img src="img/activT.png" style="width: 100%;margin-top:-1px;"/>
@@ -32,43 +32,50 @@
 
 <!--vipInfo-->
 <div v-for="(item,i) in vipCardList" v-cloak>
-    <div style="margin-bottom:15px;">
-        <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" :style="`background-image:url('img/V${item.forder}_BG.png')`" >
-        <span style="margin-bottom:5px;">{{item.typename}}</span>
-        领取{{item.typename}} {{item.commentstartdays}} 天后且完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
-            <div class="v-numver" style="width: 90%;">
-                <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
-                <div>任务期限：{{item.watchdays}} 天</div>
-                <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
-                <div>消耗XGO币：{{item.xgocoin}}</div>
-                <span class="clear">
-        </div>
-        <img :src="`img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    <div style="width: 96%;margin-left: 2%;margin-bottom:15px;padding-bottom: 10px;background: #fff;border-radius:5px;box-shadow: #c7c7c7 1px 1px 5px 1px;">
+        <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;" >
+            <!-- <span style="margin-bottom:5px;">{{item.typename}}</span>
+            领取{{item.typename}} {{item.commentstartdays}} 天后且完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
+                <div class="v-numver" style="width: 90%;">
+                    <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
+                    <div>任务期限：{{item.watchdays}} 天</div>
+                    <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
+                    <div>消耗XGO币：{{item.xgocoin}}</div>
+                    <span class="clear">
+            </div> -->
+            <img :src="`img/V${item.forder}_BG.jpg`" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
         </div>
         <div class="clear"></div>
+        <div class="vipInfoCommmsg">
+            <div class="vipimgTItle" style="width:100%;">{{item.typename}}】精美手办物美价廉</div>
+            <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
+            <div>开团时间：{{item.starttime}} - {{item.endtime}}</div>
+            <div class="clear"></div>
+        </div>
         <div v-if="item.secondbuy && item.secondbuy<120 && item.secondbuy>0">
             <input type="button" :value="fmtTimeSecond(item.secondbuy,item)" :class="`active-but  v${item.forder}-bg`"/>
         </div>
         <div v-else>
             <div v-if="item.havebuy==1 || item.havebuy==2">
-                <input type="button" v-if="item.havebuy==1" value="任务分派中" :class="`active-but  v${item.forder}-bg`"/>
-                <input type="button" v-if="item.havebuy==2" value="今日任务已领取" :class="`active-but  v${item.forder}-bg`" 
+                <input type="button" v-if="item.havebuy==1" value="正在参与团购" :class="`active-but  v${item.forder}-bg`"/>
+                <input type="button" v-if="item.havebuy==2" value="已 参 团" :class="`active-but  v${item.forder}-bg`" 
                     onclick="window.location.href='cardBag/bagPayWait.html'"/>
             </div>
             <div v-else>
                 <img src="img/isqg.gif"  v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)"  class="qggiftx"/>
-                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)" value="领 取 任 务" :class="`active-but  v${item.forder}-bg`" />
-                <input type="button" v-if="item.isbuy==0" value="暂 未 开 启" :class="`active-but  v${item.forder}-bg`"/>
+                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)" value="参 与 团 购" :class="`active-but  v${item.forder}-bg`" />
+                <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情" :onclick="`window.location.href='productList.html'`" :class="`active-but  v${item.forder}-bg`"/>
             </div>
         </div>
     </div>
     <div class="payWaitLoad" v-if="item.havebuy==1"><img src="img/timg.gif"/></div>
-    <div class="payWaitLoad" v-if="item.havebuy==2"></div>
-
+    <!-- <div class="payWaitLoad" v-if="item.havebuy==2"></div> -->
 </div>
 
 
 
+
+<!--签到窗口-->
 <div class="qiandWin" v-if="qdFlg"  v-cloak></div>
     <div class="qiandContDiv" v-if="qdFlg"  v-cloak>
       <div class="qdsucTitle">签到成功</div>
@@ -183,7 +190,8 @@ new Vue({
             this.qiand();
         }else if(tp==2){
             jqalert({
-                prompt:'请关注任务卡开启时间及时领取！',
+                prompt:'由于近期部分用户发布劣质产品，产品质量不过关。导致平台声誉受损且平台已收到其他用户的投诉信。'+
+                '现关闭产品发布通道，我们将尽力把控产品质量，为大家提供一个放心的收藏平台！再次提醒各位用户，由于产品与资金都不经过平台所以平台能为大家做的事情有限，请大家谨慎购买产品！',
                 yestext:'好 的',
                 yesfn:function () {
                 }

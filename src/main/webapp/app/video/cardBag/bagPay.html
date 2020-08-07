@@ -15,38 +15,42 @@
  <body>
     <!-- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div> -->
 <section class="main"  id="app">
-    <div class="title">
-         <img src="../img/to-left.png" onclick="history.back(-1)"/>
-        购买任务卡
-    </div>
-<div>
+    <img src="../img/to-left.png" onclick="history.back(-1)" style="width:50px;position:absolute;z-index:6;"/>
 <!--vipInfo-->
-<div style="margin-bottom: 5px;margin-top:10px;border-bottom:1px solid #f2f1f1;padding-bottom: 10px;">
-    <div  :class="`vipInfo-active vipInfo  v${orderInfo.forder}-c`" 
-    :style="`background-image:url('../img/V${orderInfo.forder}_BG.png')`" v-cloak>
-      <span style="margin-bottom:5px;"   v-cloak>{{orderInfo.typename}}专享任务</span>
-      领取{{orderInfo.typename}} {{orderInfo.commentstartdays}} 天后且您再完成相应任务要求即可转让您的任务卡！领取{{orderInfo.yield}}%任务奖励。
-      邀请好友还可以获取翻倍任务奖励哦
-      <img :src="`../img/V${orderInfo.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
-    </div>
-    <div class="clear"></div>
-</div>
 
-<div class="payVipInfoCont">
-    <div style="font-weight: 600;"><font v-cloak>{{orderInfo.forderName}}</font>专享影视</div>
-    <div>交易单号 ：<font v-cloak>{{orderInfo.ordernum}}</font></div>
-    <div>购买日期 ：<font v-cloak>{{orderInfo.buytime}}</font></div>
-    <div>任务有效期 ：<font v-cloak>{{orderInfo.duetime}}</font></div>
-    <div>交易状态 ：<span style="color:#F36257;font-weight:600;">待支付</span></div>
-    <div>购买价格 ：<span style="color:#F36257;font-weight:600;" v-cloak >{{orderInfo.cardprice}}</span></div>
+<div >
+    <div style="width:100%;margin-bottom:15px;padding-bottom: 10px;background: #fff;">
+        <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;height: auto !important;" >
+            <img :src="`../img/V1_BG.jpg`" style="width: 100%;">
+        </div>
+        <div class="clear"></div>
+        <div class="paymenytcy" style="margin-top:-4px;">
+            <div class="lf">
+                成交价格：{{orderInfo.cardprice}}
+            </div>
+            <div class="rt">
+                剩余支付时间<br/>
+                {{fmtTimeSecond(orderInfo.secondbuy)}}               
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="vipInfoCommmsg">
+            <div class="vipimgTItle" style="width:100%;">橘右京</div>
+            <div>交易单号：{{orderInfo.ordernum}}</div>
+            <div style="width: 100%;">
+                温馨提醒：通过平台购买的此产品，在{{orderInfo.commentstartdays}}天之内不得再次交易，且出售价格不得高于购买原价的{{100+orderInfo.yield}}%
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
 </div>
 
 <div style="font-weight:600;font-size: 0.9rem;color:#555;margin-left:4%;margin-top:10px;">请选择支付方式</div>
-<div class="operationEl payOption">
+<!-- <div class="operationEl payOption">
     <img src="../img/XGO-ic.png"/>
     <span>XGO币</span>
     <span class="money"><span style="color:#555;font-weight:500;font-size:0.9em;"  v-cloak>{{orderInfo.xgocoin}}</span>
-</div>
+</div> -->
 <div class="operationEl payOption" @click="selectPayType(1)">
     <img src="../img/wx-ic.png"/>
     <img src="../img/sele-ic.png" style="left:180px;" v-if="payType==1"/>
@@ -175,7 +179,7 @@ new Vue({
             showBigFlg:false,
             reqPath : reqPath,
             orderid:'',
-            payType:2,
+            payType:1,
             orderInfo:{},
             payConfirmContStatus:false,
             paypassword:'',
@@ -195,7 +199,11 @@ new Vue({
         getPayVipCardInfo(orderid){
             var vueThis = this;
             jAjax("/appVipCard/getPayVipCardInfo",{orderid:orderid},function(data){
+                data.secondbuy = 500;
                 vueThis.orderInfo = data;  
+                setInterval(()=>{
+                    vueThis.orderInfo.secondbuy -=1;
+                },1000);
             });
         },
         //选择支付方式
@@ -234,6 +242,12 @@ new Vue({
             var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             if(r!=null)return  unescape(r[2]); return null;
+        },fmtTimeSecond(second){
+            if(second<60){
+                return second+'秒';
+            }else{
+                return parseInt(second/60)+'分'+(second%60)+'秒';
+            }
         }
   }
 })

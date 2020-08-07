@@ -7,23 +7,45 @@
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
  </head>
- <body>
+ <body style="background:#f8f8f8;">
 <section class="main"  id="app">
     <div class="title">
          <img src="../img/to-left.png" onclick="history.back(-1)"/>
-        我的卡包
+         产品库
     </div>
 
 <div class="gabTitle">
-    <div onclick="window.location.href='bagPayWait.html'">抢购中</div>
+    <div onclick="window.location.href='bagPayWait.html'">团购中</div>
     <div onclick="window.location.href='bagOwn.html'" class="active">已拥有</div>
     <div onclick="window.location.href='bagSale.html'">出售中</div>
-    <div onclick="window.location.href='bagHistory.html'">历史任务</div>
+    <div onclick="window.location.href='bagHistory.html'">历史产品</div>
     <b class="clear"></b>
 </div>
 
+
+ <div class="ownEl"  v-for="(item,i) in myCardList"  v-cloak >
+    <img src="../img/V2_BG.jpg">
+    <div class="ownElmsg">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}</div>
+        <div style="margin-top:10px;">此产品从购买日期{{item.commentstartdays}}天内不得在平台再次交易，且出售价不得高于购买原价{{100+item.yield}}%</div>
+        <div style="position: absolute;bottom:15px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px">{{item.buytime}}</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div v-if="item.remaincount>0 || item.status!=4" style="width:100%;height:35px;margin-top: -10px;">
+        <div class="kongbtn" :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`" style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
+    </div>
+    <div v-else  style="width:100%;height:35px;margin-top: -10px;" >
+        <div class="kongbtn" :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`" style="position:absolute;right:120px;margin-top:3px;">查看详情</div>
+        <div class="kongbtn" :onclick="`window.location.href='bagSelling.html?orderid=${item.orderid}&cardid=${item.orderid}'`" style="position:absolute;right:15px;margin-top:3px;">立即出售</div>
+    </div v-else>
+</div>
+
 <!--vipInfo-->
-<div v-for="(item,i) in myCardList" style="margin-bottom:15px;" v-cloak>
+<!-- <div v-for="(item,i) in myCardList" style="margin-bottom:15px;" v-cloak>
     <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
     :style="`background-image:url('../img/V${item.forder}_BG.png')`">
       <span style="margin-bottom:5px;">{{item.typename}}</span>
@@ -50,10 +72,59 @@
             :onclick="`window.location.href='bagSelling.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
     </div>
     <div class="clear"></div>
+</div> -->
 
 
+
+<!-- 
+<div v-for="(item,i) in myCardList" >
+    <div style="width: 96%;margin-left: 2%;margin-bottom:15px;padding-bottom: 10px;background: #fff;border-radius:5px;box-shadow: #c7c7c7 1px 1px 5px 1px;">
+        <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;" >
+            <img :src="`../img/V${item.forder}_BG.jpg`" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+        </div>
+        <div class="clear"></div>
+        <div class="vipInfoCommmsg">
+            <div class="vipimgTItle" style="width:100%;">若需转卖您的产品且通过平台发布信息，出售价格不得高于原价{{100+item.yield}}%</div>
+            <div style="width:100%;">
+                温馨提醒：通过平台购买的此产品，在{{item.commentstartdays}}天之内不得再次交易，且出售价格不得高于购买原价的{{100+item.yield}}%
+            </div>
+            <div style="width:100%;">
+                入库日期：{{item.buytime}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                价格：{{item.cardprice}}
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div v-if="item.remaincount>0 || item.status!=4">
+            <input type="button" value="查 看 详 情" :class="`active-but  v${item.forder}-bg`" 
+                :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
+        </div>
+        <div v-else>
+            <input type="button" value="查 看 详 情" :class="`active-but  v${item.forder}-bg`" style="float:left;width:48%;margin:1px 0px 0px 2%;"
+                :onclick="`window.location.href='bagOwnInfo.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
     
-</div>
+            <input type="button" value="立 即 出 售" :class="`active-but  v${item.forder}-bg`"  style="float:left;width:48%;margin:1px 0 0 0%;"
+                :onclick="`window.location.href='bagSelling.html?orderid=${item.orderid}&cardid=${item.orderid}'`"/>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div v-if="myCardList.length==0" class="notList">您还没有拥有任务卡</div>
 </section>
 
