@@ -773,54 +773,55 @@ public class ManageBackstageController {
 		return "redirect:/managebackstage/getMemberCardList";
 	}
 	
+	
+	
 	/**
-	 * 获取会员卡视频管理列表
+	 * 获取会员卡手办列表
 	 * @param map
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/getMemberMovieList")
-	public String getMemberMovieList(@RequestParam Map<String,Object> map , HttpServletRequest request){
+	@RequestMapping(value="/getGarageKitList")
+	public String getGarageKitList(@RequestParam Map<String,Object> map , HttpServletRequest request){
 		
 		try {
 			PageHelper page = new PageHelper(request);
-			int count = this.manageBackstageService.getMemberMovieListCount(map);
+			int count = this.manageBackstageService.getGarageKitListCount(map);
 			page.setTotalCount(count);
 			page.initPage(map);
-			List<Map<String,Object>> list = this.manageBackstageService.getMemberMovieList(map);
+			List<Map<String,Object>> list = this.manageBackstageService.getGarageKitList(map);
 			request.setAttribute("list", list);
 			request.setAttribute("map", map);
 			request.setAttribute("pager", page.cateringPage().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "/managebackstage/collection/membermovie_list";
+		return "/managebackstage/collection/garagekit_list";
 	}
 	
 	/**
-	 * 新增/修改首页免费电影信息
+	 * 新增/修改手办信息
 	 * @param map
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/insertOrupdateMemberMovie")
-	public String insertOrupdateMemberMovie(@RequestParam Map<String,Object> map , HttpServletRequest request){
-		if(map!=null && map.get("movieid")!=null && !"".equals(map.get("movieid").toString())){
+	@RequestMapping(value="/insertOrupdateGarageKit")
+	public String insertOrupdateGarageKit(@RequestParam Map<String,Object> map , HttpServletRequest request){
+		if(map!=null && map.get("kitid")!=null && !"".equals(map.get("kitid").toString())){
 			//有主键id 修改信息
 			Map<String, Object> userInfo=UserUtil.getSystemUser(request);
 			map.put("updateid", userInfo.get("userid"));
 			map.put("updatetime",new Date());
-			this.manageBackstageService.updateMemberMovie(map);
+			this.manageBackstageService.updateGarageKit(map);
 		} else {
 			//新增信息
 			Map<String, Object> userInfo=UserUtil.getSystemUser(request);
 			map.put("createid", userInfo.get("userid"));
 			map.put("createtime",new Date());
-			this.manageBackstageService.insertMemberMovie(map);
+			this.manageBackstageService.insertGarageKit(map);
 		}
-		return "redirect:/managebackstage/getMemberMovieList?cardid="+map.get("cardid");
+		return "redirect:/managebackstage/getGarageKitList?cardid="+map.get("cardid");
 	}
-	
 	
 	/**-----------------------------------------会员卡管理页面end-------------------------------------------------------**/
 	

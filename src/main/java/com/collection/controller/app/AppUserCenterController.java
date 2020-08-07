@@ -1,6 +1,7 @@
 package com.collection.controller.app;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -755,6 +756,129 @@ public class AppUserCenterController extends BaseController{
 			return data;
 		}
 		data.put("resultlist", this.appUserCenterService.getRank(map));
+		return data;
+	}
+	
+	/**
+	 * 查询我的收货地址列表
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getAddressList")
+	@ResponseBody
+	public Map<String, Object> getAddressList(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		data.put("resultlist", this.appUserCenterService.getAddressList(map));
+		return data;
+	}
+	
+	/**
+	 * 新增/修改收货地址
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/insertOrUpdateAddress")
+	@ResponseBody
+	public Map<String, Object> insertOrUpdateAddress(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		//有地址主键id就是修改
+		if(map.containsKey("addressid") && map.get("addressid") != null && !"".equals(map.get("addressid").toString())) {
+			map.put("updatetime", new Date());
+			this.appUserCenterService.updateAddress(map);
+			data.put("status", 0);
+			data.put("message", "修改收货地址成功");
+			return data;
+		} else {
+			//新增地址
+			map.put("createtime", new Date());
+			this.appUserCenterService.insertAddress(map);	
+			data.put("status", 0);
+			data.put("message", "新增收货地址成功");
+			return data;
+		}
+	}
+	
+	/**
+	 * 设置默认收货地址
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/setDefaultAddress")
+	@ResponseBody
+	public Map<String, Object> setDefaultAddress(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		map.put("updatetime", new Date());
+		this.appUserCenterService.setDefaultAddress(map);
+		data.put("status", 0);
+		data.put("message", "默认收货地址成功");
+		return data;
+	}
+	
+	/**
+	 * 删除收货地址
+	 * 传入参数{"userid":132010}
+	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
+	 * @param map
+	 * @param model
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/deleteAddress")
+	@ResponseBody
+	public Map<String, Object> deleteAddress(@RequestParam Map<String, Object> map, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		map.put("updatetime", new Date());
+		this.appUserCenterService.deleteAddress(map);
+		data.put("status", 0);
+		data.put("message", "删除收货地址成功");
 		return data;
 	}
 	
