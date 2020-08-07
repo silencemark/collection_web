@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html> 
-<title>新增统计-管理方后台</title>
+<title>新增用户统计-管理方后台</title>
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
@@ -23,7 +23,7 @@
 		{
 			pageWidth = document.documentElement.clientWidth;
 			pageHeight = document.documentElement.clientHeight;
-		}比如
+		}
 		else
 		{
 			pageWidth = document.body.clientWidth;
@@ -59,11 +59,11 @@ $(document).ready(function(){
 <jsp:include page="../top.jsp" ></jsp:include>
 <div class="main_page">
 	<jsp:include page="../left.jsp" ></jsp:include>
-	<div class="page_nav"><p><a href="#">首页</a><i>/</i><a href="#">统计</a><i>/</i><span>新增统计</span></p></div>        
+	<div class="page_nav"><p><a href="#">首页</a><i>/</i><a href="#">日活统计</a><i>/</i><span>新增用户统计</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">新增统计</span></div>
+        <div class="tab_name"><span class="gray1">新增用户统计</span></div>
         <div class="sel_box">
-        	<form action="<%=request.getContextPath() %>/managebackstage/getOrderStatistics" method="post">          
+        	<form action="<%=request.getContextPath() %>/managebackstage/getNewUserStatistics" method="post">          
             <input type="text" class="text" placeholder="开始时间" name="starttime" value="${map.starttime}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />            
             <input type="text" class="text" placeholder="结束时间" name="endtime" value="${map.endtime}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
             <input type="submit" value="统计" class="find_btn"  />
@@ -79,12 +79,12 @@ $(document).ready(function(){
 </div>
 <script type="text/javascript">
 function onloaddata(){
-	<c:if test="${ordermoneylist.size()>0}">
+	<c:if test="${sumuserlist.size()>0}">
 		var timedataArray1 = new Array();
 		var nowdataArray1 = new Array();
-		<c:forEach items="${ordermoneylist }" var="money" varStatus="st">
-			timedataArray1[${st.index}]='${money.comparetime}';
-			nowdataArray1[${st.index}]='${money.count}';
+		<c:forEach items="${sumuserlist }" var="user" varStatus="st">
+			timedataArray1[${st.index}]='${user.comparetime}';
+			nowdataArray1[${st.index}]='${user.count}';
 		</c:forEach>
 		option = {
 			    
@@ -94,7 +94,7 @@ function onloaddata(){
 			        trigger: 'axis'
 			    },
 			    legend: {
-			    	data:["每日交易金额"]
+			    	data:["总用户数量"]
 			    },
 			    toolbox: {
 			        show: true,
@@ -118,7 +118,7 @@ function onloaddata(){
 			    },
 			    series: [
 			        {
-			        	name:'每日交易金额',
+			        	name:'总用户数量',
 			            type:'line',
 			            data:nowdataArray1
 			        }
@@ -129,12 +129,12 @@ function onloaddata(){
 		var myChart1 = echarts.init(document.getElementById("echarts_two"));
 		myChart1.setOption(option);
 	</c:if>
-	<c:if test="${ordercountlist.size()>0}">
+	<c:if test="${newuserlist.size()>0}">
 		var timedataArray = new Array();
 		var nowdataArray = new Array();
-		<c:forEach items="${ordercountlist }" var="order" varStatus="st">
-			timedataArray[${st.index}]='${order.comparetime}';
-			nowdataArray[${st.index}]='${order.count}';
+		<c:forEach items="${newuserlist }" var="user" varStatus="st">
+			timedataArray[${st.index}]='${user.comparetime}';
+			nowdataArray[${st.index}]='${user.count}';
 		</c:forEach>
 		option = {
 			    
@@ -144,7 +144,7 @@ function onloaddata(){
 			        trigger: 'axis'
 			    },
 			    legend: {
-			    	data:["每日订单数"]
+			    	data:["新增用户数"]
 			    },
 			    toolbox: {
 			        show: true,
@@ -168,7 +168,7 @@ function onloaddata(){
 			    },
 			    series: [
 			        {
-			        	name:'每日订单数',
+			        	name:'新增用户数',
 			            type:'line',
 			            data:nowdataArray
 			        }

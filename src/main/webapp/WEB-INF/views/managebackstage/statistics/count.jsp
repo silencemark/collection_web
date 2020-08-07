@@ -63,10 +63,10 @@ $(document).ready(function(){
         <div class="tab_name"><span class="gray1">统计</span></div>
       	<div class="skydrive_ico">
         	<ul>
-            	<li><a href="javascript:void(0)" onclick="alert('攻城狮疯狂开发中~~~')"><b class="bg_green2"><img src="../userbackstage/images/page/total_ico01.png" width="32" height="32" /></b></a><span>日活统计</span></li>
-                <li><a href="javascript:void(0)" onclick="alert('攻城狮疯狂开发中~~~')"><b class="bg_purple"><img src="../userbackstage/images/page/total_ico02.png" width="32" height="32" /></b></a><span>红黑榜</span></li>
+            	<li><a href="<%=request.getContextPath()%>/managebackstage/getStatisticsToday"><b class="bg_green2"><img src="../userbackstage/images/page/total_ico01.png" width="32" height="32" /></b></a><span>日活统计</span></li>
+                <li><a href="<%=request.getContextPath()%>/managebackstage/getNewUserStatistics"><b class="bg_purple"><img src="../userbackstage/images/page/total_ico02.png" width="32" height="32" /></b></a><span>新增用户统计</span></li>
                 <li><a href="<%=request.getContextPath()%>/managebackstage/getOrderStatistics"><b class="bg_yellow"><img src="../userbackstage/images/page/total_ico03.png" width="32" height="32" /></b></a><span>订单统计</span></li>
-                <li><a href="javascript:void(0)" onclick="alert('攻城狮疯狂开发中~~~')"><b class="bg_blue"><img src="../userbackstage/images/page/total_ico04.png" width="32" height="32" /></b></a><span>企业空间统计</span></li>
+                <li><a href="javascript:void(0)" onclick="alert('攻城狮疯狂开发中~~~')"><b class="bg_blue"><img src="../userbackstage/images/page/total_ico04.png" width="32" height="32" /></b></a><span>随便什么统计</span></li>
             </ul>
             <div class="clear"></div>
         </div>

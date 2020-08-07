@@ -499,4 +499,31 @@ public class AppVipCardController extends BaseController{
 		data.put("message", "浏览成功");
 		return data;
 	}
+	
+	
+	/**
+	 * 获取VIP会员卡对应的手办列表
+	 * 传入参数{"type":"1"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getGarageKitList")
+	@ResponseBody
+	public Map<String, Object> getGarageKitList(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		List<Map<String, Object>> list=this.appVipCardService.getGarageKitList(map);
+		data.put("resultlist", list);
+		return data;
+	}
 }

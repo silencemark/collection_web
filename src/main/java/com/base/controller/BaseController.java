@@ -42,12 +42,15 @@ public class BaseController {
 	 * @return
 	 */
 	public static boolean checkToeknSign(Map<String, Object> map){
+		boolean flag=false;
 		String token = map.get("token").toString();
 		String timestamp = map.get("timestamp").toString();
 		String sign = map.get("sign").toString();
+		if(token == null || "".equals(token) || timestamp == null || "".equals(timestamp) || sign == null || "".equals(sign)){
+			return false;
+		}
 		String signStr = token.concat(timestamp).concat(Constants.INTERFACE_SECRET);
 		String signcode = Md5Util.getMD5(signStr);
-		boolean flag=false;
 		Long s = (System.currentTimeMillis() - Long.parseLong(timestamp)) / (1000);
 		//判断3秒内的请求可取
 		if(signcode.equals(sign) && s < 3){
