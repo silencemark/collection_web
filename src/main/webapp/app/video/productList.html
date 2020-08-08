@@ -20,7 +20,7 @@
         <img src="img/to-left.png" onclick="history.back(-1)"/>
         专区互动
    </div>
-   <img src="img/yq02.png" style="width:98%;margin-left:1%;"  onclick="window.location.href='invite.html'">
+   <img src="img/yq02.png" style="width:98%;margin-left:1%;"  onclick="window.location.href='invite.html'"/>
    <div class="sqTitle">
        <div class="sqTitleEl sqTitleElActiv" @click="changStype(0)" style="width:25%;">精品推荐</div>
        <div class="sqTitleEl" @click="changStype(1)" style="width:25%;">手办专区</div>
@@ -33,7 +33,9 @@
 <div class="commsq" style="margin-top:180px;">
     <div class="commsqLeft" >
         <div class="commsqEl" v-for="(sqel , i) in dataList" v-if="i%2==0" v-cloak :onclick="`window.location.href='productInfo.html?kitid=${sqel.kitid}'`">
-            <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
+            <div style="width: 100%;min-height:150px;">
+                <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
+            </div>
             <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">{{sqel.title}}</span>
             <div style="max-height:55px;padding:5px;margin-top:-10px;">
                 {{sqel.description.length>30?sqel.description.substr(0,30)+'...':sqel.description}}
@@ -47,7 +49,9 @@
 
     <div class="commsqRight">
         <div class="commsqEl" v-for="(sqel , i) in dataList" v-if="i%2!=0" v-cloak  :onclick="`window.location.href='productInfo.html?kitid=${sqel.kitid}'`">
-            <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
+            <div style="width: 100%;min-height:150px;">
+                <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
+            </div>
             <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">{{sqel.title}}</span>
             <div style="max-height:55px;padding:5px;margin-top:-10px;">
                 {{sqel.description.length>30?sqel.description.substr(0,30)+'...':sqel.description}}
