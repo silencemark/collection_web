@@ -486,3 +486,16 @@ header .searchCont input::-webkit-input-placeholder{
     height: 90%;
     overflow: auto;
 }
+.myisRead{
+    height: 45px;
+    line-height: 45px;
+    background-color: #4988f3;
+    color: #fff;
+    text-align: center;
+    margin-top: 30px;
+    border-radius: 25px;
+    position: fixed;
+    bottom: 5px;
+    width: 90%;
+    left: 5%;
+}
