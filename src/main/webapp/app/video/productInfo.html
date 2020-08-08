@@ -92,7 +92,7 @@
       },
       created() {
           this.kitid = this.GetQueryString('kitid');
-           this.getGarageKitInfo();
+          this.getGarageKitInfo();
       },
       mounted() {
 
@@ -116,6 +116,7 @@
                 }else{
                     jqtoast('您取消了喜欢此商品！');
                 }
+                vThis.getGarageKitInfo();
             });
         },
         ctn(){

@@ -182,7 +182,7 @@
    min-height: 50px;
    line-height: 50px;
    font-size: 0.8rem;
-   border-bottom: 1px solid #e7e7e7;
+   border-bottom: 1px solid #ededed;
    color: #6b6a6a;
    letter-spacing: 1px;
    box-sizing: border-box;
@@ -208,7 +208,7 @@
    bottom: 0px;
 }
 .likeprdCont{
-   padding-left: 15px;
+   padding-left: 0;
 }
 .likeprdCont img{
    width: 26px;
@@ -218,4 +218,61 @@
    border: 2px solid #fff;
    margin-left: -5px;
    margin-top: 10px;
+}
+.likeprdCont img:first-child{
+   margin-left:0;
+}
+.userxyCont{
+   width:90%;margin-left:5%;border-radius:5px;height:auto;min-height:300px;background:none;top:150px;
+}
+.userxyContTitle{
+   width: 100%;
+   background-color: #4386f7;
+   text-align: center;
+   font-size: 1.2rem;
+   color: #fff;
+   padding-top: 25px;
+   line-height: 30px;
+   letter-spacing: 1.5px;
+   padding: 20px 70px 20px 70px;
+   box-sizing: border-box;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+   opacity: 0.95;
+}
+.userxyContTitle  img{
+   width: 60px;
+    height: 60px;
+    margin-top: 20px;
+}
+.userxyMsgCont{
+   background: #fff;
+   padding: 10px 20px 20px 20px;
+   letter-spacing: 2px;
+   color: #555;
+}
+.userxyBUt{
+   width: 100%;
+   height: auto;
+   min-height: 100px;
+   background: #fff;
+   border-top: 1px solid #ececec;
+}
+.userxyBUt{
+   padding: 20px;
+   box-sizing: border-box;
+   font-size: 0.9rem;
+}
+.userxyBUt img{
+   width: 20px;
+   position: absolute;
+}
+.userxyBUt .usersub{
+   height: 45px;
+   line-height: 45px;
+   background-color: #4988f3;
+   color: #fff;
+   text-align: center;
+   margin-top: 30px;
+   border-radius: 5px;
 }

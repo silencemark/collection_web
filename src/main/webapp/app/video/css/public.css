@@ -56,7 +56,7 @@
     /* border-bottom: 1px solid #f2f1f1; */
     height: 45px;
     line-height: 45px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #333333;
     text-align: center;
     background-color: #f7f7f7;
@@ -469,4 +469,20 @@ header .searchCont input::-webkit-input-placeholder{
 .qbtitleGbk img{
     width: 34px;
     height: 34px;
+}
+.userxyInfo{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    z-index:9;
+    background: #f9f9f9;
+}
+.userxyInfo .ussmsgggg{
+    letter-spacing: 2px;
+    color: #555;
+    padding: 15px;
+    letter-spacing: 2px;
+    height: 90%;
+    overflow: auto;
 }

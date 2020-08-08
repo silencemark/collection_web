@@ -21,19 +21,28 @@
         专区互动
    </div>
    <img src="img/yq02.png" style="width:98%;margin-left:1%;"  onclick="window.location.href='invite.html'"/>
-   <div class="sqTitle">
-       <div class="sqTitleEl sqTitleElActiv" @click="changStype(0)" style="width:25%;">精品推荐</div>
-       <div class="sqTitleEl" @click="changStype(1)" style="width:25%;">手办专区</div>
-       <div class="sqTitleEl" @click="changStype(1)" style="width:25%;">收藏品</div>
-       <div class="sqTitleEl" @click="changStype(1)" style="width:25%;">其他</div>
-       <div class="clear"></div>
+   <div style="width:100%;height: 50px;float:left;overflow-y:hidden;overflow-x:auto;white-space:nowrap;">
+       <div style="width:250%;height:50px;position:relative;display:inline-block;">
+        <div class="sqTitle">
+            <div v-for="(c,i) in vipCardList"
+            :class="`sqTitleEl ${c.cardid==cardid?'sqTitleElActiv':''}`"
+             @click="changStype(c.cardid)"
+             style="width:auto;padding:13px 15px 13px 15px;font-size: 0.85rem;"  v-cloak >{{c.typename}}</div>
+            <div class="clear"></div>
+        </div>
    </div>
+
+</div>
+   
+   
+   
+
 </div>
 
-<div class="commsq" style="margin-top:180px;">
+<div class="commsq" style="margin-top:185px;">
     <div class="commsqLeft" >
         <div class="commsqEl" v-for="(sqel , i) in dataList" v-if="i%2==0" v-cloak :onclick="`window.location.href='productInfo.html?kitid=${sqel.kitid}'`">
-            <div style="width: 100%;min-height:150px;">
+            <div style="width:100%;min-height:150px;">
                 <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
             </div>
             <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">{{sqel.title}}</span>
@@ -145,7 +154,7 @@ function getDocumentTop() {
         if((getScrollHeight()-2) < getDocumentTop() + getWindowHeight()){
             if(refEnabled){
                 refEnabled = false;
-                xlref();
+                //xlref();
             }
         }
     });
@@ -155,16 +164,18 @@ function getDocumentTop() {
       data: function() {
         return {
             reqPath : reqPath,
-            cardid:'',
             dataList : [],
             pageNo:1,
             pageSize:10,
             sumPageNumber:1,
+            cardid:'',
+            vipCardList:[],
         }
       },
       created() {
           this.cardid = this.GetQueryString("cardid");
           this.getGarageKitList({});
+          this.getVipCardList();
       },
       mounted() {
         window.xlref = this.xlref;
@@ -190,13 +201,24 @@ function getDocumentTop() {
             jAjax("/appVipCard/getGarageKitList",reqBo,function(data){
                 vThis.dataList = data.kitlist;
                 vThis.sumPageNumber = Math.ceil(data.kitnum/vThis.pageSize);
+                vThis.$forceUpdate();
+            });
+        },
+        //获取活动类型
+        getVipCardList(){
+            var vueThis = this;
+            jAjax("/appVipCard/getVipCardList",{},function(data){
+                vueThis.vipCardList = data.resultlist;  
             });
         },
         //详情
         shwoInfo(iId){
             
         },
-        changStype(){},
+        changStype(cardid){
+            this.cardid = cardid;
+            this.getGarageKitList();
+        },
         //获取URL参数
         GetQueryString(name){
             var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");

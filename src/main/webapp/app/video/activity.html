@@ -12,9 +12,8 @@
 <section class="main"  id="app">
     <div class="title" style="border:none;">
         <img src="img/to-left.png" onclick="history.back(-1)"/>
-        享购就购
-        <img src="img/msg2.png" style="width:20px;height:auto;right:20px;left:auto;top:12px;" 
-        onclick="window.location.href='user/userMsg.html'"/>
+        享购
+        <span style="right:10px;font-size:0.9rem;position:absolute;color:#777;" @click="yhxyInfo=true">用户协议？</span>
     </div>
     <img src="img/activT.png" style="width: 100%;margin-top:-1px;"/>
     <img src="img/activ1.png" style="width: 100%;"/>
@@ -25,9 +24,9 @@
         <div @click="ckActiv(4)"></div>
     </div>
     <div class="clear"></div>
-    <div class="maeeageTx"  style="top:170px" id="lookMsg" style="height:auto;" onclick="window.location.href='introduce.html'">
+    <!-- <div class="maeeageTx"  style="top:170px" id="lookMsg" style="height:auto;" onclick="window.location.href='introduce.html'">
         <span>操作引导</span>
-    </div>
+    </div> -->
 
 
 <!--vipInfo-->
@@ -43,11 +42,11 @@
                     <div>消耗XGO币：{{item.xgocoin}}</div>
                     <span class="clear">
             </div> -->
-            <img :src="`${reqPath+item.cardicon}`" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+            <img :src="`${reqPath+item.cardicon}`" :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`"  style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
         </div>
         <div class="clear"></div>
         <div class="vipInfoCommmsg">
-            <div class="vipimgTItle" style="width:100%;">{{item.typename}} 精美手办物美价廉</div>
+            <div class="vipimgTItle" style="width:100%;">{{item.typename}} </div>
             <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
             <div>开团时间：{{item.starttime}} - {{item.endtime}}</div>
             <div class="clear"></div>
@@ -57,16 +56,14 @@
         </div>
         <div v-else>
             <div v-if="item.havebuy==1 || item.havebuy==2">
+                <input type="button" v-if="item.havebuy==2" value=" 参 团 成 功 " onclick="window.location.href='cardBag/bagPayWait.html'" :class="`active-but  v${item.forder}-bg`"/>
                 <input type="button" v-if="item.havebuy==1" value="正在参与团购" :class="`active-but  v${item.forder}-bg`"/>
-                <!-- <input type="button" v-if="item.havebuy==2" value="已 参 团" :class="`active-but  v${item.forder}-bg`" 
-                    onclick="window.location.href='cardBag/bagPayWait.html'"/> -->
-                    <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情 " :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`" :class="`active-but  v${item.forder}-bg`"/>
             </div>
             <div v-else>
-                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)" value="参 与 团 购" :class="`active-but  v${item.forder}-bg`" />
-                <img src="img/isqg.gif"  v-if="item.isbuy==1" @click="rushToBuyCard(item.forder,i)"  class="qggiftx"/>
+                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder)" value="参 与 团 购" :class="`active-but  v${item.forder}-bg`" />
                 <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情" :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`" :class="`active-but  v${item.forder}-bg`"/>
             </div>
+            <img src="img/isqg.gif"  v-if="item.isbuy==1 && item.havebuy!=1 && item.havebuy!=2" style="margin-top:-30px;" @click="rushToBuyCard(item.forder)"  class="qggiftx"/>
         </div>
     </div>
     <div class="payWaitLoad" v-if="item.havebuy==1"><img src="img/timg.gif"/></div>
@@ -78,14 +75,84 @@
 
 <!--签到窗口-->
 <div class="qiandWin" v-if="qdFlg"  v-cloak></div>
-    <div class="qiandContDiv" v-if="qdFlg"  v-cloak>
-      <div class="qdsucTitle">签到成功</div>
-      <div class="qdsuccont" v-cloak style="height: 70px;">{{qdMessage}}</div>
-      <div style="text-align:center;margin-top:-35px;"><img src="img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
-      <div style="text-align:center;margin-top:-20px;">
-          <div class="btn" @click="qdFlg = false">知 道 了</div>
-      </div>
+<div class="qiandContDiv" v-if="qdFlg"  v-cloak>
+    <div class="qdsucTitle">签到成功</div>
+    <div class="qdsuccont" v-cloak style="height: 70px;">{{qdMessage}}</div>
+    <div style="text-align:center;margin-top:-35px;"><img src="img/lib.png" style="width:200px;height:200px;"  v-cloak/></div>
+    <div style="text-align:center;margin-top:-20px;">
+        <div class="btn" @click="qdFlg = false">知 道 了</div>
     </div>
+</div>
+<!--end签到窗口-->
+
+
+
+<!--用户协议WIN-->
+<div class="qiandWin" v-if="userxy"  v-cloak></div>
+<div class="qiandContDiv userxyCont" v-if="userxy">
+    <div class="userxyContTitle">
+        交易服务平台用户购买及转出协议
+        <div><img src="img/dunpai.png"/>
+        </div>
+    </div>
+    <div class="userxyMsgCont">
+        欢迎您使用享GO，在您使用享GO信息发布平台进行购买或转出您的商品前，
+        您需要完成我们的操作流程并通过勾选"本人已阅读并同意"《用户服务协议》再点击确认、
+        请您务必仔细阅读、充分理解协议中的条款内容后再点击确认。
+    </div>
+    <div class="userxyBUt">
+        <img src="img/ntxy.png" v-if="!xyIsRead" @click="xyIsRead=!xyIsRead"/>
+        <img src="img/tyxy.png" v-if="xyIsRead" @click="xyIsRead=!xyIsRead"/>
+        <span style="margin-left:23px;" @click="xyIsRead=true">
+            本人已阅读并同意<a href="javascript:void(0);" style="color:#2b6ee1;" @click="xyIsRead=true;yhxyInfo=true">《用户服务协议》</a>
+        </span>
+        <div class="usersub" @click="irReaduserx"> 确 认 </div>
+    </div>
+</div>
+<!--end用户协议WIN-->
+
+<!--bg用户协议详情-->
+<div class="userxyInfo" v-if="yhxyInfo">
+    <div class="title" style="text-align:left;padding-left:40px;">
+        <img src="img/to-left.png" @click="yhxyInfo=false"/>
+        <span @click="yhxyInfo=false">用户协议</span>
+    </div>
+    <div class="ussmsgggg">
+        <p style="font-size:1.6rem;padding:10px;text-align: center;">用户服务协议</p>
+        <p style="padding: 20px;text-align: center;">前言</p>
+
+       本《用户服务协议》（以下简称“本协议”）是由您（以下称为“用户”）与享GO影视平台（以下称为“平台”）就平台上所提供的产品和服务（包括平台的网站以及平台现在正在提供和将来可能向用户提供的其他网络服务，以下统称为“产品和服务”）所订立的协议。
+<br/>重要须知：
+<br/>1、本协议在用户获得及使用平台产品和服务之日签订并生效。本协议的订立、履行、解释及争议的解决均适用中华人民共和国法律并排除其他一切冲突法的适用。如双方就本协议的内容或其执行发生任何争议（包括但不限于合同或者其他财产性权益纠纷），双方应友好协商解决；协商不成时，双方同意交由平台所在地有管辖权的人民法院管辖并处理。
+<br/>2、请用户仔细阅读本协议内容。如用户不同意本协议的任意内容，请不要使用平台提供的任何产品和服务。如用户通过程序并勾选“我已阅读并同意用户服务协议与隐私协议”，即表示用户与平台已达成协议，自愿接受本协议及《用户隐私协议》的所有内容。此后，用户不得以未阅读/未同意本协议及《用户隐私协议》的内容作任何形式的抗辩。
+<br/>3、请注意，平台可能适时对本协议进行修改与更新，用户同意将随时留意查看本协议的最新版本。请在使用平台的产品（或服务）前，仔细阅读并了解本协议，以确保对本协议的最新版本始终保持了解。如用户不同意或不接受本协议条款内容的，请不要继续使用平台提供的产品和服务，否则视为用户同意接受修订后的本协议内容。
+<br/>4、平台特别提醒用户认真阅读本协议的全部条款，特别是其中免除或者限制平台责任的条款（该等条款通常含有“不负责”、“不保证”等词汇）、限制用户权利的条款（该等条款通常含有“不得”、“不应”、“不允许”、“禁止”等词汇）、法律适用和争议解决条款，这些条款应在中国法律所允许的范围内最大程度地适用。
+<br/>5、如果用户未满18周岁，请在法定监护人的陪同下阅读本协议，并特别注意未成年人使用条款。如未成年人继续使用平台提供的游戏及服务的，视为未成年人用户已取得法定监护人对该用户享用平台提供的服务、以及对本协议全部条款的同意。
+<br/>一、免责条款
+<br/>1.平台为大家提供了一个免费观影的信息平台，且拥有海量电影人物、动漫人物角色精美手办转让专区。在这里有大量的手办收藏的爱好者，您在不但可以在专区中挑选到您喜欢的宝贝，还可以将您个人收藏的精美手办发布在平台卖出你心仪的价格。
+<br/>2.平台手办交易专区属于C2C（客户与客户）之间的直接交易，所有资金以及产品不经过平台，需玩家线下完成交易动作，平台仅提供信息发布，交易期间出现任务问题与平台无关。
+<br/>3.为了保证市场秩序及防止部分用户恶意炒高产品价格，如通过平台购买产品再出转卖的情况，平台将限制产品的发布售价不得高于购买价格的20%。如买家与卖家自愿交易的情况可进行线下交易。
+<br/>二、实名认证
+<br/>①为了提高用户安全性和用户身份的可信性，交易的有效性，平台将要求需要在平台购买或出售产品的用户必须完成实名认证。本平台有权采取各种必要的手段对用户身份进行识别，记录并保存您提供的个人身份信息。
+<br/>②对未满18周岁不具备民事行为能力的用户，不得在平台发布以及购买产品。
+<br/>③如果用户提供的个人身份信息不准确，或不真实，或非法无效，或已变更而未及时更新，或有任何误导、伪造、隐瞒之嫌，平台有权中止或终止该用户使用平台的任何服务
+<br/>三、行为规范
+<br/>1）、不得使用账号从事包含下列内容行为或发布包含下列内容信息，否则平台将有权对您的有关行为或发布的信息依法或依本协议进行删除和屏蔽。
+<br/>①传输或发表：煽动抗拒、破坏宪法和法律、行政法规实施的言论、煽动颠覆国家政权，推翻社会主义制度的言论，煽动分裂国家破坏国家统一的言论，煽动民族仇恨、民族歧视、破坏民族团结的言论以及其他任何违反国家法律法规的言论。
+<br/>②传输或发表：封建迷信、淫秽、色情、赌博、暴力、恐怖或教唆犯罪。
+<br/>③欺诈、虚假、不准确或存在误导性的。
+<br/>④没有依据诋毁平台的商誉行为。
+<br/>⑤侵犯他人知识产权或涉及第三方商业机密及其他权利的行为。
+<br/>⑥侮辱、诽谤、恐吓、涉及他人隐私等侵害他们的合法权益。
+<br/>⑦跟踪、人肉搜索或其他方式骚扰他们行为。
+<br/>⑧存在可能破坏、篡改、删除、影响平台服务正常运行或未经授权秘密获取平台服务及其他消费者数据的病毒、木马、爬虫等恶意软件、程序代码的或未经合法授权而拦截、篡改、收集、存储或删除他人数据，或获得他人数据用于任何非法或不正当的目的。
+<br/>⑨其他违背法律、社会公共利益、公共道德，或依法规定不适格发布的行为。
+<br/>2）、若您未遵守国家相关法律法规及本协议相关规定的，平台有权采取暂停您的账号使用权益、或删除您再本平台的不良内容或终止您的使用权利，并且您必须为您的言论和行为承担法律责任。
+<br/>平台可对您的违法行为处理措施信息，以及其他经国家行政或司法机关生效的法律文件确认的违法信息予以公示。
+</div>
+</div>
+<!--end用户协议详情-->
+
 
 </section>
 
@@ -128,6 +195,11 @@ new Vue({
         qdFlg:false,
         vipCardList : [],
         timer:undefined,//定时函数
+        userxy:false,
+        xyIsRead:false,
+        yhxyInfo:false,
+        buycardid:'',
+        xxxxxx:false,
     }
     },
     created() {
@@ -142,7 +214,12 @@ new Vue({
         });
     },
     //立即抢购
-    rushToBuyCard(cardid,cardIndex){
+    rushToBuyCard(cardid){
+        this.buycardid = cardid;
+        if(!this.xxxxxx){
+            this.userxy = true;
+            return;
+        }
         var vueThis = this;
         var reqData = {cardid:cardid};
         jAjax("/appVipCard/rushToBuyCard",reqData,function(data){
@@ -205,6 +282,15 @@ new Vue({
         }else{
             window.location.href='invite.html';
         }
+    },
+    //阅读用户协议
+    irReaduserx(){
+        if(!this.xyIsRead){
+            jqalert('请先阅读用户服务协议并勾选！');
+            return;
+        }
+        this.xxxxxx = true;
+        this.rushToBuyCard(this.cardid);
     },
     qiand(){
         var vThis = this;
