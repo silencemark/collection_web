@@ -23,7 +23,7 @@
         <div class="v-numver">
           距离升级还需要<font  v-cloak>{{growthValueData.needgrowthvalue}}</font>点成长值
           <div class="jdt-father">
-              <div id="Son" :class="`v${growthValueData.levelenum}-bg`"></div>
+              <div id="Son" :class="`vip${growthValueData.levelenum}-bg`"></div>
           </div>
           <span style="float:left;"  v-cloak>V{{growthValueData.levelenum}}</span>
           <span style="float:right;"  v-cloak>V{{growthValueData.levelenum+1}}</span>
@@ -39,7 +39,7 @@
   <div class="contentTitle">当前会员等级特权</div>
   <div class="equityLable">
     <span style="display: block;height:18px;"  v-cloak>{{growthValueData.interesttimes}}倍</span>
-    <span>任务奖励</span>
+    <span>发布价</span>
   </div>
   <div class="equityLable">
     <span style="display: block;height:18px;">签到领</span>
@@ -58,30 +58,30 @@
       <tr v-for="(bo,i) in memberGrowList"  v-cloak>
           <th>V{{bo.levelenum}}{{bo.levelname}}</th>
           <th>{{bo.mingrowthvalue}}-{{bo.maxgrowthvalue}}</th>
-          <th>{{bo.interesttimes}}倍任务奖励</th>
+          <th>{{bo.interesttimes}}倍发布价</th>
       </tr>
   </table>
   
   <div class="contentTitle">会员升级攻略</div>
-  <div class="equityLable">
+  <div class="equityLable"  onclick="window.location.href='../invite.html'">
     <span style="display: block;height:18px;">邀请好友</span>
     <span>得成长值</span>
+  </div>
+  <div class="equityLable" onclick="window.location.href='../activity.html'">
+    <span style="display: block;height:18px;">购买或</span>
+    <span>发布商品</span>
   </div>
   <div class="equityLable">
     <span style="display: block;height:18px;">每日签到</span>
     <span>领取成长值</span>
-  </div>
-  <div class="equityLable">
-    <span style="display: block;height:18px;">购买VIP会</span>
-    <span>员卡得成长值</span>
   </div>
   <div class="clear"></div>
   
   <div class="contentTitle">成长值增值介绍</div>
   <div class="equityContentInfo">
     (1) 大于V0级的会员每日签到可领取1-50点成长值。<br/><br/>
-    (2) 所有会员在享互动购买VIP会员卡后，在用户将会员卡转出时系统将会以您观影收益1比1的方式发放到您的会员成长值。<br/><br/>
-    (3) 邀请好友参与观影，好友会员等级达到V1系统将会赠送您1000的成长值（限前20位好友）。
+    (2) 所有用户在享购专区发布转出商品后，用户可获得对应成长值奖励。<br/><br/>
+    (3) 邀请好友，当好友好友会员等级达到V1系统将会赠送您1000的成长值。
   </div>
 </div>
 <br/><br/><br/>   

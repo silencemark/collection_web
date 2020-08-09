@@ -264,15 +264,26 @@ header .searchCont input::-webkit-input-placeholder{
  .v7-c{color: #ce84fd;}
  .v8-c{color: #dbb3f6;}
 
- .v0-bg{background-image: linear-gradient(90deg,#7d4532,#c7284c);}
- .v1-bg{background-image: linear-gradient(90deg,#7d4532,#c7284c);}
- .v2-bg{background-image: linear-gradient(90deg,#7689c7,#63719e);}
- .v3-bg{background-image: linear-gradient(90deg,#a01043,#4a0318);}
- .v4-bg{background-image: linear-gradient(90deg,#5767ae,#020305);}
- .v5-bg{background-image: linear-gradient(90deg,#501521,#801d2a);}
- .v6-bg{background-image: linear-gradient(90deg,#be79bc,#e0a04a);}
- .v7-bg{background-image: linear-gradient(90deg,#97194a,#400d0a);}
- .v8-bg{background-image: linear-gradient(90deg,#7cd2bc,#1f3c39);}
+ .v0-bg{background-image: linear-gradient(90deg,#3748aa,#90bcf0);}
+ .v1-bg{background-image: linear-gradient(90deg,#3748aa,#90bcf0);}
+ .v2-bg{background-image: linear-gradient(90deg,#d94a51,#c69499);}
+ .v3-bg{background-image: linear-gradient(90deg,#0b376b,#02798d);}
+ .v4-bg{background-image: linear-gradient(90deg,#723e63,#dc7566);}
+ .v5-bg{background-image: linear-gradient(90deg,#70614e,#af9774);}
+ .v6-bg{background-image: linear-gradient(90deg,#514bb9,#9980df);}
+ .v7-bg{background-image: linear-gradient(90deg,#1f3c39,#7cd2bc);}
+ .v8-bg{background-image: linear-gradient(90deg,#6b1726,#4366ae);}
+
+ .vip0-bg{background-color: #555555;}
+ .vip1-bg{background-color: #805333;}
+ .vip2-bg{background-color: #707580;}
+ .vip3-bg{background-color: #806242;}
+ .vip4-bg{background-color: #457580;}
+ .vip5-bg{background-color: #405980;}
+ .vip6-bg{background-color: #674a80;}
+ .vip7-bg{background-color: #ce84fd;}
+ .vip8-bg{background-color: #5e128e;}
+
  .money{
     color:#6daefe;
     font-size: 1rem;
