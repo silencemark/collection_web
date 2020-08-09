@@ -79,7 +79,7 @@ function checkHide(num){
 }
 
 //显示隐藏窗口
-function update(kitid, iconimg,coverimg, title, description,status, cardid, forder){
+function update(kitid, iconimg,coverimg, title, description,status, cardid, forder, avgprice, likenum){
 	$("#updatediv").show();	
 	$(".div_mask").css("display","block");
 	$("#kitid").val(kitid);
@@ -92,6 +92,8 @@ function update(kitid, iconimg,coverimg, title, description,status, cardid, ford
 	$("#status").val(status);
 	$("#cardid123").val(cardid);
 	$("#forder").val(forder);
+	$("#avgprice").val(avgprice);
+	$("#likenum").val(likenum);
 }
 
 //显示隐藏支付凭证
@@ -114,7 +116,7 @@ function checkImageShowHide(rum,imagesrc){
 	<jsp:include page="../left.jsp" ></jsp:include>
 	<div class="page_nav"><p><a href="<%=request.getContextPath() %>/managebackstage/getMemberCardList">VIP任务卡管理</a><i>/</i><span>任务卡手办管理</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">任务卡手办管理列表</span><a href="#" onclick="update('','','','','','','${map.cardid}','1')">添加</a></div>
+        <div class="tab_name"><span class="gray1">任务卡手办管理列表</span><a href="#" onclick="update('','','','','','','${map.cardid}','1','','')">添加</a></div>
         <div class="sel_box">
         	<form action="<%=request.getContextPath()%>/managebackstage/getGarageKitList" method="post">
         		<input type="hidden" class="text"  name="cardid" value="${map.cardid}"/>
@@ -139,6 +141,8 @@ function checkImageShowHide(rum,imagesrc){
                     <td>手办图标</td>
                     <td>手办大图</td>
                     <td>状态</td>
+                    <td>均价</td>
+                    <td>被喜爱人数</td>
                     <td>排序值</td>
                     <td>创建时间</td>
                     <td>修改时间</td>
@@ -152,10 +156,12 @@ function checkImageShowHide(rum,imagesrc){
 	                    <td onclick="checkImageShowHide(0,'${li.iconimg }');"><img src="${li.iconimg }" alt="" width="48px" height="48px" /></td>
 	                    <td onclick="checkImageShowHide(0,'${li.coverimg }');"><img src="${li.coverimg }" alt="" width="48px" height="48px" /></td>
 	                    <td>${li.status ==1?'有效':'无效' }</td>
+	                    <td>${li.avgprice}</td>
+	                    <td>${li.likenum}</td>
 	                    <td>${li.forder}</td>
 	                    <td>${li.createtime }</td>
 	                    <td>${li.updatetime }</td>
-	                    <td><a href="javascript:void(0)" onclick="update('${li.kitid}','${li.iconimg }','${li.coverimg}','${li.title}','${li.description}','${li.status}','${map.cardid}','${li.forder}')" class="blue">修改</a></td>
+	                    <td><a href="javascript:void(0)" onclick="update('${li.kitid}','${li.iconimg }','${li.coverimg}','${li.title}','${li.description}','${li.status}','${map.cardid}','${li.forder}','${li.avgprice}','${li.likenum}')" class="blue">修改</a></td>
 	                </tr>
                 </c:forEach>
             </table>
@@ -166,7 +172,7 @@ function checkImageShowHide(rum,imagesrc){
 
 <div class="div_mask" style="display:none;"></div>
 
-<div class="tc_changetext"  id="updatediv"  style="display:none;top: 40%;left: 40%; width: 650px;">
+<div class="tc_changetext"  id="updatediv"  style="display:none;top: 20%;left: 40%; width: 650px;">
 	<div class="tc_title"><span>新增/修改任务卡手办信息</span><a href="#" onclick="checkHide(0)">×</a></div>
     <form action="<%=request.getContextPath() %>/managebackstage/insertOrupdateGarageKit" id="updateform" method="post">
     <input type="hidden" name="kitid"  id="kitid" />
@@ -185,6 +191,12 @@ function checkImageShowHide(rum,imagesrc){
         <div class="clear"></div>
         <span>描述</span>
         <textarea placeholder="请输入描述，最多允许输入800字符" maxlength="800" cols="43" style="border: 1px solid #eee;" rows="2" name="description" id="description"></textarea>
+        <div class="clear"></div>
+        <span>均价</span>
+        <input type="text" class="text2" placeholder="请输入均价" name="avgprice" id="avgprice"/> 
+        <div class="clear"></div>
+        <span>喜爱数量</span>
+        <input type="number" class="number" placeholder="请输入喜爱的默认数量" name="likenum" id="likenum"/> 
         <div class="clear"></div>
         <span>排序值</span>
         <input type="number" class="number" placeholder="请输入排序值" name="forder" id="forder"/> 
@@ -218,7 +230,7 @@ function ajaxFileUpload(id,Fileid,noimg){
 	if(!Fileid){
 		Fileid = "fileName";
 	}
-	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/managebannerimg",Fileid,function(data){
+	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/managecoverimg",Fileid,function(data){
 			if(data.imgkey){
 				$("#coverimgurl").attr("src",data.imgkey);
 				$("input[name=coverimg]").val(data.imgkey);
