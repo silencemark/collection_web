@@ -75,7 +75,7 @@
 <div class="ownEl"  v-for="(item,i) in waitPayCardList"  v-cloak >
     <img :src="reqPath+item.iconimg">
     <div class="ownElmsg">
-        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}-{{item.title}}</div>
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.title}}</div>
         <div style="margin-top:10px;">
             温馨提醒：此产品，{{item.commentstartdays}}天之内不得再次通过平台进行交易，且出售价格不得高于购买原价的{{100+item.yield}}%
             <div style="margin-top: 5px;" v-if="item.status!=2">

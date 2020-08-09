@@ -28,7 +28,7 @@
     <img :src="reqPath+item.iconimg">
     <div class="ownElmsg"  v-if="item.status==0">
         <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}-{{item.title}}</div>
-        <div style="margin-top:10px;">{{item.title}}正在等待团购出售，预计出售日期为：{{item.selltime}}</div>
+        <div style="margin-top:10px;">{{item.title}}正在等待团购出售<br>预计出售日期为：{{item.selltime}}</div>
         <div style="position: absolute;bottom:10px;width: 100%;">
             <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
             <div style="float: right;margin-right:20px;margin-top:4px;">待出售</div>
@@ -49,7 +49,7 @@
     <div class="ownElmsg"  v-if="item.status==2">
         <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}-{{item.title}}</div>
         <div style="margin-top:10px;">
-            {{item.title}}出售成功，买家已付款。交易单号为：{{item.ordernum}} 确认收款无误后请尽快审核发货</div>
+            {{item.title}}已出售交易单号为：{{item.ordernum}},买家已付款。请尽快审核发货</div>
             <div style="margin-top:5px;">剩余审核时间：{{fmtTimeSecond(item.remaintime)}}</div>
         <div style="position: absolute;bottom:10px;width: 100%;">
             <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
