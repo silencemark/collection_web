@@ -115,16 +115,15 @@ public class ManageStatisticsController extends BaseController{
 	}
 	
 	/**
-	 * 红黑榜
+	 * 待出售订单统计
 	 * @param map
 	 * @param model
 	 * @param response
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/getBlackList")
-	public String getBlackList(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
-		
+	@RequestMapping("/getWaitSellOrderStatistics")
+	public String getWaitSellOrderStatistics(@RequestParam Map<String,Object> map,Model model,HttpServletResponse response,HttpServletRequest request){
 		if((!map.containsKey("starttime") || "".equals(map.get("starttime"))) && (!map.containsKey("endtime") || "".equals(map.get("endtime")))){
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String stoptime = sdf.format(new Date());
@@ -134,7 +133,6 @@ public class ManageStatisticsController extends BaseController{
 				cal.setTime(sdf.parse(stoptime));
 				cal1.setTime(sdf.parse(stoptime));
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			cal.add(Calendar.DAY_OF_MONTH, -6);
@@ -142,7 +140,14 @@ public class ManageStatisticsController extends BaseController{
 			map.put("starttime",sdf.format(cal.getTime()));
 			map.put("endtime",sdf.format(cal1.getTime()));
 		}
-		return "/managebackstage/statistics/count_redblack";
+		//每日用户总数
+		/*List<Map<String, Object>> sumuserlist=this.manageStatisticsService.getWaitSellOrderStatistics(map);
+		model.addAttribute("sumuserlist", sumuserlist);
+		//每日用户新增人数
+		List<Map<String, Object>> newuserlist=this.manageStatisticsService.getNewUserStatistics(map);
+		model.addAttribute("newuserlist", newuserlist);*/
+		model.addAttribute("map", map);
+		return "/managebackstage/statistics/waitsell_statistics";
 	}
 	
 	/**

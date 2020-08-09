@@ -372,7 +372,7 @@ public class AppVipCardController extends BaseController{
 	}
 	
 	/**
-	 * 获取会员VIP卡对应的视频包
+	 * 获取会员VIP卡对应的视频包已废弃
 	 * 传入参数{"cardid":"123456"}
 	 * 传出参数[
 	 * @param type
@@ -380,7 +380,7 @@ public class AppVipCardController extends BaseController{
 	 * @return
 	 * @author silence
 	 */
-	@RequestMapping("/getMovieByCardId")
+	/*@RequestMapping("/getMovieByCardId")
 	@ResponseBody
 	public Map<String, Object> getMovieByCardId(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -394,7 +394,7 @@ public class AppVipCardController extends BaseController{
 		}
 		data=this.appVipCardService.getMemberCardInfo(map);
 		return data;
-	}
+	}*/
 	
 
 	/**
@@ -522,8 +522,63 @@ public class AppVipCardController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		List<Map<String, Object>> list=this.appVipCardService.getGarageKitList(map);
-		data.put("resultlist", list);
+		return this.appVipCardService.getGarageKitList(map);
+	}
+	
+
+	/**
+	 * 获取手办详情
+	 * 传入参数{"type":"1"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/getGarageKitInfo")
+	@ResponseBody
+	public Map<String, Object> getGarageKitInfo(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		return this.appVipCardService.getGarageKitInfo(map);
+	}
+	
+	/**
+	 * 获取手办详情
+	 * 传入参数{"type":"1"}
+	 * 传出参数[
+	 * @param type
+	 * @param request
+	 * @return
+	 * @author silence
+	 */
+	@RequestMapping("/likeGarageKit")
+	@ResponseBody
+	public Map<String, Object> likeGarageKit(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		//校验登录token签名是否正确
+		boolean signflag = checkToeknSign(map);
+		if (!signflag){
+			data.put("status", 1);
+			data.put("message", "签名校验失败");
+			return data;
+		}
+		this.appVipCardService.likeGarageKit(map);
+		data.put("status", 0);
+		if("1".equals(map.get("status").toString())) {
+			data.put("message", "点赞成功");
+		} else {
+			data.put("message", "取消点赞成功");
+		}
 		return data;
 	}
+	
 }

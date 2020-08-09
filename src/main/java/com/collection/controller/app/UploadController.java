@@ -1,5 +1,8 @@
 package com.collection.controller.app;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.filters.ImageFilter;
 
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.FileUtils;
@@ -140,6 +144,51 @@ public class UploadController {
 	}
 	
 	/**
+	 * 管理方--上传banner图片
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/managecoverimg",method=RequestMethod.POST)    
+	@ResponseBody 
+	public Map<String, Object> managecoverimg(HttpServletRequest request,
+			HttpServletResponse response)  throws Exception{
+		String filename = null;
+		if(request.getParameter("filename") != null && !request.getParameter("filename").equals("")){
+			filename = String.valueOf(request.getParameter("filename"));
+		}else{
+			filename = "myfiles";  
+		}
+		  
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request; // 获得文件：
+		List<MultipartFile> myfiles = multipartRequest.getFiles(filename);
+		LOGGER.debug(myfiles.get(0).getContentType()); 
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		for (MultipartFile myfile : myfiles) {
+			if (myfile.isEmpty()) {
+				map.put("error", "请选择文件后上传");
+				return map;
+			}else{
+				CommonsMultipartFile cf= (CommonsMultipartFile)myfile; 
+				DiskFileItem fi = (DiskFileItem)cf.getFileItem();
+				File file= fi.getStoreLocation();
+				String newImg = System.currentTimeMillis()/1000l+"_managecover";
+				
+			    if(!file.exists()){
+			    	file.createNewFile();
+			    }
+			    String path = request.getSession().getServletContext().getRealPath("upload/banner")+"/"+newImg+".jpg"; 
+			    //Thumbnails.of(file).imageType(BufferedImage.TYPE_INT_ARGB).size(1080,1080).toFile(path);
+			    Thumbnails.of(file).addFilter(new ThumbnailsImgFilter()).size(800,800).keepAspectRatio(false).toFile(path);
+			    map.put("imgurl", path);
+			    map.put("imgkey", "/upload/banner/"+newImg+".jpg");
+			}
+		}
+		return map;
+	}
+	
+	/**
 	 * 管理方--上传正方形图标
 	 * @param request
 	 * @param response
@@ -175,7 +224,8 @@ public class UploadController {
 			    	file.createNewFile();
 			    }
 			    String path = request.getSession().getServletContext().getRealPath("upload/banner")+"/"+newImg+".jpg"; 
-			    Thumbnails.of(file).size(500,500).toFile(path);
+			    Thumbnails.of(file).addFilter(new ThumbnailsImgFilter()).size(500,500).keepAspectRatio(false).toFile(path);
+			    //Thumbnails.of(file).imageType(BufferedImage.TYPE_INT_ARGB).size(500,500).toFile(path);
 			    map.put("imgurl", path);
 			    map.put("imgkey", "/upload/banner/"+newImg+".jpg");
 			}
@@ -724,4 +774,23 @@ public class UploadController {
 	  
 	    }
 	 
+
+		/**
+		 *将透明背景设置为白色
+		 */
+		public class ThumbnailsImgFilter implements ImageFilter {
+		    @Override
+		    public BufferedImage apply(BufferedImage img) {
+		        int w = img.getWidth();
+		        int h = img.getHeight();
+		        BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		        Graphics2D graphic = newImage.createGraphics();
+		        graphic.setColor(Color.white);//背景设置为白色
+		        graphic.fillRect(0, 0, w, h);
+		        graphic.drawRenderedImage(img, null);
+		        graphic.dispose();
+		        return newImage;
+		    }
+		}
+
 }
