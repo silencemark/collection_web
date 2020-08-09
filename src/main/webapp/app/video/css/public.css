@@ -486,7 +486,7 @@ header .searchCont input::-webkit-input-placeholder{
     height: 100%;
     position: fixed;
     top: 0;
-    z-index:9;
+    z-index:12;
     background: #f9f9f9;
 }
 .userxyInfo .ussmsgggg{
@@ -510,3 +510,26 @@ header .searchCont input::-webkit-input-placeholder{
     width: 90%;
     left: 5%;
 }
+.userxyBUt{
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    background: #fff;
+    border-top: 1px solid #ececec;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 0.9rem;
+ }
+ .userxyBUt img{
+    width: 20px;
+    position: absolute;
+ }
+ .userxyBUt .usersub{
+    height: 45px;
+    line-height: 45px;
+    background-color: #4988f3;
+    color: #fff;
+    text-align: center;
+    margin-top: 30px;
+    border-radius: 5px;
+ }

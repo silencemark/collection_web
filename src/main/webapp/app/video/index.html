@@ -63,7 +63,7 @@
                 <span>动漫</span>
             </li>
             <li class="list_li queryVideo cart" @click="queryByType(1)">
-                <span>会员专享</span>
+                <span>精品推荐</span>
             </li>
             <li class="clear"></li>
         </ul>
@@ -76,11 +76,15 @@
             <li><a href="#"><img></a></li>
             <li v-for="(item,i) in bannerList" v-cloak>
                 <a :href="`cardBag/bagComment.html?mv=${item.httpurl}`" ><img :src="reqPath+item.imgurl"></a>
-                <div v-cloak>{{item.description}}</div v-cloak>
+                <div style="height:38px" v-cloak >
+                    <!-- <span>{{item.description}}</span> -->
+                </div v-cloak>
             </li>
             <li v-for="(item,i) in bannerList">
                 <a :href="`cardBag/bagComment.html?mv=${item.httpurl}`"><img :src="reqPath+item.imgurl"></a>
-                <div  v-cloak>{{item.description}}</div>
+                <div  style="height:38px" v-cloak>
+                    <!-- <span>{{item.description}}</span> -->
+                </div>
             </li>
         </ul>
         <ul class="swipe-btn-list" id="swipe-btn-list">
@@ -90,6 +94,16 @@
     </div>
 </div>
 <!--end 轮播-->
+<marquee class="gundong" scrollamount="5" loop=2>
+    新消息提醒：爱情 爱情
+    原本bai就是一个du人的事情
+    一个zhi人动情dao 一个人平静
+    一个人付出 一个人任性
+    爱情 爱情
+    慢慢变成两个人的感情
+    一个人发疯 两个人心疼
+    一个人牺牲 两个人享用
+</marquee>
 
 <section class="main">
     <div class="prdClassCont" v-for="(item , i) in homePageMovie" v-cloak >

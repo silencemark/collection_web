@@ -32,7 +32,7 @@
  .logoCont img{
     width: 240px;
     height: 80px;
-    margin-top: 20px;
+    margin-bottom:10px;
  }
  .inputCont{
     width: 90%;
@@ -64,4 +64,18 @@
     text-align: center;
     display: block;
     padding-top: 5px;
+}
+.regCbugtle{
+    width: 100%;
+}
+.regCbugtle div{
+    /* float: left; */
+    width: 100%;
+    text-align: center;
+    padding-bottom:3px;
+    /* border-bottom: 1px solid #ededed; */
+    height: 20px;
+    line-height: 20px;
+    font-size: 0.9rem;
+    color: rgb(146, 145, 145);
 }

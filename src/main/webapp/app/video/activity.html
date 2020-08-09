@@ -89,9 +89,10 @@
 
 <!--用户协议WIN-->
 <div class="qiandWin" v-if="userxy"  v-cloak></div>
-<div class="qiandContDiv userxyCont"   v-cloak v-if="userxy">
+<div class="qiandContDiv userxyCont" v-cloak v-if="userxy">
     <div class="userxyContTitle">
-        交易服务平台用户购买及转出协议
+        <span class="clolseUserxy" @click="userxy = false">x</span>
+        购买或发布转出平台用户服务协议
         <div><img src="img/dunpai.png"/>
         </div>
     </div>
