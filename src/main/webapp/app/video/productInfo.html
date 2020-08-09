@@ -107,6 +107,19 @@
         },
         //喜欢
         likeGarageKit(status){
+            if(!getCptToken()){
+                jqalert({
+                    prompt:'您还没有登录，是否立即登录！？',
+                    yestext:'立即登录',
+                    notext:'等一会儿',
+                    yesfn:function () {
+                        window.location.href= "login.html";
+                    },
+                    nofn:function () {
+                    }
+                })
+                return;
+            };
             var vThis = this;
             vThis.prd.likestatus = status;
             jAjax("/appVipCard/likeGarageKit",{kitid:this.kitid,status:status},function(data){

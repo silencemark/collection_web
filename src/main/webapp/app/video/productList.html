@@ -175,7 +175,9 @@ function getDocumentTop() {
       created() {
           this.cardid = this.GetQueryString("cardid");
           this.getGarageKitList({});
-          this.getVipCardList();
+          if(getCptToken()){
+            this.getVipCardList();
+          }
       },
       mounted() {
         window.xlref = this.xlref;

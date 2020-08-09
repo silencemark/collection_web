@@ -60,10 +60,10 @@
                 <input type="button" v-if="item.havebuy==1" value="正在参与团购" :class="`active-but  v${item.forder}-bg`"/>
             </div>
             <div v-else>
-                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.forder)" value="参 与 团 购" :class="`active-but  v${item.forder}-bg`" />
+                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.cardid)" value="参 与 团 购" :class="`active-but  v${item.forder}-bg`" />
                 <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情" :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`" :class="`active-but  v${item.forder}-bg`"/>
             </div>
-            <img src="img/isqg.gif"  v-if="item.isbuy==1 && item.havebuy!=1 && item.havebuy!=2" style="margin-top:-30px;" @click="rushToBuyCard(item.forder)"  class="qggiftx"/>
+            <img src="img/isqg.gif"  v-if="item.isbuy==1 && item.havebuy!=1 && item.havebuy!=2" style="margin-top:-30px;" @click="rushToBuyCard(item.cardid)"  class="qggiftx"/>
         </div>
     </div>
     <div class="payWaitLoad" v-if="item.havebuy==1"><img src="img/timg.gif"/></div>
@@ -294,7 +294,7 @@ new Vue({
             return;
         }
         this.xxxxxx = true;
-        this.rushToBuyCard(this.cardid);
+        this.rushToBuyCard(this.buycardid);
     },
     qiand(){
         var vThis = this;

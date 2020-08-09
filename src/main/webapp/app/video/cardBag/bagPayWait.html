@@ -28,7 +28,7 @@
 <div v-for="(item,i) in rushToBuyList"  v-cloak >
     <div style="width: 96%;margin-left: 2%;margin-bottom:15px;padding-bottom: 10px;background: #fff;border-radius:5px;box-shadow: #c7c7c7 1px 1px 5px 1px;">
         <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;" >
-            <img :src="`../img/V${item.forder}_BG.jpg`" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+            <img :src="reqPath+item.cardicon" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
         </div>
         <div class="clear"></div>
         <div class="vipInfoCommmsg">

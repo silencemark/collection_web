@@ -20,7 +20,7 @@
 
 <div>
     <div style="width:100%;margin-bottom:15px;padding-bottom: 10px;background: #fff;">
-        <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;height: auto !important;" >
+        <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;height: auto !important;min-height:200px;" >
             <img :src="reqPath+orderInfo.coverimg" style="width: 100%;">
         </div>
         <div class="clear"></div>
@@ -54,17 +54,20 @@
 </div> -->
 <div class="operationEl payOption" @click="selectPayType(1)">
     <img src="../img/wx-ic.png"/>
-    <img src="../img/sele-ic.png" style="left:180px;" v-if="payType==1"/>
+    <img src="../img/tyxy.png" style="right:30px;" v-if="payType==1"/>
+    <img src="../img/ntxy.png" style="right:30px;" v-else/>
     <span>微信</span>
 </div>
 <div class="operationEl payOption" @click="selectPayType(2)">
     <img src="../img/zfb-ic.png"/>
-    <img src="../img/sele-ic.png" style="left:180px;" v-if="payType==2"/>
+    <img src="../img/tyxy.png" style="right:30px;" v-if="payType==2"/>
+    <img src="../img/ntxy.png" style="right:30px;" v-else/>
     <span>支付宝</span>
 </div>
 <div class="operationEl payOption" @click="selectPayType(3)">
     <img src="../img/bank-ic.png"/>
-    <img src="../img/sele-ic.png" style="left:180px;" v-if="payType==3"/>
+    <img src="../img/tyxy.png" style="right:30px;" v-if="payType==3"/>
+    <img src="../img/ntxy.png" style="right:30px;" v-else/>
     <span>银行卡</span>
 </div>
 <div class="colUserCont" v-if="payType!=0">
