@@ -221,7 +221,7 @@ new Vue({
     getxxxx(){
         var vueThis = this;
         jAjax("/appVipCard/getUserAgreementStatus",{},function(data){
-            vueThis.xxxxxx = data==1 ? true : false;
+            vueThis.xxxxxx = data.agreementstatus==1 ? true : false;
         });
     },
     //立即抢购
