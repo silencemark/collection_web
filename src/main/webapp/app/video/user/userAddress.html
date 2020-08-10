@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>收货地址管理</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/address.css"/>
+ </head>
+ <body style="background-color: #fff">
+  <!-- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div> -->
+<section class="main"  id="app">
+  <div class="title">
+     <img src="../img/to-left.png" onclick="history.back(-1)"/>
+     收货地址管理
+  </div>
+
+<div class="addrel">
+  <div class="addrbut">删除</div>
+  <div class="addrbut" style="margin-top:30px;">修改</div>
+  爱丽丝<span style="margin-left:40px;">152****55761</span>
+  <span class="addresstex">年少是上海市普通新区  汤汁设计程序中路1547号45方但</span>
+</div>
+<div class="addrel">
+  <div class="addrbut">删除</div>
+  <div class="addrbut" style="margin-top:30px;">修改</div>
+  爱丽丝<span style="margin-left:40px;">152****55761</span>
+  <span class="addresstex">年少是上海市普通新区  汤汁设计程序中路1547号45方但</span>
+</div>
+<div class="addrel">
+  <div class="addrbut">删除</div>
+  <div class="addrbut" style="margin-top:30px;">修改</div>
+  爱丽丝<span style="margin-left:40px;">152****55761</span>
+  <span class="addresstex">年少是上海市普通新区  汤汁设计程序中路1547号45方但</span>
+</div>
+<div class="but-cont" style="position: fixed;bottom:10px;">
+  <div class="btn btn-200" style="width:80% !important;" @click="addAddress">添 加 收 货 地 址</div>
+</div>
+
+
+
+<!--新增收货地址-->
+<div class="addAddressWin" v-if="addAddressWin">
+    <div class="title">
+        <img src="../img/to-left.png" @click="addAddressWin=false"/>
+        新增收货地址
+    </div>
+    <div class="addAddrel">
+      收货人 <input placeholder="请填写收货人姓名"/>
+    </div> 
+    <div class="addAddrel">
+      手机号码 <input placeholder="请填写收货人手机号"/>
+    </div> 
+    <div class="addAddrel">
+      所在地区 <input placeholder="省 市 区 乡镇"  readonly id="location" name="location"/>
+    </div> 
+    <div class="addAddrel">
+      详细地址 <input placeholder="请填写详细地址"/>
+    </div> 
+    <div class="addAddrel addisdefault" v-cloak>
+        设置为默认 
+        <img src="../img/ntxy.png" v-if="!isdefault" @click="isdefault=!isdefault"/>
+        <img src="../img/tyxy.png" v-if="isdefault" @click="isdefault=!isdefault"/>
+    </div> 
+    <div class="but-cont" style="position: fixed;bottom:10px;">
+      <div class="btn btn-200" style="width:80% !important;" @click="addAddress">立 即 保 存</div>
+    </div>
+</div>
+<!--end新增收货地址-->
+
+
+
+</section>
+</body>
+
+
+</html>
+
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            addAddressWin:false,
+            isdefault:false
+        }
+      },
+      created() {
+          // this.queryAddress();
+      },
+      methods:{
+        addAddress(){
+          this.addAddressWin = true;
+        }
+        
+      }
+    })
+  </script>
