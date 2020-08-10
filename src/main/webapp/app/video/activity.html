@@ -203,11 +203,12 @@ new Vue({
         xyIsRead:false,//用户协议是否已读
         yhxyInfo:false,//用户协议详情展示
         buycardid:'',//购买的car
-        xxxxxx:false,//是否已签过用户协议
+        xxxxxx:true,//是否已签过用户协议
     }
     },
     created() {
         this.getVipCardList();
+        this.getxxxx();
     },
     methods:{
     //获取活动
@@ -215,6 +216,12 @@ new Vue({
         var vueThis = this;
         jAjax("/appVipCard/getVipCardList",{},function(data){
             vueThis.vipCardList = data.resultlist;  
+        });
+    },
+    getxxxx(){
+        var vueThis = this;
+        jAjax("/appVipCard/getUserAgreementStatus",{},function(data){
+            vueThis.xxxxxx = data==1 ? true : false;
         });
     },
     //立即抢购
@@ -225,7 +232,8 @@ new Vue({
             return;
         }
         var vueThis = this;
-        var reqData = {cardid:cardid};
+        var argiss = this.xxxxxx?1:0;
+        var reqData = {cardid:cardid,agreementstatus:argiss};
         jAjax("/appVipCard/rushToBuyCard",reqData,function(data){
             if(data.status==0){
                 window.location.href='cardBag/bagPayWait.html';
