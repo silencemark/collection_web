@@ -279,4 +279,5 @@
    border: 0; background: transparent;
    -moz-appearance:none; /* Firefox */
    -webkit-appearance:none; /* Safari 和 Chrome */
+   outline:none;
 }

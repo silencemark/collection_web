@@ -13,7 +13,7 @@
      <link rel="stylesheet" type="text/css" href="css/money.css"/>
      <link rel="stylesheet" type="text/css" href="css/myCenter.css?v=15245"/>
  </head>
- <body style="background-color:#f6f6f6;">
+ <body style="background-color:#f6f6f6;" onload="huanyih();">
 <section class="main"  id="app">
 <div style="position: fixed;top: 0px;width: 100%;background: #fff;max-width: 580px;z-index:2;">
     <div class="title" >
@@ -105,7 +105,8 @@
            <li class="list_li home active">
                <a  href="javascript:void(0);" shref="index.html" class="text">首页</a>
            </li>
-           <li class="list_li follow" >
+           <li class="list_li follow" style="background:none;text-align: center;">
+               <img src="img/ic-xianghd-activ2.png" class="xianghudimg" id="xhdimg"/>
                <a  href="javascript:void(0);" shref="community.html" class="text">享互动</a>
             </li>
             <li class="list_li cart">
@@ -127,6 +128,15 @@
 <script src="js/vue.js"></script>
 <script src="js/exif.js"></script>
 <script>
+
+function huanyih(){
+    $("#xhdimg").addClass("refreshactive");
+    setTimeout(() => {
+        $("#xhdimg").removeClass("refreshactive");
+    },500);
+}
+
+
     $(function(){
         $(".sqTitleEl").click(function(){
             $(".sqTitleEl").removeClass("sqTitleElActiv");

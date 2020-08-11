@@ -37,7 +37,7 @@
         <div class="vipInfoCommmsg">
             <div class="vipimgTItle" style="width:100%;">{{orderInfo.title}}</div>
             <div class="vipimgTItle">交易单号：{{orderInfo.ordernum}}</div>
-            <div style="width: 100%;overflow: auto;max-height:80px;">
+            <div style="width: 100%;overflow: auto;max-height:80px;letter-spacing: 1px;">
                 {{orderInfo.description}}<br>
                 温馨提醒：通过平台购买的此产品，在{{orderInfo.commentstartdays}}天之内不得再次交易，且出售价格不得高于购买原价的{{100+orderInfo.yield}}%
             </div>
@@ -56,8 +56,8 @@
     配送方式
     <select>
         <option>双发协商发货</option>
-        <option disabled>快递</option>
-        <option disabled>平邮</option disabled>
+        <!-- <option disabled>快递</option> -->
+        <!-- <option disabled>平邮</option disabled> -->
     </select>
 </div>
 <div class="paytEl">
