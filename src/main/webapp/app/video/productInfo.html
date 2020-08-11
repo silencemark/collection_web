@@ -35,13 +35,22 @@
     <div class="clear"></div>
 </div>
 <span class="pinfmMsg">
-    <font  v-cloak>{{prd.description.length>50?prd.description.substr(0,50)+'...':prd.description}}</font>
+    <font  v-cloak>{{prd.description.length>60?prd.description.substr(0,60)+'...':prd.description}}</font>
 </span>
 <div class="pinfAttr likeprdCont" >
     <img :src="reqPath+l.headimage" v-for="(l,i) in prd.likelist"/>
     &nbsp;&nbsp;共<font  v-cloak>{{prd.likelist?prd.likelist.length:0}}</font>人喜欢此商品
-    <img style="float:right;margin-right:30px;border:0" src="img/pLike.png" v-if="prd.likestatus==0" @click="likeGarageKit(1)"/>
-    <img style="float:right;margin-right:30px;border:0" src="img/pnlike.png" v-if="prd.likestatus==1"  @click="likeGarageKit(0)"/>
+    <div  v-if="prd.likestatus==0"  style="width:100px;float:right">
+         加入喜欢
+        <img src="img/pLike.png" @click="likeGarageKit(1)"/>
+    </div>
+
+    <div v-if="prd.likestatus==1"   style="width:100px;float:right">
+         取消喜欢
+        <img src="img/pnlike.png"   @click="likeGarageKit(0)"/>
+    </div>
+    <!-- <img style="float:right;margin-right:30px;border:0" src="img/pLike.png" v-if="prd.likestatus==0" @click="likeGarageKit(1)"/>
+    <img style="float:right;margin-right:30px;border:0" src="img/pnlike.png" v-if="prd.likestatus==1"  @click="likeGarageKit(0)"/> -->
     <div class="clear"></div>
 </div>
 <div class="pinfAttr">
@@ -123,7 +132,7 @@
             var vThis = this;
             vThis.prd.likestatus = status;
             jAjax("/appVipCard/likeGarageKit",{kitid:this.kitid,status:status},function(data){
-                vThis.prd.likestatus = status;
+                // vThis.prd.likestatus = status;
                 if(status==1){
                     jqtoast('您已将商品标记为喜欢！');
                 }else{
