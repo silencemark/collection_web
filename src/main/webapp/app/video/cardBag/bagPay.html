@@ -2,7 +2,7 @@
  <html lang="en">
  <head>
      <meta charset="UTF-8">
-     <title>购买任务卡</title>
+     <title>立即支付</title>
      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
      <link rel="stylesheet" type="text/css" href="../css/public.css"/>
      <link rel="stylesheet" type="text/css" href="../css/myCenter.css?v=120"/>
@@ -19,7 +19,7 @@
 <!--vipInfo-->
 
 <div>
-    <div style="width:100%;margin-bottom:15px;padding-bottom: 10px;background: #fff;">
+    <div style="width:100%;padding-bottom: 10px;background: #fff;">
         <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;height: auto !important;min-height:200px;" >
             <img :src="reqPath+orderInfo.coverimg" style="width: 100%;">
         </div>
@@ -35,9 +35,9 @@
             <div class="clear"></div>
         </div>
         <div class="vipInfoCommmsg">
-            <div class="vipimgTItle" style="width:100%;">{{orderInfo.typename}}-{{orderInfo.title}}</div>
-            <div>交易单号：{{orderInfo.ordernum}}</div>
-            <div style="width: 100%;">
+            <div class="vipimgTItle" style="width:100%;">{{orderInfo.title}}</div>
+            <div class="vipimgTItle">交易单号：{{orderInfo.ordernum}}</div>
+            <div style="width: 100%;overflow: auto;max-height:80px;">
                 {{orderInfo.description}}<br>
                 温馨提醒：通过平台购买的此产品，在{{orderInfo.commentstartdays}}天之内不得再次交易，且出售价格不得高于购买原价的{{100+orderInfo.yield}}%
             </div>
@@ -46,13 +46,35 @@
     </div>
 </div>
 
-<div style="font-weight:600;font-size: 0.9rem;color:#555;margin-left:4%;margin-top:10px;">请选择支付方式</div>
+<!-- <div style="font-weight:600;font-size: 0.9rem;color:#555;margin-left:4%;margin-top:10px;">请选择支付方式</div> -->
 <!-- <div class="operationEl payOption">
     <img src="../img/XGO-ic.png"/>
     <span>XGO币</span>
     <span class="money"><span style="color:#555;font-weight:500;font-size:0.9em;"  v-cloak>{{orderInfo.xgocoin}}</span>
 </div> -->
-<div class="operationEl payOption" @click="selectPayType(1)">
+<div class="paytEl">
+    配送方式
+    <select>
+        <option>双发协商发货</option>
+        <option disabled>快递</option>
+        <option disabled>平邮</option disabled>
+    </select>
+</div>
+<div class="paytEl">
+    支付方式
+    <select v-model="payType">
+        <option  value="1">&nbsp;&nbsp;微信</option>
+        <option  value="2">支付宝</option>
+        <option  value="3">银行卡</option>
+        <!-- <option  value="4" disabled>XGO</option> -->
+    </select>
+</div>
+<div class="paytEl">
+    优惠券
+    <span>暂无优惠券</span>
+</div>
+
+<!-- <div class="operationEl payOption" @click="selectPayType(1)">
     <img src="../img/wx-ic.png"/>
     <img src="../img/tyxy.png" style="right:30px;" v-if="payType==1"/>
     <img src="../img/ntxy.png" style="right:30px;" v-else/>
@@ -69,8 +91,9 @@
     <img src="../img/tyxy.png" style="right:30px;" v-if="payType==3"/>
     <img src="../img/ntxy.png" style="right:30px;" v-else/>
     <span>银行卡</span>
-</div>
-<div class="colUserCont" v-if="payType!=0">
+</div> -->
+
+<div class="colUserCont" v-if="payType!=0" style="margin-top: 5px;">
     <div class="colLeft">
         <div style="font-weight:600;margin-top:10px;">收款人信息</div>
         <div v-if="payType==1">
@@ -99,10 +122,10 @@
         
         <div v-if="payType==1 || payType==2" class="showbigImg"></div>
         <div v-if="payType==1" style="background:none;opacity: 1;" class="showbigImg" @click="showbigImgWin(reqPath+orderInfo.weixinqrcode)">
-            <span>+点击查看大图</span>
+            <span style="font-weight: bold;">+点击查看大图</span>
         </div>
         <div v-if="payType==2" style="background:none;opacity: 1;"class="showbigImg" @click="showbigImgWin(reqPath+orderInfo.alipayqrcode)">
-            <span>+点击查看大图</span>
+            <span style="font-weight: bold;">+点击查看大图</span style="font-weight: bold;">
         </div>
     </div>
     <div class="clear"></div>

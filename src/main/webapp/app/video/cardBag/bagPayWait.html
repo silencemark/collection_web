@@ -15,8 +15,8 @@
     </div>
 
 <div class="gabTitle">
-    <div onclick="window.location.href='bagPayWait.html'" class="active">团购中</div>
-    <div onclick="window.location.href='bagOwn.html'">已拥有</div>
+    <div onclick="window.location.href='bagPayWait.html'" class="active">待支付</div>
+    <div onclick="window.location.href='bagOwn.html'">我的产品</div>
     <div onclick="window.location.href='bagSale.html'">待出售</div>
     <div onclick="window.location.href='bagHistory.html'">历史订单</div>
     <b class="clear"></b>
@@ -41,9 +41,9 @@
             <div class="clear"></div>
         </div>
         <div class="clear"></div>
-        <input type="button" value="正在团购中" :class="`active-but  v${item.forder}-bg`"/>
+        <input type="button" value="正在团购中......" :class="`active-but  v${item.forder}-bg`"/>
     </div>
-    <div class="payWaitLoad" style="height: 320px;margin-top:-335px;"><img src="../img/timg.gif"/></div>
+    <!-- <div class="payWaitLoad" style="height: 320px;margin-top:-335px;"><img src="../img/timg.gif"/></div> -->
 </div>
 <!--end抢购中-->
 
@@ -172,7 +172,7 @@
      :class="`active-but  v${item.forder}-bg`"/>
 </div> -->
 <!--end 待支付-->
-<div v-if="rushToBuyList.length==0 && waitPayCardList.length==0" class="notList">没有团购中记录</div>
+<div v-if="rushToBuyList.length==0 && waitPayCardList.length==0" class="notList">没有待支付记录</div>
 
 
 
