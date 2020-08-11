@@ -110,7 +110,12 @@
         //资源查找
         getGarageKitInfo(status){
             var vThis = this;
-            jAjax("/appVipCard/getGarageKitInfo",{kitid:this.kitid},function(data){
+            var tk = getCptToken();
+            var reqBo = {kitid:this.kitid};
+            if(tk){
+                reqBo.token = tk;
+            }
+            jAjax("/appVipCard/getGarageKitInfo",reqBo,function(data){
                 vThis.prd = data;
             });
         },
