@@ -25,18 +25,18 @@
         </div>
         <div class="clear"></div>
         <div class="paymenytcy" style="margin-top:-4px;">
-            <div class="lf">
+            <div class="lf"  v-cloak>
                 成交价格：￥{{orderInfo.cardprice}}
             </div>
-            <div class="rt">
+            <div class="rt"  v-cloak>
                 剩余支付时间<br/>
                 {{fmtTimeSecond(orderInfo.remaintime)}}               
             </div>
             <div class="clear"></div>
         </div>
-        <div class="vipInfoCommmsg">
+        <div class="vipInfoCommmsg"  v-cloak>
             <div class="vipimgTItle" style="width:100%;">{{orderInfo.title}}</div>
-            <div class="vipimgTItle">交易单号：{{orderInfo.ordernum}}</div>
+            <div class="vipimgTItle" style="width: 100%;">交易单号：{{orderInfo.ordernum}}</div>
             <div style="width: 100%;overflow: auto;max-height:80px;letter-spacing: 1px;">
                 {{orderInfo.description}}<br>
                 温馨提醒：通过平台购买的此产品，在{{orderInfo.commentstartdays}}天之内不得再次交易，且出售价格不得高于购买原价的{{100+orderInfo.yield}}%

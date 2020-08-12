@@ -14,6 +14,7 @@
            box-sizing: content-box;
            -webkit-tap-highlight-color: transparent;
        }
+       .mgsBUTred {margin-top:-11px;}
     </style>
  </head>
  <body>
@@ -37,7 +38,7 @@
 <div class="ownEl"  v-for="(item,i) in historyCardList"  v-cloak >
     <img :src="reqPath+item.iconimg">
     <div class="ownElmsg">
-        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.typename}}-{{item.title}}</div>
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.title}}</div>
         <div style="margin-top:10px;">{{item.typename}}-{{item.title}}已出售，交易单号为：{{item.ordernum}},您收藏此商品获得了{{item.profitprice}}元。</div>
         <div style="position: absolute;bottom:10px;width: 100%;">
             <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>

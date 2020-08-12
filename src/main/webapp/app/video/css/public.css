@@ -146,7 +146,7 @@ header .searchCont input::-webkit-input-placeholder{
  
   /*footer部分*/
   footer{
-      border-top: 1px solid #dfdfdf;
+      border-top: 1px solid #ededed;
       background-color: #fff;
       width: 100%;
       height: 50px;
