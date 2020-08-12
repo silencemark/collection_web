@@ -1,12 +1,12 @@
 var commentList = [
 	{
 		tx:'http://img5.imgtn.bdimg.com/it/u=183326193,1784969774&fm=26&gp=0.jpg',
-		name:'爱玩呼啦圈的小喵喵',commTime:'2020/04/02',xin:3,version:'5.3.4.1248',
-		contentTxt:'感觉还不错，但这个任务卡也太TM难得抢了吧，靠，靠，靠',
+		name:'爱玩呼啦圈的小喵喵',commTime:'2020/06/02',xin:3,version:'5.3.4.1248',
+		contentTxt:'感觉还不错，但这个手办也太TM难得买了吧，靠，靠，靠',
 		zan:208, nzhan:5
 	},{
 		tx:'http://img5.imgtn.bdimg.com/it/u=3526059149,524929962&fm=26&gp=0.jpg',
-		name:'ai芙兰',commTime:'2020/03/28',xin:4,version:'5.3.4.1248',
+		name:'ai芙兰',commTime:'2020/05/28',xin:4,version:'5.3.4.1248',
 		contentTxt:'有要领任务赚奖励的朋友加我好友，做我的粉丝我保证我宠你。V : yys3563,快点来快点来等我升级到V10再来的话就不宠你了',
 		zan:20, nzhan:0
 	},{

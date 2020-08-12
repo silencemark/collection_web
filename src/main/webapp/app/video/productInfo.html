@@ -39,7 +39,7 @@
 </span>
 <div class="pinfAttr likeprdCont" >
     <img :src="reqPath+l.headimage" v-for="(l,i) in prd.likelist"/>
-    &nbsp;&nbsp;共<font  v-cloak>{{prd.likelist?prd.likelist.length:0}}</font>人喜欢此商品
+    &nbsp;&nbsp;共<font  v-cloak>{{prd.likenum?prd.likenum:0}}</font>人喜欢此商品
     <div  v-if="prd.likestatus==0"  style="width:100px;float:right">
          加入喜欢
         <img src="img/pLike.png" @click="likeGarageKit(1)"/>

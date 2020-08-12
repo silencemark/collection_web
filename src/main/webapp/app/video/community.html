@@ -297,6 +297,7 @@ function getDocumentTop() {
             if(this.showType==1){
                 reqBo.uid = getCptToken();
             }
+            this.commList = [];
             reqBo.startnum=(this.pageNo-1)*this.pageSize;
             reqBo.rownum = this.pageSize;
             var vThis = this;

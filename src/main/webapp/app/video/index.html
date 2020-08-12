@@ -108,7 +108,7 @@
         </div>
         <div v-for="(movie , j) in item.movielist">
             <div class="ImgCont">
-                <div class="vioImgEL" :style="`background-image:url('${reqPath+movie.coverimg}');`" :onclick="`lokmv('cardBag/bagComment.html?mv=${movie.httpurl}')`"></div>
+                <div class="vioImgEL" :style="`background-image:url('${reqPath+movie.coverimg}');`" :onclick="`lokmv('cardBag/bagComment.html?mv=${movie.httpurl}',${movie.movieid})`"></div>
                 <!-- <img :src="reqPath+movie.coverimg" :onclick="`window.location.href='cardBag/bagComment.html?mv=${movie.httpurl}'`" /> -->
                 <div class="prdName">{{movie.title}}</div>
                 <div class="prdRemark">{{movie.description}}</div>
@@ -123,7 +123,7 @@
         </div>
         <!-- 广告图片-->
         <div>
-            <img v-if="advertisement[i]" :src="reqPath+advertisement[i].imgurl"  class="activity-img" />
+            <img v-if="advertisement[i]" :src="reqPath+advertisement[i].imgurl" :onclick="`window.location.href='${advertisement[i].httpurl}'`"  class="activity-img" />
         </div>
         <!--end广告图片 -->
     </div>
@@ -204,7 +204,10 @@ function huanyih(obj){
         $(obj).prev().removeClass("refreshactive");
     }, 500);
 }
-function lokmv(u){
+function lokmv(u,movieid){
+    if(cptToken){
+        jAjax("/appVipCard/getVipCardList",{movieid:movieid},function(data){});
+    }
     window.location.href=u;
 }
 $(function(){
@@ -229,7 +232,7 @@ new Vue({
             defaultPageMovie:[],//默认首页电影列表备份
             randomNumLogs : "",
             searchValue : "",
-            pageSize:12,
+            pageSize:6,
             iosHintShow:false,
             isOpenSafariFlag:false,
             ggAct:{},
@@ -284,7 +287,7 @@ new Vue({
                 }
             }
         }
-        this.queryByType(0);
+        this.queryVideo(0);
         this.getBanner();
         this.getAdvertisement();
         this.getNewSystemNotice();
@@ -304,13 +307,14 @@ new Vue({
             var vm = this;
             jAjax("/appIndex/getAdvertisement",{},function(data){ 
                 vm.advertisement = data;  
-                vm.advertisement.unshift(vm.advertisement[0]);
+                // vm.advertisement.unshift(vm.advertisement[0]);
             });
         },
         //获取影片
         queryVideo(type){
             var vm = this;
             jAjax("/appIndex/getHomePageMovie",{type:type},function(data){
+                // data[3].type = 1;
                 vm.homePageMovie = data;
                 // vm.defaultPageMovie = JSON.parse(JSON.stringify(data));
             });
