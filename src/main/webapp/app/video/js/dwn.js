@@ -1,27 +1,32 @@
 var commentList = [
 	{
-		tx:'http://img5.imgtn.bdimg.com/it/u=183326193,1784969774&fm=26&gp=0.jpg',
-		name:'爱玩呼啦圈的小喵喵',commTime:'2020/06/02',xin:3,version:'5.3.4.1248',
-		contentTxt:'感觉还不错，但这个手办也太TM难得买了吧，靠，靠，靠',
-		zan:208, nzhan:5
-	},{
 		tx:'http://img5.imgtn.bdimg.com/it/u=3526059149,524929962&fm=26&gp=0.jpg',
-		name:'ai芙兰',commTime:'2020/05/28',xin:4,version:'5.3.4.1248',
-		contentTxt:'有要领任务赚奖励的朋友加我好友，做我的粉丝我保证我宠你。V : yys3563,快点来快点来等我升级到V10再来的话就不宠你了',
-		zan:20, nzhan:0
-	},{
-		tx:'https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2034740944,4251903193&fm=26&gp=0.jpg',
-		name:'W DeGaio',commTime:'2020/03/25',xin:1,version:'5.3.2.101',
-		contentTxt:'为什么更新了老卡屏，有时候还闪退，差评能不能不给星，烦死人。',
+		name:'W DeGaio',commTime:'2020/07/12',xin:1,version:'5.3.2.101',
+		contentTxt:'为什么更新了老卡屏，有时候还闪退，差评能不能不给星，烦死人，我TM.....',
 		zan:0, nzhan:0
 	},{
 		tx:'http://img1.imgtn.bdimg.com/it/u=2579660820,1492564183&fm=11&gp=0.jpg',
-		name:'小飞同学',commTime:'2020/03/23',xin:5,version:'5.2.0.111',
-		contentTxt:'非常棒，领取任务卡两下子做完任务就赚了，我这里有领取任务秘籍联系我教你领抢任务手慢无哦',
+		name:'小飞同学',commTime:'2020/07/05',xin:5,version:'5.3.2.101',
+		contentTxt:'非常棒，买了一个九尾狐的雅雅,一天直接转出去趟赚7块差价哈哈',
 		zan:1, nzhan:0
 	},{
+		tx:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597324447562&di=a3c4483eb0ce72dae277fea51e6893b5&imgtype=0&src=http%3A%2F%2Fimg.hao661.com%2Fzt.hao661.com%2Fuploads%2Fallimg%2F141005%2F0H304IT-0.jpg',
+		name:'zt.MRs',commTime:'2020/07/01',xin:3,version:'5.3.2.101',
+		contentTxt:'在做的都是弟弟，我是说所有人，便宜的我都不买直奔漫威专区，一个号每天净赚三百差不多',
+		zan:3, nzhan:0
+	},{
+		tx:'https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2034740944,4251903193&fm=26&gp=0.jpg',
+		name:'ai芙兰',commTime:'2020/06/22',xin:4,version:'5.3.1.103',
+		contentTxt:'有要赚奖励的朋友加我好友，做我的粉丝我保证我宠你。V : yys3563,快点来快点来等我升级到V10再来的话就不宠你了',
+		zan:20, nzhan:0
+	},{
+		tx:'http://img5.imgtn.bdimg.com/it/u=183326193,1784969774&fm=26&gp=0.jpg',
+		name:'爱玩呼啦圈的小喵喵',commTime:'2020/06/20',xin:3,version:'5.3.1.103',
+		contentTxt:'感觉还不错，但这个手办也太TM难得买了吧，靠，靠，靠',
+		zan:208, nzhan:5
+	},{
 		tx:'http://img2.imgtn.bdimg.com/it/u=903791629,504409189&fm=11&gp=0.jpg',
-		name:'狼也',commTime:'2020/01/02',xin:3,version:'5.2.0.111',
+		name:'狼也',commTime:'2020/06/13',xin:3,version:'5.3.1.103',
 		contentTxt:'我就想知道主页里广告的那个女猪脚是谁，三分钟之内我要她的去全部信息，否则锤死在做的各位，egm',
 		zan:12, nzhan:0
 	}
