@@ -24,47 +24,42 @@
         <div @click="ckActiv(4)"></div>
     </div>
     <div class="clear"></div>
-    <!-- <div class="maeeageTx"  style="top:170px" id="lookMsg" style="height:auto;" onclick="window.location.href='introduce.html'">
-        <span>操作引导</span>
-    </div> -->
 
 
 <!--vipInfo-->
 <div v-for="(item,i) in vipCardList" v-cloak>
     <div style="width: 96%;margin-left: 2%;margin-bottom:15px;padding-bottom: 10px;background: #fff;border-radius:5px;box-shadow: #c7c7c7 1px 1px 5px 1px;">
         <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;" >
-            <!-- <span style="margin-bottom:5px;">{{item.typename}}</span>
-            领取{{item.typename}} {{item.commentstartdays}} 天后且完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
-                <div class="v-numver" style="width: 90%;">
-                    <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
-                    <div>任务期限：{{item.watchdays}} 天</div>
-                    <div>开放时间：{{item.starttime}} - {{item.endtime}}</div>
-                    <div>消耗XGO币：{{item.xgocoin}}</div>
-                    <span class="clear">
-            </div> -->
             <img :src="`${reqPath+item.cardicon}`" :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`"  style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+            <img src="img/newss.png" v-if="item.status==0" style="position: absolute;right:1px; margin-top:-4px;"/>
         </div>
         <div class="clear"></div>
         <div class="vipInfoCommmsg">
             <div class="vipimgTItle" style="width:100%;">{{item.typename}} </div>
             <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
-            <div>开团时间：{{item.starttime}} - {{item.endtime}}</div>
+            <div v-if="item.status==1">开团时间：{{item.starttime}} - {{item.endtime}}</div>
+            <div v-if="item.status==0" style="text-align:right;">此系列暂无商品</div>
             <div class="clear"></div>
         </div>
-        <div v-if="item.secondbuy && item.secondbuy<120 && item.secondbuy>0">
-            <input type="button" :value="fmtTimeSecond(item.secondbuy,item)" :class="`active-but  v${item.forder}-bg`"/>
-        </div>
-        <div v-else>
-            <div v-if="item.havebuy==1 || item.havebuy==2">
-                <!-- <input type="button" v-if="item.havebuy==2" value=" 参 团 成 功 " onclick="window.location.href='cardBag/bagPayWait.html'" :class="`active-but  v${item.forder}-bg`"/> -->
-                <input type="button" v-if="item.havebuy==2" value="  查 看 详 情 " :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`"  :class="`active-but  v${item.forder}-bg`"/>
-                <input type="button" v-if="item.havebuy==1" value="正在参与团购"  onclick="window.location.href='cardBag/bagPayWait.html'" :class="`active-but  v${item.forder}-bg`"/>
+        <div v-if="item.status==1">
+            <div v-if="item.secondbuy && item.secondbuy<120 && item.secondbuy>0">
+                <input type="button" :value="fmtTimeSecond(item.secondbuy,item)" :class="`active-but  v${item.forder}-bg`"/>
             </div>
             <div v-else>
-                <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.cardid)" value="参 与 团 购" :class="`active-but  v${item.forder}-bg`" />
-                <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情" :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`" :class="`active-but  v${item.forder}-bg`"/>
+                <div v-if="item.havebuy==1 || item.havebuy==2">
+                    <!-- <input type="button" v-if="item.havebuy==2" value=" 参 团 成 功 " onclick="window.location.href='cardBag/bagPayWait.html'" :class="`active-but  v${item.forder}-bg`"/> -->
+                    <input type="button" v-if="item.havebuy==2" value="  查 看 详 情 " :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`"  :class="`active-but  v${item.forder}-bg`"/>
+                    <input type="button" v-if="item.havebuy==1" value="正在参与团购"  onclick="window.location.href='cardBag/bagPayWait.html'" :class="`active-but  v${item.forder}-bg`"/>
+                </div>
+                <div v-else>
+                    <input type="button" v-if="item.isbuy==1" @click="rushToBuyCard(item.cardid)" value="参 与 团 购" :class="`active-but  v${item.forder}-bg`" />
+                    <input type="button" v-if="item.isbuy==0" value=" 查 看 详 情" :onclick="`window.location.href='productList.html?cardid=${item.cardid}'`" :class="`active-but  v${item.forder}-bg`"/>
+                </div>
+                <img src="img/isqg.gif"  v-if="item.isbuy==1 && item.havebuy!=1 && item.havebuy!=2" style="margin-top:-30px;" @click="rushToBuyCard(item.cardid)"  class="qggiftx"/>
             </div>
-            <img src="img/isqg.gif"  v-if="item.isbuy==1 && item.havebuy!=1 && item.havebuy!=2" style="margin-top:-30px;" @click="rushToBuyCard(item.cardid)"  class="qggiftx"/>
+        </div>
+        <div v-if="item.status==0">
+            <input type="button" value=" 暂 无 库 存 " style="background-image:linear-gradient(90deg,#acacac,#adc2cc)" class="active-but "/>
         </div>
     </div>
     <!-- <div class="payWaitLoad" v-if="item.havebuy==1"><img src="img/timg.gif"/></div> -->
@@ -299,7 +294,7 @@ new Vue({
     //阅读用户协议
     irReaduserx(){
         if(!this.xyIsRead){
-            jqalert('请先阅读用户服务协议并勾选！');
+            jqtoast("请先阅读用户服务协议并勾选！");
             return;
         }
         this.xxxxxx = true;

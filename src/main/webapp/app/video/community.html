@@ -143,8 +143,8 @@ function huanyih(){
     })
 //add bef
 function addimgBef(obj){
-    if($("#addimgList").find(".addimgEl") && $("#addimgList").find(".addimgEl").length>=3){
-        jqtoast('亲，最多只能上传三张哦！');
+    if($("#addimgList").find(".addimgEl") && $("#addimgList").find(".addimgEl").length>=5){
+        jqtoast('亲，最多只能上传五张哦！');
         return;
     }
     exAddImg(obj,sqAddimg);
@@ -273,6 +273,10 @@ function getDocumentTop() {
                 if(data.status==0){
                     jqtoast('发帖成功！');
                     vueThis.addCommentWinFlg = false;
+                    vueThis.commList = [];
+                    vueThis.pageNo=1;
+                    vueThis.pageSize=10;
+                    vueThis.sumPageNumber=1;
                     vueThis.getCommunityList({});
                 }else{
                     jqtoast(data.message);
@@ -295,7 +299,6 @@ function getDocumentTop() {
             if(this.showType==1){
                 reqBo.uid = getCptToken();
             }
-            this.commList = [];
             reqBo.startnum=(this.pageNo-1)*this.pageSize;
             reqBo.rownum = this.pageSize;
             var vThis = this;
