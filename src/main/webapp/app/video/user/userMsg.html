@@ -96,7 +96,7 @@
         <div class="infoTitle">{{seMsg.title}}</div>
         <div class="infoCont">
           {{seMsg.message}} 
-          <span v-if="seMsg.message && seMsg.message.indexOf('恭喜您抢购价值')>=0" onclick="window.location.href='../cardBag/bagPayWait.html'" style="color:blue;"><br/>前往查看</span>
+          <span v-if="seMsg.message && seMsg.message.indexOf('恭喜您参团成功')>=0" onclick="window.location.href='../cardBag/bagPayWait.html'" style="color:blue;"><br/>前往查看</span>
           <span v-if="seMsg.message && seMsg.message.indexOf('请尽快审核')>=0" onclick="window.location.href='../cardBag/bagSale.html'" style="color:blue;"><br/>前往审核</span>
         </div>
         <div class="infoCont" style="text-align:right;">{{seMsg.createtime}} </div>
