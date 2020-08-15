@@ -179,7 +179,7 @@ new Vue({
             jAjax("/appVipCard/examinePast",reqData,function(data){
                 if(data.status=='0'){
                     jqtoast('审核已完成！');
-                    window.location.href = "bagSale.html";
+                    window.location.href = "bagHistory.html";
                 }else{
                     jqtoast(data.message);
                 }
