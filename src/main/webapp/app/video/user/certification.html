@@ -31,13 +31,13 @@
     <div class="operationEl">
         <span style="margin-left:0;">姓名：</span>
         <div style="margin-top:-20px;">
-            <input v-model="userInfo.realname" placeholder="请输入您的真实姓名"  maxlength="4" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))" style="width:90%;height:30px;border:0;color:#555;"/>
+            <input v-model="userInfo.realname" type="text" placeholder="请输入您的真实姓名"  maxlength="4" style="width:90%;height:30px;border:0;color:#555;"/>
         </div>
     </div>
     <div class="operationEl">
         <span style="margin-left:0;">身份证号：</span>
         <div style="margin-top:-20px;">
-            <input v-model="userInfo.idcard" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"  placeholder="请输入您的真实身份证号"  maxlength="18" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+            <input v-model="userInfo.idcard" type="text" placeholder="请输入您的真实身份证号"  maxlength="18" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
         </div>
     </div>
     <br>

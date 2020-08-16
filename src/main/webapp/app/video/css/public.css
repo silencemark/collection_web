@@ -490,12 +490,12 @@ header .searchCont input::-webkit-input-placeholder{
     background: #f9f9f9;
 }
 .userxyInfo .ussmsgggg{
-    letter-spacing: 2px;
     color: #555;
     padding: 15px;
     letter-spacing: 2px;
     height: 90%;
     overflow: auto;
+    font-size: 0.9rem;
 }
 .myisRead{
     height: 45px;
