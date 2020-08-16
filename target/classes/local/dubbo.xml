@@ -15,7 +15,7 @@
 
 	<dubbo:protocol name="dubbo" port="20999" /> 
 	<!-- <dubbo:registry address="zookeeper://localhost:2181" check="false" />  -->
-	<dubbo:registry address="zookeeper://117.18.12.193:2181" check="false" />
+	<dubbo:registry address="zookeeper://101.132.177.82:2181" check="false" />
 
     <!-- add by silence 2020-05-26--> 
     <dubbo:reference id="appLoginService" interface="com.collection.service.IAppLoginService"/>

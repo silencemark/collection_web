@@ -123,6 +123,7 @@ function checkImageShowHide(rum,imagesrc){
 	            </select>
 	            <select class="sel" name="type">
 	            	<option>全部类别</option>
+	            	<option value="1" <c:if test="${map.type == '1' }">selected="selected"</c:if>>精品推荐</option>
 	            	<option value="2" <c:if test="${map.type == '2' }">selected="selected"</c:if>>珍藏电影</option>
 	            	<option value="3" <c:if test="${map.type == '3' }">selected="selected"</c:if>>推荐动漫</option>
 	            	<option value="4" <c:if test="${map.type == '4' }">selected="selected"</c:if>>电视剧</option>
@@ -154,7 +155,7 @@ function checkImageShowHide(rum,imagesrc){
 	                    <td>${li.httpurl }</td>
 	                    <td><c:choose>
 	                    	<c:when test="${li.type == 1 }">
-	                    		<i class="red">会员专享</i>
+	                    		<i class="red">精品推荐</i>
 	                    	</c:when>
 	                    	<c:when test="${li.type == 2 }">
 	                    		<i class="red">珍藏电影</i>
@@ -201,6 +202,7 @@ function checkImageShowHide(rum,imagesrc){
         <div class="clear"></div>
         <span>电影类型</span>
         <select class="sel" name="type" id="type">
+        	<option value="1">精品推荐</option>
            	<option value="2">珍藏电影</option>
            	<option value="3">推荐动漫</option>
            	<option value="4">电视剧</option>

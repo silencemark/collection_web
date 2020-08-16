@@ -209,7 +209,7 @@ function ajaxFileUpload(id,Fileid,noimg){
 	if(!Fileid){
 		Fileid = "fileName";
 	}
-	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/managebannerimg",Fileid,functionata){
+	hhutil.ajaxFileUpload("<%=request.getContextPath()%>/upload/managebannerimg",Fileid,function(data){
 			if(data.imgkey){
 				$("#bannerimageurl").attr("src",data.imgkey);
 				$("input[name=imgurl]").val(data.imgkey);

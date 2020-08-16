@@ -145,9 +145,7 @@ public class AppUserCenterController extends BaseController{
 			data.put("status", 1);
 			data.put("message", "已实名审核通过，请勿重新提交");
 		} else {
-			this.appUserCenterService.certification(map);
-			data.put("status", 0);
-			data.put("message", "提交成功");
+			data = this.appUserCenterService.certification(map);
 		}
 		return data;	
 	}
@@ -310,7 +308,7 @@ public class AppUserCenterController extends BaseController{
 		//获取我的邀请码和 qr二维码地址
 		codeMap = this.appUserCenterService.myInviteCode(map);
 		
-		String codeContent = Constants.PROJECT_PATH + codeMap.get("invitecodehttpurl");
+		String codeContent = Constants.INVITE_PATH + codeMap.get("invitecodehttpurl");
 		codeMap.put("invitecodehttpurl", codeContent);
 		//如果没有qr二维码就生成一个入库
 		if(codeMap.get("invitecodeqrcode") == null) {
@@ -323,7 +321,7 @@ public class AppUserCenterController extends BaseController{
 			String f = request.getSession().getServletContext().getRealPath("upload/qrcodes/");
 			String newImg = "/"+System.currentTimeMillis()/1000l + "_invitecode.jpg";
 			SharePictureBiz share = new SharePictureBiz();
-			share.retrievePicture(f + newImg, request.getSession().getServletContext().getRealPath("/") + qrcode);
+			share.retrievePicture(f + newImg, request.getSession().getServletContext().getRealPath("/") + qrcode, codeMap.get("invitecode").toString());
 			codeMap.put("invitecodeqrcode", "/upload/qrcodes/"+newImg);
 			codeMap.put("qrcode", qrcode);
 			this.appUserCenterService.updateQrcode(codeMap);
@@ -612,8 +610,7 @@ public class AppUserCenterController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		data.put("resultlist", this.appUserCenterService.getUserNotice(map));
-		return data;
+		return this.appUserCenterService.getUserNotice(map);
 	}
 	
 	/**

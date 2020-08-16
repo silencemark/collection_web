@@ -267,7 +267,17 @@ public class AppIndexController extends BaseController{
 		return data;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(FileDeal.getUUID());
+	/**
+	 * 首页查询最新的一条通知消息
+	 * @param map
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getNewSystemNotice")
+	@ResponseBody
+	public Map<String, Object> getNewSystemNotice(@RequestParam Map<String, Object> map, HttpServletRequest request,
+			HttpServletResponse response) {
+		return this.appindexService.getNewSystemNotice(map);
 	}
 }
