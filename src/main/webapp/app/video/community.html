@@ -71,7 +71,7 @@
     
 <!--发帖窗口-->
 <div class="monmc" v-cloak  @click="addCommentWinFlg = false" v-if="addCommentWinFlg"></div>
-<div class="payConfirmCont"  v-cloak v-if="addCommentWinFlg" style="height:280px;">
+<div class="payConfirmCont"  v-cloak v-if="addCommentWinFlg" style="height:360px;">
     <span style="position:absolute;right:15px;margin-top:10px;font-size:0.8rem;color:#999;" @click="addCommentWinFlg = false">取消</span>
     <div class="inputCont">
         <div style="font-size:0.9rem;font-weight:600;color:#555;margin:10px 0 10px 3%;margin-bottom:10px;">我要发帖</div>
@@ -83,7 +83,7 @@
             <input  class="sqAddBUt" style="margin-left:-60px;opacity:0;" onchange="addimgBef(this)"  type="file" accept="image/*" multiple >
         </div>
         <div class="clear"></div>
-        <div class="but-cont" style="position: fixed;bottom:0;width:100%;">
+        <div class="but-cont" style="position: fixed;bottom:10px;width:100%;">
             <div class="btn" onclick="confirmAdd()" style="width:80%;border-radius:0;height: 35px;line-height:35px;border-radius:25px;">
                 立 即 发 布 
             </div>
@@ -165,10 +165,10 @@ function confirmAdd(){
         return;
     }
     var commText = $("#sqAddCommentText").val();
-    if(!commText){
-        jqtoast('请填写发帖内容！');
-        return;
-    }
+    // if(!commText){
+    //     jqtoast('请填写发帖内容！');
+    //     return;
+    // }
     var imagelist = [];
     $("#addimgList").find(".addimgEl").each(function(){
         imagelist.push({imgurl:$(this).find("img").attr("src").replace(/^data:image\/(png|jpeg);base64,/,"")});

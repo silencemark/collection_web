@@ -134,7 +134,8 @@
         <div class="stitle">
             <img src="img/search.png">
             <input placeholder="您想要看什么" id="searchInput" v-model="searchValue" v-on:input="searchMv" maxlength="10"/>
-            <span @click="searchFlg=false">取消搜索</span>
+            <span style="right:70px;" @click="serAll">全网搜索</span>
+            <span @click="searchFlg=false">取消</span>
         </div>
         <br/><br/><br/>
         <div class="mvo" v-for="(so,i) in searchList" v-cloak>
@@ -145,7 +146,7 @@
             <div class="vrigth" :onclick="`window.location.href='cardBag/bagComment.html?mv=${so.httpurl}'`" >{{so.title}}</div>
         </div>
         <div v-if="searchList.length==0" style="text-align:center;margin-top: 40px;color: #777;">
-            很抱歉，没有找到相关资源
+            没有找到相关资源,试试全网搜索吧
         </div>
     </div>
 
@@ -381,8 +382,11 @@ new Vue({
                 jAjax("/appIndex/getHomePageVideoDesc",{videodesc:this.searchValue},function(data){
                    v.searchList = data;
                 });
-                
             }
+        },
+        serAll(){
+            // window.location.href='cardBag/bagComment.html?mv=https://www.0855y.com/index.php/vod/search/wd/'+this.searchValue+'.html';
+            window.location.href='cardBag/bagComment.html?mv=http://www.sirenju.com/a44search/-------------/?wd='+this.searchValue+'&submit=';
         },
         //弹出搜索框
         showSearchWin(){

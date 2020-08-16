@@ -207,43 +207,39 @@ function share(tp){
         window.location.href="tencent://message/?uin=1014167202&Site=在线QQ&Menu=yes";
         // alert('唤起QQ失败，未检测到您打开QQ应用程序！');
     }else{
-        $(".mask-black").click();
-        jqalert({
-            prompt:'【享GO影视】如果您下载个人海报失败，您还可以截图分享给您的好友',
-            yestext:'知道了',
-            yesfn:function () {
-            }
-        })
         downloadIamge(shareUrl,'xgo.png');
     }
 }
 
-function downloadIamge(imgsrc, name){ //下载图片地址和图片名
-    let image = new Image();
-    // 解决跨域 Canvas 污染问题
-    image.setAttribute("crossOrigin", "anonymous");
-    image.onload = function() {
-      let canvas = document.createElement("canvas");
-      canvas.width = image.width;
-      canvas.height = image.height;
-      let context = canvas.getContext("2d");
-      context.drawImage(image, 0, 0, image.width, image.height);
-      let url = canvas.toDataURL("image/png"); //得到图片的base64编码数据
-      let a = document.createElement("a"); // 生成一个a元素
-      let event = new MouseEvent("click"); // 创建一个单击事件
-      a.download = name || "photo"; // 设置图片名称
-      a.href = url; // 将生成的URL设置为a.href属性
-      a.dispatchEvent(event); // 触发a的单击事件
-    };
-    image.src = imgsrc;
-  }
+function downloadIamge(imgsrc){ //下载图片地址和图片名
+    // window.location.href=reqPath+"/upload/download?fileName="+imgsrc;
+    $("#dowifMEM").attr("src",reqPath+"/upload/download?fileName="+imgsrc);
+    $(".mask-black").click();
+	// $.ajax({
+	// 	type : "GET",
+	// 	url : reqPath+"/upload/download?fileName="+imgsrc,
+	// 	async:false, 
+	// 	success : function(data) {
+	// 		jqtoast('分享海报已下载完成！');
+	// 	},error : function(e){
+	// 		jqtoast('分享文件保存失败，您可以通过截图发送给您的好友！');
+	// 	}
+	// });
+}
 var shareUrl = "";
 $(function(){
     jAjax("/appUserCenter/myInviteCode",{},function(data){ 
-        shareUrl = reqPath+data.invitecodeqrcode;
+        shareUrl = data.invitecodeqrcode;
         clipboard = new Clipboard('#cp');
-        $("#cpLink").html("秋水一色共长天每天赚个早餐钱，看视频玩游戏都能领现金！\n"+data.invitecodehttpurl);
-        $("#incd").attr("src",shareUrl);
+        var s = 
+        "邀请您加入享GO，海量免费视频！精美手办，购买，出售赚收益！<br/>"+
+        "-------------<br/>"+
+        "下载链接："+data.invitecodehttpurl+
+        "<br/>-------------<br/>"+
+        "我的邀请口令 ："+data.invitecodehttpurl.split("=")[1];
+        // $("#cpLink").html("秋水一色共长天每天赚个早餐钱，看视频玩游戏都能领现金！\n"+data.invitecodehttpurl);
+        $("#cpLink").html(s);
+        $("#incd").attr("src",reqPath+shareUrl);
     });
     $("#cp").click(function(){
         $(".mask-black").click();
