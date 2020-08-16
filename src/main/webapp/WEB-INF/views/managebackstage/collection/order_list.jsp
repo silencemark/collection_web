@@ -78,7 +78,7 @@ function examineOrder(orderid, status){
 function returnOrder(orderid, status){
 	swal({
 		title : "",
-		text : "确认将任务卡所在订单从买家扣除，退还给卖家用户？",
+		text : "确认将手办所在订单从买家扣除，退还给卖家用户？",
 		type : "error",
 		showCancelButton : true,
 		confirmButtonColor : "#ff7922",
@@ -198,7 +198,7 @@ function checkPayOrderShowHide(rum,payorder){
         		<input type="text" class="text" placeholder="请输入交易订单号" name="ordernum" value="${map.ordernum}"/>
 	            <input type="text" class="text" placeholder="请输入买家用户昵称" name="buynickname" value="${map.buynickname }"/>
 	            <input type="text" class="text" placeholder="请输入卖家用户昵称" name="sellnickname" value="${map.sellnickname }"/>
-	            <input type="text" class="text" placeholder="请输入任务卡名称" name="typename" value="${map.typename }"/>
+	            <input type="text" class="text" placeholder="请输入手办名称" name="title" value="${map.title }"/>
 	            <select class="sel" name="type">
 	            	<option>全部订单</option>
 	            	<option value="1" <c:if test="${map.type == '1' }">selected="selected"</c:if>>是</option>
@@ -226,8 +226,8 @@ function checkPayOrderShowHide(rum,payorder){
                 	<td>交易订单号</td>
                     <td>买家昵称</td>
                     <td>卖家昵称</td>
-                    <td>任务卡名称</td>
-                    <td>任务卡价格</td>
+                    <td>手办名称</td>
+                    <td>手办价格</td>
                     <td>订单类型</td>
                     <td>是否系统订单</td>
                     <td>支付凭证</td>

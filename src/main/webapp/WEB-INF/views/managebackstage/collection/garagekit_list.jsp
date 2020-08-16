@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>首页任务卡手办管理-管理方后台</title>
+<title>首页手办专区手办信息管理-管理方后台</title>
 <link href="<%=request.getContextPath() %>/userbackstage/style/public2.css" type="text/css" rel="stylesheet" />
 <link href="<%=request.getContextPath() %>/userbackstage/style/page2.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/userbackstage/script/jquery-1.10.2.min.js"></script>
@@ -114,9 +114,9 @@ function checkImageShowHide(rum,imagesrc){
 <jsp:include page="../top.jsp" ></jsp:include>
 <div class="main_page">
 	<jsp:include page="../left.jsp" ></jsp:include>
-	<div class="page_nav"><p><a href="<%=request.getContextPath() %>/managebackstage/getMemberCardList">VIP任务卡管理</a><i>/</i><span>任务卡手办管理</span></p></div>        
+	<div class="page_nav"><p><a href="<%=request.getContextPath() %>/managebackstage/getMemberCardList">手办专区手办信息管理</a><i>/</i><span>手办专区手办信息管理</span></p></div>        
     <div class="page_tab">
-        <div class="tab_name"><span class="gray1">任务卡手办管理列表</span><a href="#" onclick="update('','','','','','','${map.cardid}','1','','')">添加</a></div>
+        <div class="tab_name"><span class="gray1">手办专区手办信息管理列表</span><a href="#" onclick="update('','','','','','','${map.cardid}','1','','')">添加</a></div>
         <div class="sel_box">
         	<form action="<%=request.getContextPath()%>/managebackstage/getGarageKitList" method="post">
         		<input type="hidden" class="text"  name="cardid" value="${map.cardid}"/>
@@ -135,7 +135,7 @@ function checkImageShowHide(rum,imagesrc){
         <div class="tab_list">
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td">
-            		<td>任务卡名称</td>
+            		<td>手办专区名称</td>
                 	<td>名称</td>
                     <td width="20%">描述</td>
                     <td>手办图标</td>
@@ -173,7 +173,7 @@ function checkImageShowHide(rum,imagesrc){
 <div class="div_mask" style="display:none;"></div>
 
 <div class="tc_changetext"  id="updatediv"  style="display:none;top: 20%;left: 40%; width: 650px;">
-	<div class="tc_title"><span>新增/修改任务卡手办信息</span><a href="#" onclick="checkHide(0)">×</a></div>
+	<div class="tc_title"><span>新增/修改手办信息</span><a href="#" onclick="checkHide(0)">×</a></div>
     <form action="<%=request.getContextPath() %>/managebackstage/insertOrupdateGarageKit" id="updateform" method="post">
     <input type="hidden" name="kitid"  id="kitid" />
     <input type="hidden" name="cardid"  id="cardid123" />

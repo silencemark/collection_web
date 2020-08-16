@@ -764,10 +764,11 @@ public class ManageBackstageController {
 		if(cardInfo == null || cardInfo.isEmpty()) {
 			//查询获取配置的结算时间和结算次数
 			String crontab = this.manageBackstageService.getCrontabTime(map);
+			System.out.println("crontab==="+crontab);
 			//说明需要更新定时任务
 			Crontab corn = new Crontab(crontab, 0);
 			//默认数据库cardid跟taskid一致，因为没有设置关联这个需要注意
-			Scheduler.update(Integer.parseInt(cardInfo.get("cardid").toString()), corn, DateUtil.sysDateTime());
+			Scheduler.update(Integer.parseInt(map.get("cardid").toString()), corn, DateUtil.sysDateTime());
 		}
 		this.manageBackstageService.updateMemberCard(map);
 		return "redirect:/managebackstage/getMemberCardList";
