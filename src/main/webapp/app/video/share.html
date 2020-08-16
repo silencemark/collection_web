@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>分享好友</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link href="css/share.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="css/public.css"/>
+        
+    </head>
+    <body style="background-color:#007bdb">
+        <div class="title" style="color:#fff;position: absolute;background: none;">
+            <img src="img/to-leftffff.png" onclick="history.back(-1)"/>
+            分享好友
+            <a href="javascript:;" class="jq22-navBar-item" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
+                <img src="img/fx.png" class="fxbut"/>
+            </a>
+        </div>
+
+        <img id="incd" style="width: 100%;">
+
+        <a id="cpLink" href="" style="position: fixed;top:-50px;"></a>
+        <div class="m-actionsheet" id="actionSheet">
+            <div class="jq22-show-box">
+                <div class="jq22-show-box-title jq22-footer-flex">
+                    <div class="b-line jq22-coll-share-box">
+                        <a href="javascript:;" class="jq22-coll-share-item">
+                            <div class="jq22-coll-share-img">
+                                <img src="img/icon-wx.png"  id="cp0" data-clipboard-action="copy" data-clipboard-target="#cpLink">
+                            </div>
+                            <div class="jq22-coll-share-text">微信好友</div>
+                        </a>
+                        <a href="javascript:;"  class="jq22-coll-share-item">
+                            <div class="jq22-coll-share-img">
+                                <img src="img/icon-qq.png"  id="cp1" data-clipboard-action="copy" data-clipboard-target="#cpLink">
+                            </div>
+                            <div class="jq22-coll-share-text">QQ</div>
+                        </a>
+                        <a href="javascript:void(0);" class="jq22-coll-share-item">
+                            <div class="jq22-coll-share-img" >
+                                <img src="img/copLine.png" id="cp" data-clipboard-action="copy" data-clipboard-target="#cpLink"/>
+                            </div>
+                            <div class="jq22-coll-share-text">分享链接</div>
+                        </a>
+                        <a href="javascript:;" onclick="share(3)" class="jq22-coll-share-item">
+                            <div class="jq22-coll-share-img">
+                                <img src="img/icon-wb.png" alt="">
+                            </div>
+                            <div class="jq22-coll-share-text">截图分享</div>
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/clipboard.min.js"></script>
+        <script>
+            var clipboard = new Clipboard('#cp0');
+            var clipboard = new Clipboard('#cp1');
+            var clipboard = new Clipboard('#cp');
+        </script>
+        <script src="js/jquery-3.1.1.min.js"></script>
+        
+        <script type="text/javascript" src="js/share.js"></script>
+    </body>
+</html>
+

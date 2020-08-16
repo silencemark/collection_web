@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>产品库</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css?v=12"/>
+     <style>
+         *{
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mgsBUTred {margin-top:-11px;}
+     </style>
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title">
+         <img src="../img/to-left.png" onclick="history.back(-1)"/>
+         产品库
+    </div>
+
+<div class="gabTitle">
+    <div onclick="window.location.href='bagPayWait.html'">待支付</div>
+    <div onclick="window.location.href='bagOwn.html'">我的产品</div>
+    <div onclick="window.location.href='bagSale.html'" class="active">待出售</div>
+    <div onclick="window.location.href='bagHistory.html'">历史订单</div>
+    <b class="clear"></b>
+</div>
+
+<!--vipInfo-->
+<div class="ownEl"  v-for="(item,i) in saleCardList"  v-cloak >
+    <img :src="reqPath+item.iconimg">
+    <div class="ownElmsg"  v-if="item.status==0">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.title}}</div>
+        <div style="margin-top:10px;">{{item.title}}正在等待团购出售<br>预计出售日期为：{{item.selltime}}</div>
+        <div style="position: absolute;bottom:10px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px;">待出售</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="ownElmsg"  v-if="item.status==1">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.title}}</div>
+        <div style="margin-top:10px;">
+            {{item.title}}已被其他用户选中，正在等待用户付款，交易单号为：{{item.ordernum}}</div>
+        <div style="margin-top:5px;">剩余支付时间：{{fmtTimeSecond(item.remaintime)}}</div>
+        <div style="position: absolute;bottom:10px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px;">待支付</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="ownElmsg"  v-if="item.status==2">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.title}}</div>
+        <div style="margin-top:10px;">
+            {{item.title}}已出售交易单号为：{{item.ordernum}},买家已付款。请尽快审核发货</div>
+            <div style="margin-top:5px;">剩余审核时间：{{fmtTimeSecond(item.remaintime)}}</div>
+        <div style="position: absolute;bottom:10px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px;">待审核</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div  style="width:100%;height:35px;margin-top: -10px;" >
+        <div class="kongbtn" v-if="item.status==0" :onclick="`window.location.href='../productInfo.html?kitid=${item.kitid}'`"  style="position:absolute;right:15px;margin-top:3px;">查看详情</div>
+        <div class="kongbtn" v-if="item.status==1" :onclick="`window.location.href='../user/userInfo.html?uid=${item.buyuserid}'`" style="position:absolute;right:15px;margin-top:3px;">查看买家</div>
+        <div class="kongbtn" v-if="item.status==2"  @click="chkOrder(item.orderid)" style="position:absolute;right:15px;margin-top:3px;">立即审核</div>
+    </div v-else>
+</div>
+
+
+
+
+<!-- <div v-for="(item,i) in saleCardList" style="margin-bottom:15px;" v-cloak>
+    <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
+    :style="`background-image:url('../img/V${item.forder}_BG.png')`">
+      <span style="margin-bottom:5px;">{{item.typename}}</span>
+      恭喜您完成了{{item.typename}}规定任务,您可获得{{item.yield}}%任务奖励，邀请好友可领取翻倍任务奖励
+        <div class="v-numver" style="width: 90%;margin-top:45px;">
+            <div v-if="item.status==0" style="width: 100%;">
+                <div style="width: 100%;">预计出售时间：{{item.selltime}}</div>
+                <div>出售价格：{{item.cardprice}}</div>
+                <div>交易状态： <a style="font-weight:bolder;color:#BA4A33;">待出售</a></div>
+            </div>
+            <div v-if="item.status==1" style="width: 100%;">
+                <div style="width:55%">交易单号：{{item.ordernum}}</div style="width:55%">
+                <div style="width:45%">出售价格：{{item.cardprice}}</div style="width:45%">
+                <div style="width:55%">剩余支付时间：{{fmtTimeSecond(item.remaintime,saleCardList[i],true)}}</div style="width:55%">
+                <div style="width:45%">交易状态： <a style="font-weight:bolder;color:#BA4A33;">待支付</a></div style="width:45%">
+            </div>
+            <div v-if="item.status==2" style="width: 100%;">
+                <div style="width:55%">交易单号：{{item.ordernum}}</div>
+                <div style="width:45%">付款金额：{{item.cardprice}}</div style="width:55%">
+                <div style="width:55%">剩余审核时间：{{fmtTimeSecond(item.remaintime,saleCardList[i],true)}}</div style="width:55%">
+                <div style="width:45%">交易状态： <a style="font-weight:bolder;color:#BA4A33;">待审核</a></div style="width:55%">
+            </div>
+            <span class="clear">
+      </div>
+      <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    </div>
+    <div class="clear"></div>
+    <input type="button" v-if="item.status==1" value="查看买家" :onclick="`window.location.href='../user/userInfo.html?uid=${item.buyuserid}'`" :class="`active-but  v${item.forder}-bg`"/>
+     <input type="button" v-if="item.status==2" value="立即审核" :class="`active-but  v${item.forder}-bg`" @click="chkOrder(item.orderid)"/>
+</div> -->
+
+
+<div v-if="saleCardList.length==0" class="notList">没有出售中的记录</div>
+</section>
+<div class="clear"></div>
+
+
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+        </li>
+        <li class="list_li cart">
+            <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+        </li>
+        <li class="list_li cart">
+           <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
+       </li>
+       <li class="list_li profile">
+           <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+ <!-- end footer-->
+</body>
+
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/vue.js"></script>
+
+<script>
+new Vue({
+    el: '#app',
+    data: function() {
+        return {
+            saleCardList : [],
+        }
+    },
+    created() {
+        this.getSaleCardList();
+    },
+    methods:{
+    //查询出售列表
+    getSaleCardList(){
+        var vueThis = this;
+        jAjax("/appVipCard/getSaleCardList",{},function(data){
+            vueThis.saleCardList = data.resultlist;  
+            if(vueThis.saleCardList.length>0){
+                var t = setInterval(()=>{
+                    for(var k=0;k<vueThis.saleCardList.length;k++){
+                        vueThis.saleCardList[k].remaintime -= 1;
+                    }
+                },1000);
+            }
+        });
+    },
+    //审核
+    chkOrder(orderid){
+        window.location.href="bagCheck.html?orderid="+orderid;
+    },
+    //格式化 秒 时间显示
+    fmtTimeSecond(second){
+        if(second<60){
+            return second+'秒';
+        }else{
+            return parseInt(second/60)+'分'+(second%60)+'秒';
+        }
+    },
+    //定时函数
+    setInterFun(item){
+        var vueThis = this;
+        if(!vueThis.timer){
+            vueThis.timer = setInterval(()=>{
+                item.remaintime -= 1;
+                if(item.remaintime<=0){
+                    item.isbuy = 1;
+                    clearInterval(vueThis.timer);
+                }
+            },1000);
+        }
+    }
+
+  }
+})
+  </script>
+
+</html>

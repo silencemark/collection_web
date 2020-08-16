@@ -1,0 +1,174 @@
+ *{     
+     margin: 0;
+     padding: 0;
+ }
+ .html,body,.wrap{
+     width: 100%;
+ }
+  
+  body{
+      background: #fff;
+  }
+  
+ ul{
+      list-style-type: none;
+  }
+  
+  a{
+      text-decoration: none;
+      color: #777;
+  }
+ 
+  a:active{
+      text-decoration: underline;
+      color: #000;
+  }
+  input,button{
+    outline:none;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
+  .clear{
+      clear: both;
+      border:0px !important;
+  }
+
+
+.dHead{
+    width: 100%;
+    height: 240px;
+    background-color: #fff;
+}
+.dHead .bg{
+    width:100%;position: absolute;top: 0;z-index: 0;
+}
+.dHead .yyb{
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 112px;
+    height: 31px;
+    z-index: 1;
+}
+.dHead .logInfoCont{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    z-index: 2;
+    position: absolute;
+    top: 15px;
+}
+.logInfoCont .log{
+    width: 80px;
+    height: 80px;
+}
+.logInfoCont .logname{
+    color: #4f4f4f;
+    font-size: 18px;
+}
+.logInfoCont .dowInfo{
+    color: #939393;
+    font-size: 12px;
+    margin-top: 7px;
+}
+.logInfoCont .aqd{
+    width: 60%;
+    height: 33px;
+    color: #fff;
+    display: inline-block;
+    line-height: 33px;
+    background-color: #01a2f2;
+    font-size: 14px;
+    margin-top: 20px;
+    letter-spacing: 3px;
+}
+.dcont{
+    background: #fff;
+    margin-left: 2%;
+    height: auto;
+    width: 96%;
+    margin-top: 10px;
+    box-shadow: 0px 0px 5px 0px #dddbdb;
+    overflow:hidden;
+}
+.dcont img{
+    width: 140px;
+    margin-left: 10px;
+    margin-top: 30px;
+    float: left;
+}
+.apremak{
+    font-size: 13px;
+    color: #686868;
+    width: 96%;
+    margin: 10px 4% 15px 3%;
+}
+.dwOption{
+    width: 100%;
+    text-align: center;
+    color: #939393;
+    margin-top: 5px;
+}
+.dwOption span{
+    font-size: 13.5px;
+    padding-bottom: 3px;
+}
+.dwOptionActive{
+    border-bottom: 1.5px solid #01a2f2;
+    color: #01a2f2;
+}
+.dwcommentCont{
+    width: 92%;
+    margin-left: 4%;
+    min-height: 50px;
+    padding-top: 20px;
+}
+.dwcommentCont img{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 50%;
+}
+.dwcommentCont .dwLeft{
+    width: 40px;
+    height: 40px;
+    float: left;
+}
+.dwcommentCont .dwright{
+    min-width: 40px;
+    height: 40px;
+    float: left;
+    padding-left: 15px;
+    padding-top: 3px;
+}
+.dwCommx{
+    width: 100%;
+    margin-top: 10px;
+}
+.dwCommx img{
+    width: 15px;
+    height: 15px;
+    margin-right: 2px;
+    margin-top: 4px;
+}
+.bwzhan{
+    font-size:13px;color:#939393;text-align:right;padding-right: 50px;
+}
+.bwzhan img{
+    width: 15px;
+    height: 15px;
+    float: none;
+    position: absolute;
+    margin-top: 1px;
+    margin-left: -15px;
+}
+.wbOpen{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 5;
+    opacity: 0.95;
+}

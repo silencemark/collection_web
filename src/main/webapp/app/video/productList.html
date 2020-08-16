@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <title>享GO影视</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <meta name="application-name" content="享GO影视">
+     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/bitbug_favicon.ico">
+     <meta name="apple-mobile-web-app-capable" content="yes">
+
+     <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="css/money.css"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
+ </head>
+ <body style="background-color:#f6f6f6;">
+<section class="main"  id="app">
+<div style="position: fixed;top: 0px;width: 100%;background: #fff;max-width: 580px;z-index:2;">
+    <div class="title" >
+        <img src="img/to-left.png" onclick="history.back(-1)"/>
+        专区互动
+   </div>
+   <img src="img/yq02.png" style="width:98%;margin-left:1%;"  onclick="window.location.href='invite.html'"/>
+   <div style="width:100%;height: 50px;float:left;overflow-y:hidden;overflow-x:auto;white-space:nowrap;">
+        <div style="width:1500px;height:50px;position:relative;display:inline-block;">
+                <div class="sqTitle">
+                    <div v-for="(c,i) in vipCardList"
+                    :class="`sqTitleEl ${c.cardid==cardid?'sqTitleElActiv':''}`"
+                    @click="changStype(c.cardid)"
+                    style="width:auto;padding:13px 15px 13px 15px;font-size: 0.85rem;"  v-cloak >{{c.typename}}</div>
+                    <div class="clear"></div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<div class="commsq" style="margin-top:185px;">
+    <div class="commsqLeft" >
+        <div class="commsqEl" v-for="(sqel , i) in dataList" v-if="i%2==0" v-cloak :onclick="`window.location.href='productInfo.html?kitid=${sqel.kitid}'`">
+            <div style="width:100%;min-height:150px;">
+                <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
+            </div>
+            <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">{{sqel.title}}</span>
+            <div style="max-height:55px;padding:5px;margin-top:-10px;">
+                {{sqel.description.length>30?sqel.description.substr(0,30)+'...':sqel.description}}
+            </div>
+            <div class="uInfo">
+                <span class="uname" style="font-size:1rem;color:rgb(222, 24, 134);">￥{{sqel.avgprice?sqel.avgprice:0}}</span>
+                <span class="znum">{{!sqel.likenum?0:sqel.likenum}}人喜欢</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="commsqRight">
+        <div class="commsqEl" v-for="(sqel , i) in dataList" v-if="i%2!=0" v-cloak  :onclick="`window.location.href='productInfo.html?kitid=${sqel.kitid}'`">
+            <div style="width: 100%;min-height:150px;">
+                <img :src="reqPath+sqel.coverimg"  @click="shwoInfo(sqel)"/>
+            </div>
+            <span style="display:block;padding:10px;font-size: 0.9rem;font-weight:bold;">{{sqel.title}}</span>
+            <div style="max-height:55px;padding:5px;margin-top:-10px;">
+                {{sqel.description.length>30?sqel.description.substr(0,30)+'...':sqel.description}}
+            </div>
+            <div class="uInfo">
+                <span class="uname" style="font-size:1rem;color:rgb(222, 24, 134);">￥{{sqel.avgprice?sqel.avgprice:0}}</span>
+                <span class="znum">{{!sqel.likenum?0:sqel.likenum}}人喜欢</span>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<br/><br/><br/><br/>
+</section>
+      <!--footer-->
+      <footer id="footer">
+        <ul id="footer_list">
+           <li class="list_li home active">
+               <a  href="javascript:void(0);" shref="index.html" class="text">首页</a>
+           </li>
+           <li class="list_li follow" >
+               <a  href="javascript:void(0);" shref="community.html" class="text">享互动</a>
+            </li>
+            <li class="list_li cart">
+                <a   href="javascript:void(0);" shref="activity.html" class="text">享购</a>
+            </li>
+            <li class="list_li cart">
+               <a   href="javascript:void(0);" shref="gameList.html" class="text">游戏</a>
+           </li>
+           <li class="list_li profile">
+               <a   href="javascript:void(0);" shref="myCenter.html" class="text">我的</a>
+           </li>
+       </ul>
+      </footer>
+        <!-- end footer-->
+</body>
+</html>
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/exif.js"></script>
+<script>
+    $(function(){
+        $(".sqTitleEl").click(function(){
+            $(".sqTitleEl").removeClass("sqTitleElActiv");
+            $(this).addClass("sqTitleElActiv");
+            jqtoast('抱歉没有更多商品了！');
+        })
+    })
+//文档高度
+function getDocumentTop() {
+        var scrollTop =  0, bodyScrollTop = 0, documentScrollTop = 0;
+        if (document.body) {
+            bodyScrollTop = document.body.scrollTop;
+        }
+        if (document.documentElement) {
+            documentScrollTop = document.documentElement.scrollTop;
+        }
+        scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+        return scrollTop;
+    }
+ 
+    //可视窗口高度
+    function getWindowHeight() {
+        var windowHeight = 0;
+        if (document.compatMode == "CSS1Compat") {
+            windowHeight = document.documentElement.clientHeight;
+        } else {
+            windowHeight = document.body.clientHeight;
+        }
+        return windowHeight;
+    }
+ 
+    //滚动条滚动高度
+    function getScrollHeight() {
+        var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+        if (document.body) {
+            bodyScrollHeight = document.body.scrollHeight;
+        }
+        if (document.documentElement) {
+            documentScrollHeight = document.documentElement.scrollHeight;
+        }
+        scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+        return scrollHeight;
+    }
+
+    //下拉加载数据
+    var refEnabled = true;//防止重复请求
+    $(window).bind("scroll", function () {
+        if((getScrollHeight()-2) < getDocumentTop() + getWindowHeight()){
+            if(refEnabled){
+                refEnabled = false;
+                //xlref();
+            }
+        }
+    });
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            reqPath : reqPath,
+            dataList : [],
+            pageNo:1,
+            pageSize:10,
+            sumPageNumber:1,
+            cardid:'',
+            vipCardList:[],
+        }
+      },
+      created() {
+          this.cardid = this.GetQueryString("cardid");
+          this.getGarageKitList({});
+          if(getCptToken()){
+            this.getVipCardList();
+          }
+      },
+      mounted() {
+        window.xlref = this.xlref;
+     },
+      methods:{
+        xlref(){
+            this.pageNo = this.pageNo +1;
+            if(this.pageNo>this.sumPageNumber){
+                return;
+            }
+            if(this.pageNo = this.sumPageNumber){
+                this.refTxt = "没有更多数据了";
+            }
+            this.getGarageKitList();
+        },
+        //资源查找
+        getGarageKitList(reqBo){
+            reqBo = reqBo?reqBo:{};
+            reqBo.cardid = this.cardid;
+            reqBo.startnum=(this.pageNo-1)*this.pageSize;
+            reqBo.rownum = this.pageSize;
+            var vThis = this;
+            jAjax("/appVipCard/getGarageKitList",reqBo,function(data){
+                vThis.dataList = data.kitlist;
+                vThis.sumPageNumber = Math.ceil(data.kitnum/vThis.pageSize);
+                vThis.$forceUpdate();
+            });
+        },
+        //获取活动类型
+        getVipCardList(){
+            var vueThis = this;
+            jAjax("/appVipCard/getVipCardList",{},function(data){
+                vueThis.vipCardList = data.resultlist;  
+            });
+        },
+        //详情
+        shwoInfo(iId){
+            
+        },
+        changStype(cardid){
+            this.cardid = cardid;
+            this.getGarageKitList();
+        },
+        //获取URL参数
+        GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+      }
+        
+    })
+  </script>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>我的资产</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/user.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/money.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.1.1.min.js"></script>
+     <script src="../js/vue.js"></script>
+     
+ </head>
+ <body>
+
+<section class="main"  id="app">
+    <div class="title" style="background-color:rgb(134,174,250);color:#fff;border:none;">
+         <img src="../img/to-leftffff.png" onclick="history.back(-1)"/>
+        我的资产
+    </div>
+    <section class="aui-flexView" style="margin-top:-1px;">
+        <section class="aui-scrollView">
+            <div class="aui-ass-box">
+                <h2>  </h2>
+                <h3><i class="icon icon-info"></i>可提资产(元)</h3>
+                <h4 v-if="!assets.sumprofit || assets.sumprofit==0">暂无可提资产</h4>
+                <h4 v-else  v-cloak>{{assets.sumprofit}}</h4>
+                <div class="aui-palace aui-palace-one">
+                    <div class="aui-palace-grid">
+                        <p>今日收益(元)</p>
+                        <h2 v-cloak>{{assets.yesterdayprofit}}</h2 v-cloak>
+                    </div>
+                    <div class="aui-palace-grid">
+                        <p>累计收益(元)</p>
+                        <h2 v-cloak>{{assets.sumassets}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="but-cont" style="background-color:rgb(196, 235, 255);padding:10px;margin-top:-1px;">
+                <div class="btn btn-200" @click="hMoney" style="background-image:linear-gradient(90deg,#83cef9,#95d4f8);">
+                    立即提现
+                </div>
+            </div>
+            <div class="aui-palace aui-palace-two">
+                <a  href="javascript:void(0)" onclick="window.location.href='systemVip.html'" class="aui-palace-grid r-line">
+                    <div class="aui-palace-grid-icon">
+                        <img src="../img/nav-005.png" alt="">
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h1>会员等级</h1>
+                        <h2>当前会员拥有<b style="color:#81878d;" v-cloak>  {{assets.interesttimes}} </b>倍收益</h2>
+                    </div>
+                </a>
+                <a  href="javascript:void(0)" onclick="window.location.href='../invite.html'" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="../img/nav-002.png" alt="">
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h1>领红包</h1>
+                        <h2>邀请好友领50奖励</h2>
+                    </div>
+                </a>
+            </div>
+            <div class="aui-palace aui-palace-two" >
+                <a href="javascript:void(0)" onclick="window.location.href='../cardBag/bagHistory.html'" class="aui-palace-grid r-line b-in">
+                    <div class="aui-palace-grid-icon">
+                        <img src="../img/nav-003.png" alt="">
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h1>历史订单</h1>
+                        <h2>累计完成任务<b style="color:#81878d;" v-cloak>  {{assets.allorder}} </b style="color:#81878d;"></h2>
+                    </div>
+                </a>
+                <a href="javascript:void(0)" onclick="window.location.href='../cardBag/bagOwn.html'" class="aui-palace-grid b-in">
+                    <div class="aui-palace-grid-icon">
+                        <img src="../img/nav-001.png" alt="">
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h1>产品库 <em>账户</em></h1>
+                        <h2>我的产品<b style="color:#81878d;" v-cloak>  {{assets.buyorder}} </b></h2>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </section>
+    
+<!--tx-->
+<div class="monmc" v-cloak  @click="payConfirmContStatus = false" v-if="payConfirmContStatus"></div>
+<div class="payConfirmCont"  v-cloak v-if="payConfirmContStatus" style="height:280px;">
+    <span style="position:absolute;right:15px;margin-top:10px;font-size:0.8rem;color:#999;" @click="payConfirmContStatus = false">关闭</span>
+    <div class="inputCont">
+        <div style="font-size:1rem;font-weight:600;color:#555;margin:10px 0 10px 3%;margin-bottom:10px;">提现金额：</div>
+        <div :class="`${txNumber==50?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=50">50</div>
+        <div :class="`${txNumber==100?'txNumber activMoneyNum':'txNumber'}`"  @click="txNumber=100">100</div>
+        <div :class="`${txNumber==200?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=200">200</div>
+        <div :class="`${txNumber==500?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=500">500</div>
+        <div :class="`${txNumber==1000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=1000">1000</div>
+        <div :class="`${txNumber==2000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=2000">2000</div>
+        <div :class="`${txNumber==3000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=3000">3000</div>
+        <div :class="`${txNumber==5000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=5000">5000</div>
+        <div :class="`${txNumber==10000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=10000">10000</div>
+        <div class="clear"></div>
+        <div class="but-cont" style="position: fixed;bottom:2px;width:100%;">
+            <div class="btn" @click="confirmhdMoney" style="width:100%;border-radius:0;height: 35px;line-height:35px;border-radius:25px;"> 立 即 提 现 </div>
+        </div>
+    </div>
+</div>
+<!--end tx-->
+
+
+<br/><br/><br/><br/><br/>
+</section>
+
+      <!--footer-->
+      <footer id="footer">
+        <ul id="footer_list">
+           <li class="list_li home active">
+               <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
+           </li>
+           <li class="list_li follow" >
+               <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+            </li>
+            <li class="list_li cart">
+                <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+            </li>
+            <li class="list_li cart">
+               <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
+           </li>
+           <li class="list_li profile">
+               <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
+           </li>
+       </ul>
+      </footer>
+     <!-- end footer-->
+</body>
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            txNumber:50,
+            payConfirmContStatus:false,
+            assets:{}
+        }
+      },
+      created() {
+          this.getMyAssets();
+      },
+      methods:{
+        hMoney(){
+            if(!this.assets.sumprofit || this.assets.sumprofit<=0){
+                jqtoast('您当前还没有可提现资产！');
+                return;
+            }
+            this.payConfirmContStatus = true;
+        },
+        confirmhdMoney(){
+            if(this.txNumber>this.assets.sumprofit){
+                jqtoast('您的资金不足！');
+                return;
+            }
+            var vThis = this;
+            jAjax("/appUserCenter/exchangeVipCard",{cardprice:this.txNumber},function(data){
+                if(data.status==0){
+                    jqtoast('提现成功,请在提现记录中查看详情！');
+                    vThis.payConfirmContStatus = false
+                }else{
+                    jqtoast(data.message);
+                }
+            });
+        },
+        //查找资产
+        getMyAssets(){
+          var vThis = this;
+          jAjax("/appUserCenter/myAssets",{},function(data){
+            vThis.assets = data;
+          });
+        }
+
+      }
+    })
+  </script>
+
+</html>

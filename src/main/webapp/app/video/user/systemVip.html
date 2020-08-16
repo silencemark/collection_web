@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>会员体系</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/user.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+ </head>
+ <body style="background-color: #fff">
+  <!-- <div class="loading" id="loadingWindow" style="display:block;background:#fff;opacity: 0.9;"><img src="../img/timg.gif"/></div> -->
+<section class="main"  id="app">
+  <div class="title">
+     <img src="../img/to-left.png" onclick="history.back(-1)"/>
+      会员体系
+  </div>
+
+    <!--vipInfo-->
+    <div  v-cloak :class="`vipInfo v${growthValueData.levelenum}-c`" :style="`background-image: url('../img/V${growthValueData.levelenum}_BG.png`">
+      <span style="margin-bottom:5px;"  v-cloak>V{{growthValueData.levelenum}}{{growthValueData.levelname}}</span>
+        当前成长值 : <font  v-cloak>{{growthValueData.growthvalue}}</font>
+        <div class="v-numver">
+          距离升级还需要<font  v-cloak>{{growthValueData.needgrowthvalue}}</font>点成长值
+          <div class="jdt-father">
+              <div id="Son" :class="`vip${growthValueData.levelenum}-bg`"></div>
+          </div>
+          <span style="float:left;"  v-cloak>V{{growthValueData.levelenum}}</span>
+          <span style="float:right;"  v-cloak>V{{growthValueData.levelenum+1}}</span>
+          <span class="clear"></span>
+      </div>
+      <img  v-cloak v-if="growthValueData.levelenum!=0" :src="`../img/V${growthValueData.levelenum}_IC.png`" class="v-img"/>
+      <a href="#tips" :class="`v${growthValueData.levelenum}-c`">
+        <div style="position: absolute;right:48px;margin-top:70px;">成长攻略</div>
+      </a>
+    </div>
+    <div class="clear"></div>
+<div style="width:94%;margin-left: 3%;">
+  <div class="contentTitle">当前会员等级特权</div>
+  <div class="equityLable">
+    <span style="display: block;height:18px;"  v-cloak>{{growthValueData.interesttimes}}倍</span>
+    <span>发布价</span>
+  </div>
+  <div class="equityLable">
+    <span style="display: block;height:18px;">签到领</span>
+    <span>成长值</span>
+  </div>
+  <div class="clear"></div>
+
+  <a name="tips"> </a>
+  <div class="contentTitle">会员等级介绍</div>
+  <table class="equityTtable">
+      <tr>
+          <th>会员等级</th>
+          <th>要求成值</th>
+          <th>基础权益</th>
+      </tr>
+      <tr v-for="(bo,i) in memberGrowList"  v-cloak>
+          <th>V{{bo.levelenum}}{{bo.levelname}}</th>
+          <th>{{bo.mingrowthvalue}}-{{bo.maxgrowthvalue}}</th>
+          <th>{{bo.interesttimes}}倍发布价</th>
+      </tr>
+  </table>
+  
+  <div class="contentTitle">会员升级攻略</div>
+  <div class="equityLable"  onclick="window.location.href='../invite.html'">
+    <span style="display: block;height:18px;">邀请好友</span>
+    <span>得成长值</span>
+  </div>
+  <div class="equityLable" onclick="window.location.href='../activity.html'">
+    <span style="display: block;height:18px;">购买或</span>
+    <span>发布商品</span>
+  </div>
+  <div class="equityLable">
+    <span style="display: block;height:18px;">每日签到</span>
+    <span>领取成长值</span>
+  </div>
+  <div class="clear"></div>
+  
+  <div class="contentTitle">成长值增值介绍</div>
+  <div class="equityContentInfo">
+    (1) 大于V0级的会员每日签到可领取1-50点成长值。<br/><br/>
+    (2) 所有用户在享购专区发布转出商品后，用户可获得对应成长值奖励。<br/><br/>
+    (3) 邀请好友，当好友好友会员等级达到V1系统将会赠送您1000的成长值。
+  </div>
+</div>
+<br/><br/><br/>   
+
+</section>
+
+
+ <br/><br/><br/>
+      <!--footer-->
+      <footer id="footer">
+        <ul id="footer_list">
+           <li class="list_li home active">
+               <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
+           </li>
+           <li class="list_li follow" >
+               <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+            </li>
+            <li class="list_li cart">
+                <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+            </li>
+            <li class="list_li cart">
+               <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
+           </li>
+           <li class="list_li profile">
+               <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
+           </li>
+       </ul>
+      </footer>
+     <!-- end footer-->
+</body>
+
+
+</html>
+
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/vue.js"></script>
+<script>
+   //进度条计算
+   var Son = document.getElementById("Son");
+    Son.style.width = Percentage(20, 100) + "%";
+    function Percentage(current, total) {
+        return current / total * 100;
+    }
+
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+          growthValueData:{levelenum:0},
+          memberGrowList:[],
+        }
+      },
+      created() {
+          this.myGrowthValue();
+      },
+      methods:{
+        myGrowthValue(){
+          var vueThis = this;
+          jAjax("/appUserCenter/myGrowthValue",{},function(data){
+            if(isNaN(data.levelenum)) data.levelenum = 0;
+            vueThis.growthValueData = data;
+            vueThis.memberGrowList = data.memberGrowList;
+          });
+        }
+        
+      }
+    })
+  </script>

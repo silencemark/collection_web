@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <title>享GO影视</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <meta name="application-name" content="享GO影视">
+     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/bitbug_favicon.ico">
+     <meta name="apple-mobile-web-app-capable" content="yes">
+
+     <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
+ </head>
+ <body style="background-color:#f6f6f6;">
+<section class="main"  id="app">
+    <div class="qbtitleGbk">
+        <img src="img/to-left.png" onclick="history.back(-1)"/>
+   </div>
+
+<div class="pfnIMGCONT">
+    <span class="BU"> 1/1 </span> 
+    <div style="width: 100%;min-height:200px;">
+        <img :src="reqPath+prd.coverimg" style="width:100%;min-height: 100px;">
+    </div>
+</div>
+<div class="paymenytcy" style="margin-top: -4px;">
+    <div class="lf">
+        成交均价：￥<font  v-cloak>{{prd.avgprice}}</font>
+    </div>
+    <div class="rt">
+        开团时间<br/>
+        <font  v-cloak>{{prd.starttime}}-{{prd.endtime}} </font>    
+    </div>
+    <div class="clear"></div>
+</div>
+<span class="pinfmMsg">
+    <font  v-cloak>{{prd.description.length>60?prd.description.substr(0,60)+'...':prd.description}}</font>
+</span>
+<div class="pinfAttr likeprdCont" >
+    <img :src="reqPath+l.headimage" v-for="(l,i) in prd.likelist"/>
+    &nbsp;&nbsp;共<font  v-cloak>{{prd.likenum?prd.likenum:0}}</font>人喜欢此商品
+    <div  v-if="prd.likestatus==0"  style="width:100px;float:right">
+         加入喜欢
+        <img src="img/pLike.png" @click="likeGarageKit(1)"/>
+    </div>
+
+    <div v-if="prd.likestatus==1"   style="width:100px;float:right">
+         取消喜欢
+        <img src="img/pnlike.png"   @click="likeGarageKit(0)"/>
+    </div>
+    <!-- <img style="float:right;margin-right:30px;border:0" src="img/pLike.png" v-if="prd.likestatus==0" @click="likeGarageKit(1)"/>
+    <img style="float:right;margin-right:30px;border:0" src="img/pnlike.png" v-if="prd.likestatus==1"  @click="likeGarageKit(0)"/> -->
+    <div class="clear"></div>
+</div>
+<div class="pinfAttr">
+    商品名称：&nbsp;&nbsp;<font  v-cloak>{{prd.title}}</font>
+</div>
+<div class="pinfAttr">
+    发布日期：&nbsp;&nbsp;<font  v-cloak>{{prd.createtime?prd.createtime.substr(0,10):prd.createtime}}</font>
+</div>
+<div class="pinfAttr">
+    关于卖家：&nbsp;&nbsp;
+</div>
+<div style="padding:10px;font-size:0.9rem;color: #333;letter-spacing:1px;">温馨提示</div>
+<div class="prdXGMgs">
+    此产品交易属于C2C（客户与客户），为了提高用户安全性和用户身份的可信性，交易的有效性，平台将要求用户必须完成实名认证，
+    且本平台有权采取各种必要的手段对用户身份进行识别，记录并保存您提供的个人身份信息。
+</div>
+<div style="padding:10px;font-size:0.9rem;color: #333;letter-spacing:1px;">团购流程</div>
+<div class="prdXGMgs">
+    <span style="color:#333;">1、</span>用户发布自己的收藏手办，设置自己心仪的价格，发布在平台。平台会根据商品价格自动归纳到不同的商品区域
+    <br/>
+    <span style="color:#333;">2、</span>其他用户在开团时间内，参团购买商品，参团成功后买家直接付款给卖家并且上传交易凭证截图
+    <br/>
+    <span style="color:#333;">3、</span>卖家查看自己的商品状态，如已卖出且买家已付款，卖家需点击"立即审核"查看买家支付真实，确认无误则点击"审核通过"后再发货给买家
+    <br/>
+    <span style="color:#333;">4、</span>买家收到商品点击"完成"按钮表示已收货，且商品会记录在平台"产品库-我的产品"，若需出售此商品无需则再次录入商品信息。
+</div>
+<br/><br/><br/><br/>
+
+<div class="prdFBottom">
+    <div class="kongbtn" onclick="history.back(-1)" style="position:absolute;right:120px;margin-top:12px;color:#e52d7a;border:1px solid #e52d7a;">返回主页</div>
+    <div class="kongbtn" @click="ctn" style="position:absolute;right:15px;margin-top:12px;color:#fff;background:#e52d7a;;border:1px solid #e52d7a;">立即参团</div>
+</div>
+</section>
+
+</body>
+</html>
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+            reqPath : reqPath,
+            prd:{
+                likestatus:0,
+                description:'',
+            },
+        }
+      },
+      created() {
+          this.kitid = this.GetQueryString('kitid');
+          this.getGarageKitInfo();
+      },
+      mounted() {
+
+     },
+      methods:{
+        //资源查找
+        getGarageKitInfo(status){
+            var vThis = this;
+            var tk = getCptToken();
+            var reqBo = {kitid:this.kitid};
+            if(tk){
+                reqBo.token = tk;
+            }
+            jAjax("/appVipCard/getGarageKitInfo",reqBo,function(data){
+                vThis.prd = data;
+            });
+        },
+        //喜欢
+        likeGarageKit(status){
+            if(!getCptToken()){
+                jqalert({
+                    prompt:'您还没有登录，是否立即登录！？',
+                    yestext:'立即登录',
+                    notext:'等一会儿',
+                    yesfn:function () {
+                        window.location.href= "login.html";
+                    },
+                    nofn:function () {
+                    }
+                })
+                return;
+            };
+            var vThis = this;
+            vThis.prd.likestatus = status;
+            jAjax("/appVipCard/likeGarageKit",{kitid:this.kitid,status:status},function(data){
+                // vThis.prd.likestatus = status;
+                if(status==1){
+                    jqtoast('您已将商品标记为喜欢！');
+                }else{
+                    jqtoast('您取消了喜欢此商品！');
+                }
+                vThis.getGarageKitInfo();
+            });
+        },
+        ctn(){
+            jqalert({
+                prompt:'此产品的开团是时间为：'+this.prd.starttime+'-'+this.prd.endtime+' 请留意产品开团时间，在产品主页参与团购谢谢！',
+                yestext:'好 的',
+                yesfn:function () {
+                }
+            });
+        },
+        //获取URL参数
+        GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+      }
+    })
+  </script>

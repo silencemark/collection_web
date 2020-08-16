@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>享GO影视</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <meta name="application-name" content="享GO影视">
+     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/bitbug_favicon.ico">
+     <meta name="apple-mobile-web-app-capable" content="yes">
+     
+     <link rel="stylesheet" type="text/css" href="css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="css/myCenter.css"/>
+ </head>
+ <body>
+<section class="main"  id="app">
+  <!--msg-->
+  <div class="maeeageTx" id="lookMsg" v-cloak>
+    <span v-if="wdmsgCount && wdmsgCount>0" >您有 {{wdmsgCount}} 条未读消息</span>
+  </div>
+  
+  <!--userInfo-->
+   <div class="userInfo">
+      <img :src="myCenterData.headimage" id="tx"/>
+      <input id="cf" onchange="chagntx(this,'tx');" class="imgFileInput" type="file" accept="image/*" multiple="" style="width:50px;height:50px;margin-left:5%;margin-top:0px;">
+      <div class="userName">
+          <span style="margin-top:3px;" v-cloak>{{myCenterData.nickname}}</span>
+          <img src="img/duopErr.png" v-cloak v-if="myCenterData.status==2" style="margin-top:5px;"/>
+          <img src="img/duopSuc.png" v-cloak v-if="myCenterData.isrealname==2 && myCenterData.status!=2" style="margin-top:5px;"/>
+          <img src="img/duop.png"  v-cloak v-if="myCenterData.isrealname!=2 && myCenterData.status!=2" style="margin-top:5px;"/>
+          
+          <div v-if="myCenterData.status==2">
+            <span class="renz">&nbsp;账号已冻结</span> 
+          </div>
+          <div v-else>
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==0"> &nbsp;未认证</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==1"> &nbsp;审核中</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==2"> &nbsp;已认证</span> 
+            <span class="renz" v-cloak v-if="myCenterData.isrealname==3"> &nbsp;认证失败</span> 
+          </div>
+      </div>
+      <div class="btn qiand" v-cloak @click="qiand" v-if="!myCenterData.isSign">签到</div>
+      <div class="btn qiand" v-cloak v-else>已签到</div>
+      <div class="clear"></div>
+  </div>
+    <!--vipInfo-->
+    <div v-show="defaultnone" :class="`vipInfo v${myCenterData.levelenum}-c `" v-cloak :style="`background-image: url('img/V${myCenterData.levelenum}_BG.png`">
+      <span style="margin-bottom:5px;">{{myCenterData.levelname}}</span>
+        当前成长值 : {{myCenterData.growthvalue}}
+        <div class="v-numver">
+          距离升级还需要{{myCenterData.needgrowthvalue}}点成长值
+          <div class="jdt-father">
+              <div id="son" :class="`vip${myCenterData.levelenum}-bg`" 
+              :style="`width:${(myCenterData.growthvalue - myCenterData.mingrowthvalue)*100/(myCenterData.maxgrowthvalue-myCenterData.mingrowthvalue)}%;`"></div>
+          </div>
+          <span style="float:left;" v-cloak>V{{myCenterData.levelenum}}</span>
+          <span style="float:right;" v-cloak>V{{myCenterData.levelenum+1}}</span>
+          <span class="clear"></span>
+      </div>
+      <img v-if="myCenterData.levelenum && myCenterData.levelenum!=0" v-cloak :src="`img/V${myCenterData.levelenum}_IC.png`" class="v-img"/>
+    </div>
+    <div class="clear"></div>
+
+
+
+    <!--operationEl-->
+    <div class="operationEl" style="margin-top:10px;">
+        <img src="img/integral-ic.png"/>
+        <span>XGO币</span>
+        <span class="money" v-cloak>{{myCenterData.xgocoin?myCenterData.xgocoin:0}}</span>
+        <div class="userXGOBut" onclick="window.location.href='user/xgoInfo.html'">明细</div>
+        <div class="userXGOBut"  @click="giveXgo" style="margin-right:30px;">转赠</div>
+    </div>
+    <div class="operationEl" onclick="window.location.href='user/setUser.html'">
+      <img src="img/set-ic.png"/>
+      <span>账号设置</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl" onclick="window.location.href='user/systemVip.html'">
+      <img src="img/vipSystem-ic.png"/>
+      <span>会员等级</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl" onclick="window.location.href='user/moneyInfo.html'">
+      <img src="img/money-ic.png"/>
+      <span>我的资产</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl" onclick="window.location.href='invite.html'">
+      <img src="img/invitation-ic.png"/>
+      <span>邀请好友</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl" onclick="window.location.href='user/userTeam.html'">
+      <img src="img/handPor-ic.png"/>
+      <span>我的好友</span>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl" onclick="window.location.href='user/problem.html'">
+      <img src="img/custService-ic.png"/>
+      <span>问题与建议</span>
+      <img src="img/to-right.png" style="right:5%;" />
+    </div>
+    <div class="operationEl"  onclick="window.location.href='dwn.html'">
+      <img src="img/app_dow-ic.png"/>
+      <span>APP下载</span></a>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    <div class="operationEl" style="border: 0;" onclick="loginOut();">
+      <img src="img/set-ic.png"/>
+      <span>退出登录</span></a>
+      <img src="img/to-right.png" style="right:5%;"/>
+    </div>
+    
+    <div class="qiandWin" v-if="qdFlg"  v-cloak></div>
+    <div class="qiandContDiv" v-if="qdFlg"  v-cloak>
+      <div class="qdsucTitle">签到成功</div>
+      <div class="qdsuccont" v-cloak style="height: 70px;">{{qdMessage}}</div>
+      <div style="text-align:center;margin-top:-35px;"><img src="img/qiandaos.png" style="width:200px;height:200px;"  v-cloak/></div>
+      <div style="text-align:center;margin-top:-20px;">
+          <div class="btn" @click="qdSuccess">知 道 了</div>
+      </div>
+    </div>
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+      <!--footer-->
+      <footer id="footer">
+        <ul id="footer_list">
+           <li class="list_li home active">
+               <a  href="javascript:void(0);" shref="index.html" class="text">首页</a>
+           </li>
+           <li class="list_li follow" >
+               <a  href="javascript:void(0);" shref="community.html" class="text">享互动</a>
+            </li>
+            <li class="list_li cart">
+                <a   href="javascript:void(0);" shref="activity.html" class="text">享购</a>
+            </li>
+            <li class="list_li cart">
+               <a   href="javascript:void(0);" shref="gameList.html" class="text">游戏</a>
+           </li>
+           <li class="list_li profile">
+               <a   href="javascript:void(0);" shref="myCenter.html" class="text">我的</a>
+           </li>
+       </ul>
+      </footer>
+        <!-- end footer-->
+</body>
+</html>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/exif.js"></script>
+<script>
+$(function(){
+  //查询消息
+  $("#lookMsg").click(function(){
+    var txt = "查看消息通知";
+    if($(this).html().indexOf("条未读消息")>0){
+      window.location.href="user/userMsg.html";
+    }else{
+        if($(this).html()==txt){
+          window.location.href="user/userMsg.html";
+        }else{
+          $(this).html(txt);
+        }
+    }
+  });
+
+})
+
+    var vm = new Vue({
+      el: '#app',
+      data: function() {
+        return {
+          defaultnone:false,
+          reqPath : reqPath,
+          qdFlg:false,
+          qdMessage:'',
+          wdmsgCount:0,
+          myCenterData:{},
+        }
+      },
+      created() {
+          this.getMyCenterData();
+      },
+      methods:{
+        //签到成功
+        qdSuccess(){
+            this.qdFlg = false;
+            window.location.reload();
+        },
+        qiand(){
+          var vThis = this;
+          jAjax("/appUserCenter/signIn",{},function(data){
+            if(data.status=='0'){
+              vThis.qdFlg = true;
+              vThis.qdMessage = data.remark;
+            }else{
+              jqtoast(data.message);
+            }
+          });
+        },
+        //转
+        giveXgo(){
+          if(!this.myCenterData.xgocoin || this.myCenterData.xgocoin<1){
+            jqtoast("您的XGO不足！");
+            return;
+          }
+          window.location.href="user/xgoGive.html?num="+this.myCenterData.xgocoin
+        },
+        getMyCenterData(){
+          var vueThis = this;
+          jAjax("/appUserCenter/myCenter",{},function(data){
+            vueThis.defaultnone = true;
+            vueThis.myCenterData = data;
+            if(!data.headimage){
+              data.headimage = "img/defaulttx.png";
+            }else{
+              data.headimage = this.reqPath+data.headimage;
+            }
+              vueThis.getMsg();
+          });
+        },
+        //查消息
+        getMsg(){
+          var vueThis = this;
+          jAjax("/appUserCenter/getNoticeUnreadNum",{},function(data){
+            if(data && data.count && data.count>0){
+              vueThis.wdmsgCount = data.count;
+            }
+          });
+        }
+        
+      }
+    })
+  </script>

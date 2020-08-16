@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>收款账户管理</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css"/>
+     <script src="../js/jquery-3.1.1.min.js"></script>
+     <script src="../js/vue.js"></script>
+     
+     
+     <script src="../js/bank.js"></script>
+     <style>
+       .userSetMsg{
+        float: right;
+        margin-right: 35px;
+       }
+     </style>
+ </head>
+ <body>
+
+<section class="main" id="app">
+    <div class="title">
+         <img src="../img/to-left.png" onclick="history.back(-1)"/>
+        收款账户管理
+    </div>
+    <div class="operationEl operationElFirst">
+        <img src="../img/bank-ic.png"/>
+        <span>银行卡收款</span>
+        <div style="font-size:0.75rem;margin-top:-20px;">提示 ：为避免您的经济损失，请仔细核对收款账号信息</div>
+    </div>
+
+    <div class="operationEl">
+        <span style="margin-left:0;">持卡人姓名：</span>
+        <div style="margin-top:-20px;">
+            <input v-model="userInfo.bankrealname" placeholder="请输入收款人真实姓名" style="width:90%;height:30px;border:0;color:#555;"/>
+        </div>
+    </div>
+    <div class="operationEl">
+        <span style="margin-left:0;">银行卡号：</span>
+        <div style="margin-top:-20px;">
+            <input v-model="userInfo.banknum" v-on:input="inputBank" maxlength="20" placeholder="请输入银行卡号" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+        </div>
+    </div>
+    <div class="operationEl">
+        <span style="margin-left:0;">所属银行：</span>
+        <div style="margin-top:-20px;">
+            <input v-model="userInfo.bank" placeholder="输入卡号所属银行" style="width:90%;height:30px;border:0;color:#555;" v-cloak/>
+        </div>
+    </div>
+    <br>
+    <div class="but-cont">
+        <div class="btn btn-200" @click="savePayment" >立 即 保 存</div>
+    </div>
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+        </li>
+        <li class="list_li cart">
+            <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+        </li>
+        <li class="list_li cart">
+           <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
+       </li>
+       <li class="list_li profile">
+           <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+ <!-- end footer-->
+</body>
+
+<script>
+new Vue({
+    el: '#app',
+    data: function() {
+        return {
+            reqPath : reqPath,
+            userInfo:{}, 
+        }
+    },
+    created() {
+        this.getMyUserInfo();
+    },
+    methods:{
+        //查询用户信息
+        getMyUserInfo(){
+            var vueThis = this;
+            jAjax("/appUserCenter/getPaymentMethod",{},function(data){
+                vueThis.userInfo = data;
+            });
+        },
+        inputBank(){
+            var bo = bankCardAttribution(this.userInfo.banknum);
+            if(bo=='error'){
+
+            }else{
+                this.userInfo.bank=bo.bankName;
+            }
+        },
+        //保存支付方式
+        savePayment(){
+            if(!this.userInfo.bankrealname){
+                jqtoast("请输入收款人真实姓名！");
+                return;
+            }
+            if(!this.userInfo.banknum || this.userInfo.banknum.length<9){
+                jqtoast("请输入正确银行卡号！");
+                return;
+            }
+            if(!this.userInfo.bank){
+                jqtoast("请输入所属银行！");
+                return;
+            }
+            this.userInfo.userid = getCptToken();
+            this.userInfo.alipayqrcode = "";
+            this.userInfo.weixinqrcode = "";
+            jAjax("/appUserCenter/updateAddPaymentMethod",this.userInfo,function(data){
+                window.location.href="bindPayType.html";
+            });
+            
+
+        }
+
+  }
+})
+  </script>
+
+</html>

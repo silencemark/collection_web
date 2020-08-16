@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>产品库</title>
+     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,width=device-width,initial-scale=1.0"/>
+     <link rel="stylesheet" type="text/css" href="../css/public.css"/>
+     <link rel="stylesheet" type="text/css" href="../css/myCenter.css?v=11001"/>
+     <style>
+        *{
+           -webkit-box-sizing: content-box;
+           box-sizing: content-box;
+           -webkit-tap-highlight-color: transparent;
+       }
+       .mgsBUTred {margin-top:-11px;}
+    </style>
+ </head>
+ <body>
+<section class="main"  id="app">
+    <div class="title">
+         <img src="../img/to-left.png" onclick="history.back(-1)"/>
+         产品库
+    </div>
+
+<div class="gabTitle">
+    <div onclick="window.location.href='bagPayWait.html'" class="active">待支付</div>
+    <div onclick="window.location.href='bagOwn.html'">我的产品</div>
+    <div onclick="window.location.href='bagSale.html'">待出售</div>
+    <div onclick="window.location.href='bagHistory.html'">历史订单</div>
+    <b class="clear"></b>
+</div>
+
+
+
+<!--抢购中-->
+<div v-for="(item,i) in rushToBuyList"  v-cloak >
+    <div style="width: 96%;margin-left: 2%;margin-bottom:15px;padding-bottom: 10px;background: #fff;border-radius:5px;box-shadow: #c7c7c7 1px 1px 5px 1px;">
+        <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;" >
+            <img :src="reqPath+item.cardicon" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+        </div>
+        <div class="clear"></div>
+        <div class="vipInfoCommmsg">
+            <div class="vipimgTItle" style="width:100%;">{{item.typename}}</div>
+            <div style="width: 100%;">
+                温馨提醒：通过平台购买的此产品，在{{item.commentstartdays}}天之内不得再次交易，且出售价格不得高于购买原价的{{100+item.yield}}%
+            </div>
+            <div>已抢购时间：{{fmtTimeSecond(item.secondbuy)}}</div>
+            <div>状态：团购中...</div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <input type="button" value="正在团购中......" :class="`active-but  v${item.forder}-bg`"/>
+    </div>
+    <!-- <div class="payWaitLoad" style="height: 320px;margin-top:-335px;"><img src="../img/timg.gif"/></div> -->
+</div>
+<!--end抢购中-->
+
+
+
+<!-- <div v-for="(item,i) in rushToBuyList" v-cloak>
+    <div style="margin-bottom:15px;">
+        <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`"
+        :style="`background-image:url('../img/V${item.forder}_BG.png')`">
+        <span style="margin-bottom:5px;">{{item.typename}}</span>
+        领取{{item.typename}} {{item.commentstartdays}} 天后且完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
+            <div class="v-numver" style="width: 90%;margin-top:45px;">
+                <div>已抢购时间：{{fmtTimeSecond(item.secondbuy)}}</div>
+                <div>任务期限：{{item.watchdays}}天</div>
+                <div>预计价格：{{item.minprice}} - {{item.maxprice}}</div>
+                <div>交易状态： <a style="font-weight:600;color:#BA4A33;">抢购中...</a></div>
+                <span class="clear">
+        </div>
+        <img v-if="item.forder" :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+        </div>
+        <div class="clear"></div>
+        <input type="button" value="任务抢购中" :class="`active-but  v${item.forder}-bg`"/>
+    </div>
+    <div class="payWaitLoad"><img src="../img/timg.gif"/></div>
+</div> -->
+
+
+
+<div class="ownEl"  v-for="(item,i) in waitPayCardList"  v-cloak >
+    <img :src="reqPath+item.iconimg">
+    <div class="ownElmsg">
+        <div style="font-size:0.9rem;color:#333;font-weight:bold;">{{item.title}}</div>
+        <div style="margin-top:10px;">
+            温馨提醒：此产品，{{item.commentstartdays}}天之内不得再次通过平台进行交易，且出售价格不得高于购买原价的{{100+item.yield}}%
+            <div style="margin-top: 5px;" v-if="item.status!=2">
+                支付倒计时：{{fmtTimeSecond(item.remaintime)}}
+            </div>
+            <div  style="margin-top: 5px;" v-else>
+                自动审核时间：{{fmtTimeSecond(item.remaintime)}}
+            </div>
+        </div>
+        <div style="position: absolute;bottom:15px;width: 100%;">
+            <b style="font-size:1rem;color:#e82893;">￥{{item.cardprice}}</b>
+            <div style="float: right;margin-right:20px;margin-top:4px">
+                <a style="font-weight:600;color:rgb(232,40,147)" v-if="item.status==1">待支付</a>
+                <a style="font-weight:600;color:rgb(232,40,147)" v-if="item.status==2">待审核</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div style="width:100%;height:35px;margin-top: -10px;">
+        <div class="kongbtn" v-if="item.status==1" :onclick="`window.location.href='bagPay.html?orderid=${item.orderid}'`" style="position:absolute;right:15px;margin-top:3px;">立即支付</div>
+        <div class="kongbtn" v-if="item.status==2" :onclick="`window.location.href='../user/userInfo.html?uid=${item.selluserid}'`" style="position:absolute;right:15px;margin-top:3px;">查看卖家</div>
+    </div>
+</div>
+
+
+
+
+
+
+<!--begin待支付-->
+<!-- <div v-for="(item,i) in waitPayCardList"  v-cloak >
+    <div style="width: 96%;margin-left: 2%;margin-bottom:15px;padding-bottom: 10px;background: #fff;border-radius:5px;box-shadow: #c7c7c7 1px 1px 5px 1px;">
+        <div  :class="`vipInfo-active vipInfo  `" style="margin:0 !important;padding: 0 !important;width:100% !important;" >
+            <img :src="`../img/V1_BG.jpg`" style="width: 100%;height: 100%;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+        </div>
+        <div class="clear"></div>
+        <div class="vipInfoCommmsg">
+            <div class="vipimgTItle" style="width:100%;">{{item.typename}}-{{item.title}}</div>
+            <div style="width: 100%;">
+                温馨提醒：通过平台购买的此产品，在{{item.commentstartdays}}天之内不得再次交易，且出售价格不得高于购买原价的{{100+item.yield}}%
+            </div>
+            <div>交易单号：{{item.ordernum}}</div>
+            <div>成交价格：{{item.cardprice}}</div>
+            <div v-if="item.status!=2">支付倒计时：{{fmtTimeSecond(item.remaintime)}}</div>
+            <div v-else>自动审核时间：{{fmtTimeSecond(item.remaintime)}}</div>
+            <div>交易状态：
+                <a style="font-weight:600;color:rgb(232, 40, 147)" v-if="item.status==1">待支付</a>
+                <a style="font-weight:600;color:rgb(232, 40, 147)" v-if="item.status==2">待审核</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        
+        <input type="button" v-if="item.status==1" :value="`立即支付`" 
+        :class="`active-but  v${item.forder}-bg`" :onclick="`window.location.href='bagPay.html?orderid=${item.orderid}'`"/>
+        
+        <input type="button" v-if="item.status==2" :value="`查看卖家信息`"  :onclick="`window.location.href='../user/userInfo.html?uid=${item.selluserid}'`"
+        :class="`active-but  v${item.forder}-bg`"/>
+    </div>
+</div> -->
+<!--end待支付-->
+
+
+
+
+
+
+
+<!-- <div v-for="(item,i) in waitPayCardList" style="margin-bottom:15px;" v-cloak>
+    <div  :class="`vipInfo-active vipInfo  v${item.forder}-c`" 
+    :style="`background-image:url('../img/V${item.forder}_BG.png')`">
+      <span style="margin-bottom:5px;">{{item.typename}}</span>
+      领取{{item.typename}} {{item.commentstartdays}} 天后且完成相应任务要求即可转让您的任务卡！领取{{item.yield}}%任务奖励。
+        <div class="v-numver" style="width: 90%;margin-top:45px;">
+            <div>交易单号：{{item.ordernum}}</div>
+            <div v-if="item.status!=2">任务期限：{{item.watchdays}}天</div>
+            <div v-else>自动审核时间：{{fmtTimeSecond(item.remaintime)}}</div>
+            <div>购买价格：{{item.cardprice}}</div>
+            <div>交易状态：
+                <a style="font-weight:600;color:#BA4A33;" v-if="item.status==1">待支付</a>
+                <a style="font-weight:600;color:#BA4A33;" v-if="item.status==2">待审核</a>
+            </div>
+            <span class="clear">
+      </div>
+      <img :src="`../img/V${item.forder}_IC.png`" class="v-img" style="width:120px;height:120px;"/>
+    </div>
+    <div class="clear"></div>
+
+    <input type="button" v-if="item.status==1" :value="`立即支付(倒计时：${fmtTimeSecond(item.remaintime)})`" 
+        :class="`active-but  v${item.forder}-bg`" :onclick="`window.location.href='bagPay.html?orderid=${item.orderid}'`"/>
+        
+    <input type="button" v-if="item.status==2" :value="`查看卖家信息`"  :onclick="`window.location.href='../user/userInfo.html?uid=${item.selluserid}'`"
+     :class="`active-but  v${item.forder}-bg`"/>
+</div> -->
+<!--end 待支付-->
+<div v-if="rushToBuyList.length==0 && waitPayCardList.length==0" class="notList">没有待支付记录</div>
+
+
+
+<!--begin参团成功-->
+<div class="qiandWin" v-if="qdFlg" style="opacity:0.7;"  v-cloak></div>
+<div class="qiandContDiv" v-if="qdFlg" style="padding-bottom:15px;height: auto;"  v-cloak>
+    <div class="qdsucTitle">参团成功</div>
+    <div class="qdsuccont" v-cloak style="padding: 10px;">恭喜您成功团购到{{qgSucName}}精美手办，请您立即支付！</div>
+    <div style="text-align:center;"><img :src="qgSucIMG" style="width:200px;height:200px;"  v-cloak/></div>
+    <div style="text-align:center;margin-top: 10px;">
+        <div class="btn" :onclick="`window.location.href='bagPay.html?orderid=${payorderid}'`">立即支付</div>
+    </div>
+</div>
+<!--end参团成功-->
+
+
+
+<!--begin抢购中-->
+<div class="qiandWin" v-if="qging"  v-cloak></div>
+<div class="qiandContDiv" v-if="qging" style="background:none;width:100%;margin-left:0;top:150px;"  v-cloak>
+  <img  src="../img/qging.gif" class="qianggingimg"/>
+  <div class="qianggouing">
+    亲您的商品正在团购中,您可以先去看会儿电影玩玩游戏，最迟开团时间10分钟后可查看参团结果，参团成功会短信通知您哟<br/><br/>
+    <div class="btn qinggbuleft" @click="qging = false">在此等待</div>
+    <div class="btn qinggourigth" onclick="window.location.href='../gameList.html'">先去逛逛</div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!--end抢购中-->
+
+</section>
+
+
+ <!--footer-->
+ <br/><br/><br/>
+ <footer id="footer">
+    <ul id="footer_list">
+       <li class="list_li home active">
+           <a  href="javascript:void(0);" shref="../index.html" class="text">首页</a>
+       </li>
+       <li class="list_li follow" >
+           <a  href="javascript:void(0);" shref="../community.html" class="text">享互动</a>
+        </li>
+        <li class="list_li cart">
+            <a   href="javascript:void(0);" shref="../activity.html" class="text">享购</a>
+        </li>
+        <li class="list_li cart">
+           <a   href="javascript:void(0);" shref="../gameList.html" class="text">游戏</a>
+       </li>
+       <li class="list_li profile">
+           <a   href="javascript:void(0);" shref="../myCenter.html" class="text">我的</a>
+       </li>
+   </ul>
+  </footer>
+ <!-- end footer-->
+</body>
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/vue.js"></script>
+
+<script>
+new Vue({
+    el: '#app',
+    data: function() {
+    return {
+        reqPath : reqPath,
+        rushToBuyList : [],
+        waitPayCardList : [],
+        payorderid:'',
+        timer : undefined,
+        qdFlg:false,
+        payTimer:null,
+        qging:false,
+        qgSucName:'',
+        qgSucIMG:''
+    }
+    },
+    created() {
+        this.getWaitPayCard();
+        this.getRushToBuyList();
+    },
+    methods:{
+        //查询抢购中 以及
+        getRushToBuyList(){
+            var vueThis = this;
+            jAjax("/appVipCard/getRushToBuyList",{},function(data){
+                vueThis.rushToBuyList = data.resultlist;
+                if(vueThis.rushToBuyList && vueThis.rushToBuyList.length>0){
+                    vueThis.qging = true;
+                    var t = setInterval(()=>{
+                        for(var k=0;k<vueThis.rushToBuyList.length;k++){
+                            vueThis.rushToBuyList[k].secondbuy += 1;
+                            var s = vueThis.rushToBuyList[k].secondbuy;
+                            if(s>180 && s%20==0){
+                                clearInterval(t);
+                                clearInterval(vueThis.payTimer);
+                                vueThis.getWaitPayCard();
+                                vueThis.getRushToBuyList();
+                            }
+                        }
+                    },1000);
+                }
+            });
+        },
+        // 待支付列表
+        getWaitPayCard(){
+            var vueThis = this;
+            jAjax("/appVipCard/getWaitPayCard",{},function(data){
+                vueThis.waitPayCardList = data.resultlist;
+                if(vueThis.waitPayCardList && vueThis.waitPayCardList.length>0){
+                    for(var k=0;k<vueThis.waitPayCardList.length;k++){
+                        if(vueThis.waitPayCardList[k].status==1){
+                            vueThis.qdFlg = true;
+                            vueThis.qging = false;
+                            vueThis.payorderid =  vueThis.waitPayCardList[k].orderid;
+                            vueThis.qgSucName = vueThis.waitPayCardList[k].title;
+                            vueThis.qgSucIMG = reqPath+vueThis.waitPayCardList[k].iconimg
+                            return;
+                        }
+                    }
+                    vueThis.payTimer = setInterval(()=>{
+                        for(var k=0;k<vueThis.waitPayCardList.length;k++){
+                            if(vueThis.waitPayCardList[k].remaintime>=0){
+                                vueThis.waitPayCardList[k].remaintime -= 1;
+                            }
+                        }
+                    },1000);
+                }
+            });
+        },
+        //格式化 秒 时间显示
+        fmtTimeSecond(second){
+            if(second<60){
+                return second+'秒';
+            }else{
+                return parseInt(second/60)+'分'+(second%60)+'秒';
+            }
+        }
+
+  }
+})
+</script>
+
+</html>
