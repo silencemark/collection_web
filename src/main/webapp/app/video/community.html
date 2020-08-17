@@ -284,14 +284,14 @@ function getDocumentTop() {
             });
         },
         xlref(){
-            this.pageNo = this.pageNo +1;
+            this.pageNo +=1;
             if(this.pageNo>this.sumPageNumber){
                 return;
             }
-            if(this.pageNo = this.sumPageNumber){
+            if(this.pageNo == this.sumPageNumber){
                 this.refTxt = "没有更多数据了";
             }
-            this.getCommunityList();
+            this.getCommunityList({});
         },
         //资源查找
         getCommunityList(reqBo){
