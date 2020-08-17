@@ -308,7 +308,13 @@ new Vue({
             var vm = this;
             jAjax("/appIndex/getAdvertisement",{},function(data){ 
                 vm.advertisement = data;  
-                // vm.advertisement.unshift(vm.advertisement[0]);
+                // 广告水机===============
+                for(var i=0;i<vm.advertisement.length+10;i++){
+                    var rdm = Math.floor(Math.random()*vm.advertisement.length)
+                    vm.advertisement.push(vm.advertisement[rdm])
+                    vm.advertisement.splice(rdm,1)
+                }
+                // 广告水机===============
             });
         },
         //获取影片
@@ -322,6 +328,15 @@ new Vue({
         },
         //跟换电影类型
         queryByType(type){
+            // 广告水机===============
+            for(var i=0;i<this.advertisement.length+10;i++){
+                var rdm = Math.floor(Math.random()*this.advertisement.length)
+                this.advertisement.push(this.advertisement[rdm])
+                this.advertisement.splice(rdm,1)
+            }
+            // 广告水机===============
+
+
             var vm = this;
             if(type==0){
                 // this.homePageMovie = this.defaultPageMovie;
