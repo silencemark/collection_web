@@ -44,7 +44,7 @@
             <div style="width: 100%;">
                 温馨提醒：通过平台购买的此产品，在{{item.commentstartdays}}天之内不得再次交易，且出售价格不得高于购买原价的{{100+item.yield}}%
             </div>
-            <div>已抢购时间：{{fmtTimeSecond(item.secondbuy)}}</div>
+            <div>已参团时间：{{fmtTimeSecond(item.secondbuy)}}</div>
             <div>状态：团购中...</div>
             <div class="clear"></div>
         </div>
@@ -203,7 +203,7 @@
 <div class="qiandContDiv" v-if="qging" style="background:none;width:100%;margin-left:0;top:150px;"  v-cloak>
   <img  src="../img/qging.gif" class="qianggingimg"/>
   <div class="qianggouing">
-    亲您的商品正在团购中,您可以先去看会儿电影玩玩游戏，最迟开团时间10分钟后可查看参团结果，参团成功会短信通知您哟<br/><br/>
+    亲您的商品正在团购中,您可以先去看会儿电影，最迟开团10分钟后可查看参团结果，团购成功会短信通知您哟<br/><br/>
     <div class="btn qinggbuleft" @click="qging = false">在此等待</div>
     <div class="btn qinggourigth" onclick="window.location.href='../gameList.html'">先去逛逛</div>
     <div class="clear"></div>
