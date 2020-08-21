@@ -39,6 +39,9 @@
             <div>价格范围：{{item.minprice}} - {{item.maxprice}}</div>
             <div v-if="item.status==1">开团时间：{{item.starttime}} - {{item.endtime}}</div>
             <div v-if="item.status==0" style="text-align:right;">此系列暂无商品</div>
+            <div v-if="item.status==1" style="width:100%;font-size: 0.7rem;letter-spacing: 0.5px;">
+                温馨提示：购买此类商品{{item.commentstartdays}}天内不得再次在平台进行交易且，交易价不得高于原价{{item.yield+100}}%
+            </div>
             <div class="clear"></div>
         </div>
         <div v-if="item.status==1">
