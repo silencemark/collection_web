@@ -53,8 +53,8 @@
 });
 	
 $(document).ready(function(){
-	$('#ratelist').parent().parent().find("span").attr("class","bg_hidden");
-	$('#ratelist').attr('class','active li_active');
+	$('#membercard').parent().parent().find("span").attr("class","bg_hidden");
+	$('#membercard').attr('class','active li_active');
 })
 
 
@@ -91,12 +91,13 @@ function update(rateid,forder,minute,rate,lastflag){
 <jsp:include page="../top.jsp" ></jsp:include>
 <div class="main_page">
 	<jsp:include page="../left.jsp" ></jsp:include>
-	<div class="page_nav"><p><a href="#">首页</a><i>/</i><span>抢购概率列表</span></p></div>        
+	<div class="page_nav"><p><a href="#">首页</a><i>/</i><span>手办专区管理</span><i>/</i><span>抢购概率列表</span></p></div>        
     <div class="page_tab">
         <div class="tab_name"><span class="gray1">抢购概率管理列表</span></div>
         <div class="tab_list">
         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr class="head_td">
+            		<td>专区名称</td>
                 	<td>结算排序数</td>
                     <td>抢购开始后几分钟开始结算</td>
                     <td>抢购成功几率</td>
@@ -107,6 +108,7 @@ function update(rateid,forder,minute,rate,lastflag){
                 </tr>
                 <c:forEach items="${list }" var="li">
                 	<tr>
+                		<td>${li.typename}</td>
 	                	<td>第${li.forder }次结算</td>
 	                    <td>${li.minute }分钟</td>
 	                    <td>${li.rate }%</td>
@@ -128,6 +130,7 @@ function update(rateid,forder,minute,rate,lastflag){
 	<div class="tc_title"><span>修改抢购概率信息</span><a href="#" onclick="checkHide(0)">×</a></div>
     <form action="<%=request.getContextPath() %>/managebackstage/insertOrUpdateRate" id="updateform" method="post">
     <input type="hidden" name="rateid"  id="rateid"/>
+    <input type="hidden" name="cardid" value="${map.cardid}"/>
     <div class="box">
         <span>结算排序数</span>
         <input type="text" class="text2"  placeholder="请输入结算排序数"  name="forder" id="forder" />
