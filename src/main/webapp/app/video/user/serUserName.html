@@ -28,9 +28,12 @@
     <div class="operationEl">
         <span style="margin-left:0;">您的昵称：</span>
         <div style="margin-top:-20px;">
-            <input v-model="userInfo.nickname" maxlength="6" placeholder="昵称一年内只能修改一次哦" style="width:90%;height:30px;border:0;color:#555;text-align:center;"/>
+            <input v-model="userInfo.nickname" maxlength="6" placeholder="您的昵称只能修改一次哟" style="width:90%;height:30px;border:0;color:#555;text-align:center;"/>
         </div>
     </div>
+            <div style="text-align: center;font-size: 0.7rem;color: #cacaca;padding: 2px;"> 
+                温馨提示：一个账号昵称只能修改一次!
+            </div> 
     <br><br>
     <div class="but-cont">
         <div class="btn btn-200" @click="updateNickname" >立 即 修 改</div>
@@ -75,11 +78,11 @@ new Vue({
         }
     },
     created() {
-        // var nickname = this.GetQueryString("nickname");
-        // if(nickname){
-            // this.userInfo.nickname = nickname;
-            // this.oldName = nickname;
-        // }
+        var nickname = this.GetQueryString("nickname");
+        if(nickname){
+            this.userInfo.nickname = nickname;
+            this.oldName = nickname;
+        }
     },
     methods:{
         //
@@ -101,12 +104,13 @@ new Vue({
                 }
             });
         },
-        //获取URL参数
-        GetQueryString(name){
-            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]); return null;
-        }
+		//获取URL参数
+		GetQueryString(name){
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	        var r = window.location.search.substr(1).match(reg);
+	        if (r != null) return decodeURIComponent(r[2]);
+	        return null;
+		}
     }
 })
   </script>
