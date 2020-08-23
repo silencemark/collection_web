@@ -178,7 +178,7 @@ public class AppUserCenterController extends BaseController{
 	}
 	
 	/**
-	 * 我的团队
+	 * 我的团队/我的好友
 	 * 传入参数{"userid":132010}
 	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
 	 * @param map

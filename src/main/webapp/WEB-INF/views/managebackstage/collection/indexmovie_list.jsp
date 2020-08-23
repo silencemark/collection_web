@@ -127,6 +127,7 @@ function checkImageShowHide(rum,imagesrc){
 	            	<option value="2" <c:if test="${map.type == '2' }">selected="selected"</c:if>>珍藏电影</option>
 	            	<option value="3" <c:if test="${map.type == '3' }">selected="selected"</c:if>>推荐动漫</option>
 	            	<option value="4" <c:if test="${map.type == '4' }">selected="selected"</c:if>>电视剧</option>
+	            	<option value="4" <c:if test="${map.type == '5' }">selected="selected"</c:if>>综艺节目</option>
 	            </select>
 	            <input type="text" class="text" placeholder="请输入录入日期"  name="createtime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" value="${map.createtime}"/>
 	            <input type="submit" value="搜索" class="find_btn"  />
@@ -165,6 +166,9 @@ function checkImageShowHide(rum,imagesrc){
 	                    	</c:when>
 	                    	<c:when test="${li.type == 4 }">
 	                    		<i class="red">电视剧</i>
+	                    	</c:when>
+	                    	<c:when test="${li.type == 5 }">
+	                    		<i class="red">综艺节目</i>
 	                    	</c:when>
 	                    </c:choose></td>
 	                    <td>${li.hotforder }</td>
@@ -206,6 +210,7 @@ function checkImageShowHide(rum,imagesrc){
            	<option value="2">珍藏电影</option>
            	<option value="3">推荐动漫</option>
            	<option value="4">电视剧</option>
+           	<option value="5">综艺节目</option>
          </select>
         <div class="clear"></div>
         <span>排序值</span>
