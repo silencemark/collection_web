@@ -13,9 +13,9 @@
     <div class="title" style="border:none;">
         <img src="img/to-left.png" onclick="history.back(-1)"/>
         享购
-        <!-- <span style="right:20px;font-size:0.9rem;position:absolute;color:#777;" @click="yhxyInfo=true">用户协议  </span> -->
+        <span style="right:20px;font-size:0.9rem;position:absolute;color:#777;" @click="fabugz=true">发布规则</span>
     </div>
-    <img src="img/yq02.png" style="width:96%;margin-left:2%;"  onclick="window.location.href='invite.html'"/>
+    <img src="img/yq03.png" style="width:96%;margin-left:2%;"  @click="fabugz=true"/>
     <img src="img/activ1.png" style="width: 100%;"/>
     <div class="activBut">
         <div @click="ckActiv(1)"style="margin-left: 0;"></div>
@@ -40,7 +40,7 @@
             <div v-if="item.status==1">开团时间：{{item.starttime}} - {{item.endtime}}</div>
             <div v-if="item.status==0" style="text-align:right;">此系列暂无商品</div>
             <div v-if="item.status==1" style="width:100%;font-size: 0.7rem;letter-spacing: 0.5px;">
-                温馨提示：购买此类商品{{item.commentstartdays}}天内不得再次在平台进行交易且，交易价不得高于原价{{item.yield+100}}%
+                温馨提示：购买此类商品{{item.commentstartdays}}天内不得再次在平台进行交易且，交易价不得高于原价{{item.yield}}%
             </div>
             <div class="clear"></div>
         </div>
@@ -157,6 +157,35 @@
 <!--end用户协议详情-->
 
 
+
+
+
+<!--bg发布规则-->
+<div class="userxyInfo" v-if="fabugz"   v-cloak>
+    <div class="title" style="text-align:left;padding-left:40px;">
+        <img src="img/to-left.png" @click="fabugz=false"/>
+        <span @click="fabugz=false">发布规则</span>
+    </div>
+    <div class="ussmsgggg">
+        <div class="prdXGMgs" style="border:0;">
+            <span style="color:#333;">1、</span>用户发布自己的收藏手办，设置自己心仪的价格，发布在平台。平台会根据商品价格自动归纳到不同的商品区域
+            <br/>
+            <span style="color:#333;">2、</span>其他用户在开团时间内，参团购买商品，参团成功后买家直接付款给卖家并且上传交易凭证截图
+            <br/>
+            <span style="color:#333;">3、</span>卖家查看自己的商品状态，如已卖出且买家已付款，卖家需点击"立即审核"查看买家支付真实，确认无误则点击"审核通过"后再发货给买家
+            <br/>
+            <span style="color:#333;">4、</span>买家收到商品点击"完成"按钮表示已收货，且商品会记录在平台"产品库-我的产品"，若需出售此商品无需则再次录入商品信息。
+            <br/>
+            注：若您发布出售的商品在7天之内仍未出售成功，您可以申请系统原价回收。
+        </div>
+
+      
+    </div>
+</div>
+<!--end用户协议详情-->
+
+
+
 </section>
 
 
@@ -203,6 +232,7 @@ new Vue({
         yhxyInfo:false,//用户协议详情展示
         buycardid:'',//购买的car
         xxxxxx:true,//是否已签过用户协议
+        fabugz:false
     }
     },
     created() {
@@ -236,13 +266,26 @@ new Vue({
         });
     },
     //立即抢购
-    rushToBuyCard(cardid){
+    rushToBuyCard(cardid,noHint){
+        var vueThis = this;
+        if(!noHint){
+            jqalert({
+                prompt:'<p style="font-size: 0.85rem;letter-spacing:0.5px;">您确定要参与团购吗？团购到的商品若不喜欢您还可以再出售此商品，如7天内仍未出售成功您可申请系统原价回收商品。</p>',
+                yestext:'参与团购',
+                notext:'取消',
+                yesfn:function () {
+                    vueThis.rushToBuyCard(cardid,true);
+                },
+                nofn:function () {}
+            });
+            return;
+        }
+
         this.buycardid = cardid;
         if(!this.xxxxxx){
             this.userxy = true;
             return;
         }
-        var vueThis = this;
         var argiss = this.xxxxxx?1:0;
         var reqData = {cardid:cardid,agreementstatus:argiss};
         jAjax("/appVipCard/rushToBuyCard",reqData,function(data){

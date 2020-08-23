@@ -799,7 +799,16 @@ a {
 .activMoneyNum{
     border: 2px solid #7dadf6;
 }
-
+.shengyu{
+    width: 50px;
+    font-size: 0.8rem;
+    color: #fff;
+    background-color: #999999;
+    height: 20px;
+    line-height: 20px;
+    position: absolute;
+    margin-top: -60px;
+}
 
 
 

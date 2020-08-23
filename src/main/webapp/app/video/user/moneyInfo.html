@@ -91,17 +91,20 @@
     <span style="position:absolute;right:15px;margin-top:10px;font-size:0.8rem;color:#999;" @click="payConfirmContStatus = false">关闭</span>
     <div class="inputCont">
         <div style="font-size:1rem;font-weight:600;color:#555;margin:10px 0 10px 3%;margin-bottom:10px;">提现金额：</div>
-        <div :class="`${txNumber==50?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=50">50</div>
-        <div :class="`${txNumber==100?'txNumber activMoneyNum':'txNumber'}`"  @click="txNumber=100">100</div>
-        <div :class="`${txNumber==200?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=200">200</div>
-        <div :class="`${txNumber==500?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=500">500</div>
-        <div :class="`${txNumber==1000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=1000">1000</div>
+        <div :class="`${txNumber==50?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=50">
+            50
+            <div class="shengyu">剩余{{1-assets.fifnum}}次</div>
+        </div>
+        <div :class="`${txNumber==1000?'txNumber activMoneyNum':'txNumber'}`"  @click="txNumber=1000">
+            1000
+            <div class="shengyu">剩余{{1-assets.thousandnum}}次</div>
+        </div>
         <div :class="`${txNumber==2000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=2000">2000</div>
         <div :class="`${txNumber==3000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=3000">3000</div>
         <div :class="`${txNumber==5000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=5000">5000</div>
         <div :class="`${txNumber==10000?'txNumber activMoneyNum':'txNumber'}`" @click="txNumber=10000">10000</div>
         <div class="clear"></div>
-        <div class="but-cont" style="position: fixed;bottom:2px;width:100%;">
+        <div class="but-cont" style="position: fixed;bottom:10px;width:100%;">
             <div class="btn" @click="confirmhdMoney" style="width:100%;border-radius:0;height: 35px;line-height:35px;border-radius:25px;"> 立 即 提 现 </div>
         </div>
     </div>
@@ -174,6 +177,7 @@
         getMyAssets(){
           var vThis = this;
           jAjax("/appUserCenter/myAssets",{},function(data){
+              console.log(data);
             vThis.assets = data;
           });
         }
