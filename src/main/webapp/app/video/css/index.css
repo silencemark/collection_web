@@ -9,3 +9,8 @@
     color: #de512a;
     letter-spacing: 0.5px;
 }
+.typeTitleName{
+    float:left;color:#555;font-size:.9rem;width:20%;height:auto;text-align:center;font-weight:bold;
+    width:auto;padding:13px 13px 3px 13px;
+}
+.active{color:#69aeff!important;border-bottom:1px solid #69aeff;padding-bottom:5px}
