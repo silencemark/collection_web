@@ -14,7 +14,6 @@
             <li><span class="bg_hidden" id="certificationlist"><a href="<%=request.getContextPath() %>/managebackstage/getCertificationList" class="bg_03">实名认证管理</a></span><div class="line"></div></li>
             <li><span class="bg_hidden" id="questionlist"><a href="<%=request.getContextPath() %>/managebackstage/getQuestionList" class="bg_03">投诉与建议回复</a></span><div class="line"></div></li>
             <li><span class="bg_hidden" id="notice"><a href="<%=request.getContextPath() %>/managebackstage/getSysNoticeList" class="bg_02">发送系统通知管理</a></span><div class="line"></div></li>
-            <li><span class="bg_hidden" id="ratelist"><a href="<%=request.getContextPath() %>/managebackstage/getRateList" class="bg_05">抢购概率管理</a></span><div class="line"></div></li>
             <li><span class="bg_hidden" id="exchangelist"><a href="<%=request.getContextPath() %>/managebackstage/getExchangeList" class="bg_08">兑换列表</a></span><div class="line"></div>
        		<li><span class="bg_hidden" id="statistics"><a href="<%=request.getContextPath() %>/managebackstage/statisticsIndex" class="bg_06">统计</a></span><div class="line"></div></li>
        </ul>

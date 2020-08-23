@@ -231,7 +231,7 @@ public class AppUserCenterController extends BaseController{
 	
 	
 	/**
-	 * 兑换记录
+	 * 兑换提现记录
 	 * 传入参数{"userid":132010}
 	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
 	 * @param map
@@ -257,7 +257,7 @@ public class AppUserCenterController extends BaseController{
 	}
 	
 	/**
-	 * 输入价格点击兑换
+	 * 输入价格点击兑换/提现
 	 * 传入参数{"userid":132010}
 	 * 传出参数{"message":"查询成功","userInfo":{""},"status":0}
 	 * @param map
@@ -278,8 +278,7 @@ public class AppUserCenterController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		data = this.appUserCenterService.exchangeVipCard(map);
-		return data;
+		return this.appUserCenterService.exchangeVipCard(map);
 	}
 	
 	/**

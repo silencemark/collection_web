@@ -1088,7 +1088,7 @@ public class ManageBackstageController {
 			map.put("createtime",new Date());
 			this.manageBackstageService.insertRate(map);
 		}
-		return "redirect:/managebackstage/getRateList";
+		return "redirect:/managebackstage/getRateList?cardid="+map.get("cardid");
 	}
 	/**-----------------------------------------抢购概率管理end-------------------------------------------------------**/
 }
