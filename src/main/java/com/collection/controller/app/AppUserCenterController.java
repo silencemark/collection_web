@@ -402,10 +402,8 @@ public class AppUserCenterController extends BaseController{
 			data.put("message", "签名校验失败");
 			return data;
 		}
-		this.appUserCenterService.updateNickName(map);
-		data.put("status", 0);
-		data.put("message", "昵称修改成功");
-		return data;	
+		return this.appUserCenterService.updateNickName(map);
+		
 	}
 	
 	/**
