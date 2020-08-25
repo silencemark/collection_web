@@ -85,6 +85,18 @@
             font-size: 0.8rem;
             color: #bebebe;
         }
+        .tuig{
+            color: rgb(51, 51, 51); width: 50%; float: left;
+            height: 35px;
+            line-height: 35px;
+            border-bottom : 2px solid #e9e9e9;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .tgActiv{
+            border-bottom: 2px solid #72c4ff;
+            color: #72c4ff;
+        }
      </style>
  </head>
  <body>
@@ -127,7 +139,9 @@
     <br/>
     <div class="ph">
         <div style="text-align: center;">
-            <div style="color: #333;">排行榜</div>
+            <div :class="`tuig ${type==1?'tgActiv':''}`" @click="queryByType(1)">收益排行榜</div>
+            <div :class="`tuig ${type==2?'tgActiv':''}`" @click="queryByType(2)">推广奖励排行</div>
+            <div class="clear"></div>
             <div style="color:#999;font-size:0.8rem;margin-top:5px;"  v-cloak>更新与{{nT}}</div>
         </div>
         <br>
@@ -182,10 +196,11 @@ new Vue({
         reqPath : reqPath,
         pList : [],
         nT:'',
+        type:1,
     }
     },
     created() {
-        this.getRank();
+        this.queryByType(1);
         var day1 = new Date();
         day1.setTime(day1.getTime()-24*60*60*1000);
         this.nT = day1.getFullYear()+"年" + (day1.getMonth()+1) + "月" + day1.getDate()+"日";
@@ -193,8 +208,14 @@ new Vue({
     methods:{
     //数据
     getRank(){
+        // var vueThis = this;
+        // jAjax("/appUserCenter/getRank",{type:this.qType},function(data){
+        //     vueThis.pList = data.resultlist;
+        // });
+    },queryByType(type){
         var vueThis = this;
-        jAjax("/appUserCenter/getRank",{},function(data){
+        this.type = type;
+        jAjax("/appUserCenter/getRank",{type:type},function(data){
             vueThis.pList = data.resultlist;
         });
     }
