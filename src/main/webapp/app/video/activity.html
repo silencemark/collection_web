@@ -272,7 +272,7 @@ new Vue({
         var vueThis = this;
         if(!noHint){
             jqalert({
-                prompt:'<p style="font-size: 0.85rem;letter-spacing:0.5px;">您确定要参与团购吗？团购到的商品若不喜欢您还可以再出售此商品，如7天内仍未出售成功您可申请系统原价回收商品。</p>',
+                prompt:'<p style="font-size: 0.85rem;letter-spacing:0.5px;">您确定要参与团购吗？团购到的商品若不喜欢您还可以出售此商品，如7天内仍未出售成功您可申请系统原价回收商品。</p>',
                 yestext:'参与团购',
                 notext:'取消',
                 yesfn:function () {
@@ -282,7 +282,6 @@ new Vue({
             });
             return;
         }
-
         this.buycardid = cardid;
         if(!this.xxxxxx){
             this.userxy = true;
@@ -305,10 +304,7 @@ new Vue({
                         nofn:function () {}
                     });
                 }else{
-                    jqalert({
-                        prompt:data.message,
-                        yesfn:function () {}
-                    });
+                    jqtoast(data.message);
                 }
             }
         });
