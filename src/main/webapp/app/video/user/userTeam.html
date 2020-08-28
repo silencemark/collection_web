@@ -74,7 +74,7 @@
         <div class="xgoInfo h50" v-for="(euser,j) in user.grandsonlist" style="padding-left:30px;" v-cloak >
             <img src="../img/defaulttx.png" v-if="!euser.headimage"/>
             <img :src="reqPath+euser.headimage" v-else/>
-            <span class="xgoInfoUname" v-cloak>{{user.nickname.length==11?user.nickname.substr(0,3)+"****"+user.nickname.substr(7,4):user.nickname}}</span>
+            <span class="xgoInfoUname" v-cloak>{{euser.nickname.length==11?euser.nickname.substr(0,3)+"****"+euser.nickname.substr(7,4):euser.nickname}}</span>
             <span class="xgoInfoUname createTime">可能认识的人</span>
             <div class="xgoAddNum"  v-cloak>￥{{euser.sumprofit}}</div>
         </div>
