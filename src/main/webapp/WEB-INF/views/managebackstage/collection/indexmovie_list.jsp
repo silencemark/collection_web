@@ -117,12 +117,12 @@ function checkImageShowHide(rum,imagesrc){
         		<input type="text" class="text" placeholder="请输入电影名称" name="title" value="${map.title}"/>
 	            <input type="text" class="text" placeholder="请输入电影描述" name="description" value="${map.description }"/>
 	            <select class="sel" name="status">
-	            	<option>全部</option>
+	            	<option value="">全部</option>
 	            	<option value="1" <c:if test="${map.status == '1' }">selected="selected"</c:if>>有效</option>
 	            	<option value="0" <c:if test="${map.status == '0' }">selected="selected"</c:if>>无效</option>
 	            </select>
 	            <select class="sel" name="type">
-	            	<option>全部类别</option>
+	            	<option value="">全部类别</option>
 	            	<option value="1" <c:if test="${map.type == '1' }">selected="selected"</c:if>>精品推荐</option>
 	            	<option value="2" <c:if test="${map.type == '2' }">selected="selected"</c:if>>珍藏电影</option>
 	            	<option value="3" <c:if test="${map.type == '3' }">selected="selected"</c:if>>推荐动漫</option>
