@@ -50,7 +50,7 @@ function dn(){
 				}
 			})
 		}else{
-			downloadUrlFile('http://www.xgomv.com/download/xgomv.apk','xgoMv.apk');
+			downloadUrlFile('https://www.goaragekit.cn/download/xgomv.apk','xgoMv.apk');
 		}
 	}
 }
