@@ -1,6 +1,6 @@
 
 //var projectpath="http://localhost:8080";
-var projectpath="http://www.xgomv.com";
+var projectpath="https://www.goaragekit.cn";
 
 var userinfo={};
 

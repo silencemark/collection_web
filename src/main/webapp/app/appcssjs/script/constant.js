@@ -3,7 +3,7 @@ var hrefurl = location.href.substring(0, location.href.indexOf("/app/"));
 // 项目域名
 
 //var projectpath="http://localhost:8080";
-var projectpath="http://www.xgomv.com";
+var projectpath="https://www.goaragekit.cn";
 
 /**
  * android终端
