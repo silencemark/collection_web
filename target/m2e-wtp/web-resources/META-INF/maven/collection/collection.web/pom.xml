@@ -11,7 +11,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- 设置 Spring 的版本 -->
-		<spring>4.1.6.RELEASE</spring>
+		<spring>5.3.19</spring>
 	</properties>
 
 	<dependencies>
